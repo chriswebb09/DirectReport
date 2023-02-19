@@ -1,6 +1,7 @@
 #!/usr/bin/env python
-import storage
+from commandline import storage
+from browserview import app
 
 def test():
-    storage.writeJSON()
     storage.readJSON()
+    app()

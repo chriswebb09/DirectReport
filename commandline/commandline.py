@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import click
 
 @click.command()
@@ -7,6 +9,9 @@ import click
 def interface(entry):
     """Takes in ENTRY for DirectReport"""
     click.echo(f"{entry}")
+    app()
 
 if __name__ == '__main__':
+    print(__package__)
+    print("Main")
     interface()
