@@ -1,23 +1,24 @@
 #!/usr/bin/env python
 
-import json
-from fuzzywuzzy import fuzz
+import sqlite3
 
-data = {"monday":"username","tues":"123"}
+class DataStorage:
 
-def writeJSON():
-    with open('data.json', 'w+') as outfile:
-        json.dump(data, outfile, indent=4)
+    def makeDBConnection(self):
+        try:
+            sqliteConnection = sqlite3.connect('SQLite_Python.db')
+            cursor = sqliteConnection.cursor()
+            print("Database created and Successfully Connected to SQLite")
 
-def readJSON():
-    with open("data.json") as file:
-        data = json.load(file)
+            sqlite_select_Query = "select sqlite_version();"
+            cursor.execute(sqlite_select_Query)
+            record = cursor.fetchall()
+            print("SQLite Database Version is: ", record)
+            cursor.close()
+        except sqlite3.Error as error:
+            print("Error while connecting to sqlite", error)
+        finally:
+            if sqliteConnection:
+                sqliteConnection.close()
+                print("The SQLite connection is closed")
 
-# Function to perform fuzzy search on the JSON data
-def fuzzy_search(data, query):
-    results = []
-    for item in data:
-        score = fuzz.token_set_ratio(item['name'], query)
-        if score >= 60:
-            results.append((score, item))
-    return results
