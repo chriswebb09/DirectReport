@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import sqlite3
-
+from commandline.entry import DailyEntry
 class DataStorage:
 
     def makeDBConnection(self):
