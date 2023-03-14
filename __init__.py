@@ -10,10 +10,8 @@ def test():
     store = storage.DataStorage()
     store.makeDBConnection()
     entry1 = entry.DailyEntry(uuid.uuid4(), "test", datetime.datetime.now(), datetime.datetime.now(), uuid.uuid4())
-    print(entry1)
     commandline.interface([entry1])
-    #LINK - app()
 
 
 if __name__ == "__main__":
-    test()
+    commandline.cli()

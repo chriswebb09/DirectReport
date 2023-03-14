@@ -3,27 +3,60 @@
 import uuid
 import datetime
 import click
-from commandline.entry import DailyEntry
-from .entry_storage import DailyEntryStorage
+import sys
+from browserview.app import app
 
-# @click.command()
-# @click.option('--new', help='New entry')
-# @click.option('--list', help='Previous entries')
+from pathlib import Path
+file = Path(__file__).resolve()
+package_root_directory = file.parents[1]
+sys.path.append(str(package_root_directory))
 
-def interface(entry):
-    """Takes in ENTRY for DirectReport"""
-    # print(entry)
+if __name__ == '__main__':
+    from entry import DailyEntry
+    from entry_storage import DailyEntryStorage
+else:
+    from .entry import DailyEntry
+    from .entry_storage import DailyEntryStorage
+
+@click.group()
+def cli():
+    pass
+
+@cli.group()
+def list_items():
+    pass
+
+@cli.group()
+def new_item():
+    pass
+
+@cli.group()
+def webbrowser():
+    pass
+
+@click.command()
+def list():
     storage = DailyEntryStorage('SQLite_Python.db')
-    storage.add_entry(entry[0])
     entries = storage.get_all_entries()
     for entry_item in entries:
         print(entry_item)
-    # click.echo(entry)
-    # app()
 
+@click.command()
+def new():
+    entry1 = DailyEntry(uuid.uuid4(), "test 2", datetime.datetime.now(), datetime.datetime.now(), uuid.uuid4())
+    storage = DailyEntryStorage('SQLite_Python.db')
+    entries = storage.add_entry(entry1)
+
+@click.command()
+def launch():
+    app.run()
+    click.launch('http://www.google.com')
+
+list_items.add_command(list)
+new_item.add_command(new)
+webbrowser.add_command(launch)
+
+cli = click.CommandCollection(sources=[list_items, new_item, webbrowser])
 
 if __name__ == '__main__':
-    print(__package__)
-    print("Main")
-    entry1 = DailyEntry(uuid.uuid4(), "test 2", datetime.datetime.now(), datetime.datetime.now(), uuid.uuid4())
-    interface(entry1)
+    cli()
