@@ -42,10 +42,10 @@ class ListBuilder:
         weekly.add_uuid(today, id)
         return id
 
-    def new(self):
+    def new(self, entry):
         storage = DailyEntryStorage('SQLite_Python.db')
         weekly_id = str(self.get_weekly_id())
-        new_entry = DailyEntry(uuid.uuid4(), "new2  data", datetime.datetime.now(), datetime.datetime.now(), weekly_id)
+        new_entry = DailyEntry(uuid.uuid4(), entry, datetime.datetime.now(), datetime.datetime.now(), weekly_id)
         storage.add_entry(new_entry)
 
     def list_all_week_ids(self):

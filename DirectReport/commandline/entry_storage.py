@@ -80,7 +80,6 @@ class DailyEntryStorage:
         WHERE week_uuid = ?
         """
         result = self.conn.execute(query, (week_uuid,))
-        # result = self.conn.execute(query, (week_uuid,))
         return [DailyEntry(*row) for row in result.fetchall()]
 
 if __name__ == '__main__':
