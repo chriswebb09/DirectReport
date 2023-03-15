@@ -22,9 +22,6 @@ class ListBuilder:
 
     def __init__(self):
         pass
-        # self.weekly = DateUUIDTable('SQLite_Python.db')
-        # self.weekly.create_table()
-        #storage = DailyEntryStorage('SQLite_Python.db')
 
     @staticmethod
     def get_weekly_id():
@@ -32,19 +29,15 @@ class ListBuilder:
         weekly = DateUUIDTable('SQLite_Python.db')
         weekly.create_table()
         result = weekly.find_uuid_by_date(today)
-        # print(result)
         if result is None:
-            # print("No weekly id exists, creating new weekly id")
             return ListBuilder.add_new_weekly()
         else:
-            # print("Weekly id already exists.")
             return result
 
     @staticmethod
     def add_new_weekly():
         today = datetime.date.today()
         weekly = DateUUIDTable('SQLite_Python.db')
-        # weekly.create_table()
         id = str(uuid.uuid4())
         weekly.add_uuid(today, id)
         return id
@@ -67,9 +60,4 @@ class ListBuilder:
         return week_list
 
 if __name__ == '__main__':
-    list_build = ListBuilder()
-    list_build.new()
-    list_build.list_this_week()
-    list_build.startup_weekly()
-    list_build.check_for_weekly()
     print("main")
