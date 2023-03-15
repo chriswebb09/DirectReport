@@ -12,11 +12,10 @@ package_root_directory = file.parents[1]
 sys.path.append(str(package_root_directory))
 
 if __name__ == '__main__':
-    from entry import DailyEntry
-    from entry_storage import DailyEntryStorage
+    from list_builder import ListBuilder
 else:
-    from .entry import DailyEntry
-    from .entry_storage import DailyEntryStorage
+    from .list_builder import ListBuilder
+
 
 @click.group()
 def cli():
@@ -36,16 +35,15 @@ def webbrowser():
 
 @click.command()
 def list():
-    storage = DailyEntryStorage('SQLite_Python.db')
-    entries = storage.get_all_entries()
-    for entry_item in entries:
-        print(entry_item)
+    builder = ListBuilder()
+    builder.list_this_week()
+
 
 @click.command()
 def new():
-    entry1 = DailyEntry(uuid.uuid4(), "test 2", datetime.datetime.now(), datetime.datetime.now(), uuid.uuid4())
-    storage = DailyEntryStorage('SQLite_Python.db')
-    entries = storage.add_entry(entry1)
+    list = ListBuilder()
+    list.new()
+    print(list.list_this_week())
 
 @click.command()
 def launch():

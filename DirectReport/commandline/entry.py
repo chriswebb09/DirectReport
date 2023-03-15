@@ -3,6 +3,7 @@
 import datetime
 
 class DailyEntry:
+
     def __init__(self, uuid, message, created_at, modified_on, week_uuid):
         self.uuid = uuid
         self.message = message
@@ -46,7 +47,7 @@ class DailyEntry:
         self.modified_on = datetime.datetime.now().timestamp()
 
     def __str__(self):
-        return str(self.__class__) + '\n' + '\n'.join(
-            ('{} = {}'.format(item, self.__dict__[item]) for item in self.__dict__))
+        return str(self.__class__) + '\n' + '\n'.join(('{} = {}'.format(item, self.__dict__[item]) for item in self.__dict__))
+
     def __len__(self):
         return len(self.message)
