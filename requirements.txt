@@ -1,5 +1,0 @@
-###### Requirements without Version Specifiers ######
-Flask
-click
-python-Levenshtein
-pytest
