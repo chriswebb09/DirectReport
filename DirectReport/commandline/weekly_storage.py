@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import sqlite3
 import uuid
 
@@ -23,7 +25,7 @@ class DateUUIDTable:
             uuid_str = str(uuid.uuid4())
         cursor = self.conn.cursor()
         cursor.execute('''
-            INSERT INTO date_uuid_table (date, uuid) VALUES (?, ?)
+            INSERT OR IGNORE INTO date_uuid_table (date, uuid) VALUES (?, ?)
         ''', (date, uuid_str))
         self.conn.commit()
 

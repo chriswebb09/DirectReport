@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-import uuid
-import datetime
 import click
 import sys
 from browserview.app import app
@@ -16,6 +14,7 @@ if __name__ == '__main__':
 else:
     from .list_builder import ListBuilder
 
+builder = ListBuilder()
 
 @click.group()
 def cli():
@@ -35,15 +34,25 @@ def webbrowser():
 
 @click.command()
 def list():
-    builder = ListBuilder()
-    builder.list_this_week()
+    week = builder.list_this_week()
+    if week is not None:
+        for week_item in week:
+            print(week_item)
+            print(" ")
+    else:
+        print("week is none")
 
 
 @click.command()
 def new():
-    list = ListBuilder()
-    list.new()
-    print(list.list_this_week())
+    builder.new()
+    week = builder.list_this_week()
+    if week is not None:
+        for week_item in week:
+            print(week_item)
+            print(" ")
+    else:
+        print("week is none")
 
 @click.command()
 def launch():

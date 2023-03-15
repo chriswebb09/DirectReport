@@ -26,24 +26,28 @@ class ListBuilder:
         # self.weekly.create_table()
         #storage = DailyEntryStorage('SQLite_Python.db')
 
-    def get_weekly_id(self):
+    @staticmethod
+    def get_weekly_id():
         today = datetime.date.today()
         weekly = DateUUIDTable('SQLite_Python.db')
         weekly.create_table()
-        result = weekly.find_uuid_by_date(str(today))
-        print(result)
+        result = weekly.find_uuid_by_date(today)
+        # print(result)
         if result is None:
-            print("No weekly id exists, creating new weekly id")
-            return uuid.uuid4()
+            # print("No weekly id exists, creating new weekly id")
+            return ListBuilder.add_new_weekly()
         else:
-            print("Weekly id already exists.")
+            # print("Weekly id already exists.")
             return result
 
-    def startup_weekly(self):
+    @staticmethod
+    def add_new_weekly():
         today = datetime.date.today()
         weekly = DateUUIDTable('SQLite_Python.db')
-        weekly.create_table()
-        weekly.add_uuid(today)
+        # weekly.create_table()
+        id = str(uuid.uuid4())
+        weekly.add_uuid(today, id)
+        return id
 
     def new(self):
         storage = DailyEntryStorage('SQLite_Python.db')
@@ -51,25 +55,21 @@ class ListBuilder:
         new_entry = DailyEntry(uuid.uuid4(), "new2  data", datetime.datetime.now(), datetime.datetime.now(), weekly_id)
         storage.add_entry(new_entry)
 
+    def list_all_week_ids(self):
+        storage = DailyEntryStorage('SQLite_Python.db')
+        list_all = storage.get_all_entries()
+        return list_all
+
     def list_this_week(self):
         storage = DailyEntryStorage('SQLite_Python.db')
         weekly_id = str(self.get_weekly_id())
-        print(weekly_id)
-        list = storage.get_entries_by_week(weekly_id)
-            # storage.get_entries_by_week(weekly_id)
-        for item in list:
-            print(item)
-            print("")
-
-        list_all = storage.get_all_entries()
-        for list_item in list_all:
-            print(list_item)
-            print("")
+        week_list = storage.get_entries_by_week(weekly_id)
+        return week_list
 
 if __name__ == '__main__':
     list_build = ListBuilder()
     list_build.new()
     list_build.list_this_week()
-    # list_build.startup_weekly()
-    # list_build.check_for_weekly()
+    list_build.startup_weekly()
+    list_build.check_for_weekly()
     print("main")
