@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
-import uuid
 import datetime
 import sys
-
+import uuid
 from pathlib import Path
+
 file = Path(__file__).resolve()
 package_root_directory = file.parents[1]
 sys.path.append(str(package_root_directory))
@@ -18,8 +18,8 @@ else:
     from .entry import DailyEntry
     from .entry_storage import DailyEntryStorage
 
-class ListBuilder:
 
+class ListBuilder:
     def __init__(self):
         pass
 
@@ -58,6 +58,7 @@ class ListBuilder:
         weekly_id = str(self.get_weekly_id())
         week_list = storage.get_entries_by_week(weekly_id)
         return week_list
+
 
 if __name__ == '__main__':
     print("main")

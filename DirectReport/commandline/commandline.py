@@ -5,6 +5,7 @@ import sys
 from browserview.app import app
 
 from pathlib import Path
+
 file = Path(__file__).resolve()
 package_root_directory = file.parents[1]
 sys.path.append(str(package_root_directory))
@@ -16,24 +17,29 @@ else:
 
 builder = ListBuilder()
 
+
 @click.group()
 def cli():
     pass
+
 
 @cli.group()
 def list_items():
     pass
 
+
 @cli.group()
 def new_item():
     pass
 
+
 @cli.group()
-def webbrowser():
+def web_browser():
     pass
 
+
 @click.command()
-def list():
+def show_list():
     week = builder.list_this_week()
     if week is not None:
         for week_item in week:
@@ -55,16 +61,18 @@ def new(entry):
     else:
         print("week is none")
 
+
 @click.command()
 def launch():
     click.launch('http://127.0.0.1:5000')
     app.run()
 
-list_items.add_command(list)
-new_item.add_command(new)
-webbrowser.add_command(launch)
 
-cli = click.CommandCollection(sources=[list_items, new_item, webbrowser])
+list_items.add_command(show_list)
+new_item.add_command(new)
+web_browser.add_command(launch)
+
+cli = click.CommandCollection(sources=[list_items, new_item, web_browser])
 
 if __name__ == '__main__':
     cli()

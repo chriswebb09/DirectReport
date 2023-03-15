@@ -6,8 +6,8 @@ if __name__ == '__main__':
 else:
     from .entry import DailyEntry
 
-class DailyEntryStorage:
 
+class DailyEntryStorage:
     def __init__(self, db_path):
         self.conn = sqlite3.connect(db_path)
         self.create_table()
@@ -30,7 +30,13 @@ class DailyEntryStorage:
         INSERT INTO daily_entries (uuid, message, created_at, modified_on, week_uuid)
         VALUES (?, ?, ?, ?, ?)
         """
-        values = (entry.uuid.__str__(), entry.message, entry.created_at.__str__(), entry.modified_on.__str__(), entry.week_uuid.__str__())
+        values = (
+            entry.uuid.__str__(),
+            entry.message,
+            entry.created_at.__str__(),
+            entry.modified_on.__str__(),
+            entry.week_uuid.__str__(),
+        )
         self.conn.execute(query, values)
         self.conn.commit()
 
@@ -81,6 +87,7 @@ class DailyEntryStorage:
         """
         result = self.conn.execute(query, (week_uuid,))
         return [DailyEntry(*row) for row in result.fetchall()]
+
 
 if __name__ == '__main__':
     print("main")
