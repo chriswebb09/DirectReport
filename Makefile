@@ -8,7 +8,7 @@ build:  ## build the python library
 	python3 setup.py build build_ext --inplace
 
 install:  ## install library
-	python3 -m pip install .
+	python3 -m pip install --user .
 
 #########
 # LINTS #

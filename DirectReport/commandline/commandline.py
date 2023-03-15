@@ -49,8 +49,8 @@ def new():
 
 @click.command()
 def launch():
+    click.launch('http://127.0.0.1:5000')
     app.run()
-    click.launch('http://www.google.com')
 
 list_items.add_command(list)
 new_item.add_command(new)
