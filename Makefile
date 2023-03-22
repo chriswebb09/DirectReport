@@ -2,13 +2,13 @@
 # BUILD #
 #########
 develop:  ## install dependencies and build library
-	python3 -m pip install -e .[develop]
+	python3 -m pip3 install -e .[develop]
 
 build:  ## build the python library
 	python3 setup.py build build_ext --inplace
 
 install:  ## install library
-	python3 -m pip install --user .
+	python3 -m pip3 install --user .
 
 #########
 # LINTS #
