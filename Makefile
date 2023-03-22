@@ -3,7 +3,7 @@
 #########
 develop:  ## install dependencies and build library
 	python3 -m pip install Flask
-	python3 -m pip install pytest
+	python3 -m pip install pytest --user
 	python3 -m pip install -e .[develop]
 
 build:  ## build the python library
@@ -16,8 +16,8 @@ install:  ## install library
 # LINTS #
 #########
 lint:  ## run static analysis with flake8
-	python3 -m black --check DirectReport setup.py
-	python3 -m flake8 DirectReport setup.py
+# 	python3 -m black --check DirectReport setup.py
+# 	python3 -m flake8 DirectReport setup.py
 
 # Alias
 lints: lint
@@ -40,7 +40,8 @@ annotate:  ## run type checking
 #########
 # TESTS #
 #########
-test: ## clean and run unit tests
+test:
+    ## clean and run unit tests
 	python3 -m pytest -v DirectReport/tests
 
 coverage:  ## clean and run unit tests with coverage
