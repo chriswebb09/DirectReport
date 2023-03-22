@@ -2,8 +2,6 @@
 
 import click
 import sys
-from DirectReport.browserview.app import app
-
 from pathlib import Path
 
 file = Path(__file__).resolve()
@@ -11,8 +9,10 @@ package_root_directory = file.parents[1]
 sys.path.append(str(package_root_directory))
 
 if __name__ == '__main__':
+    from browserview.app import app
     from list_builder import ListBuilder
 else:
+    from .browserview.app import app
     from .list_builder import ListBuilder
 
 builder = ListBuilder()

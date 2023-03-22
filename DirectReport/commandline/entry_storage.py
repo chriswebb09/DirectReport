@@ -2,9 +2,10 @@
 import sqlite3
 
 if __name__ == '__main__':
-    from entry import DailyEntry
-else:
     from .entry import DailyEntry
+else:
+    from entry import DailyEntry
+
 
 
 class DailyEntryStorage:
