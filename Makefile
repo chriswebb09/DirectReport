@@ -2,6 +2,7 @@
 # BUILD #
 #########
 develop:  ## install dependencies and build library
+    python3 -m pip uninstall flask && python3 -m pip install flask
 	python3 -m pip install -e .[develop]
 
 build:  ## build the python library
