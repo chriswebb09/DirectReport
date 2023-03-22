@@ -1,5 +1,6 @@
 graft DirectReport
 
+include *.md
 include LICENSE
 include README.md
 Include CONTRIBUTING.md
