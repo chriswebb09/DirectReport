@@ -3,7 +3,6 @@ import datetime
 
 
 class DailyEntry:
-
     def __init__(self, uuid, message, created_at, modified_on, week_uuid):
         self.uuid = uuid
         self.message = message

@@ -10,6 +10,7 @@ app = Flask(__name__, template_folder="templates")
 
 builder = ListBuilder()
 
+
 @app.route("/")
 def home():
     """Homepage"""
@@ -22,9 +23,11 @@ def list():
     week = builder.list_this_week_as_json()
     return jsonify(week)
 
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
+
 
 if __name__ == "__main__":
     app.run()

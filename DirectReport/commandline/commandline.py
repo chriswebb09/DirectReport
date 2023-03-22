@@ -12,7 +12,7 @@ if __name__ == '__main__':
     from browserview.app import app
     from models.list_builder import ListBuilder
 else:
-    from DirectReport.browserview.app import  app
+    from DirectReport.browserview.app import app
     from DirectReport.models.list_builder import ListBuilder
 
 

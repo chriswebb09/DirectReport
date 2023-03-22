@@ -20,7 +20,6 @@ else:
 
 
 class ListBuilder:
-
     def __init__(self):
         pass
 
