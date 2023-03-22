@@ -2,6 +2,7 @@
 
 ![License](https://img.shields.io/github/license/chriswebb09/DirectReport)
 ![Issues](https://img.shields.io/github/issues/chriswebb09/DirectReport)
+[![codecov](https://codecov.io/gh/chriswebb09/DirectReport/branch/main/graph/badge.svg?token=E802G1JVJ5)](https://codecov.io/gh/chriswebb09/DirectReport)
 
 # Overview
 
