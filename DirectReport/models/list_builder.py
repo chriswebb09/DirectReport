@@ -20,6 +20,7 @@ else:
 
 
 class ListBuilder:
+
     def __init__(self):
         pass
 
@@ -57,6 +58,14 @@ class ListBuilder:
         storage = DailyEntryStorage('SQLite_Python.db')
         weekly_id = str(self.get_weekly_id())
         week_list = storage.get_entries_by_week(weekly_id)
+        return week_list
+
+    def list_this_week_as_json(self):
+        storage = DailyEntryStorage('SQLite_Python.db')
+        weekly_id = str(self.get_weekly_id())
+        week_list = []
+        for item in storage.get_entries_by_week(weekly_id):
+            week_list.append(item.to_dict())
         return week_list
 
 

@@ -1,14 +1,30 @@
 #!/usr/bin/env python3
 
 from flask import Flask, render_template
+from DirectReport.models.list_builder import ListBuilder
+from flask import Flask, jsonify, request
+from DirectReport.database.weekly_storage import DateUUIDTable
+from DirectReport.database.entry_storage import DailyEntryStorage
 
 app = Flask(__name__, template_folder="templates")
 
+builder = ListBuilder()
 
 @app.route("/")
 def home():
     """Homepage"""
     return render_template('index.html', title='Home')
+
+
+@app.route("/list")
+def list():
+    """Homepage"""
+    week = builder.list_this_week_as_json()
+    return jsonify(week)
+    # if week is not None:
+    #     return render_template('index.html', title='Home ' + str(len(week)))
+    # else:
+    #     return render_template('index.html', title='Home')
 
 
 @app.errorhandler(404)
