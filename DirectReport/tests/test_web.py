@@ -19,6 +19,7 @@ def temp_db():
 
 def test_create_table(temp_db):
     storage = DailyEntryStorage(temp_db)
+    assert storage is not None
     # The table should be created without raising any exceptions
 
 
