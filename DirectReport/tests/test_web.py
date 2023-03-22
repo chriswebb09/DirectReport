@@ -5,8 +5,6 @@ import tempfile
 import uuid
 from datetime import datetime
 
-import pytest
-
 from DirectReport.commandline.entry_storage import DailyEntryStorage
 from DirectReport.commandline.entry import DailyEntry
 
