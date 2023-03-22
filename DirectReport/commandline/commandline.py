@@ -1,62 +1,78 @@
 #!/usr/bin/env python3
 
-import uuid
-import datetime
 import click
 import sys
 from browserview.app import app
 
 from pathlib import Path
+
 file = Path(__file__).resolve()
 package_root_directory = file.parents[1]
 sys.path.append(str(package_root_directory))
 
 if __name__ == '__main__':
-    from entry import DailyEntry
-    from entry_storage import DailyEntryStorage
+    from list_builder import ListBuilder
 else:
-    from .entry import DailyEntry
-    from .entry_storage import DailyEntryStorage
+    from .list_builder import ListBuilder
+
+builder = ListBuilder()
+
 
 @click.group()
 def cli():
     pass
 
+
 @cli.group()
 def list_items():
     pass
+
 
 @cli.group()
 def new_item():
     pass
 
+
 @cli.group()
-def webbrowser():
+def web_browser():
     pass
 
-@click.command()
-def list():
-    storage = DailyEntryStorage('SQLite_Python.db')
-    entries = storage.get_all_entries()
-    for entry_item in entries:
-        print(entry_item)
 
 @click.command()
-def new():
-    entry1 = DailyEntry(uuid.uuid4(), "test 2", datetime.datetime.now(), datetime.datetime.now(), uuid.uuid4())
-    storage = DailyEntryStorage('SQLite_Python.db')
-    entries = storage.add_entry(entry1)
+def show_list():
+    week = builder.list_this_week()
+    if week is not None:
+        for week_item in week:
+            print(week_item)
+            print(" ")
+    else:
+        print("week is none")
+
+
+@click.command()
+@click.option('--entry', prompt='What have you been working on')
+def new(entry):
+    builder.new(entry)
+    week = builder.list_this_week()
+    if week is not None:
+        for week_item in week:
+            print(week_item)
+            print(" ")
+    else:
+        print("week is none")
+
 
 @click.command()
 def launch():
     click.launch('http://127.0.0.1:5000')
     app.run()
 
-list_items.add_command(list)
-new_item.add_command(new)
-webbrowser.add_command(launch)
 
-cli = click.CommandCollection(sources=[list_items, new_item, webbrowser])
+list_items.add_command(show_list)
+new_item.add_command(new)
+web_browser.add_command(launch)
+
+cli = click.CommandCollection(sources=[list_items, new_item, web_browser])
 
 if __name__ == '__main__':
     cli()

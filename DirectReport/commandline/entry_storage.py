@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 import sqlite3
-from .entry import DailyEntry
+
+if __name__ == '__main__':
+    from entry import DailyEntry
+else:
+    from .entry import DailyEntry
+
 
 class DailyEntryStorage:
     def __init__(self, db_path):
@@ -25,7 +30,13 @@ class DailyEntryStorage:
         INSERT INTO daily_entries (uuid, message, created_at, modified_on, week_uuid)
         VALUES (?, ?, ?, ?, ?)
         """
-        values = (entry.uuid.__str__(), entry.message, entry.created_at.__str__(), entry.modified_on.__str__(), entry.week_uuid.__str__())
+        values = (
+            entry.uuid.__str__(),
+            entry.message,
+            entry.created_at.__str__(),
+            entry.modified_on.__str__(),
+            entry.week_uuid.__str__(),
+        )
         self.conn.execute(query, values)
         self.conn.commit()
 
@@ -67,3 +78,16 @@ class DailyEntryStorage:
         """
         result = self.conn.execute(query)
         return [DailyEntry(*row) for row in result.fetchall()]
+
+    def get_entries_by_week(self, week_uuid):
+        query = """
+        SELECT uuid, message, created_at, modified_on, week_uuid
+        FROM daily_entries
+        WHERE week_uuid = ?
+        """
+        result = self.conn.execute(query, (week_uuid,))
+        return [DailyEntry(*row) for row in result.fetchall()]
+
+
+if __name__ == '__main__':
+    print("main")
