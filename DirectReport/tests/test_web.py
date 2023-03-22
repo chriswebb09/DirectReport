@@ -8,6 +8,7 @@ import pytest
 from DirectReport.commandline.entry_storage import DailyEntryStorage
 from DirectReport.commandline.entry import DailyEntry
 
+
 @pytest.fixture
 def temp_db():
     db_fd, db_path = tempfile.mkstemp()
@@ -15,9 +16,11 @@ def temp_db():
     os.close(db_fd)
     os.remove(db_path)
 
+
 def test_create_table(temp_db):
     storage = DailyEntryStorage(temp_db)
     # The table should be created without raising any exceptions
+
 
 def test_add_get_entry(temp_db):
     storage = DailyEntryStorage(temp_db)
@@ -33,6 +36,7 @@ def test_add_get_entry(temp_db):
     retrieved_entry = storage.get_entry(entry.uuid)
 
     assert entry == retrieved_entry
+
 
 def test_update_entry(temp_db):
     storage = DailyEntryStorage(temp_db)
@@ -53,6 +57,7 @@ def test_update_entry(temp_db):
 
     assert entry == retrieved_entry
 
+
 def test_delete_entry(temp_db):
     storage = DailyEntryStorage(temp_db)
     entry = DailyEntry(
@@ -68,6 +73,7 @@ def test_delete_entry(temp_db):
     retrieved_entry = storage.get_entry(entry.uuid)
 
     assert retrieved_entry is None
+
 
 def test_get_all_entries(temp_db):
     storage = DailyEntryStorage(temp_db)
@@ -94,6 +100,7 @@ def test_get_all_entries(temp_db):
     assert entry1 in entries
     assert entry2 in entries
 
+
 def test_get_entries_by_week(temp_db):
     storage = DailyEntryStorage(temp_db)
     week_uuid = uuid.uuid4()
@@ -104,7 +111,7 @@ def test_get_entries_by_week(temp_db):
         modified_on=datetime.now(),
         week_uuid=week_uuid
     )
-    entry2 = DailyEntry(
+    entry2: DailyEntry = DailyEntry(
         uuid=uuid.uuid4(),
         message="Test message 2",
         created_at=datetime.now(),

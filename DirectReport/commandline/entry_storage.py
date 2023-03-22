@@ -6,8 +6,6 @@ if __name__ == '__main__':
 else:
     from entry import DailyEntry
 
-
-
 class DailyEntryStorage:
     def __init__(self, db_path):
         self.conn = sqlite3.connect(db_path)
