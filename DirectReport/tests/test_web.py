@@ -1,12 +1,19 @@
 #!/usr/bin/env python3
 
+from DirectReport.commandline.entry import DailyEntry
+from DirectReport.commandline.entry_storage import DailyEntryStorage
 import os
+import sys
 import tempfile
 import uuid
 from datetime import datetime
+from pathlib import Path
+
+file = Path(__file__).resolve()
+package_root_directory = file.parents[1]
+sys.path.append(str(package_root_directory))
+
 import pytest
-from DirectReport.commandline.entry_storage import DailyEntryStorage
-from DirectReport.commandline.entry import DailyEntry
 
 
 @pytest.fixture
