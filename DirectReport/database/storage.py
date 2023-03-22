@@ -3,7 +3,6 @@ import sqlite3
 
 
 class DataStorage:
-
     def connect_DB(self):
         try:
             self.sqliteConnection = sqlite3.connect('SQLite_Python.db')

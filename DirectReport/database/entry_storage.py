@@ -3,7 +3,8 @@ import sqlite3
 
 if __name__ == '__main__':
     from DirectReport.models.entry import DailyEntry
-        # models.entry import DailyEntry
+
+    # models.entry import DailyEntry
     # from ..models.entry import DailyEntry
 else:
     from ..models.entry import DailyEntry
