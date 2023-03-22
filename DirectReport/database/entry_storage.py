@@ -7,7 +7,7 @@ if __name__ == '__main__':
     # models.entry import DailyEntry
     # from ..models.entry import DailyEntry
 else:
-    from ..models.entry import DailyEntry
+    from models.entry import DailyEntry
 
 
 class DailyEntryStorage:

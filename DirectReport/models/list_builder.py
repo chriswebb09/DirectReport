@@ -10,14 +10,13 @@ package_root_directory = file.parents[1]
 sys.path.append(str(package_root_directory))
 
 if __name__ == '__main__':
-    from database.weekly_storage import DateUUIDTable
-    from entry_storage import DailyEntryStorage
-    from entry import DailyEntry
-else:
     from ..database.weekly_storage import DateUUIDTable
     from ..models.entry import DailyEntry
     from ..database.entry_storage import DailyEntryStorage
-
+else:
+    from database.weekly_storage import DateUUIDTable
+    from database.entry_storage import DailyEntryStorage
+    from models.entry import DailyEntry
 
 class ListBuilder:
     def __init__(self):
