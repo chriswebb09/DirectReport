@@ -21,16 +21,10 @@ def list():
     """Homepage"""
     week = builder.list_this_week_as_json()
     return jsonify(week)
-    # if week is not None:
-    #     return render_template('index.html', title='Home ' + str(len(week)))
-    # else:
-    #     return render_template('index.html', title='Home')
-
 
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
 
-
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
