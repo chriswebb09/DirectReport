@@ -18,6 +18,7 @@ else:
     from database.entry_storage import DailyEntryStorage
     from models.entry import DailyEntry
 
+
 class ListBuilder:
     def __init__(self):
         pass
