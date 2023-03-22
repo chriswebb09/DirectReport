@@ -46,7 +46,7 @@ class DailyEntryStorage:
         FROM daily_entries
         WHERE uuid = ?
         """
-        result = self.conn.execute(query, (uuid,))
+        result = self.conn.execute(query, (str(uuid),))
         row = result.fetchone()
         if row:
             return DailyEntry(*row)
@@ -59,7 +59,7 @@ class DailyEntryStorage:
         SET message = ?, modified_on = ?
         WHERE uuid = ?
         """
-        values = (entry.message, entry.modified_on, entry.uuid)
+        values = (entry.message, entry.modified_on, str(entry.uuid))
         self.conn.execute(query, values)
         self.conn.commit()
 
@@ -68,7 +68,7 @@ class DailyEntryStorage:
         DELETE FROM daily_entries
         WHERE uuid = ?
         """
-        self.conn.execute(query, (uuid,))
+        self.conn.execute(query, (str(uuid),))
         self.conn.commit()
 
     def get_all_entries(self):
@@ -85,7 +85,7 @@ class DailyEntryStorage:
         FROM daily_entries
         WHERE week_uuid = ?
         """
-        result = self.conn.execute(query, (week_uuid,))
+        result = self.conn.execute(query, (str(week_uuid),))
         return [DailyEntry(*row) for row in result.fetchall()]
 
 

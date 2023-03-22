@@ -7,7 +7,7 @@
 
 Keep track of your accomplishments each day of the workweek, create a report of things you accomplished at the end of the week that you can email to manager.  Review progress each quarterly for more effective performance review.
 
-## Details
+## Installing
 
 This project uses a `Makefile` as a command registry, with the following commands:
 - `make`: list available commands
@@ -20,6 +20,6 @@ This project uses a `Makefile` as a command registry, with the following command
 - `make coverage`: run automated tests with `pytest` and collect coverage information
 - `make dist`: package library for distribution
 
-
-
 Adapted From: https://github.com/ColumbiaOSS/example-project-python
+
+## Running Direct Report
