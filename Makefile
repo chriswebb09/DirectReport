@@ -2,7 +2,7 @@
 # BUILD #
 #########
 develop:  ## install dependencies and build library
-	python3 -m pip install pytest, Flask --user
+	python3 -m pip install Flask --user
 	python3 -m pip install -e .[develop]
 
 build:  ## build the python library
