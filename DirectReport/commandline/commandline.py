@@ -10,10 +10,10 @@ sys.path.append(str(package_root_directory))
 
 if __name__ == '__main__':
     from browserview.app import app
-    from list_builder import ListBuilder
+    from models.list_builder import ListBuilder
 else:
     from ..browserview.app import app
-    from .list_builder import ListBuilder
+    from ..models.list_builder import ListBuilder
 
 builder = ListBuilder()
 

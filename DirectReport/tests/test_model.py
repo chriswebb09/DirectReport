@@ -3,7 +3,7 @@
 import datetime
 import uuid
 
-from DirectReport.commandline.entry import DailyEntry
+from DirectReport.models.entry import DailyEntry
 
 
 def test_data_model_set_message():
