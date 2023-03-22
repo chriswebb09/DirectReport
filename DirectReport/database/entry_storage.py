@@ -2,9 +2,11 @@
 import sqlite3
 
 if __name__ == '__main__':
-    from entry import DailyEntry
+    from DirectReport.models.entry import DailyEntry
+        # models.entry import DailyEntry
+    # from ..models.entry import DailyEntry
 else:
-    from .entry import DailyEntry
+    from ..models.entry import DailyEntry
 
 
 class DailyEntryStorage:
