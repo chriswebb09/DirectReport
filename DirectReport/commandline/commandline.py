@@ -2,7 +2,7 @@
 
 import click
 import sys
-from browserview.app import app
+from DirectReport import *
 
 from pathlib import Path
 
