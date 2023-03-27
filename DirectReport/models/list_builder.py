@@ -10,13 +10,13 @@ package_root_directory = file.parents[1]
 sys.path.append(str(package_root_directory))
 
 if __name__ == '__main__':
-    from database.weekly_storage import DateUUIDTable
-    from entry_storage import DailyEntryStorage
-    from entry import DailyEntry
-else:
     from ..database.weekly_storage import DateUUIDTable
     from ..models.entry import DailyEntry
     from ..database.entry_storage import DailyEntryStorage
+else:
+    from database.weekly_storage import DateUUIDTable
+    from database.entry_storage import DailyEntryStorage
+    from models.entry import DailyEntry
 
 
 class ListBuilder:
@@ -57,6 +57,14 @@ class ListBuilder:
         storage = DailyEntryStorage('SQLite_Python.db')
         weekly_id = str(self.get_weekly_id())
         week_list = storage.get_entries_by_week(weekly_id)
+        return week_list
+
+    def list_this_week_as_json(self):
+        storage = DailyEntryStorage('SQLite_Python.db')
+        weekly_id = str(self.get_weekly_id())
+        week_list = []
+        for item in storage.get_entries_by_week(weekly_id):
+            week_list.append(item.__dict__())
         return week_list
 
 

@@ -20,8 +20,8 @@ class DailyEntry:
         return {
             "uuid": self.uuid,
             "message": self.message,
-            "created_at": self.created_at.isoformat(),
-            "modified_on": self.modified_on.isoformat(),
+            "created_at": str(self.created_at),
+            "modified_on": str(self.modified_on),
             "week_uuid": self.week_uuid,
         }
 

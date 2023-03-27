@@ -12,8 +12,9 @@ if __name__ == '__main__':
     from browserview.app import app
     from models.list_builder import ListBuilder
 else:
-    from ..browserview.app import app
-    from ..models.list_builder import ListBuilder
+    from DirectReport.browserview.app import app
+    from DirectReport.models.list_builder import ListBuilder
+
 
 builder = ListBuilder()
 
@@ -50,7 +51,7 @@ def show_list():
 
 
 @click.command()
-@click.option('--entry', prompt='What have you been working on')
+@click.option('--entry', help="Add new entry to list", prompt='What have you been working on')
 def new(entry):
     builder.new(entry)
     week = builder.list_this_week()
