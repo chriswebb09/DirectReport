@@ -15,6 +15,8 @@ def home():
     """Homepage"""
     weekly = DateUUIDTable('SQLite_Python.db')
     print(weekly.list_all_entries())
+    items = DailyEntryStorage('SQLite_Python.db')
+    print(items.get_all_entries())
     return render_template('index.html', title='Home')
 
 
