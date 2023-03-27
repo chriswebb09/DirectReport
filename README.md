@@ -24,3 +24,17 @@ This project uses a `Makefile` as a command registry, with the following command
 Adapted From: https://github.com/ColumbiaOSS/example-project-python
 
 ## Running Direct Report
+
+```
+
+Usage: python -m DirectReport [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  launch
+  new
+  show-list
+  
+```
