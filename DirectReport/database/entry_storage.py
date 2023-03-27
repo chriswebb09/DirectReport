@@ -3,14 +3,12 @@ import sqlite3
 
 if __name__ == '__main__':
     from DirectReport.models.entry import DailyEntry
-
-    # models.entry import DailyEntry
-    # from ..models.entry import DailyEntry
 else:
     from models.entry import DailyEntry
 
 
 class DailyEntryStorage:
+
     def __init__(self, db_path):
         self.conn = sqlite3.connect(db_path)
         self.create_table()

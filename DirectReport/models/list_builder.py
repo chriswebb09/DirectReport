@@ -64,7 +64,7 @@ class ListBuilder:
         weekly_id = str(self.get_weekly_id())
         week_list = []
         for item in storage.get_entries_by_week(weekly_id):
-            week_list.append(item.to_dict())
+            week_list.append(item.__dict__())
         return week_list
 
 

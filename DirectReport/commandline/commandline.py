@@ -51,7 +51,7 @@ def show_list():
 
 
 @click.command()
-@click.option('--entry', prompt='What have you been working on')
+@click.option('--entry', help="Add new entry to list", prompt='What have you been working on')
 def new(entry):
     builder.new(entry)
     week = builder.list_this_week()
