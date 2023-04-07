@@ -4,6 +4,7 @@ import datetime
 import sys
 import uuid
 from pathlib import Path
+import json
 
 file = Path(__file__).resolve()
 package_root_directory = file.parents[1]
@@ -63,9 +64,13 @@ class ListBuilder:
         storage = DailyEntryStorage('SQLite_Python.db')
         weekly_id = str(self.get_weekly_id())
         week_list = []
+        # for item in storage.get_all_entries():
+        #     week_list.append(item.__dict__)
+        #
         for item in storage.get_entries_by_week(weekly_id):
-            week_list.append(item.__dict__())
+            week_list.append(item.to_dict())
         return week_list
+            # json.dumps(week_list, ensure_ascii=False)
 
 
 if __name__ == '__main__':

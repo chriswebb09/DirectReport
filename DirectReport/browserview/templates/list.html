@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block header %}
+    {% block title %} List {% endblock %}
+{% endblock %}
+
+{% block content %}
+    <h1>List</h1>
+    <script>
+        var myjson = {{ data|tojson|safe }};
+    </script>
+    <div id='root'></div>
+    <script type="text/babel">
+        // Obtain the root
+        const rootElement = document.getElementById('root')
+        // Create a ES6 class component
+        class EntryList extends React.Component {
+            // Use the render function to return JSX component
+            render() {
+                return (
+                    <div className="entry-list">
+                        <h2>{this.props.name}</h2>
+                        <ul>
+                            {this.props.listdata.map(home => <div>{home.message}</div>)}
+                        </ul>
+                    </div>
+                );
+            }
+        }
+        // Create a function to wrap up your component
+        function App() {
+            return (
+                <div>
+                    <EntryList name="Entry List" listdata={myjson}/>
+                </div>
+            )
+        }
+        // Use the ReactDOM.render to show your component on the browser
+        ReactDOM.render(
+            <App/>,
+            rootElement
+        )
+    </script>
+{% endblock %}

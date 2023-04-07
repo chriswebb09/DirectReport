@@ -64,8 +64,9 @@ def new(entry):
 
 
 @click.command()
-def launch():
-    click.launch('http://127.0.0.1:5000')
+@click.option("--url", default="http://127.0.0.1:5000", help="URL to open in the web browser")
+def launch(url):
+    click.launch(url)
     app.run()
 
 

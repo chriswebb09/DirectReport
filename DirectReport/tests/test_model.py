@@ -5,7 +5,6 @@ import uuid
 
 from DirectReport.models.entry import DailyEntry
 
-
 def test_data_model_set_message():
     entry1 = DailyEntry(uuid.uuid4(), "test", datetime.datetime.now(), datetime.datetime.now(), uuid.uuid4())
     assert entry1.message == "test"

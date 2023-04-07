@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import sqlite3
+import json
 
 if __name__ == '__main__':
     from DirectReport.models.entry import DailyEntry
@@ -79,6 +80,13 @@ class DailyEntryStorage:
         result = self.conn.execute(query)
         return [DailyEntry(*row) for row in result.fetchall()]
 
+    def get_all_entries_json(self):
+        query = """
+        SELECT uuid, message, created_at, modified_on, week_uuid
+        FROM daily_entries
+        """
+        result = self.conn.execute(query)
+        return [DailyEntry(*row).to_dict() for row in result.fetchall()]
     def get_entries_by_week(self, week_uuid):
         query = """
         SELECT uuid, message, created_at, modified_on, week_uuid
@@ -86,8 +94,7 @@ class DailyEntryStorage:
         WHERE week_uuid = ?
         """
         result = self.conn.execute(query, (str(week_uuid),))
-        return [DailyEntry(*row) for row in result.fetchall()]
-
+        return [DailyEntry(*row).__dict__ for row in result.fetchall()]
 
 if __name__ == '__main__':
     print("main")
