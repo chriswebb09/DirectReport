@@ -1,15 +1,5 @@
 #!/usr/bin/env python3
 import datetime
-import json
-
-
-class DateTimeEncoder(json.JSONEncoder):
-    def default(self, z):
-        if isinstance(z, datetime.datetime):
-            return str(z)
-        else:
-            return super().default(z)
-
 
 class Entry:
     def __init__(self, uuid, topic, message, created_at, modified_on, week_uuid, day_uuid):
