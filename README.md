@@ -52,6 +52,9 @@ Commands:
 
 ### Show-List
 
+
+#### Basic
+
 ```
 
  ~/DirectReport: python DirectReport show-list
@@ -60,17 +63,30 @@ Commands:
 
 {'uuid': 'bfb5f5d7-a4db-4563-8c0e-e857adb1ce7b', 'topic': 'Test Topic', 'message': 'I have been working on work', 'created_at': '2023-04-08 09:41:54.566438', 'modified_on': '2023-04-08 09:41:54.566451', 'week_uuid': 'b4fc7c44-aade-4497-adf2-f988bbaa8950', 'day_uuid': '09f7986d-5056-478f-b4ba-5e07929bb5cb'}
 
+```
 
+
+#### All
+
+```
 
  ~/DirectReport: python DirectReport show-list --all
 {  uuid : 4ec312e8-8ebe-4a74-825d-4d0c811bd0bd  topic :   message : I am working on the railroad  created_at : 2023-04-08 10:53:34.054188  modified_on : 2023-04-08 10:53:34.054193  week_uuid : 319df1b2-8681-4d33-abdb-3051c7fd6ca5  day_uuid : c6e86041-fe13-43e5-9c2c-5a3aecf77c77  }
  
+ ```
  
+ #### Daily
+ 
+ ```
  
  ~/DirectReport: python DirectReport show-list --daily
 {  uuid : 4ec312e8-8ebe-4a74-825d-4d0c811bd0bd  topic :   message : I am working on the railroad  created_at : 2023-04-08 10:53:34.054188  modified_on : 2023-04-08 10:53:34.054193  week_uuid : 319df1b2-8681-4d33-abdb-3051c7fd6ca5  day_uuid : c6e86041-fe13-43e5-9c2c-5a3aecf77c77  }
 
+```
 
+ #### Weekly
+
+```
 
  ~/DirectReport: python DirectReport show-list --weekly
 {  uuid : 4ec312e8-8ebe-4a74-825d-4d0c811bd0bd  topic :   message : I am working on the railroad  created_at : 2023-04-08 10:53:34.054188  modified_on : 2023-04-08 10:53:34.054193  week_uuid : 319df1b2-8681-4d33-abdb-3051c7fd6ca5  day_uuid : c6e86041-fe13-43e5-9c2c-5a3aecf77c77  }
