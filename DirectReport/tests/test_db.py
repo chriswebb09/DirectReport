@@ -146,4 +146,3 @@ def test_get_entries_by_week(temp_db):
 
     entries = storage.get_entries_by_week(week_uuid)
     assert len(entries) == 1
-    # assert entry1 in entries

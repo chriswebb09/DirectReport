@@ -109,6 +109,13 @@ class EntryStorage:
         result = self.conn.execute(query, (str(day_uuid),))
         return [Entry(*row).__dict__ for row in result.fetchall()]
 
+    def delete_all_entries(self):
+        query = """
+        DELETE FROM entries
+        """
+        self.conn.execute(query)
+        self.conn.commit()
+
 
 if __name__ == '__main__':
     print("main")

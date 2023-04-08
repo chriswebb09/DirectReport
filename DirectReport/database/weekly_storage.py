@@ -22,6 +22,7 @@ class WeekUUIDTable:
         )
         self.conn.commit()
 
+
     def add_uuid(self, date, uuid_str=None):
         if uuid_str is None:
             uuid_str = str(uuid.uuid4())
@@ -33,6 +34,7 @@ class WeekUUIDTable:
             (date, uuid_str),
         )
         self.conn.commit()
+
 
     def get_uuid(self, date):
         cursor = self.conn.cursor()
@@ -47,6 +49,7 @@ class WeekUUIDTable:
             return result[0]
         else:
             return None
+
 
     def update_uuid(self, date, uuid_str):
         cursor = self.conn.cursor()
@@ -81,3 +84,24 @@ class WeekUUIDTable:
         )
         results = cursor.fetchall()
         return results
+
+
+    def delete_entry_by_date(self, date):
+        cursor = self.conn.cursor()
+        cursor.execute(
+            '''
+            DELETE FROM date_uuid_table WHERE date = ?
+            ''',
+            (date,),
+        )
+        self.conn.commit()
+
+
+    def delete_all_entries(self):
+        cursor = self.conn.cursor()
+        cursor.execute(
+            '''
+            DELETE FROM date_uuid_table
+            '''
+        )
+        self.conn.commit()
