@@ -67,8 +67,6 @@ def new(entry):
 @click.option("--url", default="http://127.0.0.1:5000", help="URL to open in the web browser")
 def launch(url):
     click.launch(url)
-    app.run()
-
 
 list_items.add_command(show_list)
 new_item.add_command(new)
