@@ -4,14 +4,13 @@ import datetime
 import sys
 import uuid
 from pathlib import Path
-import json
 
 file = Path(__file__).resolve()
 package_root_directory = file.parents[1]
 sys.path.append(str(package_root_directory))
 
 if __name__ == '__main__':
-    from ..database.weekly_storage import DateUUIDTable
+    from ..database.weekly_storage import WeekUUIDTable
     from ..models.entry import DailyEntry
     from ..database.entry_storage import DailyEntryStorage
 else:

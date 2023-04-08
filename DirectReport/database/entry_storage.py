@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import sqlite3
-import json
 
 if __name__ == '__main__':
     from DirectReport.models.entry import DailyEntry

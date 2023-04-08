@@ -47,7 +47,7 @@ class DailyEntry:
         modified_on = datetime.datetime.fromisoformat(data.get("modified_on"))
         week_uuid = data.get("week_uuid")
         day_uuid = data.get("day_uuid")
-        return cls(uuid, message, created_at, modified_on, week_uuid, day_uuid)
+        return cls(uuid, topic, message, created_at, modified_on, week_uuid, day_uuid)
 
     def mark_modified(self):
         self.modified_on = datetime.datetime.now()
