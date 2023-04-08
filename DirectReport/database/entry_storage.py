@@ -91,6 +91,7 @@ class DailyEntryStorage:
         """
         result = self.conn.execute(query)
         return [DailyEntry(*row).to_dict() for row in result.fetchall()]
+
     def get_entries_by_week(self, week_uuid):
         query = """
         SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid
@@ -99,6 +100,7 @@ class DailyEntryStorage:
         """
         result = self.conn.execute(query, (str(week_uuid),))
         return [DailyEntry(*row).__dict__ for row in result.fetchall()]
+
 
 if __name__ == '__main__':
     print("main")

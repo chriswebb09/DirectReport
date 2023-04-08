@@ -17,5 +17,3 @@ sys.path.append(str(package_root_directory))
 sys.path.append('.')
 
 import pytest
-
-

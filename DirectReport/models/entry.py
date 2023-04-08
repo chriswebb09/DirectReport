@@ -2,12 +2,14 @@
 import datetime
 import json
 
+
 class DateTimeEncoder(json.JSONEncoder):
     def default(self, z):
         if isinstance(z, datetime.datetime):
-            return (str(z))
+            return str(z)
         else:
             return super().default(z)
+
 
 class DailyEntry:
     def __init__(self, uuid, topic, message, created_at, modified_on, week_uuid, day_uuid):
@@ -33,7 +35,7 @@ class DailyEntry:
             "created_at": str(self.created_at),
             "modified_on": str(self.modified_on),
             "week_uuid": str(self.week_uuid),
-            "day_uuid": str(self.day_uuid)
+            "day_uuid": str(self.day_uuid),
         }
 
     @classmethod
@@ -62,9 +64,7 @@ class DailyEntry:
         return self
 
     def __str__(self):
-        return (
-            "{ " + "".join((' {} : {} '.format(item, self.__dict__[item]) for item in self.__dict__)) + " }"
-        )
+        return "{ " + "".join((' {} : {} '.format(item, self.__dict__[item]) for item in self.__dict__)) + " }"
 
     def __repr__(self):
         return self.__str__()
