@@ -21,18 +21,13 @@ class DailyUUIDTable:
         )
         self.conn.commit()
 
-    def add_uuid(
-        self,
-        date,
-        week_uuid_str,
-        uuid_str=None,
-    ):
+    def add_uuid(self, date, week_uuid_str, uuid_str=None):
         if uuid_str is None:
             uuid_str = str(uuid.uuid4())
         cursor = self.conn.cursor()
         cursor.execute(
             '''
-            INSERT OR IGNORE INTO day_uuid_table (date, week_uuid, uuid) VALUES (?, ?, ?)
+            INSERT OR IGNORE INTO day_uuid_table (date, week_uuid, day_uuid) VALUES (?, ?, ?)
             ''',
             (date, week_uuid_str, uuid_str),
         )
@@ -42,7 +37,7 @@ class DailyUUIDTable:
         cursor = self.conn.cursor()
         cursor.execute(
             '''
-            SELECT uuid FROM day_uuid_table WHERE date = ?
+            SELECT day_uuid FROM day_uuid_table WHERE date = ?
             ''',
             (date,),
         )
@@ -56,7 +51,7 @@ class DailyUUIDTable:
         cursor = self.conn.cursor()
         cursor.execute(
             '''
-            UPDATE day_uuid_table SET uuid = ? WHERE date = ?
+            UPDATE day_uuid_table SET day_uuid = ? WHERE date = ?
             ''',
             (uuid_str, date),
         )
@@ -66,7 +61,7 @@ class DailyUUIDTable:
         cursor = self.conn.cursor()
         cursor.execute(
             '''
-            SELECT uuid FROM day_uuid_table WHERE date = ?
+            SELECT day_uuid FROM day_uuid_table WHERE date = ?
             ''',
             (date,),
         )

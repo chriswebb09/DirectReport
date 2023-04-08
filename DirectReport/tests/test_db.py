@@ -62,14 +62,11 @@ def test_update_entry(temp_db):
         week_uuid=uuid.uuid4(),
         day_uuid=uuid.uuid4(),
     )
-
     storage.add_entry(entry)
     entry.message = "Updated message"
     entry.modified_on = datetime.now()
-
     storage.update_entry(entry)
     retrieved_entry = storage.get_entry(entry.uuid)
-
     assert entry.message == retrieved_entry.message
 
 
