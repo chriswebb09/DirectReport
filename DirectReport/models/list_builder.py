@@ -15,7 +15,7 @@ if __name__ == '__main__':
     from ..models.entry import DailyEntry
     from ..database.entry_storage import DailyEntryStorage
 else:
-    from database.weekly_storage import DateUUIDTable
+    from database.weekly_storage import WeekUUIDTable
     from database.entry_storage import DailyEntryStorage
     from models.entry import DailyEntry
 
@@ -27,7 +27,7 @@ class ListBuilder:
     @staticmethod
     def get_weekly_id():
         today = datetime.date.today()
-        weekly = DateUUIDTable('SQLite_Python.db')
+        weekly = WeekUUIDTable('SQLite_Python.db')
         weekly.create_table()
         result = weekly.find_uuid_by_date(today)
         if result is None:
@@ -38,7 +38,7 @@ class ListBuilder:
     @staticmethod
     def add_new_weekly():
         today = datetime.date.today()
-        weekly = DateUUIDTable('SQLite_Python.db')
+        weekly = WeekUUIDTable('SQLite_Python.db')
         id = str(uuid.uuid4())
         weekly.add_uuid(today, id)
         return id
@@ -64,14 +64,9 @@ class ListBuilder:
         storage = DailyEntryStorage('SQLite_Python.db')
         weekly_id = str(self.get_weekly_id())
         week_list = []
-        # for item in storage.get_all_entries():
-        #     week_list.append(item.__dict__)
-        #
         for item in storage.get_entries_by_week(weekly_id):
             week_list.append(item.to_dict())
         return week_list
-            # json.dumps(week_list, ensure_ascii=False)
-
 
 if __name__ == '__main__':
     print("main")

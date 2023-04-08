@@ -4,7 +4,7 @@ import sqlite3
 import uuid
 
 
-class DateUUIDTable:
+class WeekUUIDTable:
     def __init__(self, db_path):
         self.db_path = db_path
         self.conn = sqlite3.connect(db_path)
@@ -29,7 +29,7 @@ class DateUUIDTable:
         cursor.execute(
             '''
             INSERT OR IGNORE INTO date_uuid_table (date, uuid) VALUES (?, ?)
-        ''',
+            ''',
             (date, uuid_str),
         )
         self.conn.commit()
@@ -39,7 +39,7 @@ class DateUUIDTable:
         cursor.execute(
             '''
             SELECT uuid FROM date_uuid_table WHERE date = ?
-        ''',
+            ''',
             (date,),
         )
         result = cursor.fetchone()
@@ -53,7 +53,7 @@ class DateUUIDTable:
         cursor.execute(
             '''
             UPDATE date_uuid_table SET uuid = ? WHERE date = ?
-        ''',
+            ''',
             (uuid_str, date),
         )
         self.conn.commit()
@@ -62,8 +62,8 @@ class DateUUIDTable:
         cursor = self.conn.cursor()
         cursor.execute(
             '''
-              SELECT uuid FROM date_uuid_table WHERE date = ?
-          ''',
+            SELECT uuid FROM date_uuid_table WHERE date = ?
+            ''',
             (date,),
         )
         result = cursor.fetchone()
@@ -77,7 +77,7 @@ class DateUUIDTable:
         cursor.execute(
             '''
             SELECT * FROM date_uuid_table
-        '''
+            '''
         )
         results = cursor.fetchall()
         return results

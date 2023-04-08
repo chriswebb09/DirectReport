@@ -2,7 +2,7 @@
 
 from DirectReport.models.list_builder import ListBuilder
 from flask import Flask, jsonify, render_template
-from DirectReport.database.weekly_storage import DateUUIDTable
+from DirectReport.database.weekly_storage import WeekUUIDTable
 from DirectReport.database.entry_storage import DailyEntryStorage
 import json
 
