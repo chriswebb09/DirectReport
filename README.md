@@ -25,6 +25,8 @@ Adapted From: https://github.com/ColumbiaOSS/example-project-python
 
 ## Running Direct Report
 
+### Overview
+
 ```
 
 Usage: python -m DirectReport [OPTIONS] COMMAND [ARGS]...
@@ -37,4 +39,14 @@ Commands:
   new
   show-list
   
+```
+
+### Launch
+
+```
+
+ Usage: ~/DirectReport: python DirectReport launch
+ * Serving Flask app 'DirectReport.browserview.app'
+ * Debug mode: off
+ 
 ```
