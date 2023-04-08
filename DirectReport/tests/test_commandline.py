@@ -12,6 +12,7 @@ def test_prompt_new():
     assert response.exit_code == 0
     assert "What have you been working on" in response.output
 
+
 #
 # def test_prompt_launch():
 #     response = runner.invoke(launch);

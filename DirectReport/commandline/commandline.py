@@ -68,6 +68,7 @@ def new(entry):
 def launch(url):
     click.launch(url)
 
+
 list_items.add_command(show_list)
 new_item.add_command(new)
 web_browser.add_command(launch)
