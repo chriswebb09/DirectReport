@@ -17,6 +17,7 @@ class DailyEntryStorage:
         query = """
         CREATE TABLE IF NOT EXISTS daily_entries (
             uuid TEXT PRIMARY KEY,
+            topic TEXT,
             message TEXT,
             created_at TEXT,
             modified_on TEXT,
@@ -28,11 +29,12 @@ class DailyEntryStorage:
 
     def add_entry(self, entry):
         query = """
-        INSERT INTO daily_entries (uuid, message, created_at, modified_on, week_uuid)
-        VALUES (?, ?, ?, ?, ?)
+        INSERT INTO daily_entries (uuid, topic, message, created_at, modified_on, week_uuid)
+        VALUES (?, ?, ?, ?, ?, ?)
         """
         values = (
             entry.uuid.__str__(),
+            entry.topic,
             entry.message,
             entry.created_at.__str__(),
             entry.modified_on.__str__(),
@@ -43,7 +45,7 @@ class DailyEntryStorage:
 
     def get_entry(self, uuid):
         query = """
-        SELECT uuid, message, created_at, modified_on, week_uuid
+        SELECT uuid, topic, message, created_at, modified_on, week_uuid
         FROM daily_entries
         WHERE uuid = ?
         """
@@ -74,7 +76,7 @@ class DailyEntryStorage:
 
     def get_all_entries(self):
         query = """
-        SELECT uuid, message, created_at, modified_on, week_uuid
+        SELECT uuid, topic, message, created_at, modified_on, week_uuid
         FROM daily_entries
         """
         result = self.conn.execute(query)
@@ -82,14 +84,14 @@ class DailyEntryStorage:
 
     def get_all_entries_json(self):
         query = """
-        SELECT uuid, message, created_at, modified_on, week_uuid
+        SELECT uuid, topic, message, created_at, modified_on, week_uuid
         FROM daily_entries
         """
         result = self.conn.execute(query)
         return [DailyEntry(*row).to_dict() for row in result.fetchall()]
     def get_entries_by_week(self, week_uuid):
         query = """
-        SELECT uuid, message, created_at, modified_on, week_uuid
+        SELECT uuid, topic, message, created_at, modified_on, week_uuid
         FROM daily_entries
         WHERE week_uuid = ?
         """

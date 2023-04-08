@@ -9,12 +9,10 @@ class DateTimeEncoder(json.JSONEncoder):
         else:
             return super().default(z)
 
-
-
-
 class DailyEntry:
-    def __init__(self, uuid, message, created_at, modified_on, week_uuid):
+    def __init__(self, uuid, topic, message, created_at, modified_on, week_uuid):
         self.uuid = uuid
+        self.topic = topic
         self.message = message
         self.created_at = created_at
         self.modified_on = modified_on
@@ -29,6 +27,7 @@ class DailyEntry:
     def to_dict(self):
         return {
             "uuid": str(self.uuid),
+            "topic": self.topic,
             "message": self.message,
             "created_at": str(self.created_at),
             "modified_on": str(self.modified_on),
@@ -38,6 +37,7 @@ class DailyEntry:
     @classmethod
     def from_dict(cls, data):
         uuid = data.get("uuid")
+        topic = data.get("topic")
         message = data.get("message")
         created_at = datetime.datetime.fromisoformat(data.get("created_at"))
         modified_on = datetime.datetime.fromisoformat(data.get("modified_on"))

@@ -37,6 +37,7 @@ def test_add_get_entry(temp_db):
     storage = DailyEntryStorage(temp_db)
     entry = DailyEntry(
         uuid=uuid.uuid4(),
+        topic="My topic",
         message="Test message",
         created_at=datetime.now(),
         modified_on=datetime.now(),
@@ -53,6 +54,7 @@ def test_update_entry(temp_db):
     storage = DailyEntryStorage(temp_db)
     entry = DailyEntry(
         uuid=uuid.uuid4(),
+        topic="Test Topic",
         message="Test message",
         created_at=datetime.now(),
         modified_on=datetime.now(),
@@ -73,6 +75,7 @@ def test_delete_entry(temp_db):
     storage = DailyEntryStorage(temp_db)
     entry = DailyEntry(
         uuid=uuid.uuid4(),
+        topic="New Topic",
         message="Test message",
         created_at=datetime.now(),
         modified_on=datetime.now(),
@@ -90,6 +93,7 @@ def test_get_all_entries(temp_db):
     storage = DailyEntryStorage(temp_db)
     entry1 = DailyEntry(
         uuid=uuid.uuid4(),
+        topic="New",
         message="Test message 1",
         created_at=datetime.now(),
         modified_on=datetime.now(),
@@ -97,6 +101,7 @@ def test_get_all_entries(temp_db):
     )
     entry2 = DailyEntry(
         uuid=uuid.uuid4(),
+        topic="Topic new",
         message="Test message 2",
         created_at=datetime.now(),
         modified_on=datetime.now(),
@@ -117,6 +122,7 @@ def test_get_entries_by_week(temp_db):
     week_uuid = uuid.uuid4()
     entry1 = DailyEntry(
         uuid=uuid.uuid4(),
+        topic="Topic",
         message="Test message 1",
         created_at=datetime.now(),
         modified_on=datetime.now(),
@@ -124,6 +130,7 @@ def test_get_entries_by_week(temp_db):
     )
     entry2: DailyEntry = DailyEntry(
         uuid=uuid.uuid4(),
+        topic="Topic 3",
         message="Test message 2",
         created_at=datetime.now(),
         modified_on=datetime.now(),
