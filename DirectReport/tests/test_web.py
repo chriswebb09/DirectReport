@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-from DirectReport.models.entry import DailyEntry
-from DirectReport.database.entry_storage import DailyEntryStorage
+from DirectReport.models.entry import Entry
+from DirectReport.database.entry_storage import EntryStorage
 import os
 
 import tempfile

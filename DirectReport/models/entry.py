@@ -11,7 +11,7 @@ class DateTimeEncoder(json.JSONEncoder):
             return super().default(z)
 
 
-class DailyEntry:
+class Entry:
     def __init__(self, uuid, topic, message, created_at, modified_on, week_uuid, day_uuid):
         self.uuid = uuid
         self.topic = topic

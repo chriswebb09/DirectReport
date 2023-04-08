@@ -11,12 +11,12 @@ sys.path.append(str(package_root_directory))
 
 if __name__ == '__main__':
     from ..database.weekly_storage import WeekUUIDTable
-    from ..models.entry import DailyEntry
-    from ..database.entry_storage import DailyEntryStorage
+    from ..models.entry import Entry
+    from ..database.entry_storage import EntryStorage
 else:
-    from database.weekly_storage import WeekUUIDTable
-    from database.entry_storage import DailyEntryStorage
-    from models.entry import DailyEntry
+    from DirectReport.database.weekly_storage import WeekUUIDTable
+    from DirectReport.database.entry_storage import EntryStorage
+    from DirectReport.models.entry import Entry
 
 
 class ListBuilder:
@@ -43,26 +43,26 @@ class ListBuilder:
         return id
 
     def new(self, entry):
-        storage = DailyEntryStorage('SQLite_Python.db')
+        storage = EntryStorage('SQLite_Python.db')
         weekly_id = str(self.get_weekly_id())
-        new_entry = DailyEntry(
+        new_entry = Entry(
             uuid.uuid4(), "Test Topic", entry, datetime.datetime.now(), datetime.datetime.now(), weekly_id, uuid.uuid4()
         )
         storage.add_entry(new_entry)
 
     def list_all_week_ids(self):
-        storage = DailyEntryStorage('SQLite_Python.db')
+        storage = EntryStorage('SQLite_Python.db')
         list_all = storage.get_all_entries()
         return list_all
 
     def list_this_week(self):
-        storage = DailyEntryStorage('SQLite_Python.db')
+        storage = EntryStorage('SQLite_Python.db')
         weekly_id = str(self.get_weekly_id())
         week_list = storage.get_entries_by_week(weekly_id)
         return week_list
 
     def list_this_week_as_json(self):
-        storage = DailyEntryStorage('SQLite_Python.db')
+        storage = EntryStorage('SQLite_Python.db')
         weekly_id = str(self.get_weekly_id())
         week_list = []
         for item in storage.get_entries_by_week(weekly_id):

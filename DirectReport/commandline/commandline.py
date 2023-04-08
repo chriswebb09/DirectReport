@@ -40,14 +40,22 @@ def web_browser():
 
 
 @click.command()
-def show_list():
-    week = builder.list_this_week()
-    if week is not None:
-        for week_item in week:
-            print(week_item)
-            print(" ")
-    else:
-        print("week is none")
+@click.option('--weekly', 'transformation', flag_value='weekly', default=True)
+@click.option('--daily', 'transformation', flag_value='daily')
+@click.option('--all', 'transformation', flag_value='all')
+def show_list(transformation):
+    if transformation == "weekly":
+        week = builder.list_this_week()
+        if week is not None:
+            for week_item in week:
+                print(week_item)
+                print(" ")
+        else:
+            print("week is none")
+    elif transformation == "daily":
+        pass
+    elif transformation == "all":
+        pass
 
 
 @click.command()
@@ -61,6 +69,7 @@ def new(entry):
 def launch(url):
     click.launch(url)
     app.run()
+
 
 list_items.add_command(show_list)
 new_item.add_command(new)

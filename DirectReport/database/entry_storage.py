@@ -2,19 +2,19 @@
 import sqlite3
 
 if __name__ == '__main__':
-    from DirectReport.models.entry import DailyEntry
+    from DirectReport.models.entry import Entry
 else:
-    from models.entry import DailyEntry
+    from DirectReport.models.entry import Entry
 
 
-class DailyEntryStorage:
+class EntryStorage:
     def __init__(self, db_path):
         self.conn = sqlite3.connect(db_path)
         self.create_table()
 
     def create_table(self):
         query = """
-        CREATE TABLE IF NOT EXISTS daily_entries (
+        CREATE TABLE IF NOT EXISTS entries (
             uuid TEXT PRIMARY KEY,
             topic TEXT,
             message TEXT,
@@ -29,7 +29,7 @@ class DailyEntryStorage:
 
     def add_entry(self, entry):
         query = """
-        INSERT INTO daily_entries (uuid, topic, message, created_at, modified_on, week_uuid, day_uuid)
+        INSERT INTO entries (uuid, topic, message, created_at, modified_on, week_uuid, day_uuid)
         VALUES (?, ?, ?, ?, ?, ?, ?)
         """
         values = (
@@ -47,19 +47,19 @@ class DailyEntryStorage:
     def get_entry(self, uuid):
         query = """
         SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid
-        FROM daily_entries
+        FROM entries
         WHERE uuid = ?
         """
         result = self.conn.execute(query, (str(uuid),))
         row = result.fetchone()
         if row:
-            return DailyEntry(*row)
+            return Entry(*row)
         else:
             return None
 
     def update_entry(self, entry):
         query = """
-        UPDATE daily_entries
+        UPDATE entries
         SET message = ?, modified_on = ?
         WHERE uuid = ?
         """
@@ -69,7 +69,7 @@ class DailyEntryStorage:
 
     def delete_entry(self, uuid):
         query = """
-        DELETE FROM daily_entries
+        DELETE FROM entries
         WHERE uuid = ?
         """
         self.conn.execute(query, (str(uuid),))
@@ -78,27 +78,36 @@ class DailyEntryStorage:
     def get_all_entries(self):
         query = """
         SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid
-        FROM daily_entries
+        FROM entries
         """
         result = self.conn.execute(query)
-        return [DailyEntry(*row) for row in result.fetchall()]
+        return [Entry(*row) for row in result.fetchall()]
 
     def get_all_entries_json(self):
         query = """
         SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid
-        FROM daily_entries
+        FROM entries
         """
         result = self.conn.execute(query)
-        return [DailyEntry(*row).to_dict() for row in result.fetchall()]
+        return [Entry(*row).to_dict() for row in result.fetchall()]
 
     def get_entries_by_week(self, week_uuid):
         query = """
         SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid
-        FROM daily_entries
+        FROM entries
         WHERE week_uuid = ?
         """
         result = self.conn.execute(query, (str(week_uuid),))
-        return [DailyEntry(*row).__dict__ for row in result.fetchall()]
+        return [Entry(*row).__dict__ for row in result.fetchall()]
+
+    def get_entries_by_day(self, day_uuid):
+        query = """
+        SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid
+        FROM entries
+        WHERE day_uuid = ?
+        """
+        result = self.conn.execute(query, (str(day_uuid),))
+        return [Entry(*row).__dict__ for row in result.fetchall()]
 
 
 if __name__ == '__main__':
