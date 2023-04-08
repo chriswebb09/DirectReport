@@ -54,13 +54,13 @@ def show_list():
 @click.option('--entry', help="Add new entry to list", prompt='What have you been working on')
 def new(entry):
     builder.new(entry)
-    week = builder.list_this_week()
-    if week is not None:
-        for week_item in week:
-            print(week_item)
-            print(" ")
-    else:
-        print("week is none")
+    # week = builder.list_this_week()
+    # if week is not None:
+    #     for week_item in week:
+    #         print(week_item)
+    #         print(" ")
+    # else:
+    #     print("week is none")
 
 
 @click.command()
