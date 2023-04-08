@@ -53,7 +53,7 @@ $ python DirectReport launch
 #### Basic
 
 ```
- $ DirectReport: python DirectReport show-list
+ $ python DirectReport show-list
 ```
 
 
