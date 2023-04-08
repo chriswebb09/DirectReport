@@ -9,8 +9,10 @@ package_root_directory = file.parents[1]
 sys.path.append(str(package_root_directory))
 
 if __name__ == '__main__':
+    from browserview.app import app
     from models.list_builder import ListBuilder
 else:
+    from DirectReport.browserview.app import app
     from DirectReport.models.list_builder import ListBuilder
 
 
@@ -52,20 +54,13 @@ def show_list():
 @click.option('--entry', help="Add new entry to list", prompt='What have you been working on')
 def new(entry):
     builder.new(entry)
-    # week = builder.list_this_week()
-    # if week is not None:
-    #     for week_item in week:
-    #         print(week_item)
-    #         print(" ")
-    # else:
-    #     print("week is none")
 
 
 @click.command()
 @click.option("--url", default="http://127.0.0.1:5000", help="URL to open in the web browser")
 def launch(url):
     click.launch(url)
-
+    app.run()
 
 list_items.add_command(show_list)
 new_item.add_command(new)
