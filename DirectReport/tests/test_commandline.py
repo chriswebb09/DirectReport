@@ -19,6 +19,20 @@ def test_cli_list():
     assert response.exit_code == 0
 
 
+def test_cli_list_daily():
+    result = runner.invoke(show_list, ['--daily'])
+    assert result.exit_code == 0
+
+
+def test_cli_list_weekly():
+    result = runner.invoke(show_list, ['--weekly'])
+    assert result.exit_code == 0
+
+
+def test_cli_list_all():
+    result = runner.invoke(show_list, ['--all'])
+    assert result.exit_code == 0
+
 #
 # def test_prompt_launch():
 #     response = runner.invoke(launch);

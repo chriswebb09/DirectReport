@@ -81,7 +81,8 @@ class ListBuilder:
         list_all = storage.list_all_entries()
         return list_all
 
-    def list_all_week_ids(self):
+    @staticmethod
+    def list_all_week_ids():
         storage = WeekUUIDTable('SQLite_Python.db')
         list_all = storage.get_all_entries()
         return list_all
@@ -97,6 +98,11 @@ class ListBuilder:
         weekly_id = str(self.get_weekly_id())
         week_list = storage.get_entries_by_week(weekly_id)
         return week_list
+
+    def list_all(self):
+        storage = EntryStorage('SQLite_Python.db')
+        list = storage.get_all_entries()
+        return list
 
     def list_this_week_as_json(self):
         storage = EntryStorage('SQLite_Python.db')
