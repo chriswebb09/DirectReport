@@ -70,7 +70,9 @@ class ListBuilder:
         storage = EntryStorage('SQLite_Python.db')
         weekly_id = str(ListBuilder.get_weekly_id())
         daily_id = str(ListBuilder.get_daily_id())
-        new_entry = Entry(uuid.uuid4(), topic, entry, datetime.datetime.now(), datetime.datetime.now(), weekly_id, daily_id)
+        new_entry = Entry(
+            uuid.uuid4(), topic, entry, datetime.datetime.now(), datetime.datetime.now(), weekly_id, daily_id
+        )
         storage.add_entry(new_entry)
 
     @staticmethod
