@@ -5,42 +5,47 @@
 {% endblock %}
 
 {% block content %}
+    <main>
+        <h1 class="mt-10 flex justify-center items-center text-3xl font-bold underline">List</h1>
+        <script>
+            var myjson = {{ data|tojson|safe }};
+            console.log(myjson);
+        </script>
+        <div id='root' class='md:max-lg:flex content-start'></div>
+        <script type="text/babel">
+            // Obtain the root
+            const rootElement = document.getElementById('root')
 
-    <h1 class="mt-10 flex justify-center items-center text-3xl font-bold underline">List</h1>
-    <script>
-        var myjson = {{ data|tojson|safe }};
-        console.log(myjson);
-    </script>
-    <div id='root' class='md:max-lg:flex content-start'></div>
-    <script type="text/babel">
-        // Obtain the root
-        const rootElement = document.getElementById('root')
-        // Create a ES6 class component
-        class EntryList extends React.Component {
-            // Use the render function to return JSX component
-            render() {
-                return (
-                    <div class="m-8 h-56">
-                        <h2 class="m-8 text-2xl font-bold underline">{this.props.name}</h2>
-                        <ul class="grid grid-cols-2 gap-4 content-center">
-                            {this.props.listdata.map(item => <li class="m-8"><p>{item.message}</p> <p>created-at: {item.created_at}</p></li>)}
-                        </ul>
-                    </div>
-                );
+            // Create a ES6 class component
+            class EntryList extends React.Component {
+                // Use the render function to return JSX component
+                render() {
+                    return (
+                        <div class="m-8 h-56">
+                            <h2 class="m-8 text-2xl font-bold underline">{this.props.name}</h2>
+                            <ul class="grid grid-cols-2 gap-4 content-center">
+                                {this.props.listdata.map(item => <li class="m-8"><p>{item.message}</p>
+                                    <p>created-at: {item.created_at}</p></li>)}
+                            </ul>
+                        </div>
+                    );
+                }
             }
-        }
-        // Create a function to wrap up your component
-        function App() {
-            return (
-                <div>
-                    <EntryList name="Entry List" listdata={myjson}/>
-                </div>
+
+            // Create a function to wrap up your component
+            function App() {
+                return (
+                    <div>
+                        <EntryList name="Entry List" listdata={myjson}/>
+                    </div>
+                )
+            }
+
+            // Use the ReactDOM.render to show your component on the browser
+            ReactDOM.render(
+                <App/>,
+                rootElement
             )
-        }
-        // Use the ReactDOM.render to show your component on the browser
-        ReactDOM.render(
-            <App/>,
-            rootElement
-        )
-    </script>
+        </script>
+    </main>
 {% endblock %}
