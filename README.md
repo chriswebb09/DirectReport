@@ -56,9 +56,7 @@ Commands:
 #### Basic
 
 ```
-
  ~/DirectReport: python DirectReport show-list
- 
 {'uuid': 'dd3ac9aa-4bbf-4ad6-9b31-16df6a0a0e52', 'topic': 'Test Topic', 'message': 'test', 'created_at': '2023-04-08 09:41:43.821522', 'modified_on': '2023-04-08 09:41:43.821527', 'week_uuid': 'b4fc7c44-aade-4497-adf2-f988bbaa8950', 'day_uuid': '55a307f4-a62a-4148-a664-8dd1afcbd620'}
 
 {'uuid': 'bfb5f5d7-a4db-4563-8c0e-e857adb1ce7b', 'topic': 'Test Topic', 'message': 'I have been working on work', 'created_at': '2023-04-08 09:41:54.566438', 'modified_on': '2023-04-08 09:41:54.566451', 'week_uuid': 'b4fc7c44-aade-4497-adf2-f988bbaa8950', 'day_uuid': '09f7986d-5056-478f-b4ba-5e07929bb5cb'}
