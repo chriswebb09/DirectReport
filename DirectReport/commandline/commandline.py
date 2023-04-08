@@ -53,7 +53,14 @@ def show_list(transformation):
         else:
             print("week is none")
     elif transformation == "daily":
-        pass
+        today = builder.list_today()
+        # print(builder.list_all_daily_ids())
+        if today is not None:
+            for today_item in today:
+                print(today_item)
+                print(" ")
+        else:
+            print("Today is none")
     elif transformation == "all":
         pass
 
