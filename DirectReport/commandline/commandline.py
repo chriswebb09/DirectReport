@@ -40,32 +40,34 @@ def web_browser():
 
 
 @click.command()
-def show_list():
-    week = builder.list_this_week()
-    if week is not None:
-        for week_item in week:
-            print(week_item)
-            print(" ")
-    else:
-        print("week is none")
+@click.option('--weekly', 'transformation', flag_value='weekly', default=True)
+@click.option('--daily', 'transformation', flag_value='daily')
+@click.option('--all', 'transformation', flag_value='all')
+def show_list(transformation):
+    if transformation == "weekly":
+        week = builder.list_this_week()
+        if week is not None:
+            for week_item in week:
+                print(week_item)
+                print(" ")
+        else:
+            print("week is none")
+    elif transformation == "daily":
+        pass
+    elif transformation == "all":
+        pass
 
 
 @click.command()
 @click.option('--entry', help="Add new entry to list", prompt='What have you been working on')
 def new(entry):
     builder.new(entry)
-    week = builder.list_this_week()
-    if week is not None:
-        for week_item in week:
-            print(week_item)
-            print(" ")
-    else:
-        print("week is none")
 
 
 @click.command()
-def launch():
-    click.launch('http://127.0.0.1:5000')
+@click.option("--url", default="http://127.0.0.1:5000", help="URL to open in the web browser")
+def launch(url):
+    click.launch(url)
     app.run()
 
 

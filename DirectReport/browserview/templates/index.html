@@ -5,67 +5,12 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Home</h1>
-    <div id='root'></div>
-    <script type='text/babel'>
-        const [posts, setPosts] = React.useState([]);
-        {##}
-        {#let durationBody = this.posts.map((post, i) => {#}
-        {#    return (#}
-        {#        <li>{post} {i}</li>#}
-        {#    );#}
-
-        async function fetchData() {
-            try {
-                const resp = await axios.get(
-                    'http://127.0.0.1:5000/list',
-                    {
-                        headers: {
-                            'Accept-Encoding': 'application/json',
-                        }
-                    }
-                );
-
-                this.state.setPosts(resp.data);
-            } catch (err) {
-                console.error(err);
-            }
-        }
-
-
-
-        function FetchElements() {
-            React.useEffect(() => {
-                fetchData()
-            }, [])
-            return (
-                <div>{this.posts}</div>
-            );
-        }
-
-        const rootElement = document.getElementById('root')
-        ReactDOM.render(<FetchElements/>, rootElement)
-        //ReactDOM.render(<FetchElements/>, document.getElementById('root'));
-        {##}
-        {#document.addEventListener("DOMContentLoaded", (event) => {#}
-        {#    ReactDOM.render(<FetchElements postId={1}/>, document.getElementById("root"));#}
-
-        {#ReactDOM.render(<FetchElements/>, document.querySelector('#root'));#}
-
-    </script>
-
-    <scriptt>
-
-
-    let jsondata = {{ data | tojson }}
-    console.log(jsondata);
-    {% for result in jsondata  %}
-        console.log(result);
-        {% for item in result  %}
-            <p> {{ item.data }}</p>
-        {% endfor %}
-    {% endfor %}
-    </scriptt>
-
-
+    <main>
+        <h1 class="mt-10 flex justify-center items-center text-3xl font-bold underline">Home</h1>
+        <div id='root' class="md:max-lg:flex"></div>
+        <script type="text/babel">
+            // Obtain the root
+            const rootElement = document.getElementById('root')
+        </script>
+    </main>
 {% endblock %}

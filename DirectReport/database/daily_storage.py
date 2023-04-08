@@ -1,10 +1,8 @@
-#!/usr/bin/env python3
-
 import sqlite3
 import uuid
 
 
-class WeekUUIDTable:
+class DailyUUIDTable:
     def __init__(self, db_path):
         self.db_path = db_path
         self.conn = sqlite3.connect(db_path)
@@ -14,23 +12,29 @@ class WeekUUIDTable:
         cursor = self.conn.cursor()
         cursor.execute(
             '''
-            CREATE TABLE IF NOT EXISTS date_uuid_table (
+            CREATE TABLE IF NOT EXISTS day_uuid_table (
                 date TEXT PRIMARY KEY,
-                uuid TEXT
+                week_uuid TEXT,
+                day_uuid TEXT
             )
         '''
         )
         self.conn.commit()
 
-    def add_uuid(self, date, uuid_str=None):
+    def add_uuid(
+        self,
+        date,
+        week_uuid_str,
+        uuid_str=None,
+    ):
         if uuid_str is None:
             uuid_str = str(uuid.uuid4())
         cursor = self.conn.cursor()
         cursor.execute(
             '''
-            INSERT OR IGNORE INTO date_uuid_table (date, uuid) VALUES (?, ?)
+            INSERT OR IGNORE INTO day_uuid_table (date, week_uuid, uuid) VALUES (?, ?, ?)
             ''',
-            (date, uuid_str),
+            (date, week_uuid_str, uuid_str),
         )
         self.conn.commit()
 
@@ -38,7 +42,7 @@ class WeekUUIDTable:
         cursor = self.conn.cursor()
         cursor.execute(
             '''
-            SELECT uuid FROM date_uuid_table WHERE date = ?
+            SELECT uuid FROM day_uuid_table WHERE date = ?
             ''',
             (date,),
         )
@@ -52,7 +56,7 @@ class WeekUUIDTable:
         cursor = self.conn.cursor()
         cursor.execute(
             '''
-            UPDATE date_uuid_table SET uuid = ? WHERE date = ?
+            UPDATE day_uuid_table SET uuid = ? WHERE date = ?
             ''',
             (uuid_str, date),
         )
@@ -62,7 +66,7 @@ class WeekUUIDTable:
         cursor = self.conn.cursor()
         cursor.execute(
             '''
-            SELECT uuid FROM date_uuid_table WHERE date = ?
+            SELECT uuid FROM day_uuid_table WHERE date = ?
             ''',
             (date,),
         )
@@ -76,7 +80,7 @@ class WeekUUIDTable:
         cursor = self.conn.cursor()
         cursor.execute(
             '''
-            SELECT * FROM date_uuid_table
+            SELECT * FROM day_uuid_table
             '''
         )
         results = cursor.fetchall()

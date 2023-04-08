@@ -5,12 +5,25 @@
     <meta charset="utf-8"/>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script crossorigin src="https://unpkg.com/axios@0.24.0/dist/axios.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/main.css') }}">
 </head>
+<header>
+    <nav class="bg-gray-900 text-white w-screen">
+      <div class="px-14 py-6 flex w-full items-center">
+        <a class="ml-14 w-3/4 text-2xl font-bold font-heading" href="/">Direct Report.</a>
+        <!-- Nav Links -->
+        <ul class="flex px-6 font-semibold font-heading space-x-18">
+          <li><a class="px-6 text-1xl hover:text-gray-200" href="/">Home</a></li>
+          <li><a class="px-6 text-1xl hover:text-gray-200" href="/list">List</a></li>
+          <li><a class="px-6 text-1xl hover:text-gray-200" href="/wiki">Wiki</a></li>
+        </ul>
+      </div>
+    </nav>
+</header>
 <body>
 {% block content %}
 {% endblock %}
