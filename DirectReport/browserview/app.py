@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from DirectReport.models.list_builder import ListBuilder
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from DirectReport.database.entry_storage import DailyEntryStorage
 
 app = Flask(__name__, template_folder="templates")

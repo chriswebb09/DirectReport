@@ -9,10 +9,8 @@ package_root_directory = file.parents[1]
 sys.path.append(str(package_root_directory))
 
 if __name__ == '__main__':
-    from browserview.app import app
     from models.list_builder import ListBuilder
 else:
-    from DirectReport.browserview.app import app
     from DirectReport.models.list_builder import ListBuilder
 
 
