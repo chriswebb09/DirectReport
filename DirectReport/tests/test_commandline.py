@@ -33,6 +33,7 @@ def test_cli_list_all():
     result = runner.invoke(show_list, ['--all'])
     assert result.exit_code == 0
 
+
 #
 # def test_prompt_launch():
 #     response = runner.invoke(launch);

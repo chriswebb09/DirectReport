@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import datetime
 
+
 class Entry:
     def __init__(self, uuid, topic, message, created_at, modified_on, week_uuid, day_uuid):
         self.uuid = uuid

@@ -27,4 +27,4 @@ def test_create_table(temp_db):
     weekly_storage = WeekUUIDTable(temp_db)
     weekly_storage.create_table()
     weekly_storage.add_uuid(str(datetime.now()), str(uuid.uuid4()))
-    assert(len(weekly_storage.list_all_entries()) == 1)
+    assert len(weekly_storage.list_all_entries()) == 1

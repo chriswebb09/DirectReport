@@ -25,6 +25,7 @@ def temp_db():
     os.close(db_fd)
     os.remove(db_path)
 
+
 def test_get_weekly_id(temp_db):
     builder = list_builder.ListBuilder()
     storage = EntryStorage(temp_db)
@@ -39,7 +40,8 @@ def test_get_weekly_id(temp_db):
     )
 
     storage.add_entry(entry)
-    assert(len(builder.get_weekly_id()) is not None)
+    assert len(builder.get_weekly_id()) is not None
+
 
 def get_all_weekly_ids(temp_db):
     builder = list_builder.ListBuilder()
@@ -55,7 +57,8 @@ def get_all_weekly_ids(temp_db):
     )
 
     storage.add_entry(entry)
-    assert(len(list_builder.ListBuilder.list_all_daily_ids()) == 1)
+    assert len(list_builder.ListBuilder.list_all_daily_ids()) == 1
+
 
 def get_all_weekly_ids(temp_db):
     builder = list_builder.ListBuilder()
@@ -71,4 +74,4 @@ def get_all_weekly_ids(temp_db):
     )
 
     storage.add_entry(entry)
-    assert(len(list_builder.ListBuilder.list_all_daily_ids()) == 1)
+    assert len(list_builder.ListBuilder.list_all_daily_ids()) == 1
