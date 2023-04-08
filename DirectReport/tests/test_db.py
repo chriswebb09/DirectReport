@@ -42,6 +42,7 @@ def test_add_get_entry(temp_db):
         created_at=datetime.now(),
         modified_on=datetime.now(),
         week_uuid=uuid.uuid4(),
+        day_uuid=uuid.uuid4(),
     )
 
     storage.add_entry(entry)
@@ -59,6 +60,7 @@ def test_update_entry(temp_db):
         created_at=datetime.now(),
         modified_on=datetime.now(),
         week_uuid=uuid.uuid4(),
+        day_uuid=uuid.uuid4(),
     )
 
     storage.add_entry(entry)
@@ -80,6 +82,7 @@ def test_delete_entry(temp_db):
         created_at=datetime.now(),
         modified_on=datetime.now(),
         week_uuid=uuid.uuid4(),
+        day_uuid=uuid.uuid4(),
     )
 
     storage.add_entry(entry)
@@ -98,6 +101,7 @@ def test_get_all_entries(temp_db):
         created_at=datetime.now(),
         modified_on=datetime.now(),
         week_uuid=uuid.uuid4(),
+        day_uuid=uuid.uuid4(),
     )
     entry2 = DailyEntry(
         uuid=uuid.uuid4(),
@@ -106,6 +110,7 @@ def test_get_all_entries(temp_db):
         created_at=datetime.now(),
         modified_on=datetime.now(),
         week_uuid=uuid.uuid4(),
+        day_uuid=uuid.uuid4(),
     )
 
     storage.add_entry(entry1)
@@ -127,6 +132,7 @@ def test_get_entries_by_week(temp_db):
         created_at=datetime.now(),
         modified_on=datetime.now(),
         week_uuid=week_uuid,
+        day_uuid=uuid.uuid4(),
     )
     entry2: DailyEntry = DailyEntry(
         uuid=uuid.uuid4(),
@@ -135,6 +141,7 @@ def test_get_entries_by_week(temp_db):
         created_at=datetime.now(),
         modified_on=datetime.now(),
         week_uuid=uuid.uuid4(),
+        day_uuid=uuid.uuid4(),
     )
 
     storage.add_entry(entry1)

@@ -10,13 +10,14 @@ class DateTimeEncoder(json.JSONEncoder):
             return super().default(z)
 
 class DailyEntry:
-    def __init__(self, uuid, topic, message, created_at, modified_on, week_uuid):
+    def __init__(self, uuid, topic, message, created_at, modified_on, week_uuid, day_uuid):
         self.uuid = uuid
         self.topic = topic
         self.message = message
         self.created_at = created_at
         self.modified_on = modified_on
         self.week_uuid = week_uuid
+        self.day_uuid = day_uuid
 
     def get_created_at_formatted(self, format="%Y-%m-%d %H:%M:%S"):
         return datetime.datetime.fromtimestamp(self.created_at).strftime(format)
@@ -32,6 +33,7 @@ class DailyEntry:
             "created_at": str(self.created_at),
             "modified_on": str(self.modified_on),
             "week_uuid": str(self.week_uuid),
+            "day_uuid": str(self.day_uuid)
         }
 
     @classmethod
@@ -42,7 +44,8 @@ class DailyEntry:
         created_at = datetime.datetime.fromisoformat(data.get("created_at"))
         modified_on = datetime.datetime.fromisoformat(data.get("modified_on"))
         week_uuid = data.get("week_uuid")
-        return cls(uuid, message, created_at, modified_on, week_uuid)
+        day_uuid = data.get("day_uuid")
+        return cls(uuid, message, created_at, modified_on, week_uuid, day_uuid)
 
     def mark_modified(self):
         self.modified_on = datetime.datetime.now()

@@ -21,7 +21,8 @@ class DailyEntryStorage:
             message TEXT,
             created_at TEXT,
             modified_on TEXT,
-            week_uuid TEXT
+            week_uuid TEXT,
+            day_uuid TEXT
         )
         """
         self.conn.execute(query)
@@ -29,8 +30,8 @@ class DailyEntryStorage:
 
     def add_entry(self, entry):
         query = """
-        INSERT INTO daily_entries (uuid, topic, message, created_at, modified_on, week_uuid)
-        VALUES (?, ?, ?, ?, ?, ?)
+        INSERT INTO daily_entries (uuid, topic, message, created_at, modified_on, week_uuid, day_uuid)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
         """
         values = (
             entry.uuid.__str__(),
@@ -39,13 +40,14 @@ class DailyEntryStorage:
             entry.created_at.__str__(),
             entry.modified_on.__str__(),
             entry.week_uuid.__str__(),
+            entry.day_uuid.__str__(),
         )
         self.conn.execute(query, values)
         self.conn.commit()
 
     def get_entry(self, uuid):
         query = """
-        SELECT uuid, topic, message, created_at, modified_on, week_uuid
+        SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid
         FROM daily_entries
         WHERE uuid = ?
         """
@@ -76,7 +78,7 @@ class DailyEntryStorage:
 
     def get_all_entries(self):
         query = """
-        SELECT uuid, topic, message, created_at, modified_on, week_uuid
+        SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid
         FROM daily_entries
         """
         result = self.conn.execute(query)
@@ -84,14 +86,14 @@ class DailyEntryStorage:
 
     def get_all_entries_json(self):
         query = """
-        SELECT uuid, topic, message, created_at, modified_on, week_uuid
+        SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid
         FROM daily_entries
         """
         result = self.conn.execute(query)
         return [DailyEntry(*row).to_dict() for row in result.fetchall()]
     def get_entries_by_week(self, week_uuid):
         query = """
-        SELECT uuid, topic, message, created_at, modified_on, week_uuid
+        SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid
         FROM daily_entries
         WHERE week_uuid = ?
         """
