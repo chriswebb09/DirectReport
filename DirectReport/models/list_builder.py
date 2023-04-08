@@ -126,5 +126,6 @@ class ListBuilder:
             week_list.append(item.to_dict())
         return week_list
 
+
 if __name__ == '__main__':
     print("main")

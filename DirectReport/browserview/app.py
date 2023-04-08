@@ -15,7 +15,6 @@ def home():
     return render_template('index.html', title='Home', data=[])
 
 
-
 @app.route("/list", methods=['GET'])
 def list():
     """List"""
@@ -24,11 +23,9 @@ def list():
     return render_template('list.html', title='List', data=week)
 
 
-
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html', error=e), 404
-
 
 
 @app.route('/entry/<id>', methods=['GET'])
