@@ -66,10 +66,13 @@ class ListBuilder:
         return daily_id
 
     @staticmethod
-    def new(entry, topic=""):
+    def new(entry, topic=None):
         storage = EntryStorage('SQLite_Python.db')
         weekly_id = str(ListBuilder.get_weekly_id())
         daily_id = str(ListBuilder.get_daily_id())
+        if topic is None:
+            topic = "Entry for work data on " + str(datetime.datetime.now())
+
         new_entry = Entry(
             uuid.uuid4(), topic, entry, datetime.datetime.now(), datetime.datetime.now(), weekly_id, daily_id
         )
@@ -98,6 +101,13 @@ class ListBuilder:
     def list_this_week():
         storage = EntryStorage('SQLite_Python.db')
         weekly_id = str(ListBuilder.get_weekly_id())
+        week_list = storage.get_entries_by_week(weekly_id)
+        return week_list
+
+    @staticmethod
+    def list_week(weekly_id):
+        storage = EntryStorage('SQLite_Python.db')
+        weekly_id = str(weekly_id)
         week_list = storage.get_entries_by_week(weekly_id)
         return week_list
 

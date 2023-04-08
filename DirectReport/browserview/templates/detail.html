@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block header %}
+    {% block title %} Home {% endblock %}
+{% endblock %}
+{% block content %}
+    <main>
+        <script>
+            var data = {{ data|tojson|safe }};
+        </script>
+        <div id='root' class='md:max-lg:flex content-start'></div>
+        <script type="text/babel">
+            // Obtain the root
+            const rootElement = document.getElementById('root')
+            // Create a ES6 class component
+            class Entry extends React.Component {
+                // Use the render function to return JSX component
+                render() {
+                    return (
+                        <div class="mx-40 my-8 h-56">
+                            <h1 class="text-lg font-bold text-gray-800 sm:text-xl">{this.props.itemdata.topic}</h1>
+                            <p class="mt-3 text-sm text-gray-500">{this.props.itemdata.message}</p>
+                            <p class="mt-3 text-sm text-gray-500">{this.props.itemdata.created_at}</p>
+                        </div>
+                    );
+                }
+            }
+            // Create a function to wrap up your component
+            function App() {
+                return (
+                    <div>
+                        <Entry name="Entry" itemdata={data}/>
+                    </div>
+                )
+            }
+            // Use the ReactDOM.render to show your component on the browser
+            ReactDOM.render(<App/>, rootElement)
+        </script>
+    </main>
+{% endblock %}

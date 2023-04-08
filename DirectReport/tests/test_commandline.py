@@ -9,7 +9,7 @@ runner = CliRunner()
 
 
 def test_prompt_new():
-    response = runner.invoke(new, input='wau wau\n')
+    response = runner.invoke(new, input='From the main menu, select Edit | Find | Find in Files Ctrl+Shift+F . In the search field, type your search string. Alternatively, in the editor, highlight the string you want to find and press Ctrl+Shift+F ')
     assert response.exit_code is not None
     assert "What have you been working on" in response.output
 
