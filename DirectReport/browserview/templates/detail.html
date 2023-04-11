@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block header %}
+    {% block title %} Home {% endblock %}
+{% endblock %}
+{% block content %}
+    <main>
+        <script>
+            var data = {{ data|tojson|safe }};
+        </script>
+        <div id='root' class='md:max-lg:flex content-start'></div>
+        <script type="text/babel">
+            // Obtain the root
+            const rootElement = document.getElementById('root')
+            // Create a ES6 class component
+            class Entry extends React.Component {
+                // Use the render function to return JSX component
+                render() {
+                    return (
+                        <div class="mx-80 mt-20 my-8 h-56">
+                            <h1 class="text-3xl text-gray-800 text-center font-bold underline">{this.props.itemdata.topic}</h1>
+                            <p class="mt-10 px-10 text-lg text-gray-500">{this.props.itemdata.message}</p>
+                            <p class="my-10 px-10 text-lg text-gray-500 font-semibold">{this.props.itemdata.created_at}</p>
+                            <div class="mt-10 flex items-center justify-center gap-x-6">
+                                <a href={"/edit/" + this.props.itemdata.uuid} class="mt-50 rounded-md bg-indigo-600 px-6 py-2.5 text-xl font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Edit</a>
+                                <a href={"/delete/" + this.props.itemdata.uuid} class="mt-50 rounded-md bg-indigo-600 px-3.5 py-2.5 text-xl font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Delete</a>
+                            </div>
+                        </div>
+                    );
+
+
+                }
+            }
+            // Create a function to wrap up your component
+            function App() {
+                return (
+                    <div>
+                        <Entry name="Entry" itemdata={data}/>
+                    </div>
+                )
+            }
+            // Use the ReactDOM.render to show your component on the browser
+            ReactDOM.render(<App/>, rootElement)
+        </script>
+    </main>
+{% endblock %}

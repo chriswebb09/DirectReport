@@ -81,3 +81,22 @@ class WeekUUIDTable:
         )
         results = cursor.fetchall()
         return results
+
+    def delete_entry_by_date(self, date):
+        cursor = self.conn.cursor()
+        cursor.execute(
+            '''
+            DELETE FROM date_uuid_table WHERE date = ?
+            ''',
+            (date,),
+        )
+        self.conn.commit()
+
+    def delete_all_entries(self):
+        cursor = self.conn.cursor()
+        cursor.execute(
+            '''
+            DELETE FROM date_uuid_table
+            '''
+        )
+        self.conn.commit()

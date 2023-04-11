@@ -60,7 +60,7 @@ def get_all_weekly_ids(temp_db):
     assert len(list_builder.ListBuilder.list_all_daily_ids()) == 1
 
 
-def get_all_weekly_ids(temp_db):
+def get_all_daily_ids(temp_db):
     builder = list_builder.ListBuilder()
     storage = EntryStorage(temp_db)
     entry = Entry(
@@ -72,6 +72,5 @@ def get_all_weekly_ids(temp_db):
         week_uuid=uuid.uuid4(),
         day_uuid=uuid.uuid4(),
     )
-
     storage.add_entry(entry)
     assert len(list_builder.ListBuilder.list_all_daily_ids()) == 1

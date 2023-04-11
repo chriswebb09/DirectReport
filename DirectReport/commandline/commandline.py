@@ -45,27 +45,24 @@ def web_browser():
 @click.option('--all', 'transformation', flag_value='all')
 def show_list(transformation):
     if transformation == "weekly":
-        week = builder.list_this_week()
+        week = ListBuilder.list_this_week()
         if week is not None:
             for week_item in week:
-                print(week_item)
-                print(" ")
+                print(str(week_item) + "\n")
         else:
             print("week is none")
     elif transformation == "daily":
-        today = builder.list_today()
+        today = ListBuilder.list_today()
         if today is not None:
             for today_item in today:
-                print(today_item)
-                print(" ")
+                print(str(today_item) + "\n")
         else:
             print("Today is none")
     elif transformation == "all":
-        all = builder.list_all()
+        all = ListBuilder.list_all()
         if all is not None:
             for all_item in all:
-                print(all_item)
-                print(" ")
+                print(str(all_item) + "\n")
         else:
             print("All is none")
 
@@ -73,7 +70,10 @@ def show_list(transformation):
 @click.command()
 @click.option('--entry', help="Add new entry to list", prompt='What have you been working on')
 def new(entry):
-    builder.new(entry)
+    topic = ""
+    if click.confirm('Do you wan to add in topic?'):
+        topic = click.prompt('Enter topic', type=str)
+    builder.new(entry, topic)
 
 
 @click.command()
