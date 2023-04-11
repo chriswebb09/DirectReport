@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DirectReport &mdash; DirectReport 0.1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            DirectReport
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">DirectReport</a></li>
+<li><a class="reference internal" href="#overview">Overview</a><ul>
+<li><a class="reference internal" href="#documentation">Documentation</a></li>
+<li><a class="reference internal" href="#installing">Installing</a><ul>
+<li><a class="reference internal" href="#from-package-manager">From Package Manager</a></li>
+<li><a class="reference internal" href="#from-project-files">From Project Files:</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#running-direct-report">Running Direct Report</a><ul>
+<li><a class="reference internal" href="#id1">Overview</a></li>
+<li><a class="reference internal" href="#launch">Launch</a></li>
+<li><a class="reference internal" href="#show-list">Show-List</a></li>
+<li><a class="reference internal" href="#basic">Basic</a></li>
+<li><a class="reference internal" href="#all">All</a></li>
+<li><a class="reference internal" href="#daily">Daily</a></li>
+<li><a class="reference internal" href="#weekly">Weekly</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#web-interface">Web Interface</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">DirectReport</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">DirectReport</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="directreport">
+<h1>DirectReport<a class="headerlink" href="#directreport" title="Permalink to this heading"></a></h1>
+</section>
+<section id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h1>
+<p>Keep track of your accomplishments each day of the workweek, create a report of things you accomplished at the end of the week that you can email to manager.  Review progress each quarterly for more effective performance review.</p>
+<section id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading"></a></h2>
+</section>
+<section id="installing">
+<h2>Installing<a class="headerlink" href="#installing" title="Permalink to this heading"></a></h2>
+<section id="from-package-manager">
+<h3>From Package Manager<a class="headerlink" href="#from-package-manager" title="Permalink to this heading"></a></h3>
+<p>Using pip:
+<cite>pip install DirectReport</cite></p>
+</section>
+<section id="from-project-files">
+<h3>From Project Files:<a class="headerlink" href="#from-project-files" title="Permalink to this heading"></a></h3>
+<p>This project uses a <cite>Makefile</cite> as a command registry, with the following commands:
+- <cite>make</cite>: list available commands
+- <cite>make develop</cite>: install and build this library and its dependencies using <cite>pip</cite>
+- <cite>make build</cite>: build the library using <cite>setuptools</cite>
+- <cite>make lint</cite>: perform static analysis of this library with <cite>flake8</cite> and <cite>black</cite>
+- <cite>make format</cite>: autoformat this library using <cite>black</cite>
+- <cite>make annotate</cite>: run type checking using <cite>mypy</cite>
+- <cite>make test</cite>: run automated tests with <cite>pytest</cite>
+- <cite>make coverage</cite>: run automated tests with <cite>pytest</cite> and collect coverage information
+- <cite>make dist</cite>: package library for distribution</p>
+<p>Adapted From: <a class="reference external" href="https://github.com/ColumbiaOSS/example-project-python">https://github.com/ColumbiaOSS/example-project-python</a></p>
+</section>
+</section>
+<section id="running-direct-report">
+<h2>Running Direct Report<a class="headerlink" href="#running-direct-report" title="Permalink to this heading"></a></h2>
+<section id="id1">
+<h3>Overview<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
+<p>Usage: python -m DirectReport [OPTIONS] COMMAND [ARGS]…</p>
+<dl>
+<dt>Options:</dt><dd><dl class="option-list">
+<dt><kbd><span class="option">--help</span></kbd></dt>
+<dd><p>Show this message and exit.</p>
+</dd>
+</dl>
+</dd>
+<dt>Commands:</dt><dd><p>launch
+new
+show-list</p>
+</dd>
+</dl>
+</section>
+<section id="launch">
+<h3>Launch<a class="headerlink" href="#launch" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python DirectReport launch
+</pre></div>
+</div>
+</section>
+<section id="show-list">
+<h3>Show-List<a class="headerlink" href="#show-list" title="Permalink to this heading"></a></h3>
+</section>
+<section id="basic">
+<h3>Basic<a class="headerlink" href="#basic" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python DirectReport list
+</pre></div>
+</div>
+</section>
+<section id="all">
+<h3>All<a class="headerlink" href="#all" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python DirectReport list --all
+</pre></div>
+</div>
+</section>
+<section id="daily">
+<h3>Daily<a class="headerlink" href="#daily" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python DirectReport list --day
+</pre></div>
+</div>
+</section>
+<section id="weekly">
+<h3>Weekly<a class="headerlink" href="#weekly" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python DirectReport list --week
+</pre></div>
+</div>
+</section>
+</section>
+<section id="web-interface">
+<h2>Web Interface<a class="headerlink" href="#web-interface" title="Permalink to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, DirectReport.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
