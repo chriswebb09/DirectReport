@@ -88,7 +88,8 @@ def launch(url):
 def mail():
     recipient="mail@test.com"
     subject="work for week"
-    week = ListBuilder.list_this_week()
+    week_id = ListBuilder.get_weekly_id()
+    week = ListBuilder.list_week(week_id)
     body = ""
     if week is not None:
         for week_item in week:

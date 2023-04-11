@@ -103,24 +103,11 @@ class ListBuilder:
         return daily_list
 
     @staticmethod
-    def list_this_week():
-        storage = EntryStorage('SQLite_Python.db')
-        weekly_id = str(ListBuilder.get_weekly_id())
-        week_list = storage.get_entries_by_week(weekly_id)
-        return week_list
-
-    @staticmethod
     def list_week(weekly_id):
         storage = EntryStorage('SQLite_Python.db')
         weekly_id = str(weekly_id)
         week_list = storage.get_entries_by_week(weekly_id)
         return week_list
-
-    @staticmethod
-    def list_all():
-        storage = EntryStorage('SQLite_Python.db')
-        list = storage.get_all_entries()
-        return list
 
     @staticmethod
     def list_this_week_as_json():
@@ -131,6 +118,11 @@ class ListBuilder:
             week_list.append(item.to_dict())
         return week_list
 
+    @staticmethod
+    def list_all():
+        storage = EntryStorage('SQLite_Python.db')
+        list = storage.get_all_entries()
+        return list
 
 if __name__ == '__main__':
     print("main")

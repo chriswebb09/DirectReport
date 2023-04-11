@@ -4,6 +4,7 @@ from click.testing import CliRunner
 from DirectReport.commandline.commandline import new
 from DirectReport.commandline.commandline import list
 from DirectReport.commandline.commandline import mail
+from DirectReport.commandline.commandline import delete
 from DirectReport.commandline.commandline import launch
 
 runner = CliRunner()
@@ -39,4 +40,8 @@ def test_cli_list_all():
 
 def test_cli_mail():
     result = runner.invoke(mail)
+    assert result.exit_code == 0
+
+def test_cli_delete():
+    result = runner.invoke(delete, input="d5bc007c-6ccb-4078-b478-700b214a663b")
     assert result.exit_code == 0

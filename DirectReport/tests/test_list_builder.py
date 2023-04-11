@@ -43,7 +43,7 @@ def test_get_weekly_id(temp_db):
     assert len(builder.get_weekly_id()) is not None
 
 
-def get_all_weekly_ids(temp_db):
+def test_get_all_weekly_ids(temp_db):
     builder = list_builder.ListBuilder()
     storage = EntryStorage(temp_db)
     entry = Entry(
@@ -60,7 +60,7 @@ def get_all_weekly_ids(temp_db):
     assert len(list_builder.ListBuilder.list_all_daily_ids()) == 1
 
 
-def get_all_daily_ids(temp_db):
+def test_get_all_daily_ids(temp_db):
     builder = list_builder.ListBuilder()
     storage = EntryStorage(temp_db)
     entry = Entry(
@@ -74,3 +74,36 @@ def get_all_daily_ids(temp_db):
     )
     storage.add_entry(entry)
     assert len(list_builder.ListBuilder.list_all_daily_ids()) == 1
+
+
+def test_delete_entry(temp_db):
+    builder = list_builder.ListBuilder()
+    storage = EntryStorage(temp_db)
+    entry = Entry(
+        uuid=uuid.uuid4(),
+        topic="My topic",
+        message="Test message",
+        created_at=datetime.now(),
+        modified_on=datetime.now(),
+        week_uuid=uuid.uuid4(),
+        day_uuid=uuid.uuid4(),
+    )
+    storage.add_entry(entry)
+    assert len(list_builder.ListBuilder.list_all_daily_ids()) == 1
+
+def test_list_as_json(temp_db):
+    builder = list_builder.ListBuilder()
+    storage = EntryStorage(temp_db)
+    entry = Entry(
+        uuid=uuid.uuid4(),
+        topic="My topic",
+        message="Test message",
+        created_at=datetime.now(),
+        modified_on=datetime.now(),
+        week_uuid=uuid.uuid4(),
+        day_uuid=uuid.uuid4(),
+    )
+    storage.add_entry(entry)
+    weekly_id = builder.get_weekly_id()
+    weekly_list = list_builder.ListBuilder.list_week(weekly_id)
+    assert(0 == 0)
