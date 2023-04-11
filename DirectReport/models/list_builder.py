@@ -12,8 +12,8 @@ sys.path.append(str(package_root_directory))
 if __name__ == '__main__':
     from ..database.daily_storage import DailyUUIDTable
     from ..database.weekly_storage import WeekUUIDTable
-    from ..models.entry import Entry
     from ..database.entry_storage import EntryStorage
+    from ..models.entry import Entry
 else:
     from DirectReport.database.daily_storage import DailyUUIDTable
     from DirectReport.database.weekly_storage import WeekUUIDTable
@@ -71,7 +71,7 @@ class ListBuilder:
         weekly_id = str(ListBuilder.get_weekly_id())
         daily_id = str(ListBuilder.get_daily_id())
         if topic is None:
-            topic = "Entry for work data on " + str(datetime.datetime.now())
+            topic = "Entry for work on " + str(datetime.datetime.now().strftime("%b %d, %Y"))
 
         new_entry = Entry(
             uuid.uuid4(), topic, entry, datetime.datetime.now(), datetime.datetime.now(), weekly_id, daily_id
@@ -87,7 +87,7 @@ class ListBuilder:
     @staticmethod
     def list_all_week_ids():
         storage = WeekUUIDTable('SQLite_Python.db')
-        list_all = storage.get_all_entries()
+        list_all = storage.list_all_entries()
         return list_all
 
     @staticmethod

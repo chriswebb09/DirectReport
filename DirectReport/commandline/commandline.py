@@ -70,7 +70,10 @@ def show_list(transformation):
 @click.command()
 @click.option('--entry', help="Add new entry to list", prompt='What have you been working on')
 def new(entry):
-    builder.new(entry)
+    topic = ""
+    if click.confirm('Do you wan to add in topic?'):
+        topic = click.prompt('Enter topic', type=str)
+    builder.new(entry, topic)
 
 
 @click.command()

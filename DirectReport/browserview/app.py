@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from DirectReport.models.list_builder import ListBuilder
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect
 from DirectReport.database.entry_storage import EntryStorage
 
 app = Flask(__name__, template_folder="templates")
@@ -29,10 +29,19 @@ def page_not_found(e):
 
 
 @app.route('/entry/<id>', methods=['GET'])
-def week(id=None):
+def detail(id=None):
     item = EntryStorage('SQLite_Python.db')
     entry = item.get_entry(id).to_dict()
     return render_template('detail.html', title='Detail', data=entry)
+
+@app.route('/delete/<id>', methods=['GET'])
+def delete(id=None):
+    item = EntryStorage('SQLite_Python.db')
+    print(id)
+    entry = item.delete_entry(id)
+    return redirect("/list", code=302)
+    # return render_template('detail.html', title='Detail', data=entry)
+
 
 
 if __name__ == "__main__":
