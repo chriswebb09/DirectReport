@@ -62,7 +62,7 @@ skip-string-normalization = true
 
 [tool.check-manifest]
 ignore = [
-    '/Assets'
+    'Assets/*'
 ]
 
 [tool.flake8]
