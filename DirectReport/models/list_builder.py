@@ -51,7 +51,7 @@ class ListBuilder:
     def add_new_weekly():
         today = datetime.date.today().strftime("%m/%d/%Y, %H:%M:%S")
         weekly = WeekUUIDTable('SQLite_Python.db')
-        weekly_id= str(uuid.uuid4())
+        weekly_id = str(uuid.uuid4())
         weekly.add_uuid(today, weekly_id)
         return id
 
