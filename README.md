@@ -70,16 +70,18 @@ $ python DirectReport launch
 $ python DirectReport list --all
  ```
  
- #### Daily
+#### Daily
  
  ```
 $ python DirectReport list --day
 ```
 
- #### Weekly
+#### Weekly
 
 ```
 
 $ python DirectReport list --week
 
 ```
+
+## Web Interface
