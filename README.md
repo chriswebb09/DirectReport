@@ -91,3 +91,5 @@ $ python DirectReport list --week
 ## Web Interface
 
 ![Screenshot home page for web interface.](https://raw.githubusercontent.com/chriswebb09/DirectReport/main/assets/web_interface.png)
+
+![Screenshot home page for web interface.](https://raw.githubusercontent.com/chriswebb09/DirectReport/main/assets/web_interface2.png)
