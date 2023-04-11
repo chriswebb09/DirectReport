@@ -90,6 +90,14 @@ $ python DirectReport list --week
 
 ## Web Interface
 
+### Home
+
 ![Screenshot home page for web interface.](https://raw.githubusercontent.com/chriswebb09/DirectReport/main/assets/web_interface.png)
 
-![Screenshot home page for web interface.](https://raw.githubusercontent.com/chriswebb09/DirectReport/main/assets/web_interface2.png)
+### List
+
+![Screenshot list page for web interface.](https://raw.githubusercontent.com/chriswebb09/DirectReport/main/assets/web_interface2.png)
+
+### Detail
+
+![Screenshot detail page for web interface.](https://raw.githubusercontent.com/chriswebb09/DirectReport/main/assets/web_interface3.png)
