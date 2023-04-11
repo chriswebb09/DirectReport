@@ -8,6 +8,10 @@
 
 Keep track of your accomplishments each day of the workweek, create a report of things you accomplished at the end of the week that you can email to manager.  Review progress each quarterly for more effective performance review.
 
+## Documentation 
+
+[Github Page](https://chriswebb09.github.io/DirectReport/)
+
 ## Installing
 
 ### From Package Manager 
