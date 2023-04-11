@@ -49,7 +49,7 @@ class ListBuilder:
 
     @staticmethod
     def add_new_weekly():
-        today = datetime.date.today()
+        today = datetime.date.today().strftime("%m/%d/%Y, %H:%M:%S")
         weekly = WeekUUIDTable('SQLite_Python.db')
         id = str(uuid.uuid4())
         weekly.add_uuid(today, id)
@@ -57,7 +57,7 @@ class ListBuilder:
 
     @staticmethod
     def add_new_daily():
-        today = datetime.date.today()
+        today = datetime.date.today().strftime("%m/%d/%Y, %H:%M:%S")
         daily = DailyUUIDTable('SQLite_Python.db')
         daily.create_table()
         weekly_id = str(ListBuilder.get_weekly_id())
@@ -74,9 +74,14 @@ class ListBuilder:
             topic = "Entry for work on " + str(datetime.datetime.now().strftime("%b %d, %Y"))
 
         new_entry = Entry(
-            uuid.uuid4(), topic, entry, datetime.datetime.now(), datetime.datetime.now(), weekly_id, daily_id
+            uuid.uuid4(), topic, entry, datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S"), datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S"), weekly_id, daily_id
         )
         storage.add_entry(new_entry)
+
+    @staticmethod
+    def delete(id):
+        storage = EntryStorage('SQLite_Python.db')
+        storage.delete_entry(id)
 
     @staticmethod
     def list_all_daily_ids():

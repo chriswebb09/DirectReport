@@ -15,17 +15,17 @@ def home():
     return render_template('index.html', title='Home', data=[])
 
 
-@app.route("/list", methods=['GET'])
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html', error=e), 404
+
+
+@app.route("/list", methods=['GET', 'POST'])
 def list():
-    """List"""
     items = EntryStorage('SQLite_Python.db')
     week = items.get_all_entries_json()
     return render_template('list.html', title='List', data=week)
 
-
-@app.errorhandler(404)
-def page_not_found(e):
-    return render_template('404.html', error=e), 404
 
 
 @app.route('/entry/<id>', methods=['GET'])
@@ -40,7 +40,6 @@ def delete(id=None):
     item = EntryStorage('SQLite_Python.db')
     item.delete_entry(id)
     return redirect("/list", code=302)
-    # return render_template('detail.html', title='Detail', data=entry)
 
 
 if __name__ == "__main__":

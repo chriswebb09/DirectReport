@@ -3,6 +3,7 @@
 import click
 import sys
 from pathlib import Path
+import webbrowser
 
 file = Path(__file__).resolve()
 package_root_directory = file.parents[1]
@@ -30,7 +31,7 @@ def list_items():
 
 
 @cli.group()
-def new_item():
+def item():
     pass
 
 
@@ -40,40 +41,40 @@ def web_browser():
 
 
 @click.command()
-@click.option('--weekly', 'transformation', flag_value='weekly', default=True)
-@click.option('--daily', 'transformation', flag_value='daily')
+@click.option('--week', 'transformation', flag_value='week', default=True)
+@click.option('--day', 'transformation', flag_value='day')
 @click.option('--all', 'transformation', flag_value='all')
-def show_list(transformation):
+def list(transformation):
     if transformation == "weekly":
         week = ListBuilder.list_this_week()
         if week is not None:
             for week_item in week:
                 print(str(week_item) + "\n")
-        else:
-            print("week is none")
     elif transformation == "daily":
         today = ListBuilder.list_today()
         if today is not None:
             for today_item in today:
                 print(str(today_item) + "\n")
-        else:
-            print("Today is none")
     elif transformation == "all":
         all = ListBuilder.list_all()
         if all is not None:
             for all_item in all:
                 print(str(all_item) + "\n")
-        else:
-            print("All is none")
 
 
 @click.command()
-@click.option('--entry', help="Add new entry to list", prompt='What have you been working on')
+@click.option('--entry', help="Add new entry to list", prompt='What have you been working on? ')
 def new(entry):
     topic = ""
     if click.confirm('Do you wan to add in topic?'):
         topic = click.prompt('Enter topic', type=str)
     builder.new(entry, topic)
+
+
+@click.command()
+@click.option('--id', help="Delete item with id", prompt='What is the id of the entry you wish to delete?')
+def delete(id):
+    ListBuilder.delete(id)
 
 
 @click.command()
@@ -83,11 +84,26 @@ def launch(url):
     app.run()
 
 
-list_items.add_command(show_list)
-new_item.add_command(new)
-web_browser.add_command(launch)
+@click.command()
+def mail():
+    recipient="mail@test.com"
+    subject="work for week"
+    week = ListBuilder.list_this_week()
+    body = ""
+    if week is not None:
+        for week_item in week:
+            body += str(week_item["topic"]) + "\n"  + str(week_item["message"]) + "\n" + "\n"
 
-cli = click.CommandCollection(sources=[list_items, new_item, web_browser])
+
+    webbrowser.open('mailto:?to=' + recipient + '&subject=' + subject + '&body=' + body, new=1)
+
+list_items.add_command(list)
+item.add_command(new)
+item.add_command(delete)
+web_browser.add_command(launch)
+web_browser.add_command(mail)
+
+cli = click.CommandCollection(sources=[list_items, item, web_browser])
 
 if __name__ == '__main__':
     cli()
