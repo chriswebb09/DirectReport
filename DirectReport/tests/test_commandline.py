@@ -54,6 +54,8 @@ def test_cli_list_weekly():
 def test_cli_list_all():
     result = runner.invoke(list, ['--all'])
     assert result.exit_code == 0
+
+
 #
 #
 # def test_cli_mail():
