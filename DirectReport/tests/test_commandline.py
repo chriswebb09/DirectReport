@@ -2,7 +2,7 @@
 
 from click.testing import CliRunner
 from DirectReport.commandline.commandline import new
-from DirectReport.commandline.commandline import show_list
+from DirectReport.commandline.commandline import list
 from DirectReport.commandline.commandline import launch
 
 runner = CliRunner()
@@ -18,22 +18,22 @@ def test_prompt_new():
 
 
 def test_cli_list():
-    response = runner.invoke(show_list)
+    response = runner.invoke(list)
     assert response.exit_code == 0
 
 
 def test_cli_list_daily():
-    result = runner.invoke(show_list, ['--daily'])
+    result = runner.invoke(list, ['--day'])
     assert result.exit_code == 0
 
 
 def test_cli_list_weekly():
-    result = runner.invoke(show_list, ['--weekly'])
+    result = runner.invoke(list, ['--week'])
     assert result.exit_code == 0
 
 
 def test_cli_list_all():
-    result = runner.invoke(show_list, ['--all'])
+    result = runner.invoke(list, ['--all'])
     assert result.exit_code == 0
 
 

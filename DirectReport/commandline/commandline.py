@@ -93,9 +93,8 @@ def mail():
     if week is not None:
         for week_item in week:
             body += str(week_item["topic"]) + "\n"  + str(week_item["message"]) + "\n" + "\n"
-
-
     webbrowser.open('mailto:?to=' + recipient + '&subject=' + subject + '&body=' + body, new=1)
+
 
 list_items.add_command(list)
 item.add_command(new)
