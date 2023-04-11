@@ -56,6 +56,9 @@ def test_cli_list_all():
     assert result.exit_code == 0
 
 
+#
+
+
 def test_cli_mail():
     result = runner.invoke(mail)
     assert result.exit_code == 0

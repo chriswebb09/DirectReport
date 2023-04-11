@@ -139,6 +139,11 @@ class DailyUUIDTable:
         self.conn.commit()
 
     def delete_all_entries(self):
+        """
+        Deletes all entries from the database.
+
+        :return: None
+        """
         cursor = self.conn.cursor()
         cursor.execute(
             '''

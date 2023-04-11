@@ -40,7 +40,7 @@ def test_get_weekly_id(temp_db):
     )
 
     storage.add_entry(entry)
-    assert len(builder.get_weekly_id()) is not None
+    assert builder.get_weekly_id() is not None
 
 
 def test_get_all_weekly_ids(temp_db):
