@@ -3,7 +3,7 @@ name: build-sphinx-to-gh-pages
 env:
   GITHUB_ACTOR: chriswebb09
   GITHUB_REPOSITORY: chriswebb09/DirectReport
-  GITHUB_TOKEN: ${{ secrets.GH_PAGES }}
+  GITHUB_TOKEN: ${{ secrets.GH_PAGE }}
 
 on: 
   push:
@@ -20,7 +20,7 @@ jobs:
     
       - name: Get prerequisites and clone repository
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAGES }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAGE }}
         run: |
           set -x
           apt-get update
@@ -30,6 +30,6 @@ jobs:
 
       - name: Run build script for Sphinx pages
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAGES }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAGE }}
         run: "docs/buildsite.sh"
         shell: bash
