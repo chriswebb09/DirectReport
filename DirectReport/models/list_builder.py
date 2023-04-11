@@ -74,7 +74,13 @@ class ListBuilder:
             topic = "Entry for work on " + str(datetime.datetime.now().strftime("%b %d, %Y"))
 
         new_entry = Entry(
-            uuid.uuid4(), topic, entry, datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S"), datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S"), weekly_id, daily_id
+            uuid.uuid4(),
+            topic,
+            entry,
+            datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S"),
+            datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S"),
+            weekly_id,
+            daily_id,
         )
         storage.add_entry(new_entry)
 
@@ -123,6 +129,7 @@ class ListBuilder:
         storage = EntryStorage('SQLite_Python.db')
         list = storage.get_all_entries()
         return list
+
 
 if __name__ == '__main__':
     print("main")

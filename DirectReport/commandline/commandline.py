@@ -86,14 +86,14 @@ def launch(url):
 
 @click.command()
 def mail():
-    recipient="mail@test.com"
-    subject="work for week"
+    recipient = "mail@test.com"
+    subject = "work for week"
     week_id = ListBuilder.get_weekly_id()
     week = ListBuilder.list_week(week_id)
     body = ""
     if week is not None:
         for week_item in week:
-            body += str(week_item["topic"]) + "\n"  + str(week_item["message"]) + "\n" + "\n"
+            body += str(week_item["topic"]) + "\n" + str(week_item["message"]) + "\n" + "\n"
     webbrowser.open('mailto:?to=' + recipient + '&subject=' + subject + '&body=' + body, new=1)
 
 

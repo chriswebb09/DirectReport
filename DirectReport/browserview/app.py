@@ -27,7 +27,6 @@ def list():
     return render_template('list.html', title='List', data=week)
 
 
-
 @app.route('/entry/<id>', methods=['GET'])
 def detail(id=None):
     item = EntryStorage('SQLite_Python.db')

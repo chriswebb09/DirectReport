@@ -18,12 +18,14 @@ import pytest
 
 runner = CliRunner()
 
+
 @pytest.fixture
 def temp_db():
     db_fd, db_path = tempfile.mkstemp()
     yield db_path
     os.close(db_fd)
     os.remove(db_path)
+
 
 def test_cli_prompt_new():
     response = runner.invoke(
@@ -53,9 +55,11 @@ def test_cli_list_all():
     result = runner.invoke(list, ['--all'])
     assert result.exit_code == 0
 
+
 def test_cli_mail():
     result = runner.invoke(mail)
     assert result.exit_code == 0
+
 
 def test_cli_delete(temp_db):
     builder = ListBuilder()
