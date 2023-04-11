@@ -43,5 +43,17 @@ def test_cli_mail():
     assert result.exit_code == 0
 
 def test_cli_delete():
-    result = runner.invoke(delete, input="d5bc007c-6ccb-4078-b478-700b214a663b")
+    builder = list_builder.ListBuilder()
+    storage = EntryStorage(temp_db)
+    entry = Entry(
+        uuid=uuid.uuid4(),
+        topic="My topic",
+        message="Test message",
+        created_at=datetime.now(),
+        modified_on=datetime.now(),
+        week_uuid=uuid.uuid4(),
+        day_uuid=uuid.uuid4(),
+    )
+    storage.add_entry(entry)
+    result = runner.invoke(delete, input=entry.uuid)
     assert result.exit_code == 0
