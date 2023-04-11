@@ -20,6 +20,7 @@ import sys, os
 sys.path.insert(0, os.path.abspath('.'))
 sys.path.insert(0, os.path.abspath('..'))
 
+
 # -- Project information -----------------------------------------------------
 
 project = 'DirectReport'
@@ -40,7 +41,7 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.napoleon',
     'sphinx_rtd_theme',
-    'sphinx.ext.autodoc'
+    'sphinx.ext.autosummary'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
