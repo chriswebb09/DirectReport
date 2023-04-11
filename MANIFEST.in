@@ -4,7 +4,8 @@ include *.md
 include LICENSE
 include README.md
 include CONTRIBUTING.md
-include gh-pages/*
+include docs/*
+prune docs/build
 
 include .bumpversion.cfg
 include pyproject.toml
@@ -15,7 +16,7 @@ recursive-include docs *.rst
 recursive-include docs Makefile
 recursive-include docs *.nojekyll
 recursive-include docs *.sh
-recursive-include gh-pages *
+recursive-include docs *
 
 prune .github
 exclude .gitignore

@@ -1,3 +1,5 @@
+TMPREPO=/tmp/docs/DirectReport
+
 #########
 # BUILD #
 #########
@@ -77,6 +79,28 @@ dist: clean build dist-build dist-check  ## Build dists
 
 publish:  # Upload python assets
 	echo "would usually run python -m twine upload dist/* --skip-existing"
+	
+########
+# PAGES #
+########
+
+docs:
+	$(MAKE) -C docs/ clean
+	$(MAKE) -C docs/ html
+
+pages:
+	rm -rf $(TMPREPO)
+	git clone -b gh-pages git@github.com:chriswebb09/DirectReport.git $(TMPREPO)
+	rm -rf $(TMPREPO)/*
+	cp -r docs/source/html/* $(TMPREPO)
+	cd $(TMPREPO);\
+	git add -A ;\
+	git commit -a -m 'auto-updating docs' ;\
+	git push
+
+serve:
+	cd docs/source/html; \
+	python3 -m http.server 9087
 
 #########
 # CLEAN #
