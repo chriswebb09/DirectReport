@@ -100,4 +100,4 @@ $ python DirectReport list --week
 
 ### Detail
 
-![Screenshot detail page for web interface.](https://raw.githubusercontent.com/chriswebb09/DirectReport/main/assets/web_interface3.png)
+![Screenshot detail page for web interface.](https://raw.githubusercontent.com/chriswebb09/DirectReport/main/assets/web_interface4.png)
