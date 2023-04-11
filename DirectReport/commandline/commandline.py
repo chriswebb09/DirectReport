@@ -22,21 +22,25 @@ builder = ListBuilder()
 
 @click.group()
 def cli():
+    """Main Click group for the command line interface."""
     pass
 
 
 @cli.group()
 def list_items():
+    """Click group for list items related commands."""
     pass
 
 
 @cli.group()
 def item():
+    """Click group for item related commands."""
     pass
 
 
 @cli.group()
 def web_browser():
+    """Click group for web browser related commands."""
     pass
 
 
@@ -45,6 +49,11 @@ def web_browser():
 @click.option('--day', 'transformation', flag_value='day')
 @click.option('--all', 'transformation', flag_value='all')
 def list(transformation):
+    """
+    Lists items based on the selected transformation flag.
+
+    :param transformation: The selected transformation flag (week, day, or all).
+    """
     if transformation == "weekly":
         week = ListBuilder.list_this_week()
         if week is not None:
@@ -65,6 +74,11 @@ def list(transformation):
 @click.command()
 @click.option('--entry', help="Add new entry to list", prompt='What have you been working on? ')
 def new(entry):
+    """
+    Adds a new entry to the list.
+
+    :param entry: The entry text to add.
+    """
     topic = ""
     if click.confirm('Do you wan to add in topic?'):
         topic = click.prompt('Enter topic', type=str)
@@ -74,18 +88,31 @@ def new(entry):
 @click.command()
 @click.option('--id', help="Delete item with id", prompt='What is the id of the entry you wish to delete?')
 def delete(id):
+    """
+    Deletes an item with the specified ID.
+
+    :param id: The ID of the item to delete.
+    """
     ListBuilder.delete(id)
 
 
 @click.command()
 @click.option("--url", default="http://127.0.0.1:5000", help="URL to open in the web browser")
 def launch(url):
+    """
+    Launches the web browser and runs the app.
+
+    :param url: The URL to open in the web browser.
+    """
     click.launch(url)
     app.run()
 
 
 @click.command()
 def mail():
+    """
+    Sends an email with the week's work items.
+    """
     recipient = "mail@test.com"
     subject = "work for week"
     week_id = ListBuilder.get_weekly_id()
