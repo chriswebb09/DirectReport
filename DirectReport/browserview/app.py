@@ -27,7 +27,7 @@ def page_not_found(e):
     :param e: The error object.
     :return: Rendered HTML template for the 404 error page.
     """
-    return render_template('404.html', error=e)
+    return render_template('404.html', error=e), 404
 
 
 @app.route("/list", methods=['GET', 'POST'])

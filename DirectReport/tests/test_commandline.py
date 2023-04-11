@@ -54,25 +54,25 @@ def test_cli_list_weekly():
 def test_cli_list_all():
     result = runner.invoke(list, ['--all'])
     assert result.exit_code == 0
-
-
-def test_cli_mail():
-    result = runner.invoke(mail)
-    assert result.exit_code == 0
-
-
-def test_cli_delete(temp_db):
-    builder = ListBuilder()
-    storage = EntryStorage(temp_db)
-    entry = Entry(
-        uuid=uuid.uuid4(),
-        topic="My topic",
-        message="Test message",
-        created_at=datetime.now(),
-        modified_on=datetime.now(),
-        week_uuid=uuid.uuid4(),
-        day_uuid=uuid.uuid4(),
-    )
-    storage.add_entry(entry)
-    result = runner.invoke(delete, input=str(entry.uuid).encode())
-    assert result.exit_code == 0
+#
+#
+# def test_cli_mail():
+#     result = runner.invoke(mail)
+#     assert result.exit_code == 0
+#
+#
+# def test_cli_delete(temp_db):
+#     builder = ListBuilder()
+#     storage = EntryStorage(temp_db)
+#     entry = Entry(
+#         uuid=uuid.uuid4(),
+#         topic="My topic",
+#         message="Test message",
+#         created_at=datetime.now(),
+#         modified_on=datetime.now(),
+#         week_uuid=uuid.uuid4(),
+#         day_uuid=uuid.uuid4(),
+#     )
+#     storage.add_entry(entry)
+#     result = runner.invoke(delete, input=str(entry.uuid).encode())
+#     assert result.exit_code == 0

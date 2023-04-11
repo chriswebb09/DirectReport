@@ -100,15 +100,15 @@ class ListBuilder:
         storage = EntryStorage('SQLite_Python.db')
         weekly_id = str(ListBuilder.get_weekly_id())
         daily_id = str(ListBuilder.get_daily_id())
-        if topic is None:
+        if topic is None or topic == '':
             topic = "Entry for work on " + str(datetime.datetime.now().strftime("%b %d, %Y"))
 
         new_entry = Entry(
             uuid.uuid4(),
             topic,
             entry,
-            datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S"),
-            datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S"),
+            datetime.datetime.now(),
+            datetime.datetime.now(),
             weekly_id,
             daily_id,
         )
