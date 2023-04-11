@@ -3,7 +3,29 @@ import datetime
 
 
 class Entry:
+    """
+    A class to represent a journal entry.
+    """
+
     def __init__(self, uuid, topic, message, created_at, modified_on, week_uuid, day_uuid):
+        """
+        Initialize the Entry object.
+
+        :param uuid: A unique identifier for the entry.
+        :type uuid: str
+        :param topic: The topic of the entry.
+        :type topic: str
+        :param message: The message/content of the entry.
+        :type message: str
+        :param created_at: The timestamp when the entry was created.
+        :type created_at: float
+        :param modified_on: The timestamp when the entry was last modified.
+        :type modified_on: float
+        :param week_uuid: The unique identifier for the week.
+        :type week_uuid: str
+        :param day_uuid: The unique identifier for the day.
+        :type day_uuid: str
+        """
         self.uuid = uuid
         self.topic = topic
         self.message = message
@@ -13,12 +35,37 @@ class Entry:
         self.day_uuid = day_uuid
 
     def get_created_at_formatted(self, format="%Y-%m-%d %H:%M:%S"):
+        """
+        Get the created_at timestamp formatted as a string.
+
+        :param format: The desired format of the timestamp, default is "%Y-%m-%d %H:%M:%S".
+        :type format: str
+        :return: The formatted created_at timestamp.
+        :rtype: str
+        """
+
         return datetime.datetime.fromtimestamp(self.created_at).strftime(format)
 
     def get_modified_on_formatted(self, format="%Y-%m-%d %H:%M:%S"):
+        """
+        Get the modified_on timestamp formatted as a string.
+
+        :param format: The desired format of the timestamp, default is "%Y-%m-%d %H:%M:%S".
+        :type format: str
+        :return: The formatted modified_on timestamp.
+        :rtype: str
+        """
+
         return datetime.datetime.fromtimestamp(self.modified_on).strftime(format)
 
     def to_dict(self):
+        """
+        Convert the Entry object to a dictionary.
+
+        :return: The Entry object as a dictionary.
+        :rtype: dict
+        """
+
         return {
             "uuid": str(self.uuid),
             "topic": self.topic,
@@ -31,6 +78,14 @@ class Entry:
 
     @classmethod
     def from_dict(cls, data):
+        """
+        Create an Entry object from a dictionary.
+
+        :param data: The dictionary containing the Entry data.
+        :type data: dict
+        :return: An Entry object.
+        :rtype: Entry
+        """
         uuid = data.get("uuid")
         topic = data.get("topic")
         message = data.get("message")
