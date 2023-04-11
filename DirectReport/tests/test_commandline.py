@@ -5,10 +5,25 @@ from DirectReport.commandline.commandline import new
 from DirectReport.commandline.commandline import list
 from DirectReport.commandline.commandline import mail
 from DirectReport.commandline.commandline import delete
+from DirectReport.models.entry import Entry
+from datetime import datetime
+from DirectReport.database.entry_storage import EntryStorage
 from DirectReport.commandline.commandline import launch
+from DirectReport.models.list_builder import ListBuilder
+import tempfile
+from pathlib import Path
+import uuid
+import os
+import pytest
 
 runner = CliRunner()
 
+@pytest.fixture
+def temp_db():
+    db_fd, db_path = tempfile.mkstemp()
+    yield db_path
+    os.close(db_fd)
+    os.remove(db_path)
 
 def test_cli_prompt_new():
     response = runner.invoke(
@@ -42,8 +57,8 @@ def test_cli_mail():
     result = runner.invoke(mail)
     assert result.exit_code == 0
 
-def test_cli_delete():
-    builder = list_builder.ListBuilder()
+def test_cli_delete(temp_db):
+    builder = ListBuilder()
     storage = EntryStorage(temp_db)
     entry = Entry(
         uuid=uuid.uuid4(),
@@ -55,5 +70,5 @@ def test_cli_delete():
         day_uuid=uuid.uuid4(),
     )
     storage.add_entry(entry)
-    result = runner.invoke(delete, input=entry.uuid)
+    result = runner.invoke(delete, input=str(entry.uuid).encode())
     assert result.exit_code == 0
