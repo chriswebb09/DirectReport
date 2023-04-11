@@ -12,7 +12,6 @@ class EntryStorage:
     A class to interact with SQLite database for storing and retrieving `Entry` objects.
     """
 
-
     def __init__(self, db_path):
         """
         Initializes the EntryStorage object with the given SQLite database file path.
@@ -113,7 +112,6 @@ class EntryStorage:
         self.conn.commit()
 
     def get_all_entries(self):
-
         """
         Retrieves all `Entry` objects from the SQLite database.
 
@@ -127,7 +125,6 @@ class EntryStorage:
         return [Entry(*row) for row in result.fetchall()]
 
     def get_all_entries_json(self):
-
         """
         Retrieves all `Entry` objects from the SQLite database and returns them as dictionaries.
 
