@@ -34,14 +34,13 @@ def detail(id=None):
     entry = item.get_entry(id).to_dict()
     return render_template('detail.html', title='Detail', data=entry)
 
+
 @app.route('/delete/<id>', methods=['GET'])
 def delete(id=None):
     item = EntryStorage('SQLite_Python.db')
-    print(id)
-    entry = item.delete_entry(id)
+    item.delete_entry(id)
     return redirect("/list", code=302)
     # return render_template('detail.html', title='Detail', data=entry)
-
 
 
 if __name__ == "__main__":

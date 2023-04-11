@@ -116,5 +116,6 @@ class EntryStorage:
         self.conn.execute(query)
         self.conn.commit()
 
+
 if __name__ == '__main__':
     print("main")
