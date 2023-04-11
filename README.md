@@ -10,6 +10,13 @@ Keep track of your accomplishments each day of the workweek, create a report of 
 
 ## Installing
 
+### From Package Manager 
+
+Using pip: 
+`pip install DirectReport`
+
+### From Project Files: 
+
 This project uses a `Makefile` as a command registry, with the following commands:
 - `make`: list available commands
 - `make develop`: install and build this library and its dependencies using `pip`
@@ -53,26 +60,26 @@ $ python DirectReport launch
 #### Basic
 
 ```
- $ python DirectReport show-list
+ $ python DirectReport list
 ```
 
 
 #### All
 
 ```
-$ python DirectReport show-list --all
+$ python DirectReport list --all
  ```
  
  #### Daily
  
  ```
-$ python DirectReport show-list --daily
+$ python DirectReport list --day
 ```
 
  #### Weekly
 
 ```
 
-$ python DirectReport show-list --weekly
+$ python DirectReport list --week
 
 ```
