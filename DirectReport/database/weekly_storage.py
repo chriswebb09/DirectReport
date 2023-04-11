@@ -5,12 +5,25 @@ import uuid
 
 
 class WeekUUIDTable:
+
+    """
+    A class to interact with SQLite database for managing date-UUID mappings.
+    """
+
     def __init__(self, db_path):
+        """
+        Initializes the WeekUUIDTable object with the given SQLite database file path.
+
+        :param db_path: The SQLite database file path.
+        """
         self.db_path = db_path
         self.conn = sqlite3.connect(db_path)
         self.create_table()
 
     def create_table(self):
+        """
+        Creates the `date_uuid_table` table in the SQLite database if it doesn't exist.
+        """
         cursor = self.conn.cursor()
         cursor.execute(
             '''
@@ -23,6 +36,12 @@ class WeekUUIDTable:
         self.conn.commit()
 
     def add_uuid(self, date, uuid_str=None):
+        """
+        Adds a UUID for the specified date to the SQLite database.
+
+        :param date: The date to associate with the UUID.
+        :param uuid_str: The UUID string (optional). If not provided, a new UUID will be generated.
+        """
         if uuid_str is None:
             uuid_str = str(uuid.uuid4())
         cursor = self.conn.cursor()
@@ -35,6 +54,12 @@ class WeekUUIDTable:
         self.conn.commit()
 
     def get_uuid(self, date):
+        """
+        Retrieves the UUID associated with the specified date.
+
+        :param date: The date to get the associated UUID for.
+        :return: The UUID string if found, otherwise `None`.
+        """
         cursor = self.conn.cursor()
         cursor.execute(
             '''
@@ -49,6 +74,12 @@ class WeekUUIDTable:
             return None
 
     def update_uuid(self, date, uuid_str):
+        """
+        Updates the UUID associated with the specified date in the SQLite database.
+
+        :param date: The date to update the associated UUID for.
+        :param uuid_str: The new UUID string.
+        """
         cursor = self.conn.cursor()
         cursor.execute(
             '''
@@ -59,6 +90,12 @@ class WeekUUIDTable:
         self.conn.commit()
 
     def find_uuid_by_date(self, date):
+        """
+        Finds the UUID associated with the specified date.
+
+        :param date: The date to find the associated UUID for.
+        :return: The UUID string if found, otherwise `None`.
+        """
         cursor = self.conn.cursor()
         cursor.execute(
             '''
@@ -73,6 +110,11 @@ class WeekUUIDTable:
             return None
 
     def list_all_entries(self):
+        """
+        Lists all date-UUID mappings from the SQLite database.
+
+        :return: A list of tuples containing (date, UUID).
+        """
         cursor = self.conn.cursor()
         cursor.execute(
             '''
@@ -83,6 +125,11 @@ class WeekUUIDTable:
         return results
 
     def delete_entry_by_date(self, date):
+        """
+        Deletes the date-UUID mapping associated with the specified date.
+
+        :param date: The date to delete the associated UUID for.
+        """
         cursor = self.conn.cursor()
         cursor.execute(
             '''
