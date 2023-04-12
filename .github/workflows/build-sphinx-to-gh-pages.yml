@@ -26,8 +26,8 @@ jobs:
           apt-get update
           apt-get install -y git
           git clone "https://token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" .
-          python3 -m pip install -U sphinx
-          python3 -m pip install sphinx-rtd-theme
+          python -m pip install -U sphinx
+          python -m pip install sphinx-rtd-theme
         shell: bash
 
       - name: Run build script for Sphinx pages
