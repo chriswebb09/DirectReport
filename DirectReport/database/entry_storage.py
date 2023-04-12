@@ -46,7 +46,10 @@ class EntryStorage:
             entry.week_uuid.__str__(),
             entry.day_uuid.__str__(),
         )
-        self.conn.execute("INSERT INTO entries (uuid, topic, message, created_at, modified_on, week_uuid, day_uuid) VALUES (?, ?, ?, ?, ?, ?, ?)", values)
+        self.conn.execute(
+            "INSERT INTO entries (uuid, topic, message, created_at, modified_on, week_uuid, day_uuid) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            values,
+        )
         self.conn.commit()
 
     def get_entry(self, uuid):
@@ -57,7 +60,10 @@ class EntryStorage:
         :return: The `Entry` object if found, otherwise `None`.
         """
 
-        result = self.conn.execute("SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid FROM entries WHERE uuid = ?", (str(uuid),))
+        result = self.conn.execute(
+            "SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid FROM entries WHERE uuid = ?",
+            (str(uuid),),
+        )
         row = result.fetchone()
         if row:
             return Entry(*row)
@@ -91,7 +97,9 @@ class EntryStorage:
 
         :return: A list of `Entry` objects.
         """
-        result = self.conn.execute("SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid FROM entries")
+        result = self.conn.execute(
+            "SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid FROM entries"
+        )
         return [Entry(*row) for row in result.fetchall()]
 
     def get_all_entries_json(self):
@@ -100,7 +108,9 @@ class EntryStorage:
 
         :return: A list of dictionaries representing `Entry` objects
         """
-        result = self.conn.execute("SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid FROM entries")
+        result = self.conn.execute(
+            "SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid FROM entries"
+        )
         return [Entry(*row).to_dict() for row in result.fetchall()]
 
     def get_entries_by_week(self, week_uuid):
@@ -111,7 +121,10 @@ class EntryStorage:
         :return: A list of dictionaries containing the entries' data for the specified week.
         """
 
-        result = self.conn.execute("SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid FROM entries WHERE week_uuid = ?", (str(week_uuid),))
+        result = self.conn.execute(
+            "SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid FROM entries WHERE week_uuid = ?",
+            (str(week_uuid),),
+        )
         return [Entry(*row).__dict__ for row in result.fetchall()]
 
     def get_entries_by_day(self, day_uuid):
@@ -122,7 +135,10 @@ class EntryStorage:
         :return: A list of dictionaries containing the entries' data for the specified day.
         """
 
-        result = self.conn.execute("SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid FROM entries WHERE day_uuid = ?", (str(day_uuid),))
+        result = self.conn.execute(
+            "SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid FROM entries WHERE day_uuid = ?",
+            (str(day_uuid),),
+        )
         return [Entry(*row).__dict__ for row in result.fetchall()]
 
     def delete_all_entries(self):
