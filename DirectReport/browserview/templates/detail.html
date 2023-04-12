@@ -47,7 +47,6 @@
                 }
 
                 click = () => {
-                     console.log('clicked');
                      console.log(this.state.isEditting)
                      this.setState((state) => ({
                          ...state,
@@ -55,40 +54,6 @@
                      }));
                 }
             }
-                {#    return (#}
-                {#        <div>#}
-                {#            <p>{this.state.count}</p>#}
-                {#            <button onClick={this.click}>클릭</button>#}
-                {#        </div>#}
-                {#    );#}
-
-                {#click = () => {  // bind 방법 2#}
-                {#    // console.log('clicked');#}
-                {#    this.setState((state) => ({#}
-                {#        ...state,#}
-                {#        count: state.count + 1,#}
-                {#    }));#}
-
-                    {#const formatted_date = new Date(this.props.itemdata.created_at).toLocaleDateString();#}
-                    {# let [changeText, setChangeText] = React.useState(true);#}
-                    {# const handleChange = () => {#}
-                    {#     return setChangeText(!changeText);#}
-                    {# };#}
-                    {#return (#}
-                    {#    <div className="mx-80 px-40 content-center mt-20 my-8 h-56">#}
-                    {#        <h1 className="mb-5 text-3xl text-gray-800 text-center content-center font-bold ">{this.props.itemdata.topic}</h1>#}
-                    {#        <h2 className="my-5 px-40 text-lg text-gray-500 font-semibold">{'Created on: ' + formatted_date}</h2>#}
-                    {#        <p className="mt-5 px-40 text-xl content-center text-gray-500 border-0">{this.props.itemdata.message}</p>#}
-                    {#        <div className="mt-14 flex content-center border-0 items-center justify-center gap-x-24">#}
-                    {#            <a href={"/edit/" + this.props.itemdata.uuid} className="mt-50 rounded-full bg-blue-600 px-14 py-5 text-lg text-white shadow-lg font-semibold text-center hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Edit</a>#}
-                    {#            <a href={"/delete/" + this.props.itemdata.uuid} className="mt-50 rounded-full bg-blue-600 px-10 py-5 text-lg text-white shadow-lg font-semibold text-center hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Delete</a>#}
-                    {#            <button onClick={() => handleChange()}>click me</button>#}
-                    {#            {changeText ? "Apple" : "Banana"}#}
-                    {#        </div>#}
-                    {#    </div>#}
-            {#        );#}
-            {#    }#}
-
 
             function App() {
                 return (
