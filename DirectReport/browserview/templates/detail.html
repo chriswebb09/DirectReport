@@ -9,28 +9,87 @@
         </script>
         <div id='root' class='md:max-lg:flex content-start'></div>
         <script type="text/babel">
-            // Obtain the root
             const rootElement = document.getElementById('root')
-            // Create a ES6 class component
             class Entry extends React.Component {
-                // Use the render function to return JSX component
+
+                state = {
+                    isEditting: false
+                };
+
+                renderAuthButton = () => {
+                    if (this.state.isEditting) {
+                        return <textarea rows="4" className="focus:shadow-soft-primary-outline min-h-unset text-sm leading-5.6 ease-soft block h-auto w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none">{this.props.itemdata.message}</textarea>
+                    } else {
+                        return <p className="mt-5 px-40 text-xl content-center text-gray-500 border-0">{this.props.itemdata.message}</p>
+                    }
+                }
+
+                renderTopicElement = () => {
+                    if (this.state.isEditting) {
+                        return <input className="mx-80 px-40 content-center" type="text" value={this.props.itemdata.topic}></input>
+                    } else {
+                        return <h1 className="mb-5 text-3xl text-gray-800 text-center content-center font-bold">{this.props.itemdata.topic}</h1>
+                    }
+                }
+
                 render() {
                     return (
-                        <div className="mx-80 mt-20 my-8 h-56">
-                            <h1 className="text-3xl text-gray-800 text-center font-bold underline">{this.props.itemdata.topic}</h1>
-                            <p className="mt-10 px-10 text-lg text-gray-500">{this.props.itemdata.message}</p>
-                            <p className="my-10 px-10 text-lg text-gray-500 font-semibold">{this.props.itemdata.created_at}</p>
-                            <div className="mt-10 flex items-center justify-center gap-x-6">
-                                <a href={"/edit/" + this.props.itemdata.uuid} className="mt-50 rounded-md bg-indigo-600 px-6 py-2.5 text-xl font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Edit</a>
-                                <a href={"/delete/" + this.props.itemdata.uuid} className="mt-50 rounded-md bg-indigo-600 px-3.5 py-2.5 text-xl font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Delete</a>
+                        <div className="mx-80 px-40 content-center mt-20 my-8 h-56">
+                            {this.renderTopicElement()}
+                            <h2 className="my-5 px-40 text-lg text-gray-500 font-semibold">{'Created on: ' + this.props.itemdata.created_at}</h2>
+                            {this.renderAuthButton()}
+                            <div className="mt-14 flex content-center items-center justify-center gap-x-24">
+                                <button className="flex-none rounded-full bg-indigo-500 px-9 py-4 text-lg font-semibold text-white shadow-lg hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" onClick={this.click}>Edit</button>
                             </div>
+
                         </div>
                     );
+                }
 
-
+                click = () => {
+                     console.log('clicked');
+                     console.log(this.state.isEditting)
+                     this.setState((state) => ({
+                         ...state,
+                         isEditting: !state.isEditting
+                     }));
                 }
             }
-            // Create a function to wrap up your component
+                {#    return (#}
+                {#        <div>#}
+                {#            <p>{this.state.count}</p>#}
+                {#            <button onClick={this.click}>클릭</button>#}
+                {#        </div>#}
+                {#    );#}
+
+                {#click = () => {  // bind 방법 2#}
+                {#    // console.log('clicked');#}
+                {#    this.setState((state) => ({#}
+                {#        ...state,#}
+                {#        count: state.count + 1,#}
+                {#    }));#}
+
+                    {#const formatted_date = new Date(this.props.itemdata.created_at).toLocaleDateString();#}
+                    {# let [changeText, setChangeText] = React.useState(true);#}
+                    {# const handleChange = () => {#}
+                    {#     return setChangeText(!changeText);#}
+                    {# };#}
+                    {#return (#}
+                    {#    <div className="mx-80 px-40 content-center mt-20 my-8 h-56">#}
+                    {#        <h1 className="mb-5 text-3xl text-gray-800 text-center content-center font-bold ">{this.props.itemdata.topic}</h1>#}
+                    {#        <h2 className="my-5 px-40 text-lg text-gray-500 font-semibold">{'Created on: ' + formatted_date}</h2>#}
+                    {#        <p className="mt-5 px-40 text-xl content-center text-gray-500 border-0">{this.props.itemdata.message}</p>#}
+                    {#        <div className="mt-14 flex content-center border-0 items-center justify-center gap-x-24">#}
+                    {#            <a href={"/edit/" + this.props.itemdata.uuid} className="mt-50 rounded-full bg-blue-600 px-14 py-5 text-lg text-white shadow-lg font-semibold text-center hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Edit</a>#}
+                    {#            <a href={"/delete/" + this.props.itemdata.uuid} className="mt-50 rounded-full bg-blue-600 px-10 py-5 text-lg text-white shadow-lg font-semibold text-center hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Delete</a>#}
+                    {#            <button onClick={() => handleChange()}>click me</button>#}
+                    {#            {changeText ? "Apple" : "Banana"}#}
+                    {#        </div>#}
+                    {#    </div>#}
+            {#        );#}
+            {#    }#}
+
+
             function App() {
                 return (
                     <div>
@@ -38,7 +97,7 @@
                     </div>
                 )
             }
-            // Use the ReactDOM.render to show your component on the browser
+
             ReactDOM.render(<App/>, rootElement)
         </script>
     </main>

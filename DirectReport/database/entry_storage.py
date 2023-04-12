@@ -7,6 +7,7 @@ else:
     from DirectReport.models.entry import Entry
 
 
+# noinspection SqlNoDataSourceInspection
 class EntryStorage:
     """
     A class to interact with SQLite database for storing and retrieving `Entry` objects.
@@ -25,17 +26,7 @@ class EntryStorage:
         """
         Creates the `entries` table in the SQLite database if it doesn't exist.
         """
-        query = """
-        CREATE TABLE IF NOT EXISTS entries (
-            uuid TEXT PRIMARY KEY,
-            topic TEXT,
-            message TEXT,
-            created_at TEXT,
-            modified_on TEXT,
-            week_uuid TEXT,
-            day_uuid TEXT
-        )
-        """
+        query = "CREATE TABLE IF NOT EXISTS entries (uuid TEXT PRIMARY KEY, topic TEXT, message TEXT, created_at TEXT, modified_on TEXT, week_uuid TEXT, day_uuid TEXT)"
         self.conn.execute(query)
         self.conn.commit()
 
@@ -46,10 +37,6 @@ class EntryStorage:
         :param entry: The `Entry` object to add.
         """
 
-        query = """
-        INSERT INTO entries (uuid, topic, message, created_at, modified_on, week_uuid, day_uuid)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-        """
         values = (
             entry.uuid.__str__(),
             entry.topic,
@@ -59,7 +46,7 @@ class EntryStorage:
             entry.week_uuid.__str__(),
             entry.day_uuid.__str__(),
         )
-        self.conn.execute(query, values)
+        self.conn.execute("INSERT INTO entries (uuid, topic, message, created_at, modified_on, week_uuid, day_uuid) VALUES (?, ?, ?, ?, ?, ?, ?)", values)
         self.conn.commit()
 
     def get_entry(self, uuid):
@@ -70,12 +57,7 @@ class EntryStorage:
         :return: The `Entry` object if found, otherwise `None`.
         """
 
-        query = """
-        SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid
-        FROM entries
-        WHERE uuid = ?
-        """
-        result = self.conn.execute(query, (str(uuid),))
+        result = self.conn.execute("SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid FROM entries WHERE uuid = ?", (str(uuid),))
         row = result.fetchone()
         if row:
             return Entry(*row)
@@ -88,13 +70,9 @@ class EntryStorage:
 
         :param entry: The `Entry` object to update.
         """
-        query = """
-        UPDATE entries
-        SET message = ?, modified_on = ?
-        WHERE uuid = ?
-        """
+
         values = (entry.message, entry.modified_on, str(entry.uuid))
-        self.conn.execute(query, values)
+        self.conn.execute("UPDATE entries SET message = ?, modified_on = ? WHERE uuid = ?", values)
         self.conn.commit()
 
     def delete_entry(self, uuid):
@@ -104,11 +82,7 @@ class EntryStorage:
         :param uuid: The UUID of the entry to delete.
         """
 
-        query = """
-        DELETE FROM entries
-        WHERE uuid = ?
-        """
-        self.conn.execute(query, (str(uuid),))
+        self.conn.execute("DELETE FROM entries WHERE uuid = ?", (str(uuid),))
         self.conn.commit()
 
     def get_all_entries(self):
@@ -117,11 +91,7 @@ class EntryStorage:
 
         :return: A list of `Entry` objects.
         """
-        query = """
-        SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid
-        FROM entries
-        """
-        result = self.conn.execute(query)
+        result = self.conn.execute("SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid FROM entries")
         return [Entry(*row) for row in result.fetchall()]
 
     def get_all_entries_json(self):
@@ -130,11 +100,7 @@ class EntryStorage:
 
         :return: A list of dictionaries representing `Entry` objects
         """
-        query = """
-        SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid
-        FROM entries
-        """
-        result = self.conn.execute(query)
+        result = self.conn.execute("SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid FROM entries")
         return [Entry(*row).to_dict() for row in result.fetchall()]
 
     def get_entries_by_week(self, week_uuid):
@@ -145,12 +111,7 @@ class EntryStorage:
         :return: A list of dictionaries containing the entries' data for the specified week.
         """
 
-        query = """
-        SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid
-        FROM entries
-        WHERE week_uuid = ?
-        """
-        result = self.conn.execute(query, (str(week_uuid),))
+        result = self.conn.execute("SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid FROM entries WHERE week_uuid = ?", (str(week_uuid),))
         return [Entry(*row).__dict__ for row in result.fetchall()]
 
     def get_entries_by_day(self, day_uuid):
@@ -161,12 +122,7 @@ class EntryStorage:
         :return: A list of dictionaries containing the entries' data for the specified day.
         """
 
-        query = """
-        SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid
-        FROM entries
-        WHERE day_uuid = ?
-        """
-        result = self.conn.execute(query, (str(day_uuid),))
+        result = self.conn.execute("SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid FROM entries WHERE day_uuid = ?", (str(day_uuid),))
         return [Entry(*row).__dict__ for row in result.fetchall()]
 
     def delete_all_entries(self):
@@ -176,10 +132,7 @@ class EntryStorage:
         :return: None
         """
 
-        query = """
-        DELETE FROM entries
-        """
-        self.conn.execute(query)
+        self.conn.execute("DELETE FROM entries")
         self.conn.commit()
 
 
