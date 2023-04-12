@@ -7,9 +7,12 @@
         <script>
             var data = {{ data|tojson|safe }};
         </script>
+
         <div id='root' class='md:max-lg:flex content-start'></div>
+
         <script type="text/babel">
             const rootElement = document.getElementById('root')
+
             class Entry extends React.Component {
 
                 state = {
@@ -42,13 +45,11 @@
                                 <button className="mt-50 rounded-full bg-blue-600 px-14 py-5 text-lg text-white shadow-lg font-semibold text-center hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" onClick={this.click}>Edit</button>
                                 <a href={"/delete/" + this.props.itemdata.uuid} className="mt-50 rounded-full bg-blue-600 px-14 py-5 text-lg text-white shadow-lg font-semibold text-center hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Delete</a>
                             </div>
-
                         </div>
                     );
                 }
 
                 click = () => {
-                     console.log(this.state.isEditting)
                      this.setState((state) => ({
                          ...state,
                          isEditting: !state.isEditting
