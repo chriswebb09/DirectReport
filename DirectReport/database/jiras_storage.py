@@ -3,7 +3,6 @@ import uuid
 
 
 class JirasDataStore:
-
     def __init__(self, db_path):
         """
         Initializes the JirasDataStore object with the given SQLite database file path.

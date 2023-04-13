@@ -3,7 +3,6 @@ import uuid
 
 
 class BlockerDataStore:
-
     def __init__(self, db_path):
         """
         Initializes the BlockerDataStore object with the given SQLite database file path.
@@ -31,7 +30,6 @@ class BlockerDataStore:
         self.conn.commit()
 
     def add_blocker_entry(self, blocker_entry, associated_entry_uuuid_str, uuid_str=None):
-
         if uuid_str is None:
             uuid_str = str(uuid.uuid4())
         cursor = self.conn.cursor()
@@ -44,7 +42,6 @@ class BlockerDataStore:
         self.conn.commit()
 
     def entries_for_associated_uuid(self, associated_uuid):
-
         result = self.conn.execute(
             "SELECT uuid, associated_entry_uuuid, blocker_entry FROM blockers_uuid_table WHERE associated_entry_uuuid = ?",
             (str(associated_uuid),),

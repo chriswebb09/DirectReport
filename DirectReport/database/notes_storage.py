@@ -3,7 +3,6 @@ import uuid
 
 
 class NotesDataStore:
-
     def __init__(self, db_path):
         """
         Initializes the NotesDataStore object with the given SQLite database file path.
