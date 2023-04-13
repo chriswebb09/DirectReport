@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 
+from DirectReport.models.entry import Entry
 import datetime
 import uuid
-
-from DirectReport.models.entry import Entry
 
 
 def test_data_model_set_message():

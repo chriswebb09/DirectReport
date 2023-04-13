@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
 
-from DirectReport.models.entry import Entry
 from DirectReport.database.entry_storage import EntryStorage
-import os
-
-import tempfile
-import uuid
+from DirectReport.models.entry import Entry
 from datetime import datetime
 from pathlib import Path
+import tempfile
+import uuid
 import sys
+import os
 
 file = Path(__file__).resolve()
 package_root_directory = file.parents[1]

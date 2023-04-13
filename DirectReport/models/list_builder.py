@@ -1,18 +1,17 @@
 #!/usr/bin/env python3
 
-import datetime
-import sys
-import uuid
-from pathlib import Path
-
-file = Path(__file__).resolve()
-package_root_directory = file.parents[1]
-sys.path.append(str(package_root_directory))
-
 from DirectReport.database.daily_storage import DailyUUIDTable
 from DirectReport.database.weekly_storage import WeekUUIDTable
 from DirectReport.database.entry_storage import EntryStorage
 from DirectReport.models.entry import Entry
+from pathlib import Path
+import datetime
+import sys
+import uuid
+
+file = Path(__file__).resolve()
+package_root_directory = file.parents[1]
+sys.path.append(str(package_root_directory))
 
 
 class ListBuilder:

@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import sqlite3
 import uuid
 
@@ -19,8 +21,6 @@ class DailyUUIDTable:
         else:
             self.conn = conn
         self.create_table()
-
-
 
     def create_table(self):
         """

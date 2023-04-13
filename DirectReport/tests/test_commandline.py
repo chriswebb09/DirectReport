@@ -1,20 +1,20 @@
 #!/usr/bin/env python3
 
-from click.testing import CliRunner
-from DirectReport.commandline.commandline import new
+from DirectReport.database.entry_storage import EntryStorage
+from DirectReport.models.list_builder import ListBuilder
+from DirectReport.commandline.commandline import launch
+from DirectReport.commandline.commandline import delete
 from DirectReport.commandline.commandline import list
 from DirectReport.commandline.commandline import mail
-from DirectReport.commandline.commandline import delete
+from DirectReport.commandline.commandline import new
 from DirectReport.models.entry import Entry
+from click.testing import CliRunner
 from datetime import datetime
-from DirectReport.database.entry_storage import EntryStorage
-from DirectReport.commandline.commandline import launch
-from DirectReport.models.list_builder import ListBuilder
-import tempfile
 from pathlib import Path
+import tempfile
+import pytest
 import uuid
 import os
-import pytest
 
 runner = CliRunner()
 
