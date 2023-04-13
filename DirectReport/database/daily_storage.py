@@ -7,15 +7,20 @@ class DailyUUIDTable:
     A class to interact with SQLite database for managing daily date-UUID mappings.
     """
 
-    def __init__(self, db_path):
+    def __init__(self, db_path, conn=None):
         """
         Initializes the DailyUUIDTable object with the given SQLite database file path.
 
         :param db_path: The SQLite database file path.
         """
         self.db_path = db_path
-        self.conn = sqlite3.connect(db_path)
+        if conn is None:
+            self.conn = sqlite3.connect(db_path)
+        else:
+            self.conn = conn
         self.create_table()
+
+
 
     def create_table(self):
         """

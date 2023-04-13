@@ -9,16 +9,10 @@ file = Path(__file__).resolve()
 package_root_directory = file.parents[1]
 sys.path.append(str(package_root_directory))
 
-if __name__ == '__main__':
-    from ..database.daily_storage import DailyUUIDTable
-    from ..database.weekly_storage import WeekUUIDTable
-    from ..database.entry_storage import EntryStorage
-    from ..models.entry import Entry
-else:
-    from DirectReport.database.daily_storage import DailyUUIDTable
-    from DirectReport.database.weekly_storage import WeekUUIDTable
-    from DirectReport.database.entry_storage import EntryStorage
-    from DirectReport.models.entry import Entry
+from DirectReport.database.daily_storage import DailyUUIDTable
+from DirectReport.database.weekly_storage import WeekUUIDTable
+from DirectReport.database.entry_storage import EntryStorage
+from DirectReport.models.entry import Entry
 
 
 class ListBuilder:
@@ -195,7 +189,3 @@ class ListBuilder:
         storage = EntryStorage('SQLite_Python.db')
         list_items = storage.get_all_entries()
         return list_items
-
-
-if __name__ == '__main__':
-    print("main")

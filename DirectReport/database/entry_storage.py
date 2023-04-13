@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 import sqlite3
-
-if __name__ == '__main__':
-    from DirectReport.models.entry import Entry
-else:
-    from DirectReport.models.entry import Entry
+from DirectReport.models.entry import Entry
 
 
 # noinspection SqlNoDataSourceInspection
@@ -13,13 +9,16 @@ class EntryStorage:
     A class to interact with SQLite database for storing and retrieving `Entry` objects.
     """
 
-    def __init__(self, db_path):
+    def __init__(self, db_path, conn=None):
         """
         Initializes the EntryStorage object with the given SQLite database file path.
 
         :param db_path: The SQLite database file path.
         """
-        self.conn = sqlite3.connect(db_path)
+        if conn is None:
+            self.conn = sqlite3.connect(db_path)
+        else:
+            self.conn = conn
         self.create_table()
 
     def create_table(self):
@@ -150,7 +149,3 @@ class EntryStorage:
 
         self.conn.execute("DELETE FROM entries")
         self.conn.commit()
-
-
-if __name__ == '__main__':
-    print("main")
