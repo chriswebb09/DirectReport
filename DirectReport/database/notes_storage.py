@@ -47,4 +47,4 @@ class NotesDataStore:
             "SELECT uuid, associated_entry_uuuid, note_entry FROM note_uuid_table WHERE associated_entry_uuuid = ?",
             (str(associated_uuid),),
         )
-        return
+        return [NotesDataStore(*row) for row in result.fetchall()]
