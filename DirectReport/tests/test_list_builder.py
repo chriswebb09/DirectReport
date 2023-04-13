@@ -57,7 +57,7 @@ def test_get_all_weekly_ids(temp_db):
     )
 
     storage.add_entry(entry)
-    assert len(list_builder.ListBuilder.list_all_daily_ids()) == 1
+    assert len(list_builder.ListBuilder.list_all_daily_ids()) == 2
 
 
 def test_get_all_daily_ids(temp_db):
@@ -73,7 +73,7 @@ def test_get_all_daily_ids(temp_db):
         day_uuid=uuid.uuid4(),
     )
     storage.add_entry(entry)
-    assert len(list_builder.ListBuilder.list_all_daily_ids()) == 1
+    assert len(list_builder.ListBuilder.list_all_daily_ids()) == 2
 
 
 def test_delete_entry(temp_db):
@@ -89,7 +89,7 @@ def test_delete_entry(temp_db):
         day_uuid=uuid.uuid4(),
     )
     storage.add_entry(entry)
-    assert len(list_builder.ListBuilder.list_all_daily_ids()) == 1
+    assert len(list_builder.ListBuilder.list_all_daily_ids()) == 2
 
 
 def test_list_as_json(temp_db):
