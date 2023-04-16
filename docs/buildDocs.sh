@@ -23,7 +23,8 @@ apt-get update
 
 pwd
 ls -lah
-export SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)
+export SOURCE_DATE_EPOCH=$(git log -1 -s --format=format:%ct HEAD)
+
 
 ##############
 # BUILD DOCS #
