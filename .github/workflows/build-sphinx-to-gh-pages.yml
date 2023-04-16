@@ -24,9 +24,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_PAGE }}
         run: |
           set -x
-          git config --global user.email "chris.webb5249@gmail.com"
           apt-get update
           apt-get install -y git rsync python-sphinx python-sphinx-rtd-theme
+          git config --global user.email "chris.webb5249@gmail.com"
           git clone "https://token:$GITHUB_TOKEN@github.com/chriswebb9/DirectReport.git" .
         shell: bash
 
