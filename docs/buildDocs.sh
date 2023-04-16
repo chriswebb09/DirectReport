@@ -22,7 +22,7 @@ apt-get update
 #####################
 
 ls -lah
-export SOURCE_DATE_EPOCH=git log -1 -q --format=format:%ct HEAD
+export SOURCE_DATE_EPOCH=$(git log -1 -q --format=format:%ct HEAD)
 
 
 ##############
@@ -53,7 +53,7 @@ touch .nojekyll
 git add .
 
 # commit all the new files
-msg="Updating Docs for commit ${GITHUB_SHA} made on `date -d"@${SOURCE_DATE_EPOCH}"` from ${GITHUB_REF} by ${GITHUB_ACTOR}"
+msg="Updating Docs for commit ${GITHUB_SHA} made on `date -d"@$SOURCE_DATE_EPOCH"` from ${GITHUB_REF} by ${GITHUB_ACTOR}"
 
 git commit -am "${msg}"
 
