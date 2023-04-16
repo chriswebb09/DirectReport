@@ -15,8 +15,7 @@
 # INSTALL DEPENDS #
 ###################
 
-apt-get updat
-apt-get -y install git rsync python-sphinx python-sphinx-rtd-theme
+apt-get update
 
 #####################
 # DECLARE VARIABLES #
