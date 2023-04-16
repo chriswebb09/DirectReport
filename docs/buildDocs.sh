@@ -46,7 +46,7 @@ pushd $docroot
 git init
 	
 git remote set-url origin https://$GITHUB_TOKEN@github.com/chriswebb9/DirectReport.git
-git remote add deploy "https://token:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git"
+git remote add deploy "https://token:${GITHUB_TOKEN}@github.com/$GITHUB_REPOSITORY.git"
 git checkout -b gh-pages
  
 touch .nojekyll
