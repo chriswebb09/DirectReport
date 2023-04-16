@@ -43,18 +43,19 @@ git config --global user.name "chriswebb09"
 git config --global user.email "chriswebb09@users.noreply.github.com"
 
 docroot=`mktemp -d`
-pwd
 rsync -av "docs/build/html" "${docroot}"
-pwd
 pushd "${docroot}"
 
+docroot=`mktemp -d`
+rsync -av "docs/_build/html/" "${docroot}/"
+ 
+pushd "${docroot}"
+ 
 # don't bother maintaining history; just generate fresh
 git init
-git remote add deploy "https://token:${GITHUB_TOKEN}@github.com/chriswebb09/DirectReport.git"
+git remote add deploy "https://token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
 git checkout -b gh-pages
-
-# add .nojekyll to the root so that github won't 404 on content added to dirs
-# that start with an underscore (_), such as our "_content" dir..
+ 
 touch .nojekyll
 
 # Add README
