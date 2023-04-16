@@ -21,16 +21,16 @@ jobs:
     
       - name: Get prerequisites and clone repository
         env:
-          GITHUB_TOKEN: ${GH_TOKEN}
+          GITHUB_TOKEN: ${{ secrets.GH_PAGES }}
         run: |
           set -x
           apt-get update
           apt-get install -y git rsync python-sphinx python-sphinx-rtd-theme
-          git clone 'https://token:${GH_TOKEN}@github.com/chriswebb09/DirectReport.git' .
+          git clone 'https://token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git' .
         shell: bash
 
       - name: Run build script for Sphinx pages
         env:
-          GITHUB_TOKEN: ${GH_TOKEN}
+          GITHUB_TOKEN:${{ secrets.GH_PAGES }}
         run: "docs/buildDocs.sh"
         shell: bash
