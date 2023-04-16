@@ -39,7 +39,7 @@ make -C docs html
 #######################
 
 docroot=`mktemp -d`
-rsync -av "docs/build/html" "${docroot}"
+rsync -av "docs/build/html" "$docroot"
 pushd $docroot
  
 # don't bother maintaining history; just generate fresh
