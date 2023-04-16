@@ -50,7 +50,7 @@ pushd "${docroot}"
 
 # don't bother maintaining history; just generate fresh
 git init
-git remote add deploy "https://token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+git remote add deploy "https://token:${GH_TOKEN}@github.com/chriswebb09/DirectReport.git"
 git checkout -b gh-pages
 
 # add .nojekyll to the root so that github won't 404 on content added to dirs
