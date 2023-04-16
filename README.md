@@ -92,9 +92,13 @@ $ python DirectReport list --week
 
 ### Home
 
+Web interface home page - WIP
+
 ![Screenshot home page for web interface.](DirectReport/assets/web_interface.png)
 
 ### List
+
+Web interface for list page - WIP
 
 ![Screenshot list page for web interface.](DirectReport/assets/web_interface2.png)
 
