@@ -15,6 +15,7 @@ jobs:
   build_sphinx_job:
     runs-on: ubuntu-latest
     container: debian:buster-slim
+    
 
     steps:
     
@@ -27,9 +28,7 @@ jobs:
           apt-get install software-properties-common
           apt-get install python3.9
           apt-get install -y git
-          git clone "https://token:${{ secrets.GH_PAGES }}@github.com/chriswebb09/DirectReport.git" 
-          python -m pip install sphinx
-          python -m pip install sphinx-rtd-theme
+          git clone 'https://token:${{ secrets.GH_PAGES }}@github.com/chriswebb09/DirectReport.git' .
         shell: bash
 
       - name: Run build script for Sphinx pages
