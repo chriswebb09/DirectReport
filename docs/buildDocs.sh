@@ -21,9 +21,8 @@ apt-get update
 # DECLARE VARIABLES #
 #####################
 
-pwd
 ls -lah
-export SOURCE_DATE_EPOCH=$(git log -1 -q --format=format:%ct HEAD)
+export SOURCE_DATE_EPOCH=git log -1 -q --format=format:%ct HEAD
 
 
 ##############
