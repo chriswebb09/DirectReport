@@ -25,7 +25,6 @@ jobs:
         run: |
           set -x
           git config --global user.email "chris.webb5249@gmail.com"
-          git config --global user.name "chriswebb09"
           apt-get update
           apt-get install -y git rsync python-sphinx python-sphinx-rtd-theme
           git clone "https://token:$GITHUB_TOKEN@github.com/chriswebb9/DirectReport.git" .
