@@ -26,6 +26,7 @@ jobs:
           apt-get update
           apt-get install -y git
           git clone "https://token:${{ secrets.GH_PAGES }}@github.com/chriswebb09/DirectReport.git" .
+          echo pwd
           python -m pip sphinx
           python -m pip sphinx-rtd-theme
         shell: bash
