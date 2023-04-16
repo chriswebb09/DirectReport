@@ -3,7 +3,7 @@ name: build-sphinx-to-gh-pages
 env:
   GITHUB_ACTOR: chriswebb09
   GITHUB_REPOSITORY: DirectReport
-  GITHUB_TOKEN: ${{ secrets.GH_PAGES }}
+  GITHUB_TOKEN: ${{ secrets.GH_PAGE }}
 
 on: 
   push:
@@ -21,12 +21,12 @@ jobs:
     
       - name: Get prerequisites and clone repository
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAGES }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAGE }}
         run: |
           set -x
           apt-get update
           apt-get install -y git rsync python-sphinx python-sphinx-rtd-theme
-          git clone 'https://token:${GH_TOKEN}@github.com/DirectReport.git' .
+          git clone 'https://token:$GITHUB_TOKEN@github.com/DirectReport.git' .
         shell: bash
 
       - name: Run build script for Sphinx pages
