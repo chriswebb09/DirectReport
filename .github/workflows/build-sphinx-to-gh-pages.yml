@@ -3,7 +3,7 @@ name: build-sphinx-to-gh-pages
 env:
   GITHUB_ACTOR: chriswebb09
   GITHUB_REPOSITORY: DirectReport
-  GITHUB_TOKEN: ${{ secrets.GH_PAGES }}
+  GITHUB_TOKEN: ${{ secrets.GH_PAGE }}
 
 on: 
   push:
