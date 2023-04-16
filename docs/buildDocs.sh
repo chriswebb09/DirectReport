@@ -39,7 +39,7 @@ make -C docs html
 #######################
 
 docroot=`mktemp -d`
-rsync -av "docs/build/html/" "${docroot}/"
+rsync -av "docs/build/html" "${docroot}"
 pushd $docroot
  
 # don't bother maintaining history; just generate fresh
@@ -53,7 +53,7 @@ touch .nojekyll
 git add .
 
 # commit all the new files
-msg="Updating Docs for commit ${GITHUB_SHA} made on `date -d"@$SOURCE_DATE_EPOCH"` from ${GITHUB_REF} by ${GITHUB_ACTOR}"
+msg="Updating Docs for commit ${GITHUB_SHA} made on `date -d "$SOURCE_DATE_EPOCH"` from ${GITHUB_REF} by ${GITHUB_ACTOR}"
 
 git commit -am "${msg}"
 
