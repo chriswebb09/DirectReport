@@ -44,6 +44,7 @@ git config --global user.email "chriswebb09@users.noreply.github.com"
 
 docroot=`mktemp -d`
 rsync -av "./build/html" "${docroot}"
+echo "${docroot}" | rev | cut -c5- | rev
 pushd "${docroot}"
  
 # don't bother maintaining history; just generate fresh
