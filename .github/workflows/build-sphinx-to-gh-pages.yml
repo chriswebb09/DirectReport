@@ -25,7 +25,7 @@ jobs:
         run: |
           set -x
           apt-get update
-          apt-get install -y git
+          apt-get install -y git rsync python-sphinx python-sphinx-rtd-theme
           git clone 'https://token:${{ secrets.GH_PAGES }}@github.com/chriswebb09/DirectReport.git' .
           python -m pip install sphinx
           python -m pip install sphinx-rtd-theme
