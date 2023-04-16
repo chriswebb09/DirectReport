@@ -32,5 +32,5 @@ jobs:
       - name: Run build script for Sphinx pages
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAGES }}
-        run: "${{ github.workspace }}/DirectReport/docs/buildDocs.sh"
+        run: "docs/buildDocs.sh"
         shell: bash
