@@ -26,7 +26,7 @@ jobs:
           set -x
           apt-get update
           apt-get install -y git rsync python-sphinx python-sphinx-rtd-theme
-          git clone "https://token:$GH_TOKEN@github.com/chriswebb9/DirectReport.git" .
+          git clone "https://token:$GITHUB_TOKEN@github.com/chriswebb9/DirectReport.git" .
         shell: bash
 
       - name: Run build script for Sphinx pages
