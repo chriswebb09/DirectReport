@@ -2,7 +2,7 @@ name: build-sphinx-to-gh-pages
 
 env:
   GITHUB_ACTOR: chriswebb09
-  GITHUB_REPOSITORY: chriswebb09/DirectReport
+  GITHUB_REPOSITORY: /chriswebb09/DirectReport
   GITHUB_TOKEN: ${{ secrets.GH_PAGE }}
 
 on: 
@@ -25,6 +25,7 @@ jobs:
           set -x
           apt-get update
           apt-get install -y git
+          echo GITHUB_TOKEN
           git clone "https://token:${{ secrets.GH_PAGE }}@github.com/chriswebb09/DirectReport.git" .
           python -m pip sphinx
           python -m pip sphinx-rtd-theme
