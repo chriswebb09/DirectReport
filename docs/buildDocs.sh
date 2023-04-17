@@ -38,14 +38,14 @@ pushd "${docroot}"
 
 # don't bother maintaining history; just generate fresh
 git init
-git remote add deploy https://chriswebb09:${GITHUB_TOKEN}@github.com/DirectReport.git
+git remote add deploy https://token:$GITHUB_TOKEN@github.com/chriswebb09/DirectReport.git
 git checkout -b gh-pages
 
 # add .nojekyll to the root so that github won't 404 on content added to dirs
 # that start with an underscore (_), such as our "_content" dir..
 touch .nojekyll
 
-git remote set-url --push origin https://chriswebb09:${GITHUB_TOKEN}@github.com/chriswebb09/DirectReport.git
+git remote set-url --push origin https://chriswebb09:$GITHUB_TOKEN@github.com/chriswebb09/DirectReport.git
 
 
 # copy the resulting html pages built from sphinx above to our new git repo
