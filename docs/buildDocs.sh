@@ -2,7 +2,7 @@
 
 apt-get update
 apt-get -y install git rsync
-
+apt-get install --reinstall ca-certificates
 ##############
 # BUILD DOCS #
 ##############
