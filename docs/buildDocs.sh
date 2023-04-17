@@ -3,11 +3,12 @@
 apt-get update
 apt-get -y install git rsync
 apt-get install --reinstall ca-certificates
-##############
-# BUILD DOCS #
-##############
+
+
 
 git remote set-url git@github.com/chriswebb09/DirectReport.git
+git config --global user.name "chriswebb09"
+git config --global user.email "chris.webb5249@gmail.com"
 
 #####################
 # DECLARE VARIABLES #
@@ -17,22 +18,23 @@ pwd
 ls -lah
 export SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)
 
-#######################
-# Update GitHub Pages #
-#######################
-
-git config --global user.name "chriswebb09"
-git config --global user.email "chris.webb5249@gmail.com"
-
-docroot=$(mktemp -d)
-rsync -av "docs/build/html/" "${docroot}/"
-
-pushd "${docroot}"
+##############
+# BUILD DOCS #
+##############
 
 # build our documentation with sphinx (see docs/conf.py)
 # * https://www.sphinx-doc.org/en/master/usage/quickstart.html#running-the-build
 make -C docs clean
 make -C docs html
+
+#######################
+# Update GitHub Pages #
+#######################
+
+docroot=$(mktemp -d)
+rsync -av "docs/build/html/" "${docroot}/"
+
+pushd "${docroot}"
 
 # don't bother maintaining history; just generate fresh
 git init
