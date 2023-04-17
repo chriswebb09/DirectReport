@@ -3,14 +3,6 @@
 apt-get update
 apt-get -y install git rsync
 
-#####################
-# DECLARE VARIABLES #
-#####################
-
-pwd
-ls -lah
-export SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)
-
 ##############
 # BUILD DOCS #
 ##############
@@ -19,6 +11,16 @@ export SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)
 # * https://www.sphinx-doc.org/en/master/usage/quickstart.html#running-the-build
 make -C docs clean
 make -C docs html
+
+#####################
+# DECLARE VARIABLES #
+#####################
+
+pwd
+ls -lah
+export SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)
+
+
 
 #######################
 # Update GitHub Pages #
