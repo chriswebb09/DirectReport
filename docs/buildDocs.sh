@@ -45,18 +45,8 @@ git checkout -b gh-pages
 # that start with an underscore (_), such as our "_content" dir..
 touch .nojekyll
 
-# Add README
-cat > README.md <<EOF
-# GitHub Pages Cache
+git remote set-url --push origin https://chriswebb09:${GITHUB_TOKEN}@github.com/chriswebb09/DirectReport.git
 
-Nothing to see here. The contents of this branch are essentially a cache that's not intended to be viewed on github.com.
-
-If you're looking to update our documentation, check the relevant development branch's 'docs/' dir.
-
-For more information on how this documentation is built using Sphinx, Read the Docs, and GitHub Actions/Pages, see:
-
- * https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
-EOF
 
 # copy the resulting html pages built from sphinx above to our new git repo
 git add .
