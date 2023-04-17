@@ -36,7 +36,7 @@ make -C docs html
 
 # don't bother maintaining history; just generate fresh
 git init
-git remote add deploy "https://token:$GITHUB_TOKEN@github.com/chriswebb09/DirectReport.git"
+git remote add deploy "https://token:${GITHUB_TOKEN}@github.com/chriswebb09/DirectReport.git"
 git checkout -b gh-pages
 
 # add .nojekyll to the root so that github won't 404 on content added to dirs
