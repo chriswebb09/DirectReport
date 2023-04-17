@@ -26,8 +26,8 @@ export SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)
 # Update GitHub Pages #
 #######################
 
-git config --global user.name "${GITHUB_ACTOR}"
-git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+git config --global user.name "chriswebb09"
+git config --global user.email "chris.webb5249@gmail.com"
 
 docroot=$(mktemp -d)
 rsync -av "docs/build/html/" "${docroot}/"
@@ -36,7 +36,7 @@ pushd "${docroot}"
 
 # don't bother maintaining history; just generate fresh
 git init
-git remote add deploy "https://token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+git remote add deploy "https://token:$GITHUB_TOKEN@github.com/chriswebb09/DirectReport.git"
 git checkout -b gh-pages
 
 # add .nojekyll to the root so that github won't 404 on content added to dirs
