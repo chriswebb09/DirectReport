@@ -7,6 +7,8 @@ apt-get -y install git rsync
 # BUILD DOCS #
 ##############
 
+git remote set-url git@github.com/chriswebb09/DirectReport.git
+
 # build our documentation with sphinx (see docs/conf.py)
 # * https://www.sphinx-doc.org/en/master/usage/quickstart.html#running-the-build
 make -C docs clean
@@ -19,7 +21,6 @@ make -C docs html
 pwd
 ls -lah
 export SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)
-
 
 
 #######################
