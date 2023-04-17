@@ -9,11 +9,6 @@ apt-get install --reinstall ca-certificates
 
 git remote set-url git@github.com/chriswebb09/DirectReport.git
 
-# build our documentation with sphinx (see docs/conf.py)
-# * https://www.sphinx-doc.org/en/master/usage/quickstart.html#running-the-build
-make -C docs clean
-make -C docs html
-
 #####################
 # DECLARE VARIABLES #
 #####################
@@ -34,6 +29,11 @@ docroot=$(mktemp -d)
 rsync -av "docs/build/html/" "${docroot}/"
 
 pushd "${docroot}"
+
+# build our documentation with sphinx (see docs/conf.py)
+# * https://www.sphinx-doc.org/en/master/usage/quickstart.html#running-the-build
+make -C docs clean
+make -C docs html
 
 # don't bother maintaining history; just generate fresh
 git init
