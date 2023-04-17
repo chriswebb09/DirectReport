@@ -36,6 +36,8 @@ rsync -av "docs/build/html/" "${docroot}/"
 
 pushd "${docroot}"
 
+git config --global --add safe.directory '*'
+
 # don't bother maintaining history; just generate fresh
 git init
 git remote add deploy https://token:$GITHUB_TOKEN@github.com/chriswebb09/DirectReport.git
