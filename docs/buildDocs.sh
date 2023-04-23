@@ -1,13 +1,7 @@
 apt-get -y install git rsync
 apt-get install --reinstall ca-certificates
 
-git remote set-url origin git@github.com/chriswebb09/DirectReport.git
-git config --global --unset credential.helper
-git config --global user.name "chriswebb09"
-git config --global user.email "chris.webb5249@gmail.com"
-git remote -v
-
-git config --global credential.helper store
+git remote set-url origin https://scuzzlebuzzle:<MYTOKEN>@github.com/scuzzlebuzzle/ol3-1.git
 
 #####################
 # DECLARE VARIABLES #
@@ -35,11 +29,13 @@ rsync -av "build/html/" "${docroot}/"
 
 pushd "${docroot}"
 
+git remote set-url origin https://chriswebb09:$GITHUB_TOKEN@github.com/chriswebb09/DirectReport.git
+
 git config --global --add safe.directory '*'
 
 # don't bother maintaining history; just generate fresh
 git init
-git remote add deploy https://token:$GITHUB_TOKEN@github.com/chriswebb09/DirectReport.git
+git remote add deploy https://chriswebb09:$GITHUB_TOKEN@github.com/chriswebb09/DirectReport.git
 git checkout -b gh-pages
 
 
