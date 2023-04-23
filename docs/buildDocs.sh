@@ -38,8 +38,9 @@ git config --global --add safe.directory '*'
 
 # don't bother maintaining history; just generate fresh
 git init
-git remote add deploy https://token:$GITHUB_TOKEN@github.com/chriswebb09/DirectReport.git
 git fetch && git checkout gh-pages
+git remote add deploy https://token:$GITHUB_TOKEN@github.com/chriswebb09/DirectReport.git
+
 
 # add .nojekyll to the root so that github won't 404 on content added to dirs
 # that start with an underscore (_), such as our "_content" dir..
