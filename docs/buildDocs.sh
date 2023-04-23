@@ -1,7 +1,5 @@
-apt-get -y install git rsync
-apt-get install --reinstall ca-certificates
 
-git remote set-url origin https://scuzzlebuzzle:<MYTOKEN>@github.com/scuzzlebuzzle/ol3-1.git
+git remote set-url origin https://chriswebb09:$GITHUB_TOKEN@github.com/chriswebb09/DirectReport.git
 
 #####################
 # DECLARE VARIABLES #
