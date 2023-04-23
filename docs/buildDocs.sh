@@ -4,8 +4,6 @@ apt-get update
 apt-get -y install git rsync
 apt-get install --reinstall ca-certificates
 
-
-
 git remote set-url git@github.com/chriswebb09/DirectReport.git
 git config --global user.name "chriswebb09"
 git config --global user.email "chris.webb5249@gmail.com"
@@ -41,7 +39,7 @@ git config --global --add safe.directory '*'
 # don't bother maintaining history; just generate fresh
 git init
 git remote add deploy https://token:$GITHUB_TOKEN@github.com/chriswebb09/DirectReport.git
-git checkout origin/gh-pages
+git fetch && git checkout gh-pages
 
 # add .nojekyll to the root so that github won't 404 on content added to dirs
 # that start with an underscore (_), such as our "_content" dir..
