@@ -1,9 +1,3 @@
-#!/bin/bash
-
-apt-get update
-apt-get -y install git rsync
-apt-get install --reinstall ca-certificates
-
 git remote set-url git@github.com/chriswebb09/DirectReport.git
 git config --global user.name "chriswebb09"
 git config --global user.email "chris.webb5249@gmail.com"
@@ -34,7 +28,7 @@ rsync -av "build/html/" "${docroot}/"
 
 pushd "${docroot}"
 
-git config --global --add safe.directory /__w/{DirectReport}/{DirectReport}
+git config --global --add safe.directory '*'
 
 # don't bother maintaining history; just generate fresh
 git init
@@ -55,5 +49,3 @@ git commit -am "${msg}"
 
 # overwrite the contents of the gh-pages branch on our github.com repo
 git push deploy gh-pages --force
-
-
