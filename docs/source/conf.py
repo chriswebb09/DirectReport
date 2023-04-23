@@ -22,13 +22,12 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.napoleon',
     'sphinx_rtd_theme',
+    'sphinx_search.extension',
     'sphinx.ext.autosummary'
 ]
 
 templates_path = ['_templates']
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
-
-
+exclude_patterns = ['build', 'Thumbs.db', '.DS_Store']
 
 
 # -- Options for HTML output -------------------------------------------------
@@ -38,5 +37,5 @@ html_theme = 'sphinx_rtd_theme'
 
 html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
-html_static_path = ['_static']
+html_static_path = ['static']
 

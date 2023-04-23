@@ -30,7 +30,7 @@ make -C docs html
 #######################
 
 docroot=$(mktemp -d)
-rsync -av "docs/build/html/" "${docroot}/"
+rsync -av "build/html/" "${docroot}/"
 
 pushd "${docroot}"
 
@@ -39,15 +39,12 @@ git config --global --add safe.directory /__w/{DirectReport}/{DirectReport}
 # don't bother maintaining history; just generate fresh
 git init
 git remote add deploy https://token:$GITHUB_TOKEN@github.com/chriswebb09/DirectReport.git
-git checkout gh-pages
+git checkout -b gh-pages
 
 
 # add .nojekyll to the root so that github won't 404 on content added to dirs
 # that start with an underscore (_), such as our "_content" dir..
 touch .nojekyll
-
-git remote set-url --push gh-pages https://token:$GITHUB_TOKEN@github.com/chriswebb09/DirectReport.git
-
 
 # copy the resulting html pages built from sphinx above to our new git repo
 git add .
@@ -59,7 +56,4 @@ git commit -am "${msg}"
 # overwrite the contents of the gh-pages branch on our github.com repo
 git push deploy gh-pages --force
 
-popd # return to main repo sandbox root
 
-# exit cleanly
-exit 0
