@@ -49,3 +49,8 @@ git commit -am "${msg}"
 
 # overwrite the contents of the gh-pages branch on our github.com repo
 git push deploy gh-pages --force
+
+popd # return to main repo sandbox root
+
+# exit cleanly
+exit 0
