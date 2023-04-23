@@ -1,3 +1,6 @@
+apt-get -y install git rsync
+apt-get install --reinstall ca-certificates
+
 git remote set-url origin git@github.com/chriswebb09/DirectReport.git
 git config --global --unset credential.helper
 git config --global user.name "chriswebb09"
