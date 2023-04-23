@@ -34,7 +34,7 @@ rsync -av "docs/build/html/" "${docroot}/"
 
 pushd "${docroot}"
 
-git config --global --add safe.directory '*'
+git config --global --add safe.directory /__w/{DirectReport}/{DirectReport}
 
 # don't bother maintaining history; just generate fresh
 git init
