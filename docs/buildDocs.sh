@@ -1,4 +1,5 @@
 git remote set-url origin git@github.com/chriswebb09/DirectReport.git
+git config --global --unset credential.helper
 git config --global user.name "chriswebb09"
 git config --global user.email "chris.webb5249@gmail.com"
 git remote -v
