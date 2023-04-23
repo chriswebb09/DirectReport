@@ -30,7 +30,7 @@ make -C docs html
 #######################
 
 docroot=$(mktemp -d)
-rsync -av "docs/build/html/" "${docroot}/"
+rsync -av "/build/html/" "${docroot}/"
 
 pushd "${docroot}"
 
