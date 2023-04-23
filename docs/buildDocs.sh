@@ -7,6 +7,9 @@ git config --global user.name "chriswebb09"
 git config --global user.email "chris.webb5249@gmail.com"
 git remote -v
 
+printf "host=github.com\nprotocol=https\nusername=chriswebb09\npassword=${GITHUB_TOKEN}" | \ 
+  git credential-manager-core store
+
 #####################
 # DECLARE VARIABLES #
 #####################
