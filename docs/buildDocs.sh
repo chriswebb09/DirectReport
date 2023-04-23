@@ -46,7 +46,7 @@ git remote add deploy https://token:$GITHUB_TOKEN@github.com/chriswebb09/DirectR
 # that start with an underscore (_), such as our "_content" dir..
 touch .nojekyll
 
-git remote set-url --push gh-pages https://chriswebb09:$GITHUB_TOKEN@github.com/chriswebb09/DirectReport.git
+git remote set-url --push gh-pages https://token:$GITHUB_TOKEN@github.com/chriswebb09/DirectReport.git
 
 
 # copy the resulting html pages built from sphinx above to our new git repo
