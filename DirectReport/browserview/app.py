@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from ..models.list_builder import ListBuilder
+from DirectReport.models.list_builder import ListBuilder
 from DirectReport.models.weekly_builder import WeeklyBuilder
 from DirectReport.database.entry_storage import EntryStorage
 from flask import Flask, render_template, request, redirect
