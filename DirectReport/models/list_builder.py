@@ -1,14 +1,8 @@
 #!/usr/bin/env python3
 
-from DirectReport.database.daily_storage import DailyUUIDTable
-from DirectReport.database.weekly_storage import WeekUUIDTable
-from DirectReport.database.entry_storage import EntryStorage
-from DirectReport.database.notes_storage import NotesDataStore
-from DirectReport.database.blockers_storage import BlockerDataStore
-from DirectReport.database.jiras_storage import JirasDataStore
-from DirectReport.models.entry import Entry
 
 from pathlib import Path
+
 import datetime
 import sys
 import uuid
@@ -17,6 +11,13 @@ file = Path(__file__).resolve()
 package_root_directory = file.parents[1]
 sys.path.append(str(package_root_directory))
 
+from DirectReport.database.daily_storage import DailyUUIDTable
+from DirectReport.database.weekly_storage import WeekUUIDTable
+from DirectReport.models import entry
+from DirectReport.database import entry_storage
+from DirectReport.database import blockers_storage
+from DirectReport.database import notes_storage
+from DirectReport.database.jiras_storage import JirasDataStore
 
 class ListBuilder:
     """
@@ -111,7 +112,7 @@ class ListBuilder:
         :return: The newly created daily ID.
         """
 
-        notes = NotesDataStore('SQLite_Python.db')
+        notes = notes_storage.NotesDataStore('SQLite_Python.db')
         notes.add_notes_entry(note_text, associated_id)
 
     @staticmethod
@@ -120,7 +121,7 @@ class ListBuilder:
         TODO
         """
 
-        notes = NotesDataStore('SQLite_Python.db')
+        notes = notes_storage.NotesDataStore('SQLite_Python.db')
         note_list = notes.entries_for_associated_uuid(associated_id)
         print(note_list)
         return note_list
@@ -133,7 +134,7 @@ class ListBuilder:
         :return: The newly created daily ID.
         """
 
-        blocker = BlockerDataStore('SQLite_Python.db')
+        blocker = blockers_storage.BlockerDataStore('SQLite_Python.db')
         blocker.create_table()
         blocker.add_blocker_entry(blocker_text, str(associated_id))
 
@@ -143,7 +144,7 @@ class ListBuilder:
         TODO
         """
 
-        blockers = BlockerDataStore('SQLite_Python.db')
+        blockers = blockers_storage.BlockerDataStore('SQLite_Python.db')
         blocker_list = blockers.entries_for_associated_uuid(associated_id)
         print(blocker_list)
         return blocker_list
@@ -180,7 +181,7 @@ class ListBuilder:
         :param topic: The topic for the entry (optional).
         """
         today = datetime.date.today().strftime("%m/%d/%Y")
-        storage = EntryStorage('SQLite_Python.db')
+        storage = entry_storage.EntryStorage('SQLite_Python.db')
         print(storage.get_uuid(today))
         if storage.get_uuid(today) is not None:
             return
@@ -206,9 +207,9 @@ class ListBuilder:
         :param weekly_id: The weekly id.
         :param daily_id: The daily id.
         """
-        storage = EntryStorage('SQLite_Python.db')
+        storage = entry_storage.EntryStorage('SQLite_Python.db')
         storage.create_table()
-        new_entry = Entry(uuid.UUID(id), topic, entry, created_at, datetime.datetime.now(), weekly_id)
+        new_entry = entry.Entry(uuid.UUID(id), topic, entry, created_at, datetime.datetime.now(), weekly_id)
         storage.update_entry(new_entry)
 
     @staticmethod
@@ -218,7 +219,7 @@ class ListBuilder:
 
         :param entry_id: The ID of the entry to delete.
         """
-        storage = EntryStorage('SQLite_Python.db')
+        storage = entry_storage.EntryStorage('SQLite_Python.db')
         storage.delete_entry(entry_id)
 
     @staticmethod
@@ -251,7 +252,7 @@ class ListBuilder:
         :return: A list of entries for today.
         """
 
-        storage = EntryStorage('SQLite_Python.db')
+        storage = entry_storage.EntryStorage('SQLite_Python.db')
         daily_id = str(ListBuilder.get_daily_id())
         daily_list = storage.get_entry(daily_id)
         return daily_list
@@ -264,7 +265,7 @@ class ListBuilder:
         :param weekly_id: The weekly ID to list entries for.
         :return: A list of entries for the specified week.
         """
-        storage = EntryStorage('SQLite_Python.db')
+        storage = entry_storage.EntryStorage('SQLite_Python.db')
         weekly_id = str(weekly_id)
         week_list = storage.get_entries_by_week(weekly_id)
         return week_list
@@ -276,7 +277,7 @@ class ListBuilder:
 
         :return: A JSON representation of all entries for the current week.
         """
-        storage = EntryStorage('SQLite_Python.db')
+        storage = entry_storage.EntryStorage('SQLite_Python.db')
         weekly_id = str(ListBuilder.get_weekly_id())
         week_list = []
         for item in storage.get_entries_by_week(weekly_id):
@@ -290,6 +291,6 @@ class ListBuilder:
 
         :return: A list of all entries.
         """
-        storage = EntryStorage('SQLite_Python.db')
+        storage = entry_storage.EntryStorage('SQLite_Python.db')
         list_items = storage.get_all_entries()
         return list_items

@@ -111,7 +111,7 @@ class Entry:
 
     def set_message(self, new_message):
         self.message = new_message
-        self.modified_on = datetime.datetime.now().timestamp().strftime("%m/%d/%Y")
+        self.modified_on = datetime.datetime.now().timestamp()
 
     def __iter__(self):
         return self

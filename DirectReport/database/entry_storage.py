@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 
 import sqlite3
-from DirectReport.models.entry import Entry
+from DirectReport.models import entry
 
-
-# noinspection SqlNoDataSourceInspection
 class EntryStorage:
     """
     A class to interact with SQLite database for storing and retrieving `Entry` objects.
@@ -65,7 +63,7 @@ class EntryStorage:
         )
         row = result.fetchone()
         if row:
-            return Entry(*row)
+            return entry.Entry(*row)
         else:
             return None
 
@@ -102,7 +100,7 @@ class EntryStorage:
             "SELECT uuid, topic, message, created_at, modified_on, week_uuid FROM entries WHERE week_uuid = ?",
             (str(week_uuid),),
         )
-        return [Entry(*row).__dict__ for row in result.fetchall()]
+        return [entry.Entry(*row).__dict__ for row in result.fetchall()]
 
     def get_uuid(self, date):
         """
@@ -131,3 +129,18 @@ class EntryStorage:
 
         self.conn.execute("DELETE FROM entries")
         self.conn.commit()
+
+    def list_all_entries(self):
+        """
+        Lists all date-UUID mappings from the SQLite database.
+
+        :return: A list of tuples containing (date, week_uuid, day_uuid).
+        """
+        cursor = self.conn.cursor()
+        cursor.execute(
+            '''
+            SELECT * FROM entries
+            '''
+        )
+        results = cursor.fetchall()
+        return results
