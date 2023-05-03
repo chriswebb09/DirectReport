@@ -117,6 +117,7 @@ def new(transformation):
             jira_tag = click.prompt('Jira', type=str)
             JiraBuilder.add_new_jira(jira_ticket, jira_tag, daily_id)
 
+
 @click.command()
 @click.option('--id', help="Delete item with id", prompt='What is the id of the entry you wish to delete?')
 def delete(uid):

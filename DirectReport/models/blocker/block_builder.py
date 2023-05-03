@@ -3,8 +3,8 @@
 
 from DirectReport.database.blocker_storage import BlockerDataStore
 
-class BlockerBuilder:
 
+class BlockerBuilder:
     def __init__(self):
         pass
 

@@ -8,6 +8,7 @@ from DirectReport.database.entry_storage import EntryStorage
 from DirectReport.models.weekly_builder import WeeklyBuilder
 from DirectReport.models.daily_builder import DailyBuilder
 
+
 class ListBuilder:
     """
     A class to facilitate creating, deleting and listing entries in a weekly and daily report system.
