@@ -27,7 +27,7 @@ def test_cli_prompt_new():
 
 def test_cli_list():
     response = runner.invoke(list)
-    assert response.exit_code == 1
+    assert response.exit_code == 0
 
 
 def test_cli_list_daily():
@@ -37,7 +37,7 @@ def test_cli_list_daily():
 
 def test_cli_list_weekly():
     result = runner.invoke(list, ['--week'])
-    assert result.exit_code == 1
+    assert result.exit_code == 0
 
 
 def test_cli_list_all():
@@ -47,7 +47,7 @@ def test_cli_list_all():
 
 def test_cli_mail():
     result = runner.invoke(mail)
-    assert result.exit_code == 1
+    assert result.exit_code == 0
 
 
 def test_cli_delete(temp_db):

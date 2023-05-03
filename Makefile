@@ -18,7 +18,7 @@ install:  ## install library
 #########
 lint:  ## run static analysis with flake8
 	python3 -m black --check DirectReport setup.py
-	python3 -m flake8 DirectReport setup.py --ignore=E501,F401
+	python3 -m flake8 DirectReport setup.py --ignore=E501,F401,F403
 
 # Alias
 lints: lint
