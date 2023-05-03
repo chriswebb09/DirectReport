@@ -15,6 +15,7 @@ package_root_directory = file.parents[1]
 sys.path.append(str(package_root_directory))
 sys.path.append('.')
 
+
 @pytest.fixture
 def temp_db():
     db_fd, db_path = tempfile.mkstemp()
