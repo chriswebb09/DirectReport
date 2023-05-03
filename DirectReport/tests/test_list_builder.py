@@ -2,7 +2,8 @@
 
 from DirectReport.models.entry import Entry
 from DirectReport.database.entry_storage import EntryStorage
-from DirectReport.models import list_builder
+from DirectReport.models.list_builder import ListBuilder
+from DirectReport.models.weekly_builder import WeeklyBuilder
 import tempfile
 import uuid
 import os
@@ -27,7 +28,6 @@ def temp_db():
 
 
 def test_get_weekly_id(temp_db):
-    builder = list_builder.ListBuilder()
     storage = EntryStorage(temp_db)
     entry = Entry(
         uuid=uuid.uuid4(),
@@ -36,8 +36,7 @@ def test_get_weekly_id(temp_db):
         created_at=datetime.now(),
         modified_on=datetime.now(),
         week_uuid=uuid.uuid4(),
-        day_uuid=uuid.uuid4(),
     )
 
     storage.add_entry(entry)
-    assert builder.get_weekly_id() is not None
+    assert WeeklyBuilder.get_weekly_id() is not None

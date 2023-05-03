@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 
-from DirectReport.database.entry_storage import EntryStorage
 from DirectReport.models.entry import Entry
+from DirectReport.database.entry_storage import EntryStorage
 from datetime import datetime
 from pathlib import Path
 import tempfile
+import pytest
 import uuid
 import sys
 import os
@@ -12,10 +13,7 @@ import os
 file = Path(__file__).resolve()
 package_root_directory = file.parents[1]
 sys.path.append(str(package_root_directory))
-
 sys.path.append('.')
-
-import pytest
 
 
 @pytest.fixture
@@ -41,7 +39,6 @@ def test_add_get_entry(temp_db):
         created_at=datetime.now(),
         modified_on=datetime.now(),
         week_uuid=uuid.uuid4(),
-        day_uuid=uuid.uuid4(),
     )
 
     storage.add_entry(entry)
@@ -59,7 +56,6 @@ def test_update_entry(temp_db):
         created_at=datetime.now(),
         modified_on=datetime.now(),
         week_uuid=uuid.uuid4(),
-        day_uuid=uuid.uuid4(),
     )
     storage.add_entry(entry)
     entry.message = "Updated message"
@@ -78,7 +74,6 @@ def test_delete_entry(temp_db):
         created_at=datetime.now(),
         modified_on=datetime.now(),
         week_uuid=uuid.uuid4(),
-        day_uuid=uuid.uuid4(),
     )
 
     storage.add_entry(entry)
@@ -97,7 +92,6 @@ def test_get_all_entries(temp_db):
         created_at=datetime.now(),
         modified_on=datetime.now(),
         week_uuid=uuid.uuid4(),
-        day_uuid=uuid.uuid4(),
     )
     entry2 = Entry(
         uuid=uuid.uuid4(),
@@ -106,13 +100,12 @@ def test_get_all_entries(temp_db):
         created_at=datetime.now(),
         modified_on=datetime.now(),
         week_uuid=uuid.uuid4(),
-        day_uuid=uuid.uuid4(),
     )
 
     storage.add_entry(entry1)
     storage.add_entry(entry2)
 
-    entries = storage.get_all_entries()
+    entries = storage.list_all_entries()
     assert len(entries) == 2
     # assert entry1 in entries
     # assert entry2 in entries
@@ -128,7 +121,6 @@ def test_get_entries_by_week(temp_db):
         created_at=datetime.now(),
         modified_on=datetime.now(),
         week_uuid=week_uuid,
-        day_uuid=uuid.uuid4(),
     )
     entry2: Entry = Entry(
         uuid=uuid.uuid4(),
@@ -137,11 +129,11 @@ def test_get_entries_by_week(temp_db):
         created_at=datetime.now(),
         modified_on=datetime.now(),
         week_uuid=uuid.uuid4(),
-        day_uuid=uuid.uuid4(),
     )
 
     storage.add_entry(entry1)
     storage.add_entry(entry2)
 
     entries = storage.get_entries_by_week(week_uuid)
+    # et_entries_by_week(week_uuid)
     assert len(entries) == 1

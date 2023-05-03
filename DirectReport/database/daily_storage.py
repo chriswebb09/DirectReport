@@ -147,7 +147,7 @@ class DailyUUIDTable:
         """
         Deletes all entries from the database.
 
-        :return: None
+        :return: Void
         """
         cursor = self.conn.cursor()
         cursor.execute(

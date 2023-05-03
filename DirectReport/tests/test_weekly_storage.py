@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
 
-from DirectReport.database.weekly_storage import WeekUUIDTable
-from DirectReport.models import list_builder
-from datetime import datetime
-from pathlib import Path
-import tempfile
-import pytest
-import uuid
 import os
 import sys
+import tempfile
+import uuid
+from datetime import datetime
+from pathlib import Path
+import pytest
+from DirectReport.database.weekly_storage import WeekUUIDTable
 
 file = Path(__file__).resolve()
 package_root_directory = file.parents[1]
