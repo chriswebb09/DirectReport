@@ -47,7 +47,6 @@ def list():
 
     :return: Rendered HTML template for the list page.
     """
-    items = EntryStorage('SQLite_Python.db')
     if request.method == "POST":
         json_data = request.get_json()
         ListBuilder.new(json_data["entry"], json_data["topic"])

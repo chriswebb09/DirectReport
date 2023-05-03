@@ -7,7 +7,7 @@ from DirectReport.database.notes_storage import NotesDataStore
 from DirectReport.database.blockers_storage import BlockerDataStore
 from DirectReport.database.jiras_storage import JirasDataStore
 from DirectReport.models.entry import Entry
-from DirectReport.models.note import Note
+
 from pathlib import Path
 import datetime
 import sys

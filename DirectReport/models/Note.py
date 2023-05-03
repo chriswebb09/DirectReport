@@ -1,4 +1,4 @@
-import uuid
+#!/usr/bin/env python3
 
 
 class Note:

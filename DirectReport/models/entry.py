@@ -9,34 +9,6 @@ class Entry:
     A class to represent a journal entry.
     """
 
-    def __init__(self, uuid, topic, message, created_at, modified_on, week_uuid, notes, blockers):
-        """
-        Initialize the Entry object.
-
-        :param uuid: A unique identifier for the entry.
-        :type uuid: str
-        :param topic: The topic of the entry.
-        :type topic: str
-        :param message: The message/content of the entry.
-        :type message: str
-        :param created_at: The timestamp when the entry was created.
-        :type created_at: float
-        :param modified_on: The timestamp when the entry was last modified.
-        :type modified_on: float
-        :param week_uuid: The unique identifier for the week.
-        :type week_uuid: str
-        :type day_uuid: str
-        """
-
-        self.uuid = uuid
-        self.topic = topic
-        self.message = message
-        self.created_at = created_at
-        self.modified_on = modified_on
-        self.week_uuid = week_uuid
-        self.notes = notes
-        self.blockers = blockers
-
     def __init__(self, uuid, topic, message, created_at, modified_on, week_uuid):
         """
         Initialize the Entry object.
@@ -125,10 +97,10 @@ class Entry:
         created_at = datetime.datetime.fromisoformat(data.get("created_at")).strftime("%m/%d/%Y")
         modified_on = datetime.datetime.fromisoformat(data.get("modified_on")).strftime("%m/%d/%Y")
         week_uuid = data.get("week_uuid")
-        notes = list_builder.ListBuilder.get_notes(self.uuid)
-        blockers = list_builder.ListBuilder.get_blockers(self.uuid)
-        jiras = list_builder.ListBuilder.get_jiras(self.uuid)
-        return cls(uuid, topic, message, created_at, modified_on, week_uuid, day_uuid, notes, blockers, jiras)
+        notes = list_builder.ListBuilder.get_notes(uuid)
+        blockers = list_builder.ListBuilder.get_blockers(uuid)
+        jiras = list_builder.ListBuilder.get_jiras(uuid)
+        return cls(uuid, topic, message, created_at, modified_on, week_uuid, notes, blockers, jiras)
 
     def mark_modified(self):
         self.modified_on = datetime.datetime.now().strftime("%m/%d/%Y")
