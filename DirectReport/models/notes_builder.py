@@ -1,4 +1,6 @@
-from DirectReport.database.notes_storage import NotesDataStore
+#!/usr/bin/env python3
+
+from ..database.notes_storage import NotesDataStore
 
 
 class NotesBuilder:
