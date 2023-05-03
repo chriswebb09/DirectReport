@@ -1,13 +1,6 @@
 import sqlite3
 import uuid
-from pathlib import Path
-import sys
-from ..models import note
-
-file = Path(__file__).resolve()
-package_root_directory = file.parents[1]
-sys.path.append(str(package_root_directory))
-
+from ..models.note import Note
 
 class NotesDataStore:
     def __init__(self, db_path, conn=None):
@@ -62,4 +55,4 @@ class NotesDataStore:
             "SELECT uuid, associated_entry_uuid, note_entry FROM note_uuid_table WHERE associated_entry_uuid = ?",
             (str(associated_uuid),),
         )
-        return [note.Note(*row).to_dict() for row in result.fetchall()]
+        return [Note(*row).to_dict() for row in result.fetchall()]
