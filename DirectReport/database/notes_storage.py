@@ -2,6 +2,7 @@ import sqlite3
 import uuid
 from ..models.note import Note
 
+
 class NotesDataStore:
     def __init__(self, db_path, conn=None):
         """
