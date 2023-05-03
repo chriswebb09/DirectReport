@@ -110,10 +110,14 @@ class ListBuilder:
     @staticmethod
     def update(id, entry, topic, created_at, weekly_id, daily_id):
         """
-        Creates a new entry with the given entry text and topic.
+        Updates an entry with the given entry text and topic.
 
+        :param id: The entry id.
         :param entry: The entry text.
-        :param topic: The topic for the entry (optional).
+        :param topic: The topic for the entry
+        :param created_at: The date entry was created.
+        :param weekly_id: The weekly id.
+        :param daily_id: The daily id.
         """
         storage = EntryStorage('SQLite_Python.db')
         storage.create_table()

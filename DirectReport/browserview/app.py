@@ -30,6 +30,15 @@ def page_not_found(e):
     return render_template('404.html', error=e), 404
 
 
+@app.route("/new", methods=['GET', 'POST'])
+def new():
+    """
+    Retrieves and renders the list of all entries.
+
+    :return: Rendered HTML template for the list page.
+    """
+    return render_template('list.html', title='New Entry', data=[])
+
 @app.route("/list", methods=['GET', 'POST'])
 def list():
     """
