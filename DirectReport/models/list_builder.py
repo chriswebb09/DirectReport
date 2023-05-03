@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 
-from pathlib import Path
 import datetime
-import sys
 import uuid
-
 from DirectReport.models import entry
 from DirectReport.database.daily_storage import DailyUUIDTable
 from DirectReport.database.weekly_storage import WeekUUIDTable
@@ -12,10 +9,6 @@ from DirectReport.database import entry_storage
 from DirectReport.database import blockers_storage
 from DirectReport.database import notes_storage
 from DirectReport.database.jiras_storage import JirasDataStore
-
-file = Path(__file__).resolve()
-package_root_directory = file.parents[1]
-sys.path.append(str(package_root_directory))
 
 
 class ListBuilder:
