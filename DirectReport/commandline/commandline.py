@@ -9,7 +9,7 @@ from DirectReport.models.list_builder import ListBuilder
 from DirectReport.models.weekly_builder import WeeklyBuilder
 from DirectReport.models.daily_builder import DailyBuilder
 from DirectReport.models.note_builder import NoteBuilder
-from DirectReport.models.blocker.block_builder import BlockersBuilder
+from DirectReport.models.blocker.block_builder import BlockerBuilder
 from DirectReport.models.jira.jira_builder import JiraBuilder
 
 file = Path(__file__).resolve()
@@ -56,7 +56,7 @@ def list(transformation):
     if transformation == "week":
         week_id = WeeklyBuilder.get_weekly_id()
         week = WeeklyBuilder.list_week(week_id)
-        if week == []:
+        if not week:
             WeeklyBuilder.add_new_weekly()
         if week is not None:
             for week_item in week:
@@ -67,15 +67,15 @@ def list(transformation):
             print("today - " + str(today) + "\n")
 
     elif transformation == "all":
-        all = ListBuilder.list_all()
-        if all is not None:
-            for all_item in all:
+        all_list = ListBuilder.list_all()
+        if all_list is not None:
+            for all_item in all_list:
                 print(str(all_item) + "\n")
     elif transformation == "notes":
         daily_id = DailyBuilder.get_daily_id()
-        all = NoteBuilder.get_notes(daily_id)
-        if all is not None:
-            for all_item in all:
+        all_list = NoteBuilder.get_notes(daily_id)
+        if all_list is not None:
+            for all_item in all_list:
                 print(str(all_item) + "\n")
 
 
@@ -98,40 +98,34 @@ def new(transformation):
         topic = click.prompt('Topic', type=str)
         entry = click.prompt('Goal', type=str)
         ListBuilder.new(entry, topic)
-    if transformation == "note":
-        if ListBuilder.week_exists() is False:
-            WeeklyBuilder.add_new_weekly()
-            DailyBuilder.add_new_daily()
-        daily_id = DailyBuilder.get_daily_id()
-        note = ""
-        note = click.prompt('Note', type=str)
-        NoteBuilder.add_new_note(note, daily_id)
-    if transformation == "blocker":
-        if WeeklyBuilder.week_exists() is False:
-            WeeklyBuilder.add_new_weekly()
-            DailyBuilder.add_new_daily()
-        daily_id = DailyBuilder.get_daily_id()
-        blocker = click.prompt('Blocker', type=str)
-        BlockersBuilder.add_new_blocker(blocker, daily_id)
-    if transformation == "jira":
+    else:
         if WeeklyBuilder.week_exists() is False:
             DailyBuilder.add_new_weekly()
             DailyBuilder.add_new_daily()
-        daily_id = DailyBuilder.get_daily_id()
-        jira_ticket = click.prompt('Jira', type=str)
-        jira_tag = click.prompt('Jira', type=str)
-        JiraBuilder.add_new_jira(jira_ticket, jira_tag, daily_id)
-
+        if transformation == "note":
+            daily_id = DailyBuilder.get_daily_id()
+            note = click.prompt('Note', type=str)
+            NoteBuilder.add_new_note(note, daily_id)
+        if transformation == "blocker":
+            if WeeklyBuilder.week_exists() is False:
+                daily_id = DailyBuilder.get_daily_id()
+            blocker = click.prompt('Blocker', type=str)
+            BlockerBuilder.add_new_blocker(blocker, daily_id)
+        if transformation == "jira":
+            daily_id = DailyBuilder.get_daily_id()
+            jira_ticket = click.prompt('Jira', type=str)
+            jira_tag = click.prompt('Jira', type=str)
+            JiraBuilder.add_new_jira(jira_ticket, jira_tag, daily_id)
 
 @click.command()
 @click.option('--id', help="Delete item with id", prompt='What is the id of the entry you wish to delete?')
-def delete(id):
+def delete(uid):
     """
     Deletes an item with the specified ID.
 
-    :param id: The ID of the item to delete.
+    :param uid: The ID of the item to delete.
     """
-    ListBuilder.delete(id)
+    ListBuilder.delete(uid)
 
 
 @click.command()

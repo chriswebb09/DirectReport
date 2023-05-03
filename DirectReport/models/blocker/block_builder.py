@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
 
-from DirectReport.database.blockers_storage import BlockerDataStore
+from DirectReport.database.blocker_storage import BlockerDataStore
 
+class BlockerBuilder:
 
-class BlockersBuilder:
     def __init__(self):
         pass
 

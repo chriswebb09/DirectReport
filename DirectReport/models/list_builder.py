@@ -5,7 +5,8 @@ import uuid
 
 from DirectReport.models.entry import Entry
 from DirectReport.database.entry_storage import EntryStorage
-
+from DirectReport.models.weekly_builder import WeeklyBuilder
+from DirectReport.models.daily_builder import DailyBuilder
 
 class ListBuilder:
     """
@@ -28,10 +29,10 @@ class ListBuilder:
         print(storage.get_uuid(today))
         if storage.get_uuid(today) is not None:
             return
-        ListBuilder.add_new_daily()
-        ListBuilder.add_new_weekly()
-        weekly_id = str(ListBuilder.get_weekly_id())
-        daily_id = str(ListBuilder.get_daily_id())
+        DailyBuilder.add_new_daily()
+        WeeklyBuilder.add_new_weekly()
+        weekly_id = str(WeeklyBuilder.get_weekly_id())
+        daily_id = str(DailyBuilder.get_daily_id())
 
         if topic_text is None or topic_text == '':
             topic_text = "Entry for work on " + str(datetime.datetime.now().strftime("%b %d, %Y"))
@@ -73,7 +74,7 @@ class ListBuilder:
         """
 
         storage = EntryStorage('SQLite_Python.db')
-        daily_id = str(ListBuilder.get_daily_id())
+        daily_id = str(DailyBuilder.get_daily_id())
         daily_list = storage.get_entry(daily_id)
         return daily_list
 
