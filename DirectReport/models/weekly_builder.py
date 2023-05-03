@@ -30,6 +30,12 @@ class WeeklyBuilder:
 
     @staticmethod
     def week_exists():
+        """
+        Check if there is a week UUID associated with the current date.
+
+        :return: True if a week UUID exists for the current date, False otherwise.
+        :rtype: bool
+        """
         today = datetime.date.today().strftime("%m/%d/%Y")
         weekly = WeekUUIDTable('SQLite_Python.db')
         if weekly.get_uuid(today) is None:

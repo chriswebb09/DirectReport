@@ -7,6 +7,7 @@ import uuid
 
 
 class DailyBuilder:
+
     def __init__(self):
         pass
 

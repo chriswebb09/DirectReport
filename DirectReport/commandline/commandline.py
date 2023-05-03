@@ -52,7 +52,6 @@ def list(transformation):
 
     :param transformation: The selected transformation flag (week, day, or all).
     """
-
     if transformation == "week":
         week_id = WeeklyBuilder.get_weekly_id()
         week = WeeklyBuilder.list_week(week_id)
@@ -90,7 +89,6 @@ def new(transformation):
 
     :param transformation: The entry text to add.
     """
-
     if transformation == "entry":
         if WeeklyBuilder.week_exists() is False:
             WeeklyBuilder.add_new_weekly()
