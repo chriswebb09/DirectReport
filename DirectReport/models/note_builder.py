@@ -2,6 +2,7 @@
 
 from DirectReport.database.note_storage import NoteDataStore
 
+
 class NoteBuilder:
     def __init__(self):
         pass
