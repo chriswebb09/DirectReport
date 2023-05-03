@@ -2,7 +2,6 @@
 
 
 class Jira:
-
     def __init__(self, uuid, associated_entry_uuid, jira_tag, jira_ticket):
         self.uuid = uuid
         self.associated_entry_uuid = associated_entry_uuid

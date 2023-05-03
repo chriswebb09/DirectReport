@@ -5,7 +5,6 @@ from DirectReport.database.blockers_storage import BlockerDataStore
 
 
 class BlockersBuilder:
-    
     def __init__(self):
         pass
 
