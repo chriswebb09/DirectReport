@@ -23,7 +23,7 @@ def test_list_route():
     assert response.status_code == 200
 
 
-# def test_404_route():
-#     response = app.test_client().get('/wiki')
-#     assert response.status_code == 404
-#     assert response.data.decode('utf-8').__contains__('404')
+def test_404_route():
+    response = app.test_client().get('/wiki')
+    assert response.status_code == 404
+    assert response.data.decode('utf-8').__contains__('404')
