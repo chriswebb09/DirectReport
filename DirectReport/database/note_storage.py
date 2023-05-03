@@ -2,7 +2,7 @@
 
 import sqlite3
 import uuid
-from ..models.note import Note
+from DirectReport.models.note.note import Note
 
 
 class NoteDataStore:

@@ -8,7 +8,7 @@ from DirectReport.browserview.app import app
 from DirectReport.models.list_builder import ListBuilder
 from DirectReport.models.weekly_builder import WeeklyBuilder
 from DirectReport.models.daily_builder import DailyBuilder
-from DirectReport.models.note_builder import NoteBuilder
+from DirectReport.models.note.note_builder import NoteBuilder
 from DirectReport.models.blocker.block_builder import BlockerBuilder
 from DirectReport.models.jira.jira_builder import JiraBuilder
 

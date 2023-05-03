@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import datetime
-from DirectReport.models.note_builder import NoteBuilder
+from DirectReport.models.note.note_builder import NoteBuilder
 from DirectReport.models.blocker.block_builder import BlockerBuilder
 from DirectReport.models.jira.jira_builder import JiraBuilder
 
