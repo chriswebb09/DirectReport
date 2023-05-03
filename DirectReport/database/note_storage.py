@@ -2,8 +2,7 @@
 
 import sqlite3
 import uuid
-from DirectReport.models.note import Note
-
+from ..models.note.note import Note
 
 class NoteDataStore:
     def __init__(self, db_path, conn=None):
