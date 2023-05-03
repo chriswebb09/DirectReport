@@ -1,8 +1,15 @@
 #!/usr/bin/env python3
 
-
 class Jira:
     def __init__(self, uuid, associated_entry_uuid, jira_tag, jira_ticket):
+        """
+        Initializes a new instance of the Jira class.
+
+        :param uuid: The UUID of the Jira.
+        :param associated_entry_uuid: The UUID of the associated entry.
+        :param jira_tag: The Jira tag.
+        :param jira_ticket: The Jira ticket.
+        """
         self.uuid = uuid
         self.associated_entry_uuid = associated_entry_uuid
         self.jira_tag = jira_tag
@@ -10,9 +17,9 @@ class Jira:
 
     def to_dict(self):
         """
-        Convert the Entry object to a dictionary.
+        Convert the Jira object to a dictionary.
 
-        :return: The Entry object as a dictionary.
+        :return: The Jira object as a dictionary.
         :rtype: dict
         """
 

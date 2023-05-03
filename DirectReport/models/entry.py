@@ -2,11 +2,12 @@
 
 import datetime
 from DirectReport.models.note.note_builder import NoteBuilder
-from DirectReport.models.blocker.block_builder import BlockerBuilder
-from DirectReport.models.jira.jira_builder import JiraBuilder
+from DirectReport.models.blocker_models.block_builder import BlockerBuilder
+from DirectReport.models.jira_models.jira_builder import JiraBuilder
 
 
 class Entry:
+
     """
     A class to represent a journal entry.
     """

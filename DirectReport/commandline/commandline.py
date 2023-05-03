@@ -9,8 +9,8 @@ from DirectReport.models.list_builder import ListBuilder
 from DirectReport.models.weekly_builder import WeeklyBuilder
 from DirectReport.models.daily_builder import DailyBuilder
 from DirectReport.models.note.note_builder import NoteBuilder
-from DirectReport.models.blocker.block_builder import BlockerBuilder
-from DirectReport.models.jira.jira_builder import JiraBuilder
+from DirectReport.models.blocker_models.block_builder import BlockerBuilder
+from DirectReport.models.jira_models.jira_builder import JiraBuilder
 
 file = Path(__file__).resolve()
 package_root_directory = file.parents[1]
@@ -82,8 +82,8 @@ def list(transformation):
 @click.command()
 @click.option('--entry', 'transformation', flag_value='entry', default=True, help="Add new entry to list")
 @click.option('--note', 'transformation', flag_value='note', help="Add new entry to list")
-@click.option('--blocker', 'transformation', flag_value='blocker', help="Add new blocker to list")
-@click.option('--jira', 'transformation', flag_value='jira', help="Add new jira to list")
+@click.option('--blocker_models', 'transformation', flag_value='blocker_models', help="Add new blocker_models to list")
+@click.option('--jira_models', 'transformation', flag_value='jira_models', help="Add new jira_models to list")
 def new(transformation):
     """
     Adds a new entry to the list.
@@ -106,12 +106,12 @@ def new(transformation):
             daily_id = DailyBuilder.get_daily_id()
             note = click.prompt('Note', type=str)
             NoteBuilder.add_new_note(note, daily_id)
-        if transformation == "blocker":
+        if transformation == "blocker_models":
             if WeeklyBuilder.week_exists() is False:
                 daily_id = DailyBuilder.get_daily_id()
             blocker = click.prompt('Blocker', type=str)
             BlockerBuilder.add_new_blocker(blocker, daily_id)
-        if transformation == "jira":
+        if transformation == "jira_models":
             daily_id = DailyBuilder.get_daily_id()
             jira_ticket = click.prompt('Jira', type=str)
             jira_tag = click.prompt('Jira', type=str)

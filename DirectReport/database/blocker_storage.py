@@ -2,7 +2,7 @@
 
 import sqlite3
 import uuid
-from DirectReport.models.blocker.blocker import Blocker
+from DirectReport.models.blocker_models.blocker import Blocker
 
 
 class BlockerDataStore:
@@ -36,8 +36,13 @@ class BlockerDataStore:
         self.conn.commit()
 
     def add_blocker_entry(self, blocker, associated_entry_uuid_str, uuid_str=None):
-        """
-        TODO
+         """
+        Adds a new blocker entry to the `blockers_uuid_table`.
+
+        :param blocker: The blocker entry.
+        :param associated_entry_uuid_str: The associated entry UUID as a string.
+        :param uuid_str: The UUID of the blocker entry as a string (optional).
+        :return: None
         """
         if uuid_str is None:
             uuid_str = str(uuid.uuid4())
@@ -52,7 +57,10 @@ class BlockerDataStore:
 
     def entries_for_associated_uuid(self, associated_uuid):
         """
-        TODO
+        Retrieves a list of blocker entries associated with the specified UUID.
+
+        :param associated_uuid: The UUID to retrieve blocker entries for.
+        :return: A list of blocker entries associated with the UUID.
         """
         result = self.conn.execute(
             "SELECT uuid, associated_entry_uuid, blocker_entry FROM blockers_uuid_table WHERE associated_entry_uuid = ?",
