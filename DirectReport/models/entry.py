@@ -2,8 +2,8 @@
 
 import datetime
 from DirectReport.models.notes_builder import NotesBuilder
-from DirectReport.models.block_builder import BlockersBuilder
-from DirectReport.models.jira_builder import JiraBuilder
+from DirectReport.models.blocker.block_builder import BlockersBuilder
+from DirectReport.models.jira.jira_builder import JiraBuilder
 
 
 class Entry:

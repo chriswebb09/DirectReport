@@ -9,8 +9,8 @@ from DirectReport.models.list_builder import ListBuilder
 from DirectReport.models.weekly_builder import WeeklyBuilder
 from DirectReport.models.daily_builder import DailyBuilder
 from DirectReport.models.notes_builder import NotesBuilder
-from DirectReport.models.block_builder import BlockersBuilder
-from DirectReport.models.jira_builder import JiraBuilder
+from DirectReport.models.blocker.block_builder import BlockersBuilder
+from DirectReport.models.jira.jira_builder import JiraBuilder
 
 file = Path(__file__).resolve()
 package_root_directory = file.parents[1]

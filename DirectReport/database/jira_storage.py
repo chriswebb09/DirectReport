@@ -2,7 +2,7 @@
 
 import sqlite3
 import uuid
-from DirectReport.models.jira import Jira
+from DirectReport.models.jira.jira import Jira
 
 
 class JiraDataStore:

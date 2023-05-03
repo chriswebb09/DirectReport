@@ -2,7 +2,7 @@
 
 import sqlite3
 import uuid
-from DirectReport.models.blocker import Blocker
+from DirectReport.models.blocker.blocker import Blocker
 
 
 class BlockerDataStore:
