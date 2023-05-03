@@ -2,7 +2,6 @@ import uuid
 
 
 class Note:
-
     def __init__(self, uuid, associated_entry_uuid, note):
         self.uuid = uuid
         self.associated_entry_uuid = associated_entry_uuid
@@ -16,11 +15,7 @@ class Note:
         :rtype: dict
         """
 
-        return {
-            "uuid": str(self.uuid),
-            "associated_entry_uuid": str(self.associated_entry_uuid),
-            "note": self.note
-        }
+        return {"uuid": str(self.uuid), "associated_entry_uuid": str(self.associated_entry_uuid), "note": self.note}
 
     def __iter__(self):
         return self

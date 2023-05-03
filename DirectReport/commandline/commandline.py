@@ -88,7 +88,6 @@ def list(transformation):
 @click.option('--blocker', 'transformation', flag_value='blocker', help="Add new blocker to list")
 @click.option('--jira', 'transformation', flag_value='jira', help="Add new jira to list")
 def new(transformation):
-
     """
     Adds a new entry to the list.
 
@@ -125,8 +124,6 @@ def new(transformation):
         jira_ticket = click.prompt('Jira', type=str)
         jira_tag = click.prompt('Jira', type=str)
         ListBuilder.add_new_jira(jira_ticket, jira_tag, daily_id)
-
-
 
 
 @click.command()

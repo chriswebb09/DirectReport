@@ -43,7 +43,7 @@ class EntryStorage:
             entry.message,
             entry.created_at.__str__(),
             entry.modified_on.__str__(),
-            entry.week_uuid.__str__()
+            entry.week_uuid.__str__(),
         )
         self.conn.execute(
             "INSERT INTO entries (uuid, topic, message, created_at, modified_on, week_uuid) VALUES (?, ?, ?, ?, ?, ?)",

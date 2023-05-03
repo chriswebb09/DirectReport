@@ -39,6 +39,7 @@ def new():
     """
     return render_template('list.html', title='New Entry', data=[])
 
+
 @app.route("/list", methods=['GET', 'POST'])
 def list():
     """
@@ -63,14 +64,17 @@ def detail(id=None):
     :param id: The ID of the entry to display.
     :return: Rendered HTML template for the entry details page.
     """
-    entry=None
+    entry = None
     item = EntryStorage('SQLite_Python.db')
     if request.method == "POST":
         json_data = request.get_json()
         print(json_data)
-        ListBuilder.update(json_data["id"], json_data['entry'], json_data['topic'], json_data['created_at'], json_data['week_id'])
+        ListBuilder.update(
+            json_data["id"], json_data['entry'], json_data['topic'], json_data['created_at'], json_data['week_id']
+        )
     entry = item.get_entry(id).to_dict()
     return render_template('detail.html', title='Detail', data=entry)
+
 
 @app.route('/delete/<id>', methods=['GET'])
 def delete(id=None):

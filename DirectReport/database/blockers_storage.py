@@ -3,8 +3,8 @@
 import sqlite3
 import uuid
 
-class Blocker:
 
+class Blocker:
     def __init__(self, uuid, associated_entry_uuid, blocker_text):
         self.uuid = uuid
         self.associated_entry_uuid = associated_entry_uuid
@@ -21,7 +21,7 @@ class Blocker:
         return {
             "uuid": str(self.uuid),
             "associated_entry_uuid": str(self.associated_entry_uuid),
-            "blocker": self.blocker_text
+            "blocker": self.blocker_text,
         }
 
     def __iter__(self):
@@ -35,6 +35,7 @@ class Blocker:
 
     def __len__(self):
         return len(self.blocker_text)
+
 
 class BlockerDataStore:
     def __init__(self, db_path, conn=None):

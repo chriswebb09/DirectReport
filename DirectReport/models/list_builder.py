@@ -66,6 +66,7 @@ class ListBuilder:
             return False
         else:
             return True
+
     @staticmethod
     def add_new_weekly():
         """
@@ -190,14 +191,7 @@ class ListBuilder:
 
         if topic is None or topic == '':
             topic = "Entry for work on " + str(datetime.datetime.now().strftime("%b %d, %Y"))
-        new_entry = Entry(
-            daily_id,
-            topic,
-            entry,
-            datetime.datetime.now(),
-            datetime.datetime.now(),
-            weekly_id
-        )
+        new_entry = Entry(daily_id, topic, entry, datetime.datetime.now(), datetime.datetime.now(), weekly_id)
         storage.add_entry(new_entry)
 
     @staticmethod
@@ -214,14 +208,7 @@ class ListBuilder:
         """
         storage = EntryStorage('SQLite_Python.db')
         storage.create_table()
-        new_entry = Entry(
-            uuid.UUID(id),
-            topic,
-            entry,
-            created_at,
-            datetime.datetime.now(),
-            weekly_id
-        )
+        new_entry = Entry(uuid.UUID(id), topic, entry, created_at, datetime.datetime.now(), weekly_id)
         storage.update_entry(new_entry)
 
     @staticmethod

@@ -3,14 +3,13 @@
 import sqlite3
 import uuid
 
-class Jira:
 
+class Jira:
     def __init__(self, uuid, associated_entry_uuid, jira_tag, jira_ticket):
         self.uuid = uuid
         self.associated_entry_uuid = associated_entry_uuid
         self.jira_tag = jira_tag
         self.jira_ticket = jira_ticket
-
 
     def to_dict(self):
         """
@@ -24,7 +23,7 @@ class Jira:
             "uuid": str(self.uuid),
             "associated_entry_uuid": str(self.associated_entry_uuid),
             "jira_tag": self.jira_tag,
-            "jira_ticket": self.jira_ticket
+            "jira_ticket": self.jira_ticket,
         }
 
     def __iter__(self):
@@ -38,6 +37,7 @@ class Jira:
 
     def __len__(self):
         return len(self.jira_ticket)
+
 
 class JirasDataStore:
     def __init__(self, db_path, conn=None):

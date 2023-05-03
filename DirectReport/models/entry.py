@@ -3,6 +3,7 @@
 import datetime
 from . import list_builder
 
+
 class Entry:
     """
     A class to represent a journal entry.
@@ -64,7 +65,6 @@ class Entry:
         self.blockers = list_builder.ListBuilder.get_blockers(self.uuid)
         self.jiras = list_builder.ListBuilder.get_jiras(self.uuid)
 
-
     def get_created_at_formatted(self, format="%Y-%m-%d %H:%M:%S"):
         """
         Get the created_at timestamp formatted as a string.
@@ -106,7 +106,7 @@ class Entry:
             "week_uuid": str(self.week_uuid),
             "notes": self.notes,
             "blockers": self.blockers,
-            "jiras": self.jiras
+            "jiras": self.jiras,
         }
 
     @classmethod
@@ -140,7 +140,6 @@ class Entry:
     def set_message(self, new_message):
         self.message = new_message
         self.modified_on = datetime.datetime.now().timestamp().strftime("%m/%d/%Y")
-
 
     def __iter__(self):
         return self
