@@ -85,6 +85,8 @@ def list(transformation):
 @click.command()
 @click.option('--entry', 'transformation', flag_value='entry', default=True, help="Add new entry to list")
 @click.option('--note', 'transformation', flag_value='note', help="Add new entry to list")
+@click.option('--blocker', 'transformation', flag_value='blocker', help="Add new blocker to list")
+@click.option('--jira', 'transformation', flag_value='jira', help="Add new jira to list")
 def new(transformation):
 
     """
@@ -108,6 +110,22 @@ def new(transformation):
         note = ""
         note = click.prompt('Note', type=str)
         ListBuilder.add_new_note(note, daily_id)
+    if transformation == "blocker":
+        if ListBuilder.week_exists() is False:
+            ListBuilder.add_new_weekly()
+            ListBuilder.add_new_daily()
+        daily_id = ListBuilder.get_daily_id()
+        blocker = click.prompt('Blocker', type=str)
+        ListBuilder.add_new_blocker(blocker, daily_id)
+    if transformation == "jira":
+        if ListBuilder.week_exists() is False:
+            ListBuilder.add_new_weekly()
+            ListBuilder.add_new_daily()
+        daily_id = ListBuilder.get_daily_id()
+        jira_ticket = click.prompt('Jira', type=str)
+        jira_tag = click.prompt('Jira', type=str)
+        ListBuilder.add_new_jira(jira_ticket, jira_tag, daily_id)
+
 
 
 

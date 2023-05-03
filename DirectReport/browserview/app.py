@@ -68,7 +68,7 @@ def detail(id=None):
     if request.method == "POST":
         json_data = request.get_json()
         print(json_data)
-        ListBuilder.update(json_data["id"], json_data['entry'], json_data['topic'], json_data['created_at'], json_data['week_id'], json_data['day_id'])
+        ListBuilder.update(json_data["id"], json_data['entry'], json_data['topic'], json_data['created_at'], json_data['week_id'])
     entry = item.get_entry(id).to_dict()
     return render_template('detail.html', title='Detail', data=entry)
 

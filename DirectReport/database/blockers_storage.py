@@ -3,6 +3,38 @@
 import sqlite3
 import uuid
 
+class Blocker:
+
+    def __init__(self, uuid, associated_entry_uuid, blocker_text):
+        self.uuid = uuid
+        self.associated_entry_uuid = associated_entry_uuid
+        self.blocker_text = blocker_text
+
+    def to_dict(self):
+        """
+        Convert the Entry object to a dictionary.
+
+        :return: The Entry object as a dictionary.
+        :rtype: dict
+        """
+
+        return {
+            "uuid": str(self.uuid),
+            "associated_entry_uuid": str(self.associated_entry_uuid),
+            "blocker": self.blocker_text
+        }
+
+    def __iter__(self):
+        return self
+
+    def __str__(self):
+        return "{ " + "".join((' {} : {} '.format(item, self.__dict__[item]) for item in self.__dict__)) + " }"
+
+    def __repr__(self):
+        return self.__str__()
+
+    def __len__(self):
+        return len(self.blocker_text)
 
 class BlockerDataStore:
     def __init__(self, db_path, conn=None):
@@ -27,14 +59,14 @@ class BlockerDataStore:
             '''
             CREATE TABLE IF NOT EXISTS blockers_uuid_table (
                 uuid TEXT PRIMARY KEY,
-                associated_entry_uuuid TEXT,
+                associated_entry_uuid TEXT,
                 blocker_entry TEXT
             )
         '''
         )
         self.conn.commit()
 
-    def add_blocker_entry(self, blocker_entry, associated_entry_uuuid_str, uuid_str=None):
+    def add_blocker_entry(self, blocker, associated_entry_uuid_str, uuid_str=None):
         """
         TODO
         """
@@ -43,9 +75,9 @@ class BlockerDataStore:
         cursor = self.conn.cursor()
         cursor.execute(
             '''
-            INSERT OR IGNORE INTO blockers_uuid_table (uuid, associated_entry_uuuid, blocker_entry) VALUES (?, ?, ?)
+            INSERT OR IGNORE INTO blockers_uuid_table (uuid, associated_entry_uuid, blocker_entry) VALUES (?, ?, ?)
             ''',
-            (uuid_str, associated_entry_uuuid_str, blocker_entry),
+            (uuid_str, associated_entry_uuid_str, blocker),
         )
         self.conn.commit()
 
@@ -54,7 +86,7 @@ class BlockerDataStore:
         TODO
         """
         result = self.conn.execute(
-            "SELECT uuid, associated_entry_uuuid, blocker_entry FROM blockers_uuid_table WHERE associated_entry_uuuid = ?",
+            "SELECT uuid, associated_entry_uuid, blocker_entry FROM blockers_uuid_table WHERE associated_entry_uuid = ?",
             (str(associated_uuid),),
         )
-        return [BlockerDataStore(*row) for row in result.fetchall()]
+        return [Blocker(*row).to_dict() for row in result.fetchall()]

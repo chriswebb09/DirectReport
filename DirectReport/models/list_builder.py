@@ -4,6 +4,8 @@ from DirectReport.database.daily_storage import DailyUUIDTable
 from DirectReport.database.weekly_storage import WeekUUIDTable
 from DirectReport.database.entry_storage import EntryStorage
 from DirectReport.database.notes_storage import NotesDataStore
+from DirectReport.database.blockers_storage import BlockerDataStore
+from DirectReport.database.jiras_storage import JirasDataStore
 from DirectReport.models.entry import Entry
 from DirectReport.models.note import Note
 from pathlib import Path
@@ -123,6 +125,52 @@ class ListBuilder:
         return note_list
 
     @staticmethod
+    def add_new_blocker(blocker_text, associated_id):
+        """
+        Adds a new daily ID.
+
+        :return: The newly created daily ID.
+        """
+
+        blocker = BlockerDataStore('SQLite_Python.db')
+        blocker.create_table()
+        blocker.add_blocker_entry(blocker_text, str(associated_id))
+
+    @staticmethod
+    def get_blockers(associated_id):
+        """
+        TODO
+        """
+
+        blockers = BlockerDataStore('SQLite_Python.db')
+        blocker_list = blockers.entries_for_associated_uuid(associated_id)
+        print(blocker_list)
+        return blocker_list
+
+    @staticmethod
+    def add_new_jira(jira_ticket, jira_tag, associated_id):
+        """
+        Adds a new daily ID.
+
+        :return: The newly created daily ID.
+        """
+
+        jiras = JirasDataStore('SQLite_Python.db')
+        jiras.create_table()
+        jiras.add_jira_entry(jira_tag, jira_ticket, associated_id)
+
+    @staticmethod
+    def get_jiras(associated_id):
+        """
+        TODO
+        """
+
+        jiras = JirasDataStore('SQLite_Python.db')
+        jiras_list = jiras.entries_for_associated_uuid(associated_id)
+        print(jiras_list)
+        return jiras_list
+
+    @staticmethod
     def new(entry, topic=None):
         """
         Creates a new entry with the given entry text and topic.
@@ -153,7 +201,7 @@ class ListBuilder:
         storage.add_entry(new_entry)
 
     @staticmethod
-    def update(id, entry, topic, created_at, weekly_id, daily_id):
+    def update(id, entry, topic, created_at, weekly_id):
         """
         Updates an entry with the given entry text and topic.
 

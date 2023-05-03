@@ -8,7 +8,7 @@ class Entry:
     A class to represent a journal entry.
     """
 
-    def __init__(self, uuid, topic, message, created_at, modified_on, week_uuid, notes):
+    def __init__(self, uuid, topic, message, created_at, modified_on, week_uuid, notes, blockers):
         """
         Initialize the Entry object.
 
@@ -34,6 +34,7 @@ class Entry:
         self.modified_on = modified_on
         self.week_uuid = week_uuid
         self.notes = notes
+        self.blockers = blockers
 
     def __init__(self, uuid, topic, message, created_at, modified_on, week_uuid):
         """
@@ -60,6 +61,8 @@ class Entry:
         self.modified_on = modified_on
         self.week_uuid = week_uuid
         self.notes = list_builder.ListBuilder.get_notes(self.uuid)
+        self.blockers = list_builder.ListBuilder.get_blockers(self.uuid)
+        self.jiras = list_builder.ListBuilder.get_jiras(self.uuid)
 
 
     def get_created_at_formatted(self, format="%Y-%m-%d %H:%M:%S"):
@@ -101,7 +104,9 @@ class Entry:
             "created_at": str(self.created_at),
             "modified_on": str(self.modified_on),
             "week_uuid": str(self.week_uuid),
-            "notes": self.notes
+            "notes": self.notes,
+            "blockers": self.blockers,
+            "jiras": self.jiras
         }
 
     @classmethod
@@ -121,7 +126,9 @@ class Entry:
         modified_on = datetime.datetime.fromisoformat(data.get("modified_on")).strftime("%m/%d/%Y")
         week_uuid = data.get("week_uuid")
         notes = list_builder.ListBuilder.get_notes(self.uuid)
-        return cls(uuid, topic, message, created_at, modified_on, week_uuid, day_uuid, notes)
+        blockers = list_builder.ListBuilder.get_blockers(self.uuid)
+        jiras = list_builder.ListBuilder.get_jiras(self.uuid)
+        return cls(uuid, topic, message, created_at, modified_on, week_uuid, day_uuid, notes, blockers, jiras)
 
     def mark_modified(self):
         self.modified_on = datetime.datetime.now().strftime("%m/%d/%Y")
