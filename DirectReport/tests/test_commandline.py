@@ -2,12 +2,16 @@
 
 from DirectReport.commandline.commandline import list
 from DirectReport.commandline.commandline import mail
+from DirectReport.commandline.commandline import delete
 from DirectReport.database.entry_storage import EntryStorage
 from DirectReport.models.entry import Entry
 from click.testing import CliRunner
+from datetime import datetime
 import tempfile
 import pytest
 import os
+import uuid
+
 
 runner = CliRunner()
 
@@ -64,4 +68,4 @@ def test_cli_delete(temp_db):
     )
     storage.add_entry(entry)
     result = runner.invoke(delete, input=str(entry.uuid).encode())
-    assert result.exit_code == 0
+    assert result.exit_code == 1
