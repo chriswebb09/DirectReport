@@ -1,6 +1,6 @@
 import sqlite3
 import uuid
-from DirectReport.models.note import Note
+from DirectReport.models import note
 
 
 class NotesDataStore:
@@ -56,4 +56,4 @@ class NotesDataStore:
             "SELECT uuid, associated_entry_uuid, note_entry FROM note_uuid_table WHERE associated_entry_uuid = ?",
             (str(associated_uuid),),
         )
-        return [Note(*row).to_dict() for row in result.fetchall()]
+        return [note.Note(*row).to_dict() for row in result.fetchall()]
