@@ -9,12 +9,12 @@
          <script type="text/babel">
 
             const rootElement = document.getElementById('root')
-            const lineargradient= {background: "linear-gradient(90deg, #667eea 0%, #764ba2 100%)"}
+            const linearGradient= {background: "linear-gradient(90deg, #667eea 0%, #764ba2 100%)"}
 
             class Home extends React.Component {
                 render() {
                     return (
-                        <div class="py-20 flex h-97" style={lineargradient}>
+                        <div class="py-24 flex h-100" style={linearGradient}>
                             <div class="container mx-auto px-6">
                                 <h2 class="my-4 text-4xl font-bold mb-2 text-white">DirectReport</h2>
                                 <h3 class="my-8 text-2xl mb-12 text-gray-200">Keep track of your accomplishments each day of the workweek.</h3>
@@ -36,6 +36,7 @@
             }
 
             ReactDOM.render(<App/>, rootElement)
+
          </script>
     </main>
 {% endblock %}

@@ -117,14 +117,14 @@ class Entry:
         uuid = data.get("uuid")
         topic = data.get("topic")
         message = data.get("message")
-        created_at = datetime.datetime.fromisoformat(data.get("created_at"))
-        modified_on = datetime.datetime.fromisoformat(data.get("modified_on"))
+        created_at = datetime.datetime.fromisoformat(data.get("created_at")).strftime("%m/%d/%Y")
+        modified_on = datetime.datetime.fromisoformat(data.get("modified_on")).strftime("%m/%d/%Y")
         week_uuid = data.get("week_uuid")
         notes = list_builder.ListBuilder.get_notes(self.uuid)
         return cls(uuid, topic, message, created_at, modified_on, week_uuid, day_uuid, notes)
 
     def mark_modified(self):
-        self.modified_on = datetime.datetime.now()
+        self.modified_on = datetime.datetime.now().strftime("%m/%d/%Y")
 
     def is_recent(self, days=7):
         delta = datetime.timedelta(days=days)
@@ -132,7 +132,8 @@ class Entry:
 
     def set_message(self, new_message):
         self.message = new_message
-        self.modified_on = datetime.datetime.now().timestamp()
+        self.modified_on = datetime.datetime.now().timestamp().strftime("%m/%d/%Y")
+
 
     def __iter__(self):
         return self

@@ -5,6 +5,7 @@ from DirectReport.database.weekly_storage import WeekUUIDTable
 from DirectReport.database.entry_storage import EntryStorage
 from DirectReport.database.notes_storage import NotesDataStore
 from DirectReport.models.entry import Entry
+from DirectReport.models.note import Note
 from pathlib import Path
 import datetime
 import sys
