@@ -9,7 +9,7 @@
 project = 'DirectReport'
 copyright = '2023, Christopher Webb-Orenstein'
 author = 'Christopher Webb-Orenstein'
-release = '0.1.0'
+release = '1.0.0'
 import sphinx_rtd_theme
 import os               # line 13
 import sys              # line 14
@@ -24,8 +24,6 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.napoleon',
     'sphinx_rtd_theme',
-    'sphinx_search.extension',
-    'sphinx_search.extension',
     'sphinx.ext.autosummary'
 ]
 
