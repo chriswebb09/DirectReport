@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from DirectReport.database.jira_storage import JiraDataStore
 
 

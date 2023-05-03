@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import datetime
 from DirectReport.database.daily_storage import DailyUUIDTable
 import DirectReport.models.weekly_builder as WeeklyBuilder
@@ -5,6 +7,7 @@ import uuid
 
 
 class DailyBuilder:
+
     def __init__(self):
         pass
 

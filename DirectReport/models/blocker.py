@@ -2,6 +2,7 @@
 
 
 class Blocker:
+
     def __init__(self, uuid, associated_entry_uuid, blocker_text):
         self.uuid = uuid
         self.associated_entry_uuid = associated_entry_uuid
