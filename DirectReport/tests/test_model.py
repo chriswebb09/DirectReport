@@ -19,4 +19,4 @@ def test_data_model_update_message():
 def test_data_model_is_recent():
     entry3 = Entry(uuid.uuid4(), "Topic", "test", datetime.datetime.now(), datetime.datetime.now(), uuid.uuid4())
     entry3.set_message("test2")
-    assert True == entry3.is_recent()
+    assert entry3.is_recent() is True
