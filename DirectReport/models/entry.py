@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 
 import datetime
-from .list_builder import ListBuilder
+from DirectReport.models.notes_builder import NotesBuilder
+from DirectReport.models.block_builder import BlockersBuilder
+from DirectReport.models.jira_builder import JiraBuilder
 
 
 class Entry:
@@ -33,9 +35,9 @@ class Entry:
         self.created_at = created_at
         self.modified_on = modified_on
         self.week_uuid = week_uuid
-        self.notes = ListBuilder.get_notes(self.uuid)
-        self.blockers = ListBuilder.get_blockers(self.uuid)
-        self.jiras = ListBuilder.get_jiras(self.uuid)
+        self.notes = NotesBuilder.get_notes(self.uuid)
+        self.blockers = BlockersBuilder.get_blockers(self.uuid)
+        self.jiras = JiraBuilder.get_jiras(self.uuid)
 
     def get_created_at_formatted(self, format="%Y-%m-%d %H:%M:%S"):
         """
@@ -97,9 +99,9 @@ class Entry:
         created_at = datetime.datetime.fromisoformat(data.get("created_at")).strftime("%m/%d/%Y")
         modified_on = datetime.datetime.fromisoformat(data.get("modified_on")).strftime("%m/%d/%Y")
         week_uuid = data.get("week_uuid")
-        notes = ListBuilder.get_notes(uuid)
-        blockers = ListBuilder.get_blockers(uuid)
-        jiras = ListBuilder.get_jiras(uuid)
+        notes = NotesBuilder.get_notes(uuid)
+        blockers = BlockersBuilder.get_blockers(uuid)
+        jiras = JiraBuilder.get_jiras(uuid)
         return cls(uuid, topic, message, created_at, modified_on, week_uuid, notes, blockers, jiras)
 
     def mark_modified(self):

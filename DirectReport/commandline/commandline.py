@@ -6,13 +6,15 @@ from pathlib import Path
 import webbrowser
 from DirectReport.browserview.app import app
 from DirectReport.models.list_builder import ListBuilder
+from DirectReport.models.weekly_builder import WeeklyBuilder
+from DirectReport.models.daily_builder import DailyBuilder
+from DirectReport.models.notes_builder import NotesBuilder
+from DirectReport.models.block_builder import BlockersBuilder
+from DirectReport.models.jira_builder import JiraBuilder
 
 file = Path(__file__).resolve()
 package_root_directory = file.parents[1]
 sys.path.append(str(package_root_directory))
-
-
-builder = ListBuilder()
 
 
 @click.group()
@@ -52,10 +54,10 @@ def list(transformation):
     """
 
     if transformation == "week":
-        week_id = ListBuilder.get_weekly_id()
-        week = ListBuilder.list_week(week_id)
+        week_id = WeeklyBuilder.get_weekly_id()
+        week = WeeklyBuilder.list_week(week_id)
         if week == []:
-            ListBuilder.add_new_weekly()
+            WeeklyBuilder.add_new_weekly()
         if week is not None:
             for week_item in week:
                 print(str(week_item) + "\n")
@@ -70,8 +72,8 @@ def list(transformation):
             for all_item in all:
                 print(str(all_item) + "\n")
     elif transformation == "notes":
-        daily_id = ListBuilder.get_daily_id()
-        all = ListBuilder.get_notes(daily_id)
+        daily_id = DailyBuilder.get_daily_id()
+        all = NotesBuilder.get_notes(daily_id)
         if all is not None:
             for all_item in all:
                 print(str(all_item) + "\n")
@@ -86,39 +88,39 @@ def new(transformation):
     """
     Adds a new entry to the list.
 
-    :param entry: The entry text to add.
+    :param transformation: The entry text to add.
     """
 
     if transformation == "entry":
-        if ListBuilder.week_exists() is False:
-            ListBuilder.add_new_weekly()
-        ListBuilder.add_new_daily()
+        if WeeklyBuilder.week_exists() is False:
+            WeeklyBuilder.add_new_weekly()
+        DailyBuilder.add_new_daily()
         topic = click.prompt('Topic', type=str)
         entry = click.prompt('Goal', type=str)
-        builder.new(entry, topic)
+        ListBuilder.new(entry, topic)
     if transformation == "note":
         if ListBuilder.week_exists() is False:
-            ListBuilder.add_new_weekly()
-            ListBuilder.add_new_daily()
-        daily_id = ListBuilder.get_daily_id()
+            WeeklyBuilder.add_new_weekly()
+            DailyBuilder.add_new_daily()
+        daily_id = DailyBuilder.get_daily_id()
         note = ""
         note = click.prompt('Note', type=str)
-        ListBuilder.add_new_note(note, daily_id)
+        NotesBuilder.add_new_note(note, daily_id)
     if transformation == "blocker":
-        if ListBuilder.week_exists() is False:
-            ListBuilder.add_new_weekly()
-            ListBuilder.add_new_daily()
-        daily_id = ListBuilder.get_daily_id()
+        if WeeklyBuilder.week_exists() is False:
+            WeeklyBuilder.add_new_weekly()
+            DailyBuilder.add_new_daily()
+        daily_id = DailyBuilder.get_daily_id()
         blocker = click.prompt('Blocker', type=str)
-        ListBuilder.add_new_blocker(blocker, daily_id)
+        BlockersBuilder.add_new_blocker(blocker, daily_id)
     if transformation == "jira":
-        if ListBuilder.week_exists() is False:
-            ListBuilder.add_new_weekly()
-            ListBuilder.add_new_daily()
-        daily_id = ListBuilder.get_daily_id()
+        if WeeklyBuilder.week_exists() is False:
+            DailyBuilder.add_new_weekly()
+            DailyBuilder.add_new_daily()
+        daily_id = DailyBuilder.get_daily_id()
         jira_ticket = click.prompt('Jira', type=str)
         jira_tag = click.prompt('Jira', type=str)
-        ListBuilder.add_new_jira(jira_ticket, jira_tag, daily_id)
+        JiraBuilder.add_new_jira(jira_ticket, jira_tag, daily_id)
 
 
 @click.command()
@@ -151,8 +153,8 @@ def mail():
     """
     recipient = "mail@test.com"
     subject = "work for week"
-    week_id = ListBuilder.get_weekly_id()
-    week = ListBuilder.list_week(week_id)
+    week_id = WeeklyBuilder.get_weekly_id()
+    week = WeeklyBuilder.list_week(week_id)
     body = ""
     if week is not None:
         for week_item in week:

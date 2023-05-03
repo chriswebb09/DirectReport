@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 
-from DirectReport.models.list_builder import ListBuilder
+from ..models.list_builder import ListBuilder
+from DirectReport.models.weekly_builder import WeeklyBuilder
 from DirectReport.database.entry_storage import EntryStorage
 from flask import Flask, render_template, request, redirect
 
 app = Flask(__name__, template_folder="templates")
-
-builder = ListBuilder()
 
 
 @app.route("/")
@@ -50,8 +49,8 @@ def list():
     if request.method == "POST":
         json_data = request.get_json()
         ListBuilder.new(json_data["entry"], json_data["topic"])
-    week_id = ListBuilder.get_weekly_id()
-    week = ListBuilder.list_week(week_id)
+    week_id = WeeklyBuilder.get_weekly_id()
+    week = WeeklyBuilder.list_week(week_id)
     return render_template('list.html', title='List', data=week)
 
 

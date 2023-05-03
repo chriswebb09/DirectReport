@@ -6,9 +6,7 @@ import tempfile
 import uuid
 from datetime import datetime
 from pathlib import Path
-
 import pytest
-
 from DirectReport.database.weekly_storage import WeekUUIDTable
 
 file = Path(__file__).resolve()
