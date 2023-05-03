@@ -47,6 +47,7 @@ def web_browser():
 @click.command()
 @click.option('--week', 'transformation', flag_value='week', default=True)
 @click.option('--day', 'transformation', flag_value='day')
+@click.option('--notes', 'transformation', flag_value='notes')
 @click.option('--all', 'transformation', flag_value='all')
 def list(transformation):
     """
@@ -54,35 +55,60 @@ def list(transformation):
 
     :param transformation: The selected transformation flag (week, day, or all).
     """
-    if transformation == "weekly":
-        week = ListBuilder.list_this_week()
+
+    if transformation == "week":
+        week_id = ListBuilder.get_weekly_id()
+        week = ListBuilder.list_week(week_id)
+        if week == []:
+            ListBuilder.add_new_weekly()
         if week is not None:
             for week_item in week:
                 print(str(week_item) + "\n")
-    elif transformation == "daily":
+    elif transformation == "day":
         today = ListBuilder.list_today()
         if today is not None:
-            for today_item in today:
-                print(str(today_item) + "\n")
+            print("today - " + str(today) + "\n")
+
     elif transformation == "all":
         all = ListBuilder.list_all()
+        if all is not None:
+            for all_item in all:
+                print(str(all_item) + "\n")
+    elif transformation == "notes":
+        daily_id = ListBuilder.get_daily_id()
+        all = ListBuilder.get_notes(daily_id)
         if all is not None:
             for all_item in all:
                 print(str(all_item) + "\n")
 
 
 @click.command()
-@click.option('--entry', help="Add new entry to list", prompt='What have you been working on? ')
-def new(entry):
+@click.option('--entry', 'transformation', flag_value='entry', default=True, help="Add new entry to list")
+@click.option('--note', 'transformation', flag_value='note', help="Add new entry to list")
+def new(transformation):
+
     """
     Adds a new entry to the list.
 
     :param entry: The entry text to add.
     """
-    topic = ""
-    if click.confirm('Do you wan to add in topic?'):
-        topic = click.prompt('Enter topic', type=str)
-    builder.new(entry, topic)
+
+    if transformation == "entry":
+        if ListBuilder.week_exists() is False:
+            ListBuilder.add_new_weekly()
+        ListBuilder.add_new_daily()
+        topic = click.prompt('Topic', type=str)
+        entry = click.prompt('Goal', type=str)
+        builder.new(entry, topic)
+    if transformation == "note":
+        if ListBuilder.week_exists() is False:
+            ListBuilder.add_new_weekly()
+            ListBuilder.add_new_daily()
+        daily_id = ListBuilder.get_daily_id()
+        note = ""
+        note = click.prompt('Note', type=str)
+        ListBuilder.add_new_note(note, daily_id)
+
 
 
 @click.command()

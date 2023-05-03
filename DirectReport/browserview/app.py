@@ -50,7 +50,9 @@ def list():
     if request.method == "POST":
         json_data = request.get_json()
         ListBuilder.new(json_data["entry"], json_data["topic"])
-    week = items.get_all_entries_json()
+    week_id = ListBuilder.get_weekly_id()
+    week = ListBuilder.list_week(week_id)
+    print(week)
     return render_template('list.html', title='List', data=week)
 
 

@@ -3,6 +3,7 @@
 from DirectReport.database.daily_storage import DailyUUIDTable
 from DirectReport.database.weekly_storage import WeekUUIDTable
 from DirectReport.database.entry_storage import EntryStorage
+from DirectReport.database.notes_storage import NotesDataStore
 from DirectReport.models.entry import Entry
 from pathlib import Path
 import datetime
@@ -55,17 +56,29 @@ class ListBuilder:
             return result
 
     @staticmethod
+    def week_exists():
+        today = datetime.date.today().strftime("%m/%d/%Y")
+        weekly = WeekUUIDTable('SQLite_Python.db')
+        if weekly.get_uuid(today) is None:
+            return False
+        else:
+            return True
+    @staticmethod
     def add_new_weekly():
         """
         Adds a new weekly ID.
 
         :return: The newly created weekly ID.
         """
-        today = datetime.date.today().strftime("%m/%d/%Y, %H:%M:%S")
+        today = datetime.date.today().strftime("%m/%d/%Y")
         weekly = WeekUUIDTable('SQLite_Python.db')
-        weekly_id = str(uuid.uuid4())
-        weekly.add_uuid(today, weekly_id)
-        return id
+        weekly_id = ""
+        if weekly.get_uuid(today) is None:
+            weekly_id = str(uuid.uuid4())
+            weekly.add_uuid(today, weekly_id)
+        else:
+            weekly_id = weekly.get_uuid(today)
+        return weekly_id
 
     @staticmethod
     def add_new_daily():
@@ -74,13 +87,39 @@ class ListBuilder:
 
         :return: The newly created daily ID.
         """
-        today = datetime.date.today().strftime("%m/%d/%Y, %H:%M:%S")
+        today = datetime.date.today().strftime("%m/%d/%Y")
         daily = DailyUUIDTable('SQLite_Python.db')
         daily.create_table()
         weekly_id = str(ListBuilder.get_weekly_id())
-        daily_id = str(uuid.uuid4())
-        daily.add_uuid(str(today), weekly_id, daily_id)
+        daily_id = ""
+        if daily.get_uuid(today) is not None:
+            daily_id = daily.get_uuid(today)
+        else:
+            daily_id = str(uuid.uuid4())
+            daily.add_uuid(str(today), weekly_id, daily_id)
         return daily_id
+
+    @staticmethod
+    def add_new_note(note_text, associated_id):
+        """
+        Adds a new daily ID.
+
+        :return: The newly created daily ID.
+        """
+
+        notes = NotesDataStore('SQLite_Python.db')
+        notes.add_notes_entry(note_text, associated_id)
+
+    @staticmethod
+    def get_notes(associated_id):
+        """
+        TODO
+        """
+
+        notes = NotesDataStore('SQLite_Python.db')
+        note_list = notes.entries_for_associated_uuid(associated_id)
+        print(note_list)
+        return note_list
 
     @staticmethod
     def new(entry, topic=None):
@@ -90,20 +129,25 @@ class ListBuilder:
         :param entry: The entry text.
         :param topic: The topic for the entry (optional).
         """
+        today = datetime.date.today().strftime("%m/%d/%Y")
         storage = EntryStorage('SQLite_Python.db')
+        print(storage.get_uuid(today))
+        if storage.get_uuid(today) is not None:
+            return
+        ListBuilder.add_new_daily()
+        ListBuilder.add_new_weekly()
         weekly_id = str(ListBuilder.get_weekly_id())
         daily_id = str(ListBuilder.get_daily_id())
+
         if topic is None or topic == '':
             topic = "Entry for work on " + str(datetime.datetime.now().strftime("%b %d, %Y"))
-
         new_entry = Entry(
-            uuid.uuid4(),
+            daily_id,
             topic,
             entry,
             datetime.datetime.now(),
             datetime.datetime.now(),
-            weekly_id,
-            daily_id,
+            weekly_id
         )
         storage.add_entry(new_entry)
 
@@ -127,8 +171,7 @@ class ListBuilder:
             entry,
             created_at,
             datetime.datetime.now(),
-            weekly_id,
-            daily_id
+            weekly_id
         )
         storage.update_entry(new_entry)
 
@@ -171,9 +214,10 @@ class ListBuilder:
 
         :return: A list of entries for today.
         """
+
         storage = EntryStorage('SQLite_Python.db')
         daily_id = str(ListBuilder.get_daily_id())
-        daily_list = storage.get_entries_by_day(daily_id)
+        daily_list = storage.get_entry(daily_id)
         return daily_list
 
     @staticmethod

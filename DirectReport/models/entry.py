@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 
 import datetime
-
+from . import list_builder
 
 class Entry:
     """
     A class to represent a journal entry.
     """
 
-    def __init__(self, uuid, topic, message, created_at, modified_on, week_uuid, day_uuid):
+    def __init__(self, uuid, topic, message, created_at, modified_on, week_uuid, notes):
         """
         Initialize the Entry object.
 
@@ -24,16 +24,43 @@ class Entry:
         :type modified_on: float
         :param week_uuid: The unique identifier for the week.
         :type week_uuid: str
-        :param day_uuid: The unique identifier for the day.
         :type day_uuid: str
         """
+
         self.uuid = uuid
         self.topic = topic
         self.message = message
         self.created_at = created_at
         self.modified_on = modified_on
         self.week_uuid = week_uuid
-        self.day_uuid = day_uuid
+        self.notes = notes
+
+    def __init__(self, uuid, topic, message, created_at, modified_on, week_uuid):
+        """
+        Initialize the Entry object.
+
+        :param uuid: A unique identifier for the entry.
+        :type uuid: str
+        :param topic: The topic of the entry.
+        :type topic: str
+        :param message: The message/content of the entry.
+        :type message: str
+        :param created_at: The timestamp when the entry was created.
+        :type created_at: float
+        :param modified_on: The timestamp when the entry was last modified.
+        :type modified_on: float
+        :param week_uuid: The unique identifier for the week.
+        :type week_uuid: str
+        """
+
+        self.uuid = uuid
+        self.topic = topic
+        self.message = message
+        self.created_at = created_at
+        self.modified_on = modified_on
+        self.week_uuid = week_uuid
+        self.notes = list_builder.ListBuilder.get_notes(self.uuid)
+
 
     def get_created_at_formatted(self, format="%Y-%m-%d %H:%M:%S"):
         """
@@ -74,7 +101,7 @@ class Entry:
             "created_at": str(self.created_at),
             "modified_on": str(self.modified_on),
             "week_uuid": str(self.week_uuid),
-            "day_uuid": str(self.day_uuid),
+            "notes": self.notes
         }
 
     @classmethod
@@ -93,8 +120,8 @@ class Entry:
         created_at = datetime.datetime.fromisoformat(data.get("created_at"))
         modified_on = datetime.datetime.fromisoformat(data.get("modified_on"))
         week_uuid = data.get("week_uuid")
-        day_uuid = data.get("day_uuid")
-        return cls(uuid, topic, message, created_at, modified_on, week_uuid, day_uuid)
+        notes = list_builder.ListBuilder.get_notes(self.uuid)
+        return cls(uuid, topic, message, created_at, modified_on, week_uuid, day_uuid, notes)
 
     def mark_modified(self):
         self.modified_on = datetime.datetime.now()

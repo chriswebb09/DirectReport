@@ -26,7 +26,7 @@ class EntryStorage:
         """
         Creates the `entries` table in the SQLite database if it doesn't exist.
         """
-        query = "CREATE TABLE IF NOT EXISTS entries (uuid TEXT PRIMARY KEY, topic TEXT, message TEXT, created_at TEXT, modified_on TEXT, week_uuid TEXT, day_uuid TEXT)"
+        query = "CREATE TABLE IF NOT EXISTS entries (uuid TEXT PRIMARY KEY, topic TEXT, message TEXT, created_at TEXT, modified_on TEXT, week_uuid TEXT)"
         self.conn.execute(query)
         self.conn.commit()
 
@@ -43,11 +43,10 @@ class EntryStorage:
             entry.message,
             entry.created_at.__str__(),
             entry.modified_on.__str__(),
-            entry.week_uuid.__str__(),
-            entry.day_uuid.__str__(),
+            entry.week_uuid.__str__()
         )
         self.conn.execute(
-            "INSERT INTO entries (uuid, topic, message, created_at, modified_on, week_uuid, day_uuid) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            "INSERT INTO entries (uuid, topic, message, created_at, modified_on, week_uuid) VALUES (?, ?, ?, ?, ?, ?)",
             values,
         )
         self.conn.commit()
@@ -61,7 +60,7 @@ class EntryStorage:
         """
 
         result = self.conn.execute(
-            "SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid FROM entries WHERE uuid = ?",
+            "SELECT uuid, topic, message, created_at, modified_on, week_uuid FROM entries WHERE uuid = ?",
             (str(uuid),),
         )
         row = result.fetchone()
@@ -91,28 +90,6 @@ class EntryStorage:
         self.conn.execute("DELETE FROM entries WHERE uuid = ?", (str(uuid),))
         self.conn.commit()
 
-    def get_all_entries(self):
-        """
-        Retrieves all `Entry` objects from the SQLite database.
-
-        :return: A list of `Entry` objects.
-        """
-        result = self.conn.execute(
-            "SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid FROM entries"
-        )
-        return [Entry(*row) for row in result.fetchall()]
-
-    def get_all_entries_json(self):
-        """
-        Retrieves all `Entry` objects from the SQLite database and returns them as dictionaries.
-
-        :return: A list of dictionaries representing `Entry` objects
-        """
-        result = self.conn.execute(
-            "SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid FROM entries"
-        )
-        return [Entry(*row).to_dict() for row in result.fetchall()]
-
     def get_entries_by_week(self, week_uuid):
         """
         Retrieves all entries for a given week.
@@ -122,24 +99,28 @@ class EntryStorage:
         """
 
         result = self.conn.execute(
-            "SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid FROM entries WHERE week_uuid = ?",
+            "SELECT uuid, topic, message, created_at, modified_on, week_uuid FROM entries WHERE week_uuid = ?",
             (str(week_uuid),),
         )
         return [Entry(*row).__dict__ for row in result.fetchall()]
 
-    def get_entries_by_day(self, day_uuid):
+    def get_uuid(self, date):
         """
-        Retrieves all entries for a given day.
+        Retrieves the UUID associated with the specified date.
 
-        :param day_uuid: The UUID of the day for which to retrieve entries.
-        :return: A list of dictionaries containing the entries' data for the specified day.
+        :param date: The date to get the associated UUID for.
+        :return: The UUID string if found, otherwise `None`.
         """
-
+        cursor = self.conn.cursor()
         result = self.conn.execute(
-            "SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid FROM entries WHERE day_uuid = ?",
-            (str(day_uuid),),
+            "SELECT uuid, topic, message, created_at, modified_on, week_uuid FROM entries WHERE modified_on = ?",
+            (str(date),),
         )
-        return [Entry(*row).__dict__ for row in result.fetchall()]
+        result = cursor.fetchone()
+        if result is not None:
+            return result
+        else:
+            return None
 
     def delete_all_entries(self):
         """
@@ -150,3 +131,42 @@ class EntryStorage:
 
         self.conn.execute("DELETE FROM entries")
         self.conn.commit()
+
+    # def get_all_entries(self):
+    #     """
+    #     Retrieves all `Entry` objects from the SQLite database.
+    #
+    #     :return: A list of `Entry` objects.
+    #     """
+    #     result = self.conn.execute(
+    #         "SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid FROM entries"
+    #     )
+    #     return [Entry(*row) for row in result.fetchall()]
+
+    # def get_all_entries_json(self):
+    #     """
+    #     Retrieves all `Entry` objects from the SQLite database and returns them as dictionaries.
+    #
+    #     :return: A list of dictionaries representing `Entry` objects
+    #     """
+    #     result = self.conn.execute(
+    #         "SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid FROM entries"
+    #     )
+    #     return [Entry(*row).to_dict() for row in result.fetchall()]
+
+
+    # def get_entries_by_day(self, day_uuid):
+    #     """
+    #     Retrieves all entries for a given day.
+    #
+    #     :param day_uuid: The UUID of the day for which to retrieve entries.
+    #     :return: A list of dictionaries containing the entries' data for the specified day.
+    #     """
+    #
+    #     result = self.conn.execute(
+    #         "SELECT uuid, topic, message, created_at, modified_on, week_uuid, day_uuid FROM entries WHERE day_uuid = ?",
+    #         (str(day_uuid),),
+    #     )
+    #     return [Entry(*row).__dict__ for row in result.fetchall()]
+
+
