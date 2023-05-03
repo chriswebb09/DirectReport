@@ -1,6 +1,3 @@
-
-git remote set-url origin "https://token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-
 #####################
 # DECLARE VARIABLES #
 #####################
@@ -27,13 +24,16 @@ rsync -av "build/html/" "${docroot}/"
 
 pushd "${docroot}"
 
-git remote set-url origin  "https://token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+git config --global user.name "chriswebb09"
+git config --global user.email "chris.webb5249@gmail.com"
+
+git remote set-url origin  "https://token:${GITHUB_TOKEN}@github.com/chriswebb09/DirectReport.git"
 
 git config --global --add safe.directory '*'
 
 # don't bother maintaining history; just generate fresh
 git init
-git remote add deploy "https://token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+git remote add deploy "https://token:${GITHUB_TOKEN}@github.com/chriswebb09/DirectReport.git"
 git checkout -b gh-pages
 
 

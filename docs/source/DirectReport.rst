@@ -10,7 +10,7 @@ Subpackages
    DirectReport.browserview
    DirectReport.commandline
    DirectReport.database
-   DirectReport.tests
+   DirectReport.models
 
 Module contents
 ---------------

@@ -14,7 +14,6 @@ Indices and tables
 
 * :ref:`genindex`
 * :ref:`modindex`
-* :ref:`search`
 
 #############
 Overview
@@ -53,9 +52,9 @@ This project uses a `Makefile` as a command registry, with the following command
 
 Adapted From: https://github.com/ColumbiaOSS/example-project-python
 
-*************
+*********************
 Running Direct Report
-*************
+*********************
 
 =========
 Overview
