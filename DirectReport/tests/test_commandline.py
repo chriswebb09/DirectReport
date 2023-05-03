@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
-from ..database.entry_storage import EntryStorage
-from ..commandline.commandline import delete
-from ..commandline.commandline import list
-from ..commandline.commandline import mail
-from ..models.entry import Entry
+from DirectReport.models.entry import Entry
+from DirectReport.database.entry_storage import EntryStorage
+from DirectReport.commandline.commandline import delete
+from DirectReport.commandline.commandline import list
+from DirectReport.commandline.commandline import mail
 from click.testing import CliRunner
 from datetime import datetime
 import tempfile
