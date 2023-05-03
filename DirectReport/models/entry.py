@@ -36,7 +36,7 @@ class Entry:
         self.modified_on = modified_on
         self.week_uuid = week_uuid
         self.notes = NoteBuilder.get_notes(self.uuid)
-        self.blockers = BlockersBuilder.get_blockers(self.uuid)
+        self.blockers = BlockerBuilder.get_blockers(self.uuid)
         self.jiras = JiraBuilder.get_jiras(self.uuid)
 
     def get_created_at_formatted(self, format="%Y-%m-%d %H:%M:%S"):
@@ -100,7 +100,7 @@ class Entry:
         modified_on = datetime.datetime.fromisoformat(data.get("modified_on")).strftime("%m/%d/%Y")
         week_uuid = data.get("week_uuid")
         notes = NoteBuilder.get_notes(uuid)
-        blockers = BlockersBuilder.get_blockers(uuid)
+        blockers = BlockerBuilder.get_blockers(uuid)
         jiras = JiraBuilder.get_jiras(uuid)
         return cls(uuid, topic, message, created_at, modified_on, week_uuid, notes, blockers, jiras)
 
