@@ -6,7 +6,6 @@ from DirectReport.models.note.note import Note
 
 
 class NoteDataStore:
-
     def __init__(self, db_path, conn=None):
         """
         Initializes the NoteDataStore object with the given SQLite database file path.

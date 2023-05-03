@@ -36,7 +36,7 @@ class BlockerDataStore:
         self.conn.commit()
 
     def add_blocker_entry(self, blocker, associated_entry_uuid_str, uuid_str=None):
-         """
+        """
         Adds a new blocker entry to the `blockers_uuid_table`.
 
         :param blocker: The blocker entry.

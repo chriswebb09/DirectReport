@@ -4,13 +4,11 @@ from DirectReport.database.jira_storage import JiraDataStore
 
 
 class JiraBuilder:
-
     def __init__(self):
         pass
 
     @staticmethod
     def add_new_jira(jira_ticket, jira_tag, associated_id):
-
         """
         Adds a new Jira entry to the list.
 
@@ -26,7 +24,6 @@ class JiraBuilder:
 
     @staticmethod
     def get_jiras(associated_id):
-
         """
         Retrieves a list of Jiras associated with the specified ID.
 

@@ -2,7 +2,6 @@
 
 
 class Blocker:
-
     def __init__(self, uuid, associated_entry_uuid, blocker_text):
         """
         Initializes a new instance of the Blocker class.

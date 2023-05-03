@@ -5,7 +5,6 @@ from DirectReport.database.blocker_storage import BlockerDataStore
 
 
 class BlockerBuilder:
-
     def __init__(self):
         """
         Initializes a new instance of the BlockerBuilder class.
