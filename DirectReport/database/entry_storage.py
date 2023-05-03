@@ -64,7 +64,7 @@ class EntryStorage:
         )
         row = result.fetchone()
         if row:
-            return entry.Entry(*row)
+            return Entry(*row)
         else:
             return None
 
@@ -101,7 +101,7 @@ class EntryStorage:
             "SELECT uuid, topic, message, created_at, modified_on, week_uuid FROM entries WHERE week_uuid = ?",
             (str(week_uuid),),
         )
-        return [entry.Entry(*row).__dict__ for row in result.fetchall()]
+        return [Entry(*row).__dict__ for row in result.fetchall()]
 
     def get_uuid(self, date):
         """
