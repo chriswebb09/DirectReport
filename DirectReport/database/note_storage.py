@@ -1,15 +1,17 @@
+#!/usr/bin/env python3
+
 import sqlite3
 import uuid
 from DirectReport.models.note import Note
 
-
 class NoteDataStore:
+
     def __init__(self, db_path, conn=None):
         """
         Initializes the NotesDataStore object with the given SQLite database file path.
-
         :param db_path: The SQLite database file path.
         """
+
         self.db_path = db_path
         if conn is None:
             self.conn = sqlite3.connect(db_path)
