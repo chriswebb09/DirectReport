@@ -15,36 +15,68 @@
 
             class Entry extends React.Component {
 
-                state = {
-                    isEditting: false
-                };
+                 constructor(props) {
+                    super(props);
+                    this.state = {
+                        isEditting: false,
+                        topic: '',
+                        entry: ''
+                    };
+                    this.handleSubmit = this.handleSubmit.bind(this);
+                    this.handleChange = this.handleChange.bind(this);
+                    this.handleChange2 = this.handleChange2.bind(this);
+                }
 
-                renderAuthButton = () => {
-                    if (this.state.isEditting) {
-                        return <textarea rows="4" className="focus:shadow-soft-primary-outline min-h-unset text-sm leading-5.6 ease-soft block h-auto w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none">{this.props.itemdata.message}</textarea>
-                    } else {
-                        return <p className="mt-5 px-40 text-xl content-center text-gray-500 border-0">{this.props.itemdata.message}</p>
-                    }
+                handleSubmit(event) {
+                    event.preventDefault();
+                    axios({
+                        method: 'post',
+                        url: "http://127.0.0.1:5000/entry/" + this.props.itemdata.uuid,
+                        headers: {'content-type': 'application/json'},
+                        data: {"id": this.props.itemdata.uuid, "entry": this.props.itemdata.message, "topic": this.props.itemdata.topic, "created_at": this.props.itemdata.created_at, "week_id": this.props.itemdata.week_uuid, day_id: this.props.itemdata.day_uuid}
+                    }).then(result => {
+                        console.log(result.data)
+                    }).catch(error => {
+                        console.log(error);
+                    })
+                    this.click();
+                }
+
+                handleChange(event) {
+                    this.setState({topic: event.target.value});
+                    this.props.itemdata.topic = event.target.value;
+                }
+
+                 handleChange2(event) {
+                    this.setState({entry: event.target.value});
+                    this.props.itemdata.message = event.target.value;
                 }
 
                 renderTopicElement = () => {
+                    console.log(this.props.itemdata);
                     if (this.state.isEditting) {
-                        return <input className="mx-80 px-40 content-center" type="text" value={this.props.itemdata.topic}></input>
+                        return <form className="w-2/4 py-2 px-2 self-center" onSubmit={this.handleSubmit}>
+                            <div className="flex my-10 mr-40">
+                            <div class="w-1/6"><label className="text-2xl text-gray-700 font-medium text-right mb-1 mb-0 pr-2">Topic:</label></div>
+                            <div class="w-5/6"><input className="content-center rounded w-full" type="text" value={this.props.itemdata.topic} onChange={this.handleChange}></input></div>
+                            </div>
+                            <div class="w-5/6"><textarea rows="4" className="mx-20 my-6  focus:shadow-soft-primary-outline min-h-unset text-sm leading-5.6 ease-soft block h-auto w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none" value={this.props.itemdata.message} onChange={this.handleChange2}>{this.props.itemdata.message}</textarea></div>
+                            <div className="flex justify-center my-6"><button className="self-center bg-blue-500 hover:bg-gray-400 text-white text-xl font-semibold py-4 px-6 rounded-lg" type="submit">Update</button></div>
+                            </form>
                     } else {
-                        return <h1 className="mb-5 text-3xl text-gray-800 text-center content-center font-bold">{this.props.itemdata.topic}</h1>
+                        return <div className="w-3/4 my-10 py-2 px-2 self-center">
+                            <h1 className="mb-5 text-3xl text-gray-800 text-center content-center font-bold">{this.props.itemdata.topic}</h1>
+                            <p className="mt-5 px-40 text-xl content-center text-gray-500 border-0">{this.props.itemdata.message}</p>
+                            <h2 className="my-5 px-40 text-lg text-gray-500 font-semibold">{'Created on: ' + this.props.itemdata.created_at}</h2>
+                            <div className="mt-14 flex content-center items-center justify-center gap-x-24"><button className="mt-50 rounded-full bg-blue-600 px-16 py-5 text-lg text-white shadow-lg font-semibold text-center hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" onClick={this.click}>Edit</button><a href={"/delete/" + this.props.itemdata.uuid} className="mt-50 rounded-full bg-blue-600 px-14 py-5 text-lg text-white shadow-lg font-semibold text-center hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Delete</a></div>
+                        </div>
                     }
                 }
 
                 render() {
                     return (
-                        <div className="mx-60 px-40 content-center mt-20 my-8 h-56">
+                        <div className="flex flex-col justify-center my-6 mx-60">
                             {this.renderTopicElement()}
-                            <h2 className="my-5 px-40 text-lg text-gray-500 font-semibold">{'Created on: ' + this.props.itemdata.created_at}</h2>
-                            {this.renderAuthButton()}
-                            <div className="mt-14 flex content-center items-center justify-center gap-x-24">
-                                <button className="mt-50 rounded-full bg-blue-600 px-14 py-5 text-lg text-white shadow-lg font-semibold text-center hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" onClick={this.click}>Edit</button>
-                                <a href={"/delete/" + this.props.itemdata.uuid} className="mt-50 rounded-full bg-blue-600 px-14 py-5 text-lg text-white shadow-lg font-semibold text-center hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Delete</a>
-                            </div>
                         </div>
                     );
                 }
@@ -60,6 +92,7 @@
             function App() {
                 return (
                     <div>
+
                         <Entry name="Entry" itemdata={data}/>
                     </div>
                 )

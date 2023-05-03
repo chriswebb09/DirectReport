@@ -2,7 +2,7 @@
 
 from DirectReport.models.list_builder import ListBuilder
 from DirectReport.database.entry_storage import EntryStorage
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, request, redirect
 
 app = Flask(__name__, template_folder="templates")
 
@@ -38,11 +38,14 @@ def list():
     :return: Rendered HTML template for the list page.
     """
     items = EntryStorage('SQLite_Python.db')
+    if request.method == "POST":
+        json_data = request.get_json()
+        ListBuilder.new(json_data["entry"], json_data["topic"])
     week = items.get_all_entries_json()
     return render_template('list.html', title='List', data=week)
 
 
-@app.route('/entry/<id>', methods=['GET'])
+@app.route('/entry/<id>', methods=['GET', 'POST'])
 def detail(id=None):
     """
     Retrieves and renders the details of a specific entry.
@@ -50,10 +53,14 @@ def detail(id=None):
     :param id: The ID of the entry to display.
     :return: Rendered HTML template for the entry details page.
     """
+    entry=None
     item = EntryStorage('SQLite_Python.db')
+    if request.method == "POST":
+        json_data = request.get_json()
+        print(json_data)
+        ListBuilder.update(json_data["id"], json_data['entry'], json_data['topic'], json_data['created_at'], json_data['week_id'], json_data['day_id'])
     entry = item.get_entry(id).to_dict()
     return render_template('detail.html', title='Detail', data=entry)
-
 
 @app.route('/delete/<id>', methods=['GET'])
 def delete(id=None):

@@ -108,6 +108,27 @@ class ListBuilder:
         storage.add_entry(new_entry)
 
     @staticmethod
+    def update(id, entry, topic, created_at, weekly_id, daily_id):
+        """
+        Creates a new entry with the given entry text and topic.
+
+        :param entry: The entry text.
+        :param topic: The topic for the entry (optional).
+        """
+        storage = EntryStorage('SQLite_Python.db')
+        storage.create_table()
+        new_entry = Entry(
+            uuid.UUID(id),
+            topic,
+            entry,
+            created_at,
+            datetime.datetime.now(),
+            weekly_id,
+            daily_id
+        )
+        storage.update_entry(new_entry)
+
+    @staticmethod
     def delete(entry_id):
         """
         Deletes an entry with the specified ID.
