@@ -4,13 +4,13 @@ import click
 import sys
 from pathlib import Path
 import webbrowser
+from DirectReport.browserview.app import app
+from DirectReport.models.list_builder import ListBuilder
 
 file = Path(__file__).resolve()
 package_root_directory = file.parents[1]
 sys.path.append(str(package_root_directory))
 
-from DirectReport.browserview.app import app
-from DirectReport.models.list_builder import ListBuilder
 
 builder = ListBuilder()
 

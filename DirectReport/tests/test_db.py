@@ -40,7 +40,7 @@ def test_add_get_entry(temp_db):
         message="Test message",
         created_at=datetime.now(),
         modified_on=datetime.now(),
-        week_uuid=uuid.uuid4()
+        week_uuid=uuid.uuid4(),
     )
 
     storage.add_entry(entry)
@@ -57,7 +57,7 @@ def test_update_entry(temp_db):
         message="Test message",
         created_at=datetime.now(),
         modified_on=datetime.now(),
-        week_uuid=uuid.uuid4()
+        week_uuid=uuid.uuid4(),
     )
     storage.add_entry(entry)
     entry.message = "Updated message"
@@ -75,7 +75,7 @@ def test_delete_entry(temp_db):
         message="Test message",
         created_at=datetime.now(),
         modified_on=datetime.now(),
-        week_uuid=uuid.uuid4()
+        week_uuid=uuid.uuid4(),
     )
 
     storage.add_entry(entry)
@@ -93,7 +93,7 @@ def test_get_all_entries(temp_db):
         message="Test message 1",
         created_at=datetime.now(),
         modified_on=datetime.now(),
-        week_uuid=uuid.uuid4()
+        week_uuid=uuid.uuid4(),
     )
     entry2 = Entry(
         uuid=uuid.uuid4(),
@@ -101,7 +101,7 @@ def test_get_all_entries(temp_db):
         message="Test message 2",
         created_at=datetime.now(),
         modified_on=datetime.now(),
-        week_uuid=uuid.uuid4()
+        week_uuid=uuid.uuid4(),
     )
 
     storage.add_entry(entry1)
@@ -122,7 +122,7 @@ def test_get_entries_by_week(temp_db):
         message="Test message 1",
         created_at=datetime.now(),
         modified_on=datetime.now(),
-        week_uuid=week_uuid
+        week_uuid=week_uuid,
     )
     entry2: Entry = Entry(
         uuid=uuid.uuid4(),
@@ -130,7 +130,7 @@ def test_get_entries_by_week(temp_db):
         message="Test message 2",
         created_at=datetime.now(),
         modified_on=datetime.now(),
-        week_uuid=uuid.uuid4()
+        week_uuid=uuid.uuid4(),
     )
 
     storage.add_entry(entry1)

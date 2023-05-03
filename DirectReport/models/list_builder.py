@@ -1,23 +1,23 @@
 #!/usr/bin/env python3
 
-
 from pathlib import Path
 
 import datetime
 import sys
 import uuid
 
-file = Path(__file__).resolve()
-package_root_directory = file.parents[1]
-sys.path.append(str(package_root_directory))
-
+from DirectReport.models import entry
 from DirectReport.database.daily_storage import DailyUUIDTable
 from DirectReport.database.weekly_storage import WeekUUIDTable
-from DirectReport.models import entry
 from DirectReport.database import entry_storage
 from DirectReport.database import blockers_storage
 from DirectReport.database import notes_storage
 from DirectReport.database.jiras_storage import JirasDataStore
+
+file = Path(__file__).resolve()
+package_root_directory = file.parents[1]
+sys.path.append(str(package_root_directory))
+
 
 class ListBuilder:
     """
@@ -173,7 +173,7 @@ class ListBuilder:
         return jiras_list
 
     @staticmethod
-    def new(entry, topic=None):
+    def new(entry_text, topic_text=None):
         """
         Creates a new entry with the given entry text and topic.
 
@@ -190,9 +190,11 @@ class ListBuilder:
         weekly_id = str(ListBuilder.get_weekly_id())
         daily_id = str(ListBuilder.get_daily_id())
 
-        if topic is None or topic == '':
-            topic = "Entry for work on " + str(datetime.datetime.now().strftime("%b %d, %Y"))
-        new_entry = Entry(daily_id, topic, entry, datetime.datetime.now(), datetime.datetime.now(), weekly_id)
+        if topic_text is None or topic_text == '':
+            topic_text = "Entry for work on " + str(datetime.datetime.now().strftime("%b %d, %Y"))
+        new_entry = entry.Entry(
+            daily_id, topic_text, entry_text, datetime.datetime.now(), datetime.datetime.now(), weekly_id
+        )
         storage.add_entry(new_entry)
 
     @staticmethod

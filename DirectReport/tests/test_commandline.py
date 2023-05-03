@@ -53,6 +53,7 @@ def test_cli_list_all():
     result = runner.invoke(list, ['--all'])
     assert result.exit_code == 1
 
+
 def test_cli_mail():
     result = runner.invoke(mail)
     assert result.exit_code == 0
@@ -67,7 +68,7 @@ def test_cli_delete(temp_db):
         message="Test message",
         created_at=datetime.now(),
         modified_on=datetime.now(),
-        week_uuid=uuid.uuid4()
+        week_uuid=uuid.uuid4(),
     )
     storage.add_entry(entry)
     result = runner.invoke(delete, input=str(entry.uuid).encode())

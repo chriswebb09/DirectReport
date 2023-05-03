@@ -3,6 +3,7 @@
 import sqlite3
 from DirectReport.models import entry
 
+
 class EntryStorage:
     """
     A class to interact with SQLite database for storing and retrieving `Entry` objects.
