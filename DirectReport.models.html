@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DirectReport.models package &mdash; DirectReport 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            DirectReport
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">DirectReport.models package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-DirectReport.models.daily_builder">DirectReport.models.daily_builder module</a><ul>
+<li><a class="reference internal" href="#DirectReport.models.daily_builder.DailyBuilder"><code class="docutils literal notranslate"><span class="pre">DailyBuilder</span></code></a><ul>
+<li><a class="reference internal" href="#DirectReport.models.daily_builder.DailyBuilder.add_new_daily"><code class="docutils literal notranslate"><span class="pre">DailyBuilder.add_new_daily()</span></code></a></li>
+<li><a class="reference internal" href="#DirectReport.models.daily_builder.DailyBuilder.get_daily_id"><code class="docutils literal notranslate"><span class="pre">DailyBuilder.get_daily_id()</span></code></a></li>
+<li><a class="reference internal" href="#DirectReport.models.daily_builder.DailyBuilder.list_all_daily_ids"><code class="docutils literal notranslate"><span class="pre">DailyBuilder.list_all_daily_ids()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-DirectReport.models.entry">DirectReport.models.entry module</a><ul>
+<li><a class="reference internal" href="#DirectReport.models.entry.Entry"><code class="docutils literal notranslate"><span class="pre">Entry</span></code></a><ul>
+<li><a class="reference internal" href="#DirectReport.models.entry.Entry.from_dict"><code class="docutils literal notranslate"><span class="pre">Entry.from_dict()</span></code></a></li>
+<li><a class="reference internal" href="#DirectReport.models.entry.Entry.get_created_at_formatted"><code class="docutils literal notranslate"><span class="pre">Entry.get_created_at_formatted()</span></code></a></li>
+<li><a class="reference internal" href="#DirectReport.models.entry.Entry.get_modified_on_formatted"><code class="docutils literal notranslate"><span class="pre">Entry.get_modified_on_formatted()</span></code></a></li>
+<li><a class="reference internal" href="#DirectReport.models.entry.Entry.is_recent"><code class="docutils literal notranslate"><span class="pre">Entry.is_recent()</span></code></a></li>
+<li><a class="reference internal" href="#DirectReport.models.entry.Entry.mark_modified"><code class="docutils literal notranslate"><span class="pre">Entry.mark_modified()</span></code></a></li>
+<li><a class="reference internal" href="#DirectReport.models.entry.Entry.set_message"><code class="docutils literal notranslate"><span class="pre">Entry.set_message()</span></code></a></li>
+<li><a class="reference internal" href="#DirectReport.models.entry.Entry.to_dict"><code class="docutils literal notranslate"><span class="pre">Entry.to_dict()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-DirectReport.models.list_builder">DirectReport.models.list_builder module</a><ul>
+<li><a class="reference internal" href="#DirectReport.models.list_builder.ListBuilder"><code class="docutils literal notranslate"><span class="pre">ListBuilder</span></code></a><ul>
+<li><a class="reference internal" href="#DirectReport.models.list_builder.ListBuilder.delete"><code class="docutils literal notranslate"><span class="pre">ListBuilder.delete()</span></code></a></li>
+<li><a class="reference internal" href="#DirectReport.models.list_builder.ListBuilder.list_all"><code class="docutils literal notranslate"><span class="pre">ListBuilder.list_all()</span></code></a></li>
+<li><a class="reference internal" href="#DirectReport.models.list_builder.ListBuilder.list_today"><code class="docutils literal notranslate"><span class="pre">ListBuilder.list_today()</span></code></a></li>
+<li><a class="reference internal" href="#DirectReport.models.list_builder.ListBuilder.new"><code class="docutils literal notranslate"><span class="pre">ListBuilder.new()</span></code></a></li>
+<li><a class="reference internal" href="#DirectReport.models.list_builder.ListBuilder.update"><code class="docutils literal notranslate"><span class="pre">ListBuilder.update()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-DirectReport.models.weekly_builder">DirectReport.models.weekly_builder module</a><ul>
+<li><a class="reference internal" href="#DirectReport.models.weekly_builder.WeeklyBuilder"><code class="docutils literal notranslate"><span class="pre">WeeklyBuilder</span></code></a><ul>
+<li><a class="reference internal" href="#DirectReport.models.weekly_builder.WeeklyBuilder.add_new_weekly"><code class="docutils literal notranslate"><span class="pre">WeeklyBuilder.add_new_weekly()</span></code></a></li>
+<li><a class="reference internal" href="#DirectReport.models.weekly_builder.WeeklyBuilder.get_weekly_id"><code class="docutils literal notranslate"><span class="pre">WeeklyBuilder.get_weekly_id()</span></code></a></li>
+<li><a class="reference internal" href="#DirectReport.models.weekly_builder.WeeklyBuilder.list_all_week_ids"><code class="docutils literal notranslate"><span class="pre">WeeklyBuilder.list_all_week_ids()</span></code></a></li>
+<li><a class="reference internal" href="#DirectReport.models.weekly_builder.WeeklyBuilder.list_this_week_as_json"><code class="docutils literal notranslate"><span class="pre">WeeklyBuilder.list_this_week_as_json()</span></code></a></li>
+<li><a class="reference internal" href="#DirectReport.models.weekly_builder.WeeklyBuilder.list_week"><code class="docutils literal notranslate"><span class="pre">WeeklyBuilder.list_week()</span></code></a></li>
+<li><a class="reference internal" href="#DirectReport.models.weekly_builder.WeeklyBuilder.week_exists"><code class="docutils literal notranslate"><span class="pre">WeeklyBuilder.week_exists()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-DirectReport.models">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DirectReport</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">DirectReport.models package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/DirectReport.models.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="directreport-models-package">
+<h1>DirectReport.models package<a class="headerlink" href="#directreport-models-package" title="Permalink to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="DirectReport.models.blocker_models.html">DirectReport.models.blocker_models package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="DirectReport.models.blocker_models.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DirectReport.models.blocker_models.html#module-DirectReport.models.blocker_models.block_builder">DirectReport.models.blocker_models.block_builder module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="DirectReport.models.blocker_models.html#DirectReport.models.blocker_models.block_builder.BlockerBuilder"><code class="docutils literal notranslate"><span class="pre">BlockerBuilder</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="DirectReport.models.blocker_models.html#DirectReport.models.blocker_models.block_builder.BlockerBuilder.add_new_blocker"><code class="docutils literal notranslate"><span class="pre">BlockerBuilder.add_new_blocker()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="DirectReport.models.blocker_models.html#DirectReport.models.blocker_models.block_builder.BlockerBuilder.get_blockers"><code class="docutils literal notranslate"><span class="pre">BlockerBuilder.get_blockers()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="DirectReport.models.blocker_models.html#module-DirectReport.models.blocker_models.blocker">DirectReport.models.blocker_models.blocker module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="DirectReport.models.blocker_models.html#DirectReport.models.blocker_models.blocker.Blocker"><code class="docutils literal notranslate"><span class="pre">Blocker</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="DirectReport.models.blocker_models.html#DirectReport.models.blocker_models.blocker.Blocker.to_dict"><code class="docutils literal notranslate"><span class="pre">Blocker.to_dict()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="DirectReport.models.blocker_models.html#module-DirectReport.models.blocker_models">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="DirectReport.models.jira_models.html">DirectReport.models.jira_models package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="DirectReport.models.jira_models.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DirectReport.models.jira_models.html#module-DirectReport.models.jira_models.jira">DirectReport.models.jira_models.jira module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="DirectReport.models.jira_models.html#DirectReport.models.jira_models.jira.Jira"><code class="docutils literal notranslate"><span class="pre">Jira</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="DirectReport.models.jira_models.html#DirectReport.models.jira_models.jira.Jira.to_dict"><code class="docutils literal notranslate"><span class="pre">Jira.to_dict()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="DirectReport.models.jira_models.html#module-DirectReport.models.jira_models.jira_builder">DirectReport.models.jira_models.jira_builder module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="DirectReport.models.jira_models.html#DirectReport.models.jira_models.jira_builder.JiraBuilder"><code class="docutils literal notranslate"><span class="pre">JiraBuilder</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="DirectReport.models.jira_models.html#DirectReport.models.jira_models.jira_builder.JiraBuilder.add_new_jira"><code class="docutils literal notranslate"><span class="pre">JiraBuilder.add_new_jira()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="DirectReport.models.jira_models.html#DirectReport.models.jira_models.jira_builder.JiraBuilder.get_jiras"><code class="docutils literal notranslate"><span class="pre">JiraBuilder.get_jiras()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="DirectReport.models.jira_models.html#module-DirectReport.models.jira_models">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="DirectReport.models.note.html">DirectReport.models.note package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="DirectReport.models.note.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DirectReport.models.note.html#module-DirectReport.models.note.note">DirectReport.models.note.note module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="DirectReport.models.note.html#DirectReport.models.note.note.Note"><code class="docutils literal notranslate"><span class="pre">Note</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="DirectReport.models.note.html#DirectReport.models.note.note.Note.to_dict"><code class="docutils literal notranslate"><span class="pre">Note.to_dict()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="DirectReport.models.note.html#module-DirectReport.models.note.note_builder">DirectReport.models.note.note_builder module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="DirectReport.models.note.html#DirectReport.models.note.note_builder.NoteBuilder"><code class="docutils literal notranslate"><span class="pre">NoteBuilder</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="DirectReport.models.note.html#DirectReport.models.note.note_builder.NoteBuilder.add_new_note"><code class="docutils literal notranslate"><span class="pre">NoteBuilder.add_new_note()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="DirectReport.models.note.html#DirectReport.models.note.note_builder.NoteBuilder.get_notes"><code class="docutils literal notranslate"><span class="pre">NoteBuilder.get_notes()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="DirectReport.models.note.html#module-DirectReport.models.note">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-DirectReport.models.daily_builder">
+<span id="directreport-models-daily-builder-module"></span><h2>DirectReport.models.daily_builder module<a class="headerlink" href="#module-DirectReport.models.daily_builder" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="DirectReport.models.daily_builder.DailyBuilder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">DirectReport.models.daily_builder.</span></span><span class="sig-name descname"><span class="pre">DailyBuilder</span></span><a class="reference internal" href="_modules/DirectReport/models/daily_builder.html#DailyBuilder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DirectReport.models.daily_builder.DailyBuilder" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="DirectReport.models.daily_builder.DailyBuilder.add_new_daily">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_new_daily</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DirectReport/models/daily_builder.html#DailyBuilder.add_new_daily"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DirectReport.models.daily_builder.DailyBuilder.add_new_daily" title="Permalink to this definition"></a></dt>
+<dd><p>Adds a new daily ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The newly created daily ID.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="DirectReport.models.daily_builder.DailyBuilder.get_daily_id">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_daily_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DirectReport/models/daily_builder.html#DailyBuilder.get_daily_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DirectReport.models.daily_builder.DailyBuilder.get_daily_id" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves the daily ID for the current day.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The daily ID.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="DirectReport.models.daily_builder.DailyBuilder.list_all_daily_ids">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">list_all_daily_ids</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DirectReport/models/daily_builder.html#DailyBuilder.list_all_daily_ids"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DirectReport.models.daily_builder.DailyBuilder.list_all_daily_ids" title="Permalink to this definition"></a></dt>
+<dd><p>Lists all daily IDs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of all daily IDs.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-DirectReport.models.entry">
+<span id="directreport-models-entry-module"></span><h2>DirectReport.models.entry module<a class="headerlink" href="#module-DirectReport.models.entry" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="DirectReport.models.entry.Entry">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">DirectReport.models.entry.</span></span><span class="sig-name descname"><span class="pre">Entry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created_at</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modified_on</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">week_uuid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DirectReport/models/entry.html#Entry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DirectReport.models.entry.Entry" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to represent a journal entry.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="DirectReport.models.entry.Entry.from_dict">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DirectReport/models/entry.html#Entry.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DirectReport.models.entry.Entry.from_dict" title="Permalink to this definition"></a></dt>
+<dd><p>Create an Entry object from a dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>dict</em>) – The dictionary containing the Entry data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An Entry object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#DirectReport.models.entry.Entry" title="DirectReport.models.entry.Entry">Entry</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="DirectReport.models.entry.Entry.get_created_at_formatted">
+<span class="sig-name descname"><span class="pre">get_created_at_formatted</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'%Y-%m-%d</span> <span class="pre">%H:%M:%S'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DirectReport/models/entry.html#Entry.get_created_at_formatted"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DirectReport.models.entry.Entry.get_created_at_formatted" title="Permalink to this definition"></a></dt>
+<dd><p>Get the created_at timestamp formatted as a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>format</strong> (<em>str</em>) – The desired format of the timestamp, default is “%Y-%m-%d %H:%M:%S”.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The formatted created_at timestamp.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="DirectReport.models.entry.Entry.get_modified_on_formatted">
+<span class="sig-name descname"><span class="pre">get_modified_on_formatted</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'%Y-%m-%d</span> <span class="pre">%H:%M:%S'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DirectReport/models/entry.html#Entry.get_modified_on_formatted"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DirectReport.models.entry.Entry.get_modified_on_formatted" title="Permalink to this definition"></a></dt>
+<dd><p>Get the modified_on timestamp formatted as a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>format</strong> (<em>str</em>) – The desired format of the timestamp, default is “%Y-%m-%d %H:%M:%S”.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The formatted modified_on timestamp.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="DirectReport.models.entry.Entry.is_recent">
+<span class="sig-name descname"><span class="pre">is_recent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">days</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">7</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DirectReport/models/entry.html#Entry.is_recent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DirectReport.models.entry.Entry.is_recent" title="Permalink to this definition"></a></dt>
+<dd><p>Check if the entry is recent (created within the specified number of days).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>days</strong> (<em>int</em>) – The number of days to consider as recent, default is 7.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the entry is recent, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="DirectReport.models.entry.Entry.mark_modified">
+<span class="sig-name descname"><span class="pre">mark_modified</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DirectReport/models/entry.html#Entry.mark_modified"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DirectReport.models.entry.Entry.mark_modified" title="Permalink to this definition"></a></dt>
+<dd><p>Update the modified_on timestamp to the current time.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="DirectReport.models.entry.Entry.set_message">
+<span class="sig-name descname"><span class="pre">set_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DirectReport/models/entry.html#Entry.set_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DirectReport.models.entry.Entry.set_message" title="Permalink to this definition"></a></dt>
+<dd><p>Update the message of the entry and set the modified_on timestamp to the current time.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>new_message</strong> (<em>str</em>) – The new message/content for the entry.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="DirectReport.models.entry.Entry.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DirectReport/models/entry.html#Entry.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DirectReport.models.entry.Entry.to_dict" title="Permalink to this definition"></a></dt>
+<dd><p>Convert the Entry object to a dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The Entry object as a dictionary.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-DirectReport.models.list_builder">
+<span id="directreport-models-list-builder-module"></span><h2>DirectReport.models.list_builder module<a class="headerlink" href="#module-DirectReport.models.list_builder" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="DirectReport.models.list_builder.ListBuilder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">DirectReport.models.list_builder.</span></span><span class="sig-name descname"><span class="pre">ListBuilder</span></span><a class="reference internal" href="_modules/DirectReport/models/list_builder.html#ListBuilder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DirectReport.models.list_builder.ListBuilder" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to facilitate creating, deleting and listing entries in a weekly and daily report system.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="DirectReport.models.list_builder.ListBuilder.delete">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entry_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DirectReport/models/list_builder.html#ListBuilder.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DirectReport.models.list_builder.ListBuilder.delete" title="Permalink to this definition"></a></dt>
+<dd><p>Deletes an entry with the specified ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>entry_id</strong> – The ID of the entry to delete.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="DirectReport.models.list_builder.ListBuilder.list_all">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">list_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DirectReport/models/list_builder.html#ListBuilder.list_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DirectReport.models.list_builder.ListBuilder.list_all" title="Permalink to this definition"></a></dt>
+<dd><p>Lists all entries.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of all entries.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="DirectReport.models.list_builder.ListBuilder.list_today">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">list_today</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DirectReport/models/list_builder.html#ListBuilder.list_today"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DirectReport.models.list_builder.ListBuilder.list_today" title="Permalink to this definition"></a></dt>
+<dd><p>Lists all entries for today.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of entries for today.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="DirectReport.models.list_builder.ListBuilder.new">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">new</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entry_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topic_text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DirectReport/models/list_builder.html#ListBuilder.new"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DirectReport.models.list_builder.ListBuilder.new" title="Permalink to this definition"></a></dt>
+<dd><p>Creates a new entry with the given entry text and topic.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>entry_text</strong> – The entry text.</p></li>
+<li><p><strong>topic_text</strong> – The topic for the entry (optional).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="DirectReport.models.list_builder.ListBuilder.update">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entry_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topic_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created_at</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weekly_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DirectReport/models/list_builder.html#ListBuilder.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DirectReport.models.list_builder.ListBuilder.update" title="Permalink to this definition"></a></dt>
+<dd><p>Updates an entry with the given entry text and topic.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uid</strong> – The entry id.</p></li>
+<li><p><strong>entry_text</strong> – The entry text.</p></li>
+<li><p><strong>topic_text</strong> – The topic for the entry</p></li>
+<li><p><strong>created_at</strong> – The date entry was created.</p></li>
+<li><p><strong>weekly_id</strong> – The weekly id.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-DirectReport.models.weekly_builder">
+<span id="directreport-models-weekly-builder-module"></span><h2>DirectReport.models.weekly_builder module<a class="headerlink" href="#module-DirectReport.models.weekly_builder" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="DirectReport.models.weekly_builder.WeeklyBuilder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">DirectReport.models.weekly_builder.</span></span><span class="sig-name descname"><span class="pre">WeeklyBuilder</span></span><a class="reference internal" href="_modules/DirectReport/models/weekly_builder.html#WeeklyBuilder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DirectReport.models.weekly_builder.WeeklyBuilder" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to facilitate creating, deleting and listing entries in a weekly and daily report system.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="DirectReport.models.weekly_builder.WeeklyBuilder.add_new_weekly">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_new_weekly</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DirectReport/models/weekly_builder.html#WeeklyBuilder.add_new_weekly"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DirectReport.models.weekly_builder.WeeklyBuilder.add_new_weekly" title="Permalink to this definition"></a></dt>
+<dd><p>Adds a new weekly ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The newly created weekly ID.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="DirectReport.models.weekly_builder.WeeklyBuilder.get_weekly_id">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_weekly_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DirectReport/models/weekly_builder.html#WeeklyBuilder.get_weekly_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DirectReport.models.weekly_builder.WeeklyBuilder.get_weekly_id" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves the weekly ID for the current week.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The weekly ID.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="DirectReport.models.weekly_builder.WeeklyBuilder.list_all_week_ids">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">list_all_week_ids</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DirectReport/models/weekly_builder.html#WeeklyBuilder.list_all_week_ids"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DirectReport.models.weekly_builder.WeeklyBuilder.list_all_week_ids" title="Permalink to this definition"></a></dt>
+<dd><p>Lists all weekly IDs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of all weekly IDs.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="DirectReport.models.weekly_builder.WeeklyBuilder.list_this_week_as_json">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">list_this_week_as_json</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DirectReport/models/weekly_builder.html#WeeklyBuilder.list_this_week_as_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DirectReport.models.weekly_builder.WeeklyBuilder.list_this_week_as_json" title="Permalink to this definition"></a></dt>
+<dd><p>Lists all entries for the current week as JSON.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A JSON representation of all entries for the current week.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="DirectReport.models.weekly_builder.WeeklyBuilder.list_week">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">list_week</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weekly_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DirectReport/models/weekly_builder.html#WeeklyBuilder.list_week"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DirectReport.models.weekly_builder.WeeklyBuilder.list_week" title="Permalink to this definition"></a></dt>
+<dd><p>Lists all entries for a given week.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>weekly_id</strong> – The weekly ID to list entries for.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of entries for the specified week.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="DirectReport.models.weekly_builder.WeeklyBuilder.week_exists">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">week_exists</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DirectReport/models/weekly_builder.html#WeeklyBuilder.week_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DirectReport.models.weekly_builder.WeeklyBuilder.week_exists" title="Permalink to this definition"></a></dt>
+<dd><p>Check if there is a week UUID associated with the current date.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if a week UUID exists for the current date, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-DirectReport.models">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-DirectReport.models" title="Permalink to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Christopher Webb-Orenstein.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

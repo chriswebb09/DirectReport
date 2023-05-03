@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DirectReport.models.entry &mdash; DirectReport 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            DirectReport
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">DirectReport</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">DirectReport.models.entry</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for DirectReport.models.entry</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">from</span> <span class="nn">DirectReport.models.note.note_builder</span> <span class="kn">import</span> <span class="n">NoteBuilder</span>
+<span class="kn">from</span> <span class="nn">DirectReport.models.blocker_models.block_builder</span> <span class="kn">import</span> <span class="n">BlockerBuilder</span>
+<span class="kn">from</span> <span class="nn">DirectReport.models.jira_models.jira_builder</span> <span class="kn">import</span> <span class="n">JiraBuilder</span>
+
+
+<div class="viewcode-block" id="Entry"><a class="viewcode-back" href="../../../DirectReport.models.html#DirectReport.models.entry.Entry">[docs]</a><span class="k">class</span> <span class="nc">Entry</span><span class="p">:</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class to represent a journal entry.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uuid</span><span class="p">,</span> <span class="n">topic</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">created_at</span><span class="p">,</span> <span class="n">modified_on</span><span class="p">,</span> <span class="n">week_uuid</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the Entry object.</span>
+
+<span class="sd">        :param uuid: A unique identifier for the entry.</span>
+<span class="sd">        :type uuid: str</span>
+<span class="sd">        :param topic: The topic of the entry.</span>
+<span class="sd">        :type topic: str</span>
+<span class="sd">        :param message: The message/content of the entry.</span>
+<span class="sd">        :type message: str</span>
+<span class="sd">        :param created_at: The timestamp when the entry was created.</span>
+<span class="sd">        :type created_at: float</span>
+<span class="sd">        :param modified_on: The timestamp when the entry was last modified.</span>
+<span class="sd">        :type modified_on: float</span>
+<span class="sd">        :param week_uuid: The unique identifier for the week.</span>
+<span class="sd">        :type week_uuid: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uuid</span> <span class="o">=</span> <span class="n">uuid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">topic</span> <span class="o">=</span> <span class="n">topic</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">created_at</span> <span class="o">=</span> <span class="n">created_at</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modified_on</span> <span class="o">=</span> <span class="n">modified_on</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">week_uuid</span> <span class="o">=</span> <span class="n">week_uuid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">notes</span> <span class="o">=</span> <span class="n">NoteBuilder</span><span class="o">.</span><span class="n">get_notes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uuid</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blockers</span> <span class="o">=</span> <span class="n">BlockerBuilder</span><span class="o">.</span><span class="n">get_blockers</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uuid</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">jiras</span> <span class="o">=</span> <span class="n">JiraBuilder</span><span class="o">.</span><span class="n">get_jiras</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uuid</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Entry.get_created_at_formatted"><a class="viewcode-back" href="../../../DirectReport.models.html#DirectReport.models.entry.Entry.get_created_at_formatted">[docs]</a>    <span class="k">def</span> <span class="nf">get_created_at_formatted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the created_at timestamp formatted as a string.</span>
+
+<span class="sd">        :param format: The desired format of the timestamp, default is &quot;%Y-%m-%d %H:%M:%S&quot;.</span>
+<span class="sd">        :type format: str</span>
+<span class="sd">        :return: The formatted created_at timestamp.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">created_at</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="nb">format</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Entry.get_modified_on_formatted"><a class="viewcode-back" href="../../../DirectReport.models.html#DirectReport.models.entry.Entry.get_modified_on_formatted">[docs]</a>    <span class="k">def</span> <span class="nf">get_modified_on_formatted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the modified_on timestamp formatted as a string.</span>
+
+<span class="sd">        :param format: The desired format of the timestamp, default is &quot;%Y-%m-%d %H:%M:%S&quot;.</span>
+<span class="sd">        :type format: str</span>
+<span class="sd">        :return: The formatted modified_on timestamp.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modified_on</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="nb">format</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Entry.to_dict"><a class="viewcode-back" href="../../../DirectReport.models.html#DirectReport.models.entry.Entry.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert the Entry object to a dictionary.</span>
+
+<span class="sd">        :return: The Entry object as a dictionary.</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;uuid&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uuid</span><span class="p">),</span>
+            <span class="s2">&quot;topic&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">topic</span><span class="p">,</span>
+            <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="p">,</span>
+            <span class="s2">&quot;created_at&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">created_at</span><span class="p">),</span>
+            <span class="s2">&quot;modified_on&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modified_on</span><span class="p">),</span>
+            <span class="s2">&quot;week_uuid&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">week_uuid</span><span class="p">),</span>
+            <span class="s2">&quot;notes&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">notes</span><span class="p">,</span>
+            <span class="s2">&quot;blockers&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">blockers</span><span class="p">,</span>
+            <span class="s2">&quot;jiras&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">jiras</span><span class="p">,</span>
+        <span class="p">}</span></div>
+
+<div class="viewcode-block" id="Entry.from_dict"><a class="viewcode-back" href="../../../DirectReport.models.html#DirectReport.models.entry.Entry.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create an Entry object from a dictionary.</span>
+
+<span class="sd">        :param data: The dictionary containing the Entry data.</span>
+<span class="sd">        :type data: dict</span>
+<span class="sd">        :return: An Entry object.</span>
+<span class="sd">        :rtype: Entry</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uuid</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;uuid&quot;</span><span class="p">)</span>
+        <span class="n">topic</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;topic&quot;</span><span class="p">)</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;message&quot;</span><span class="p">)</span>
+        <span class="n">created_at</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromisoformat</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;created_at&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%m/</span><span class="si">%d</span><span class="s2">/%Y&quot;</span><span class="p">)</span>
+        <span class="n">modified_on</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromisoformat</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;modified_on&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%m/</span><span class="si">%d</span><span class="s2">/%Y&quot;</span><span class="p">)</span>
+        <span class="n">week_uuid</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;week_uuid&quot;</span><span class="p">)</span>
+        <span class="n">notes</span> <span class="o">=</span> <span class="n">NoteBuilder</span><span class="o">.</span><span class="n">get_notes</span><span class="p">(</span><span class="n">uuid</span><span class="p">)</span>
+        <span class="n">blockers</span> <span class="o">=</span> <span class="n">BlockerBuilder</span><span class="o">.</span><span class="n">get_blockers</span><span class="p">(</span><span class="n">uuid</span><span class="p">)</span>
+        <span class="n">jiras</span> <span class="o">=</span> <span class="n">JiraBuilder</span><span class="o">.</span><span class="n">get_jiras</span><span class="p">(</span><span class="n">uuid</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">uuid</span><span class="p">,</span> <span class="n">topic</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">created_at</span><span class="p">,</span> <span class="n">modified_on</span><span class="p">,</span> <span class="n">week_uuid</span><span class="p">,</span> <span class="n">notes</span><span class="p">,</span> <span class="n">blockers</span><span class="p">,</span> <span class="n">jiras</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Entry.mark_modified"><a class="viewcode-back" href="../../../DirectReport.models.html#DirectReport.models.entry.Entry.mark_modified">[docs]</a>    <span class="k">def</span> <span class="nf">mark_modified</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update the modified_on timestamp to the current time.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modified_on</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%m/</span><span class="si">%d</span><span class="s2">/%Y&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Entry.is_recent"><a class="viewcode-back" href="../../../DirectReport.models.html#DirectReport.models.entry.Entry.is_recent">[docs]</a>    <span class="k">def</span> <span class="nf">is_recent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">days</span><span class="o">=</span><span class="mi">7</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if the entry is recent (created within the specified number of days).</span>
+
+<span class="sd">        :param days: The number of days to consider as recent, default is 7.</span>
+<span class="sd">        :type days: int</span>
+<span class="sd">        :return: True if the entry is recent, False otherwise.</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">days</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">created_at</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">delta</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Entry.set_message"><a class="viewcode-back" href="../../../DirectReport.models.html#DirectReport.models.entry.Entry.set_message">[docs]</a>    <span class="k">def</span> <span class="nf">set_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_message</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update the message of the entry and set the modified_on timestamp to the current time.</span>
+
+<span class="sd">        :param new_message: The new message/content for the entry.</span>
+<span class="sd">        :type new_message: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">new_message</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modified_on</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;{ &quot;</span> <span class="o">+</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="s1">&#39; </span><span class="si">{}</span><span class="s1"> : </span><span class="si">{}</span><span class="s1"> &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">item</span><span class="p">])</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot; }&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Christopher Webb-Orenstein.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
