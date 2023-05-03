@@ -69,7 +69,7 @@ ignore = [
 ignore = ['E203', 'W503', 'F401']
 max-line-length=120
 exclude=[
-    'DirectReport/tests/*'
+    'tests/*'
 ]
 per-file-ignores= [
     'DirectReport/__init__.py:F401, F403'
@@ -106,4 +106,4 @@ pythonpath = [
   "."
 ]
 asyncio_mode = 'strict'
-testpaths = 'DirectReport/tests/'
+testpaths = 'tests/'
