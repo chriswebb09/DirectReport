@@ -209,7 +209,9 @@ class ListBuilder:
         """
         storage = entry_storage.EntryStorage('SQLite_Python.db')
         storage.create_table()
-        new_entry = entry.Entry(str(uuid.UUID(uid)), topic_text, entry_text, created_at, datetime.datetime.now(), weekly_id)
+        new_entry = entry.Entry(
+            str(uuid.UUID(uid)), topic_text, entry_text, created_at, datetime.datetime.now(), weekly_id
+        )
         storage.update_entry(new_entry)
 
     @staticmethod
