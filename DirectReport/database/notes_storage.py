@@ -2,7 +2,7 @@ import sqlite3
 import uuid
 from pathlib import Path
 import sys
-from DirectReport.models import note
+from ..models.note import Note
 
 file = Path(__file__).resolve()
 package_root_directory = file.parents[1]
@@ -62,4 +62,4 @@ class NotesDataStore:
             "SELECT uuid, associated_entry_uuid, note_entry FROM note_uuid_table WHERE associated_entry_uuid = ?",
             (str(associated_uuid),),
         )
-        return [note.Note(*row).to_dict() for row in result.fetchall()]
+        return [Note(*row).to_dict() for row in result.fetchall()]
