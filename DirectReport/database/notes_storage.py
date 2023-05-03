@@ -33,6 +33,9 @@ class NotesDataStore:
         self.conn.commit()
 
     def add_blocker_entry(self, note_entry, associated_entry_uuuid_str, uuid_str=None):
+        """
+        TODO
+        """
         if uuid_str is None:
             uuid_str = str(uuid.uuid4())
         cursor = self.conn.cursor()
@@ -45,6 +48,9 @@ class NotesDataStore:
         self.conn.commit()
 
     def entries_for_associated_uuid(self, associated_uuid):
+        """
+        TODO
+        """
         result = self.conn.execute(
             "SELECT uuid, associated_entry_uuuid, note_entry FROM note_uuid_table WHERE associated_entry_uuuid = ?",
             (str(associated_uuid),),

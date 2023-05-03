@@ -36,6 +36,9 @@ class JirasDataStore:
         self.conn.commit()
 
     def add_jira_entry(self, jira_tag, jira_entry, associated_entry_uuuid_str, uuid_str=None):
+        """
+        TODO
+        """
         if uuid_str is None:
             uuid_str = str(uuid.uuid4())
         cursor = self.conn.cursor()
@@ -48,6 +51,9 @@ class JirasDataStore:
         self.conn.commit()
 
     def entries_for_associated_uuid(self, associated_uuid):
+        """
+        TODO
+        """
         result = self.conn.execute(
             "SELECT uuid, associated_entry_uuuid, jira_tag, jira_entry FROM jiras_uuid_table WHERE associated_entry_uuuid = ?",
             (str(associated_uuid),),
