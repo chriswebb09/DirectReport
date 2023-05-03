@@ -2,7 +2,7 @@ import sqlite3
 import uuid
 from pathlib import Path
 import sys
-from ..models import note
+from DirectReport.models import note
 
 file = Path(__file__).resolve()
 package_root_directory = file.parents[1]

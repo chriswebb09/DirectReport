@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import datetime
-from . import list_builder
+from .list_builder import ListBuilder
 
 
 class Entry:
@@ -33,9 +33,9 @@ class Entry:
         self.created_at = created_at
         self.modified_on = modified_on
         self.week_uuid = week_uuid
-        self.notes = list_builder.ListBuilder.get_notes(self.uuid)
-        self.blockers = list_builder.ListBuilder.get_blockers(self.uuid)
-        self.jiras = list_builder.ListBuilder.get_jiras(self.uuid)
+        self.notes = ListBuilder.get_notes(self.uuid)
+        self.blockers = ListBuilder.get_blockers(self.uuid)
+        self.jiras = ListBuilder.get_jiras(self.uuid)
 
     def get_created_at_formatted(self, format="%Y-%m-%d %H:%M:%S"):
         """
@@ -97,9 +97,9 @@ class Entry:
         created_at = datetime.datetime.fromisoformat(data.get("created_at")).strftime("%m/%d/%Y")
         modified_on = datetime.datetime.fromisoformat(data.get("modified_on")).strftime("%m/%d/%Y")
         week_uuid = data.get("week_uuid")
-        notes = list_builder.ListBuilder.get_notes(uuid)
-        blockers = list_builder.ListBuilder.get_blockers(uuid)
-        jiras = list_builder.ListBuilder.get_jiras(uuid)
+        notes = ListBuilder.get_notes(uuid)
+        blockers = ListBuilder.get_blockers(uuid)
+        jiras = ListBuilder.get_jiras(uuid)
         return cls(uuid, topic, message, created_at, modified_on, week_uuid, notes, blockers, jiras)
 
     def mark_modified(self):

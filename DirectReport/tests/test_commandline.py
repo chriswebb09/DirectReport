@@ -2,15 +2,12 @@
 
 from DirectReport.database.entry_storage import EntryStorage
 from DirectReport.models import list_builder
-from DirectReport.commandline.commandline import launch
 from DirectReport.commandline.commandline import delete
 from DirectReport.commandline.commandline import list
 from DirectReport.commandline.commandline import mail
-from DirectReport.commandline.commandline import new
 from DirectReport.models.entry import Entry
 from click.testing import CliRunner
 from datetime import datetime
-from pathlib import Path
 import tempfile
 import pytest
 import uuid
