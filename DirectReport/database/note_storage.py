@@ -2,7 +2,7 @@
 
 import sqlite3
 import uuid
-from ..models.note.note import Note
+from ..models.note import Note
 
 
 class NoteDataStore:
