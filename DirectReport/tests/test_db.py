@@ -5,6 +5,7 @@ from DirectReport.database.entry_storage import EntryStorage
 from datetime import datetime
 from pathlib import Path
 import tempfile
+import pytest
 import uuid
 import sys
 import os
@@ -12,11 +13,7 @@ import os
 file = Path(__file__).resolve()
 package_root_directory = file.parents[1]
 sys.path.append(str(package_root_directory))
-
 sys.path.append('.')
-
-import pytest
-
 
 @pytest.fixture
 def temp_db():
