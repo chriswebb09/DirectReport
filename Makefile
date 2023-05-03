@@ -43,7 +43,7 @@ annotate:  ## run type checking
 #########
 test:
     ## clean and run unit tests
-	python3 -m pytest -v DirectReport/tests
+	python3 -m pytest -v DirectReport/tests/
 
 coverage:  ## clean and run unit tests with coverage
 	python3 -m pytest -v DirectReport/tests --cov=DirectReport --cov-branch --cov-fail-under=5 --cov-report term-missing

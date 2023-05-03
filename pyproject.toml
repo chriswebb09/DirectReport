@@ -106,4 +106,4 @@ pythonpath = [
   "."
 ]
 asyncio_mode = 'strict'
-testpaths = 'DirectReport/tests'
+testpaths = 'DirectReport/tests/'

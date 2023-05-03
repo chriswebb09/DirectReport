@@ -8,7 +8,7 @@ from DirectReport.browserview.app import app
 from DirectReport.models.list_builder import ListBuilder
 from DirectReport.models.weekly_builder import WeeklyBuilder
 from DirectReport.models.daily_builder import DailyBuilder
-from DirectReport.models.notes_builder import NotesBuilder
+from DirectReport.models.note_builder import NoteBuilder
 from DirectReport.models.blocker.block_builder import BlockersBuilder
 from DirectReport.models.jira.jira_builder import JiraBuilder
 
@@ -73,7 +73,7 @@ def list(transformation):
                 print(str(all_item) + "\n")
     elif transformation == "notes":
         daily_id = DailyBuilder.get_daily_id()
-        all = NotesBuilder.get_notes(daily_id)
+        all = NoteBuilder.get_notes(daily_id)
         if all is not None:
             for all_item in all:
                 print(str(all_item) + "\n")
@@ -105,7 +105,7 @@ def new(transformation):
         daily_id = DailyBuilder.get_daily_id()
         note = ""
         note = click.prompt('Note', type=str)
-        NotesBuilder.add_new_note(note, daily_id)
+        NoteBuilder.add_new_note(note, daily_id)
     if transformation == "blocker":
         if WeeklyBuilder.week_exists() is False:
             WeeklyBuilder.add_new_weekly()

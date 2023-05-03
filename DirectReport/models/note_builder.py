@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 
-from DirectReport.database.notes_storage import NotesDataStore
+from DirectReport.database.note_storage import NoteDataStore
 
-
-class NotesBuilder:
+class NoteBuilder:
     def __init__(self):
         pass
 
@@ -15,7 +14,7 @@ class NotesBuilder:
         :return: The newly created daily ID.
         """
 
-        notes = NotesDataStore('SQLite_Python.db')
+        notes = NoteDataStore('SQLite_Python.db')
         notes.add_notes_entry(note_text, associated_id)
 
     @staticmethod
@@ -24,6 +23,6 @@ class NotesBuilder:
         TODO
         """
 
-        notes = NotesDataStore('SQLite_Python.db')
+        notes = NoteDataStore('SQLite_Python.db')
         note_list = notes.entries_for_associated_uuid(associated_id)
         return note_list
