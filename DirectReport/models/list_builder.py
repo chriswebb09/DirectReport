@@ -76,13 +76,13 @@ class ListBuilder:
         """
         today = datetime.date.today().strftime("%m/%d/%Y")
         weekly = WeekUUIDTable('SQLite_Python.db')
-        weekly_id = ""
         if weekly.get_uuid(today) is None:
             weekly_id = str(uuid.uuid4())
             weekly.add_uuid(today, weekly_id)
+            return weekly_id
         else:
             weekly_id = weekly.get_uuid(today)
-        return weekly_id
+            return weekly_id
 
     @staticmethod
     def add_new_daily():
@@ -95,13 +95,13 @@ class ListBuilder:
         daily = DailyUUIDTable('SQLite_Python.db')
         daily.create_table()
         weekly_id = str(ListBuilder.get_weekly_id())
-        daily_id = ""
         if daily.get_uuid(today) is not None:
             daily_id = daily.get_uuid(today)
+            return daily_id
         else:
             daily_id = str(uuid.uuid4())
             daily.add_uuid(str(today), weekly_id, daily_id)
-        return daily_id
+            return daily_id
 
     @staticmethod
     def add_new_note(note_text, associated_id):
@@ -176,8 +176,8 @@ class ListBuilder:
         """
         Creates a new entry with the given entry text and topic.
 
-        :param entry: The entry text.
-        :param topic: The topic for the entry (optional).
+        :param entry_text: The entry text.
+        :param topic_text: The topic for the entry (optional).
         """
         today = datetime.date.today().strftime("%m/%d/%Y")
         storage = entry_storage.EntryStorage('SQLite_Python.db')
@@ -197,20 +197,19 @@ class ListBuilder:
         storage.add_entry(new_entry)
 
     @staticmethod
-    def update(id, entry, topic, created_at, weekly_id):
+    def update(uid, entry_text, topic_text, created_at, weekly_id):
         """
         Updates an entry with the given entry text and topic.
 
-        :param id: The entry id.
-        :param entry: The entry text.
-        :param topic: The topic for the entry
+        :param uid: The entry id.
+        :param entry_text: The entry text.
+        :param topic_text: The topic for the entry
         :param created_at: The date entry was created.
         :param weekly_id: The weekly id.
-        :param daily_id: The daily id.
         """
         storage = entry_storage.EntryStorage('SQLite_Python.db')
         storage.create_table()
-        new_entry = entry.Entry(uuid.UUID(id), topic, entry, created_at, datetime.datetime.now(), weekly_id)
+        new_entry = entry.Entry(str(uuid.UUID(uid)), topic_text, entry_text, created_at, datetime.datetime.now(), weekly_id)
         storage.update_entry(new_entry)
 
     @staticmethod
@@ -293,5 +292,5 @@ class ListBuilder:
         :return: A list of all entries.
         """
         storage = entry_storage.EntryStorage('SQLite_Python.db')
-        list_items = storage.get_all_entries()
+        list_items = storage.list_all_entries()
         return list_items
