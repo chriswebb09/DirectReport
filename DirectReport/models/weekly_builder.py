@@ -8,6 +8,7 @@ class WeeklyBuilder:
     """
     A class to facilitate creating, deleting and listing entries in a weekly and daily report system.
     """
+
     def __init__(self):
         pass
 

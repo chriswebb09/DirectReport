@@ -109,7 +109,7 @@ class Entry:
         :rtype: bool
         """
         delta = datetime.timedelta(days=days)
-        difference = (datetime.datetime.now() - delta)
+        difference = datetime.datetime.now() - delta
         return self.created_at >= difference.timestamp()
 
     def set_message(self, new_message):

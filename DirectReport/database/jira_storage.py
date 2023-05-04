@@ -6,7 +6,6 @@ from DirectReport.models.jira_models.jira import Jira
 
 
 class JiraDataStore:
-
     def __init__(self, db_path, conn=None):
         """
         Initializes the JiraDataStore object with the given SQLite database file path.

@@ -64,7 +64,7 @@ def test_cli_delete(temp_db):
         message="Test message",
         created_at=datetime.now().timestamp(),
         modified_on=datetime.now().timestamp(),
-        week_uuid=str(uuid.uuid4())
+        week_uuid=str(uuid.uuid4()),
     )
     storage.add_entry(entry)
     result = runner.invoke(delete, input=str(entry.uuid).encode())

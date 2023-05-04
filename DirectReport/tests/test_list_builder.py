@@ -34,7 +34,7 @@ def test_get_weekly_id(temp_db):
         message="Test message",
         created_at=datetime.now().timestamp(),
         modified_on=datetime.now().timestamp(),
-        week_uuid=str(uuid.uuid4())
+        week_uuid=str(uuid.uuid4()),
     )
 
     storage.add_entry(entry)
