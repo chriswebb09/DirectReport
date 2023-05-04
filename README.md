@@ -6,6 +6,7 @@
 ![build](https://github.com/chriswebb09/DirectReport/actions/workflows/build.yml/badge.svg)
 ![GitHub Latest Release](https://img.shields.io/github/v/release/chriswebb09/DirectReport?logo=github)
 ![ReadTheDocs](https://readthedocs.org/projects/directreport/badge/?version=latest)
+[![PyPI version](https://badge.fury.io/py/DirectReport.svg)](https://badge.fury.io/py/DirectReport)
 
 
 # Overview
