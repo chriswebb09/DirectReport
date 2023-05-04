@@ -14,8 +14,6 @@
 
             const rootElement = document.getElementById('root')
             const dateItem = new Date(data.created_at).toLocaleDateString()
-            {#const showBlocker = this.props.itemdata.blockers.length > 0#}
-            {#const showNotes = this.props.itemdata.notes.length > 0#}
 
             class Entry extends React.Component {
 
@@ -88,28 +86,28 @@
                         </form>
                     } else {
                         return <div className="w-3/4 bg-gray-100 mx-8 my-10 py-12 rounded-xl px-2 self-center shadow-md">
-                            <h1 className="mb-5 text-3xl text-gray-600 text-center content-center font-bold">{'Topic: ' + this.props.itemdata.topic}</h1>
+                            <h1 className="mb-5 underline text-3xl text-gray-600 text-center content-center font-bold">{'Topic: ' + this.props.itemdata.topic}</h1>
                             <p className="mt-8 px-40 text-xl content-center text-gray-500 border-0">{'Entry: ' + this.props.itemdata.message}</p>
                             <h2 className="my-2 px-40 text-lg text-gray-500 font-semibold">{'Created on: ' +   dateItem}</h2>
-                            <div className="flex flex-row items-center content-center mx-20 space-x-10">
-                                <div className="ml-20 bg-gray-200 rounded-xl my-6 px-2 py-2 w-1/4">
-                                    <h1 className="py-1 text-lg text-gray-600 font-bold">Notes</h1>
-                                    <ul className="list-disc list-inside px-2 py-1">
+                            <div className="flex flex-row items-center content-center my-20 mx-20 space-x-10">
+                                <div className="ml-20 h-40 bg-gray-200 rounded-xl my-3 px-2 py-2 w-1/4">
+                                    <h1 className="py-1 underline text-center text-lg text-gray-600 font-bold">Notes</h1>
+                                    <ul className="list-disc list-inside px-2">
                                         {this.props.itemdata.notes.map(note =>
                                             <li className="text-gray-600">{note.note}</li>
                                         )}
                                     </ul>
                                 </div>
-                                <div className="mx-10 bg-gray-200 rounded-xl my-6 px-3 py-2 w-1/4">
-                                    <h1 className="py-1 text-lg text-gray-600 font-bold">Blockers</h1>
-                                    <ul className="list-disc list-inside px-2 py-1">
+                                <div className="mx-10 h-40 bg-gray-200 rounded-xl my-3 px-3 py-2 w-1/4">
+                                    <h1 className="py-1 underline text-center text-lg text-gray-600 font-bold">Blockers</h1>
+                                    <ul className="list-disc list-inside px-2">
                                         {this.props.itemdata.blockers.map(blocker =>
                                             <li className="text-gray-600">{blocker.blocker}</li>
                                         )}
                                     </ul>
                                 </div>
-                                <div className="bg-gray-200 rounded-xl my-6 px-3 py-2 w-1/4">
-                                    <h1 className="py-1 text-lg text-gray-600 font-bold">Jira's</h1>
+                                <div className="h-40 bg-gray-200 rounded-xl px-3 my-3 py-2 w-1/4">
+                                    <h1 className="py-1 underline text-center text-lg text-gray-600 font-bold">Jira's</h1>
                                     <ul className="list-disc list-inside px-2 py-1">
                                         {this.props.itemdata.jiras.map(jira =>
                                             <li className="text-gray-600">{"Ticket: " + jira.jira_ticket + " Tag: " + jira.jira_tag}</li>

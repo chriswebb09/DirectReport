@@ -2,7 +2,6 @@
 
 from DirectReport.models.entry import Entry
 from DirectReport.database.entry_storage import EntryStorage
-from DirectReport.models.list_builder import ListBuilder
 from DirectReport.models.weekly_builder import WeeklyBuilder
 import tempfile
 import uuid
@@ -30,12 +29,12 @@ def temp_db():
 def test_get_weekly_id(temp_db):
     storage = EntryStorage(temp_db)
     entry = Entry(
-        uuid=uuid.uuid4(),
+        uuid=str(uuid.uuid4()),
         topic="My topic",
         message="Test message",
-        created_at=datetime.now(),
-        modified_on=datetime.now(),
-        week_uuid=uuid.uuid4(),
+        created_at=datetime.now().timestamp(),
+        modified_on=datetime.now().timestamp(),
+        week_uuid=str(uuid.uuid4())
     )
 
     storage.add_entry(entry)

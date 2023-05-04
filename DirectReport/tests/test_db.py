@@ -33,12 +33,12 @@ def test_create_table(temp_db):
 def test_add_get_entry(temp_db):
     storage = EntryStorage(temp_db)
     entry = Entry(
-        uuid=uuid.uuid4(),
+        uuid=str(uuid.uuid4()),
         topic="My topic",
         message="Test message",
-        created_at=datetime.now(),
-        modified_on=datetime.now(),
-        week_uuid=uuid.uuid4(),
+        created_at=datetime.now().timestamp(),
+        modified_on=datetime.now().timestamp(),
+        week_uuid=str(uuid.uuid4())
     )
 
     storage.add_entry(entry)
@@ -50,12 +50,12 @@ def test_add_get_entry(temp_db):
 def test_update_entry(temp_db):
     storage = EntryStorage(temp_db)
     entry = Entry(
-        uuid=uuid.uuid4(),
+        uuid=str(uuid.uuid4()),
         topic="Test Topic",
         message="Test message",
-        created_at=datetime.now(),
-        modified_on=datetime.now(),
-        week_uuid=uuid.uuid4(),
+        created_at=datetime.now().timestamp(),
+        modified_on=datetime.now().timestamp(),
+        week_uuid=str(uuid.uuid4())
     )
     storage.add_entry(entry)
     entry.message = "Updated message"
@@ -68,12 +68,12 @@ def test_update_entry(temp_db):
 def test_delete_entry(temp_db):
     storage = EntryStorage(temp_db)
     entry = Entry(
-        uuid=uuid.uuid4(),
+        uuid=str(uuid.uuid4()),
         topic="New Topic",
         message="Test message",
-        created_at=datetime.now(),
-        modified_on=datetime.now(),
-        week_uuid=uuid.uuid4(),
+        created_at=datetime.now().timestamp(),
+        modified_on=datetime.now().timestamp(),
+        week_uuid=str(uuid.uuid4())
     )
 
     storage.add_entry(entry)
@@ -86,20 +86,20 @@ def test_delete_entry(temp_db):
 def test_get_all_entries(temp_db):
     storage = EntryStorage(temp_db)
     entry1 = Entry(
-        uuid=uuid.uuid4(),
+        uuid=str(uuid.uuid4()),
         topic="New",
         message="Test message 1",
-        created_at=datetime.now(),
-        modified_on=datetime.now(),
-        week_uuid=uuid.uuid4(),
+        created_at=datetime.now().timestamp(),
+        modified_on=datetime.now().timestamp(),
+        week_uuid=str(uuid.uuid4())
     )
     entry2 = Entry(
-        uuid=uuid.uuid4(),
+        uuid=str(uuid.uuid4()),
         topic="Topic new",
         message="Test message 2",
-        created_at=datetime.now(),
-        modified_on=datetime.now(),
-        week_uuid=uuid.uuid4(),
+        created_at=datetime.now().timestamp(),
+        modified_on=datetime.now().timestamp(),
+        week_uuid=str(uuid.uuid4())
     )
 
     storage.add_entry(entry1)
@@ -115,20 +115,20 @@ def test_get_entries_by_week(temp_db):
     storage = EntryStorage(temp_db)
     week_uuid = uuid.uuid4()
     entry1 = Entry(
-        uuid=uuid.uuid4(),
+        uuid=str(uuid.uuid4()),
         topic="Topic",
         message="Test message 1",
-        created_at=datetime.now(),
-        modified_on=datetime.now(),
-        week_uuid=week_uuid,
+        created_at=datetime.now().timestamp(),
+        modified_on=datetime.now().timestamp(),
+        week_uuid=str(week_uuid)
     )
     entry2: Entry = Entry(
-        uuid=uuid.uuid4(),
+        uuid=str(uuid.uuid4()),
         topic="Topic 3",
         message="Test message 2",
-        created_at=datetime.now(),
-        modified_on=datetime.now(),
-        week_uuid=uuid.uuid4(),
+        created_at=datetime.now().timestamp(),
+        modified_on=datetime.now().timestamp(),
+        week_uuid=str(uuid.uuid4()),
     )
 
     storage.add_entry(entry1)

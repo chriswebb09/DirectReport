@@ -6,13 +6,15 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
+import sphinx_rtd_theme
+import os               # line 13
+import sys
+
 project = 'DirectReport'
 copyright = '2023, Christopher Webb-Orenstein'
 author = 'Christopher Webb-Orenstein'
 release = '1.0.0'
-import sphinx_rtd_theme
-import os               # line 13
-import sys              # line 14
+
 sys.path.insert(0, os.path.abspath('../../../DirectReport'))
 sys.path.insert(1, os.path.abspath('../../DirectReport'))
 
@@ -49,11 +51,3 @@ html_static_path = ['_static']
 # 'searchbox.html']``.
 #
 #
-
-#html_sidebars = {'searchbox.htm'}
-#
-#project = "DirectReport"
-#version = "0.1.0"
-#
-## Include results from subprojects by default.
-#rtd_sphinx_search_default_filter = f"subprojects:{project}/{version}"

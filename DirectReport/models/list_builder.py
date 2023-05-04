@@ -38,7 +38,7 @@ class ListBuilder:
 
         if topic_text is None or topic_text == '':
             topic_text = "Entry for work on " + str(datetime.datetime.now().strftime("%b %d, %Y"))
-        new_entry = Entry(daily_id, topic_text, entry_text, datetime.datetime.now(), datetime.datetime.now(), weekly_id)
+        new_entry = Entry(daily_id, topic_text, entry_text, datetime.datetime.now().timestamp(), datetime.datetime.now().timestamp(), weekly_id)
         storage.add_entry(new_entry)
 
     @staticmethod
@@ -54,7 +54,7 @@ class ListBuilder:
         """
         storage = EntryStorage('SQLite_Python.db')
         storage.create_table()
-        new_entry = Entry(str(uuid.UUID(uid)), topic_text, entry_text, created_at, datetime.datetime.now(), weekly_id)
+        new_entry = Entry(str(uuid.UUID(uid)), topic_text, entry_text, created_at, datetime.datetime.now().timestamp(), weekly_id)
         storage.update_entry(new_entry)
 
     @staticmethod
@@ -74,7 +74,6 @@ class ListBuilder:
 
         :return: A list of entries for today.
         """
-
         storage = EntryStorage('SQLite_Python.db')
         daily_id = str(DailyBuilder.get_daily_id())
         daily_list = storage.get_entry(daily_id)

@@ -8,7 +8,6 @@ class WeeklyBuilder:
     """
     A class to facilitate creating, deleting and listing entries in a weekly and daily report system.
     """
-
     def __init__(self):
         pass
 
@@ -16,7 +15,6 @@ class WeeklyBuilder:
     def get_weekly_id():
         """
         Retrieves the weekly ID for the current week.
-
         :return: The weekly ID.
         """
         today = datetime.date.today()
@@ -32,7 +30,6 @@ class WeeklyBuilder:
     def week_exists():
         """
         Check if there is a week UUID associated with the current date.
-
         :return: True if a week UUID exists for the current date, False otherwise.
         :rtype: bool
         """
@@ -47,7 +44,6 @@ class WeeklyBuilder:
     def add_new_weekly():
         """
         Adds a new weekly ID.
-
         :return: The newly created weekly ID.
         """
         today = datetime.date.today().strftime("%m/%d/%Y")
@@ -64,7 +60,6 @@ class WeeklyBuilder:
     def list_all_week_ids():
         """
         Lists all weekly IDs.
-
         :return: A list of all weekly IDs.
         """
         storage = WeekUUIDTable('SQLite_Python.db')
@@ -75,7 +70,6 @@ class WeeklyBuilder:
     def list_week(weekly_id):
         """
         Lists all entries for a given week.
-
         :param weekly_id: The weekly ID to list entries for.
         :return: A list of entries for the specified week.
         """
@@ -88,7 +82,6 @@ class WeeklyBuilder:
     def list_this_week_as_json():
         """
         Lists all entries for the current week as JSON.
-
         :return: A JSON representation of all entries for the current week.
         """
         storage = EntryStorage('SQLite_Python.db')

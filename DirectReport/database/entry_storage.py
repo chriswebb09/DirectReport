@@ -12,7 +12,6 @@ class EntryStorage:
     def __init__(self, db_path, conn=None):
         """
         Initializes the EntryStorage object with the given SQLite database file path.
-
         :param db_path: The SQLite database file path.
         """
         if conn is None:
@@ -106,16 +105,13 @@ class EntryStorage:
     def get_uuid(self, date):
         """
         Retrieves the UUID associated with the specified date.
-
         :param date: The date to get the associated UUID for.
         :return: The UUID string if found, otherwise `None`.
         """
-        cursor = self.conn.cursor()
         result = self.conn.execute(
             "SELECT uuid, topic, message, created_at, modified_on, week_uuid FROM entries WHERE modified_on = ?",
             (str(date),),
         )
-        result = cursor.fetchone()
         if result is not None:
             return result
         else:
