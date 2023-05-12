@@ -28,9 +28,6 @@ class ListBuilder:
         """
         today = datetime.date.today().strftime("%m/%d/%Y")
         storage = EntryStorage('SQLite_Python.db')
-        print(storage.get_uuid(today))
-        if storage.get_uuid(today) is not None:
-            return
         DailyBuilder.add_new_daily()
         WeeklyBuilder.add_new_weekly()
         weekly_id = str(WeeklyBuilder.get_weekly_id())
@@ -46,6 +43,7 @@ class ListBuilder:
             datetime.datetime.now().timestamp(),
             weekly_id,
         )
+        print(new_entry)
         storage.add_entry(new_entry)
 
     @staticmethod
