@@ -50,6 +50,7 @@ def list_entries():
         ListBuilder.new(json_data["entry"], json_data["topic"])
     week_id = WeeklyBuilder.get_weekly_id()
     week = WeeklyBuilder.list_week(week_id)
+    print(week)
     return render_template('list.html', title='List', data=week)
 
 

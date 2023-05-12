@@ -12,8 +12,8 @@
 
         <script type="text/babel">
 
-            const rootElement = document.getElementById('root')
-            const dateItem = new Date(data.created_at).toLocaleDateString()
+            const rootElement = document.getElementById('root');
+            const dateItem = new Date(parseFloat(data.created_at) * 1000).toLocaleDateString("en-US");
 
             class Entry extends React.Component {
 
@@ -94,7 +94,7 @@
                                     <h1 className="py-1 underline text-center text-lg text-gray-600 font-bold">Notes</h1>
                                     <ul className="list-disc list-inside px-2">
                                         {this.props.itemdata.notes.map(note =>
-                                            <li className="text-gray-600">{note.note}</li>
+                                            <li className="text-gray-600 list-none">{note.note}</li>
                                         )}
                                     </ul>
                                 </div>
@@ -102,7 +102,7 @@
                                     <h1 className="py-1 underline text-center text-lg text-gray-600 font-bold">Blockers</h1>
                                     <ul className="list-disc list-inside px-2">
                                         {this.props.itemdata.blockers.map(blocker =>
-                                            <li className="text-gray-600">{blocker.blocker}</li>
+                                            <li className="text-gray-600 list-none">{blocker.blocker}</li>
                                         )}
                                     </ul>
                                 </div>
@@ -110,7 +110,7 @@
                                     <h1 className="py-1 underline text-center text-lg text-gray-600 font-bold">Jira's</h1>
                                     <ul className="list-disc list-inside px-2 py-1">
                                         {this.props.itemdata.jiras.map(jira =>
-                                            <li className="text-gray-600">{"Ticket: " + jira.jira_ticket + " Tag: " + jira.jira_tag}</li>
+                                            <li className="text-gray-600 list-none">{"Ticket: " + jira.jira_ticket + " Tag: " + jira.jira_tag}</li>
                                         )}
                                     </ul>
                                 </div>

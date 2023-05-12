@@ -32,18 +32,20 @@ class ListBuilder:
         WeeklyBuilder.add_new_weekly()
         weekly_id = str(WeeklyBuilder.get_weekly_id())
         daily_id = str(DailyBuilder.get_daily_id())
-
+        if storage.get_uuid(today) is not None:
+            print("Entry exists for today. Try adding a note")
+            return
         if topic_text is None or topic_text == '':
-            topic_text = "Entry for work on " + str(datetime.datetime.now().strftime("%b %d, %Y"))
+            topic_text = "Entry for work on " + str(today)
         new_entry = Entry(
-            daily_id,
+            str(uuid.uuid4()),
             topic_text,
             entry_text,
             datetime.datetime.now().timestamp(),
             datetime.datetime.now().timestamp(),
+            daily_id,
             weekly_id,
         )
-        print(new_entry)
         storage.add_entry(new_entry)
 
     @staticmethod

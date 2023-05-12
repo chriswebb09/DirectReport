@@ -44,7 +44,7 @@ class EntryStorage:
             entry.week_uuid.__str__(),
         )
         self.conn.execute(
-            "INSERT INTO entries (uuid, topic, message, created_at, modified_on, week_uuid) VALUES (?, ?, ?, ?, ?, ?)",
+            "INSERT OR IGNORE INTO entries (uuid, topic, message, created_at, modified_on, week_uuid) VALUES (?, ?, ?, ?, ?, ?)",
             values,
         )
         self.conn.commit()
