@@ -154,9 +154,9 @@ $ python DirectReport list --week
 
 ### Home
 
-Web interface home page - WIP
+Web interface home page
 
-![Screenshot home page for web interface.](DirectReport/assets/web_interface.png)
+![Screenshot home page for web interface.](DirectReport/assets/main_launch.png)
 
 ### List
 
