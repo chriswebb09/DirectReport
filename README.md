@@ -57,22 +57,65 @@ Options:
   --help  Show this message and exit.
 
 Commands:
-  launch
-  new
-  show-list
+  delete  Deletes an item with the specified ID.
+  launch  Launches the web browser and runs the app.
+  list    Lists items based on the selected transformation flag.
+  mail    Sends an email with the week's work items.
+  new     Adds a new entry to the list.
   
 ```
 
 ### Launch
 
+#### Overview of Launch command options:
+
+```
+
+Usage: python -m DirectReport launch [OPTIONS]
+
+  Launches the web browser and runs the app.
+
+  :param url: The URL to open in the web browser.
+
+Options:
+  --url TEXT  URL to open in the web browser
+  --help      Show this message and exit.
+  
+```
+
+#### Using the launch command: 
+
 ```
 
 $ python DirectReport launch
+ * Serving Flask app 'DirectReport.browserview.app'
+ * Debug mode: off
+ WARNING: This is a development server. Do not use it in a production deployment. 
+ Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+ Press CTRL+C to quit
+ 127.0.0.1 - - [12/May/2023 15:23:25] "GET / HTTP/1.1" 200 -
 
 ```
 
 ### Show-List
 
+```
+
+Usage: python -m DirectReport list [OPTIONS]
+
+  Lists items based on the selected transformation flag.
+
+  :param transformation: The selected transformation flag (week, day, or all).
+
+Options:
+  --week
+  --day
+  --notes
+  --all
+  --help   Show this message and exit.
+ 
+```
 
 #### Basic
 
