@@ -15,9 +15,13 @@
 
 Keep track of your accomplishments each day of the workweek, create a report of things you accomplished at the end of the week that you can email to manager.  Review progress each quarterly for more effective performance review.
 
+## Project End Goals 
+
+Ultimately the goal of this project goal is seamlessly track your work during the week through API integrations / commandline interface and then allow you to explore the data in a webbrowser page. The end goal is to allow you to maintain notes of your weekly work and if needed generate a concise report for your manager. 
+
 ## Documentation 
 
-[Github Page](https://chriswebb09.github.io/DirectReport/)
+You can find further documentation at this [Github Page](https://chriswebb09.github.io/DirectReport/)
 
 ## Installing
 
@@ -62,7 +66,9 @@ Commands:
 ### Launch
 
 ```
+
 $ python DirectReport launch
+
 ```
 
 ### Show-List
@@ -71,20 +77,26 @@ $ python DirectReport launch
 #### Basic
 
 ```
+
  $ python DirectReport list
+ 
 ```
 
 
 #### All
 
 ```
+
 $ python DirectReport list --all
+
  ```
  
 #### Daily
  
  ```
+ 
 $ python DirectReport list --day
+
 ```
 
 #### Weekly
