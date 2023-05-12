@@ -1,11 +1,13 @@
 # DirectReport
 
-![License](https://img.shields.io/github/license/chriswebb09/DirectReport)
-![Issues](https://img.shields.io/github/issues/chriswebb09/DirectReport)
-![codecov](https://codecov.io/gh/chriswebb09/DirectReport/branch/main/graph/badge.svg?token=E802G1JVJ5)
-![build](https://github.com/chriswebb09/DirectReport/actions/workflows/build.yml/badge.svg)
-![GitHub Latest Release](https://img.shields.io/github/v/release/chriswebb09/DirectReport?logo=github)
-![ReadTheDocs](https://readthedocs.org/projects/directreport/badge/?version=latest)
+
+
+[![License](https://img.shields.io/github/license/chriswebb09/DirectReport)](https://raw.githubusercontent.com/chriswebb09/DirectReport/main/LICENSE)
+[![Issues](https://img.shields.io/github/issues/chriswebb09/DirectReport)](https://github.com/chriswebb09/DirectReport/issues)
+[![codecov](https://codecov.io/gh/chriswebb09/DirectReport/branch/main/graph/badge.svg?token=E802G1JVJ5)](https://app.codecov.io/gh/chriswebb09/DirectReport)
+[![Build Status](https://github.com/ColumbiaOSS/project-proposals-s2023/workflows/Build%20Status/badge.svg?branch=main)](https://github.com/chriswebb09/DirectReport/actions?query=workflow%3A%22Build+Status%22)
+[![GitHub Latest Release](https://img.shields.io/github/v/release/chriswebb09/DirectReport?logo=github)](https://github.com/chriswebb09/DirectReport/releases/latest)
+[![ReadTheDocs](https://readthedocs.org/projects/directreport/badge/?version=latest)](https://readthedocs.org/projects/directreport/)
 [![PyPI version](https://badge.fury.io/py/DirectReport.svg)](https://badge.fury.io/py/DirectReport)
 
 
