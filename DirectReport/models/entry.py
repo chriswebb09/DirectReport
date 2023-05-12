@@ -37,34 +37,31 @@ class Entry:
         self.week_uuid = week_uuid
         self.notes = NoteBuilder.get_notes(self.uuid)
         self.blockers = BlockerBuilder.get_blockers(self.uuid)
-        self.jiras = JiraBuilder.get_jiras(self.uuid)
+        self.jiras = JiraBuilder.get_jira(self.uuid)
 
-    def get_created_at_formatted(self, format="%Y-%m-%d %H:%M:%S"):
+    def get_created_at_formatted(self, date_format="%Y-%m-%d %H:%M:%S"):
         """
         Get the created_at timestamp formatted as a string.
-
-        :param format: The desired format of the timestamp, default is "%Y-%m-%d %H:%M:%S".
-        :type format: str
+        :param date_format: The desired format of the timestamp, default is "%Y-%m-%d %H:%M:%S".
+        :type date_format: str
         :return: The formatted created_at timestamp.
         :rtype: str
         """
-        return datetime.datetime.fromtimestamp(self.created_at).strftime(format)
+        return datetime.datetime.fromtimestamp(self.created_at).strftime(date_format)
 
-    def get_modified_on_formatted(self, format="%Y-%m-%d %H:%M:%S"):
+    def get_modified_on_formatted(self, date_format="%Y-%m-%d %H:%M:%S"):
         """
         Get the modified_on timestamp formatted as a string.
-
-        :param format: The desired format of the timestamp, default is "%Y-%m-%d %H:%M:%S".
-        :type format: str
+        :param date_format: The desired format of the timestamp, default is "%Y-%m-%d %H:%M:%S".
+        :type date_format: str
         :return: The formatted modified_on timestamp.
         :rtype: str
         """
-        return datetime.datetime.fromtimestamp(self.modified_on).strftime(format)
+        return datetime.datetime.fromtimestamp(self.modified_on).strftime(date_format)
 
     def to_dict(self):
         """
         Convert the Entry object to a dictionary.
-
         :return: The Entry object as a dictionary.
         :rtype: dict
         """
@@ -84,7 +81,6 @@ class Entry:
     def from_dict(cls, data):
         """
         Create an Entry object from a dictionary.
-
         :param data: The dictionary containing the Entry data.
         :type data: dict
         :return: An Entry object.
@@ -93,13 +89,10 @@ class Entry:
         uuid = data.get("uuid")
         topic = data.get("topic")
         message = data.get("message")
-        created_at = datetime.datetime.fromisoformat(data.get("created_at")).strftime("%m/%d/%Y")
-        modified_on = datetime.datetime.fromisoformat(data.get("modified_on")).strftime("%m/%d/%Y")
+        created_at = datetime.datetime.fromisoformat(data.get("created_at")).timestamp()
+        modified_on = datetime.datetime.fromisoformat(data.get("modified_on")).timestamp()
         week_uuid = data.get("week_uuid")
-        notes = NoteBuilder.get_notes(uuid)
-        blockers = BlockerBuilder.get_blockers(uuid)
-        jiras = JiraBuilder.get_jiras(uuid)
-        return cls(uuid, topic, message, created_at, modified_on, week_uuid, notes, blockers, jiras)
+        return cls(uuid, topic, message, created_at, modified_on, week_uuid)
 
     def mark_modified(self):
         """
@@ -110,19 +103,18 @@ class Entry:
     def is_recent(self, days=7):
         """
         Check if the entry is recent (created within the specified number of days).
-
         :param days: The number of days to consider as recent, default is 7.
         :type days: int
         :return: True if the entry is recent, False otherwise.
         :rtype: bool
         """
         delta = datetime.timedelta(days=days)
-        return self.created_at >= (datetime.datetime.now() - delta)
+        difference = datetime.datetime.now() - delta
+        return self.created_at >= difference.timestamp()
 
     def set_message(self, new_message):
         """
         Update the message of the entry and set the modified_on timestamp to the current time.
-
         :param new_message: The new message/content for the entry.
         :type new_message: str
         """

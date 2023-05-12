@@ -21,7 +21,7 @@ class JiraDataStore:
 
     def create_table(self):
         """
-        Creates the `jiras_uuid_table` table in the SQLite database if it doesn't exist.
+        Creates the `jira_uuid_table` table in the SQLite database if it doesn't exist.
         """
         cursor = self.conn.cursor()
         cursor.execute(
@@ -38,7 +38,7 @@ class JiraDataStore:
 
     def add_jira_entry(self, jira_tag, jira_entry, associated_entry_uuid_str, uuid_str=None):
         """
-        Adds a new Jira entry to the `jiras_uuid_table`.
+        Adds a new Jira entry to the `jira_uuid_table`.
 
         :param jira_tag: The Jira tag.
         :param jira_entry: The Jira entry.

@@ -12,7 +12,6 @@ app = Flask(__name__, template_folder="templates")
 def home():
     """
     Renders the homepage of the web application.
-
     :return: Rendered HTML template for the homepage.
     """
     return render_template('index.html', title='Home')
@@ -40,7 +39,7 @@ def new():
 
 
 @app.route("/list", methods=['GET', 'POST'])
-def list():
+def list_entries():
     """
     Retrieves and renders the list of all entries.
 
@@ -54,36 +53,34 @@ def list():
     return render_template('list.html', title='List', data=week)
 
 
-@app.route('/entry/<id>', methods=['GET', 'POST'])
-def detail(id=None):
+@app.route('/entry/<uid>', methods=['GET', 'POST'])
+def detail(uid=None):
     """
     Retrieves and renders the details of a specific entry.
 
-    :param id: The ID of the entry to display.
+    :param uid: The ID of the entry to display.
     :return: Rendered HTML template for the entry details page.
     """
-    entry = None
     item = EntryStorage('SQLite_Python.db')
     if request.method == "POST":
         json_data = request.get_json()
-        print(json_data)
         ListBuilder.update(
             json_data["id"], json_data['entry'], json_data['topic'], json_data['created_at'], json_data['week_id']
         )
-    entry = item.get_entry(id).to_dict()
+    entry = item.get_entry(uid).to_dict()
     return render_template('detail.html', title='Detail', data=entry)
 
 
 @app.route('/delete/<id>', methods=['GET'])
-def delete(id=None):
+def delete(uid=None):
     """
     Deletes a specific entry and redirects to the list page.
 
-    :param id: The ID of the entry to delete.
+    :param uid: The ID of the entry to delete.
     :return: Redirects to the '/list' route.
     """
     item = EntryStorage('SQLite_Python.db')
-    item.delete_entry(id)
+    item.delete_entry(uid)
     return redirect("/list", code=302)
 
 

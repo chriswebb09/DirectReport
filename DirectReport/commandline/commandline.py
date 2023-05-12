@@ -92,23 +92,22 @@ def new(transformation):
     if transformation == "entry":
         if WeeklyBuilder.week_exists() is False:
             WeeklyBuilder.add_new_weekly()
-        DailyBuilder.add_new_daily()
+        if DailyBuilder.get_daily_id() is None:
+            DailyBuilder.add_new_daily()
         topic = click.prompt('Topic', type=str)
         entry = click.prompt('Goal', type=str)
         ListBuilder.new(entry, topic)
     else:
         if WeeklyBuilder.week_exists() is False:
-            DailyBuilder.add_new_weekly()
+            WeeklyBuilder.add_new_weekly()
             DailyBuilder.add_new_daily()
         if transformation == "note":
             daily_id = DailyBuilder.get_daily_id()
             note = click.prompt('Note', type=str)
             NoteBuilder.add_new_note(note, daily_id)
         if transformation == "blocker_models":
-            if WeeklyBuilder.week_exists() is False:
-                daily_id = DailyBuilder.get_daily_id()
             blocker = click.prompt('Blocker', type=str)
-            BlockerBuilder.add_new_blocker(blocker, daily_id)
+            BlockerBuilder.add_new_blocker(blocker, DailyBuilder.get_daily_id())
         if transformation == "jira_models":
             daily_id = DailyBuilder.get_daily_id()
             jira_ticket = click.prompt('Jira', type=str)
@@ -132,7 +131,6 @@ def delete(uid):
 def launch(url):
     """
     Launches the web browser and runs the app.
-
     :param url: The URL to open in the web browser.
     """
     click.launch(url)

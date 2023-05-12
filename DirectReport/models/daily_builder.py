@@ -2,7 +2,7 @@
 
 import datetime
 from DirectReport.database.daily_storage import DailyUUIDTable
-import DirectReport.models.weekly_builder as WeeklyBuilder
+from DirectReport.models.weekly_builder import WeeklyBuilder
 import uuid
 
 
