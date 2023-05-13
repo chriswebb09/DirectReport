@@ -22,12 +22,13 @@ class DailyBuilder:
         daily.create_table()
         result = daily.find_uuid_by_date(today)
         if result is None:
-            return DailyBuilder.add_new_daily()
+            print("HERE NONE")
+            return None
         else:
             return result
 
     @staticmethod
-    def add_new_daily():
+    def add_new_daily() -> object:
         """
         Adds a new daily ID.
 

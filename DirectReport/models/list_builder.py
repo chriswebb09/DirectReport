@@ -28,13 +28,12 @@ class ListBuilder:
         """
         today = datetime.date.today().strftime("%m/%d/%Y")
         storage = EntryStorage('SQLite_Python.db')
-        DailyBuilder.add_new_daily()
-        WeeklyBuilder.add_new_weekly()
-        weekly_id = str(WeeklyBuilder.get_weekly_id())
-        daily_id = str(DailyBuilder.get_daily_id())
         if storage.get_uuid(today) is not None:
             print("Entry exists for today. Try adding a note")
             return
+        DailyBuilder.add_new_daily()
+        WeeklyBuilder.add_new_weekly()
+        weekly_id = str(WeeklyBuilder.get_weekly_id())
         if topic_text is None or topic_text == '':
             topic_text = "Entry for work on " + str(today)
         new_entry = Entry(
@@ -43,7 +42,6 @@ class ListBuilder:
             entry_text,
             datetime.datetime.now().timestamp(),
             datetime.datetime.now().timestamp(),
-            daily_id,
             weekly_id,
         )
         storage.add_entry(new_entry)

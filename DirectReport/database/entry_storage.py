@@ -113,7 +113,7 @@ class EntryStorage:
             (str(date),),
         )
         if result is not None:
-            return result
+            return result.fetchone()
         else:
             return None
 
