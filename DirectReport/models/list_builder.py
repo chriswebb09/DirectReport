@@ -42,7 +42,7 @@ class ListBuilder:
             entry_text,
             datetime.datetime.now().timestamp(),
             datetime.datetime.now().timestamp(),
-            weekly_id
+            weekly_id,
         )
         storage.add_entry(new_entry)
 

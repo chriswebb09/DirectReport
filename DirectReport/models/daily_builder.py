@@ -24,7 +24,7 @@ class DailyBuilder:
         if result is None:
             print("HERE NONE")
             return None
-                # DailyBuilder.add_new_daily()
+            # DailyBuilder.add_new_daily()
         else:
             return result
 
