@@ -90,21 +90,11 @@ def new(transformation):
     :param transformation: The entry text to add.
     """
     if transformation == "entry":
-        # if WeeklyBuilder.week_exists() is False:
-        #     WeeklyBuilder.add_new_weekly()
-        # if DailyBuilder.get_daily_id() is None:
-        #     DailyBuilder.add_new_daily()
         topic = click.prompt('Topic', type=str)
         entry = click.prompt('Goal', type=str)
-        print("here 1")
         ListBuilder.new(entry, topic)
         return
     else:
-        print("here 2")
-        print(transformation)
-        # if WeeklyBuilder.week_exists() is False:
-        #     WeeklyBuilder.add_new_weekly()
-        #     DailyBuilder.add_new_daily()
         if transformation == "note":
             daily_id = DailyBuilder.get_daily_id()
             note = click.prompt('Note', type=str)
