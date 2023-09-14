@@ -5,6 +5,7 @@ requires = [
     "wheel",
     "Flask",
     "click",
+    "openai",
     "python-Levenshtein",
     "pytest"
 ]
@@ -48,6 +49,7 @@ develop = [
     "flake8-black>=0.2.1",
     "flake8-pyproject",
     "mypy",
+    "openai",
     "pytest",
     "pytest-cov",
     "twine",
