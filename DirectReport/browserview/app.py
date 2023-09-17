@@ -8,6 +8,7 @@ from flask import Flask, render_template, request, redirect, jsonify, json
 
 import openai
 import secrets
+import prompts
 
 openai.api_key = secrets.SECRET_KEY
 
@@ -21,6 +22,9 @@ def home():
     """
     return render_template('index.html', title='Home')
 
+@app.route("/account", methods=['GET', 'POST'])
+def account():
+    return render_template('account.html', title='Account')
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -44,15 +48,23 @@ def team_report():
 def report():
     prompt = ""
     if request.method == "POST":
-        print("POST")
         prompt = request.get_json()["prompt"]
-    report = get_team_summarys_from_git_shortlog(prompt);
+    report = get_team_summarys_from_git_shortlog(prompt)
     elements = report.choices[0].message.content
     elements = elements.replace("'", '"')
     elements = elements.replace('"albinek"', '')
     json_object = json.loads(elements)
     return json_object, 201
 
+@app.route("/generate_email", methods=['POST'])
+def generate_email():
+    prompt = ""
+    if request.method == "POST":
+        prompt = json.dumps(request.get_json()["prompt"])
+    print(prompt)
+    report = generate_email(prompt)
+    elements = {"email": report.choices[0].message.content}
+    return elements, 201
 
 def new():
     """
@@ -63,15 +75,28 @@ def new():
     return render_template('list.html', title='New Entry', data=[])
 
 def get_team_summarys_from_git_shortlog(data):
-    prompt =  "can you provide a short summary of what the team as a whole accomplished this week as well as an individual breakdown based on the following list of team members and work using the following" + "Format: \n" + "{ \n" + "'team'" + ": [{" + "\n 'name'" + ": '', " + "\n 'accomplishments'" + ": '' " + " ," + "\n 'commits'" + ": '' \n" + "}]," + "\n'report'" + ": {" + "\n 'summary'" + ": " + "\n  'highlights'" + ": [{" + "\n   'title'" + ": '' ," + "\n   'description'" + ": '' "+ "\n }], \n" + " 'conclusion'" + ": ''" + "\n}" + "\n}" + "\n" + "Data:" + data
+    prompt =  prompts.GENERATE_SUMMARY_PROMPT_PREIX + data
     message=[{"role": "user", "content": prompt}]
     response = openai.ChatCompletion.create(
         model="gpt-4",
         messages = message,
-        temperature=0.2,
+        temperature=0.1,
         max_tokens=1000,
         frequency_penalty=0.0
     )
+    return response
+
+def generate_email(data):
+    prompt =  prompts.GENERATE_EMAIL_PROMPT_PREFIX + data
+    message=[{"role": "user", "content": prompt}]
+    response = openai.ChatCompletion.create(
+        model="gpt-4",
+        messages = message,
+        temperature=0.1,
+        max_tokens=1000,
+        frequency_penalty=0.0
+    )
+    print(response)
     return response
 
 
