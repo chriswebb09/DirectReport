@@ -6,49 +6,72 @@
 
 {% block content %}
     <main>
-        <div id="root"></div>
+        <div id="root" class='my-10 md:max-lg:flex content-start'></div>
         <script type="text/babel">
             const { useState, useEffect } = React;
+
             const TeamData = () => {
                 const [teamData, setTeamData] = useState({});
+                const [commentText,setCommentText] = useState("")
 
-                useEffect(() => {
-                    fetch("/data")
-                        .then((res) => {
-                            return res.json();
-                        })
-                        .then((data) => {
-                            console.log(data);
-                            setTeamData(data);
-                        })
-                        .catch((err) => {
-                            console.log(err);
-                        });
-                }, []);
-
-
+                const handleSubmit = e => {
+                    e.preventDefault()
+                    var dataForm = {
+                        "prompt": commentText
+                    };
+                    const formDataJsonString = JSON.stringify(dataForm);
+                    fetch("/report", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json"
+                        },
+                        body: formDataJsonString
+                    }).then(function(res) {
+                        return res.json();
+                    }).then(function(data) {
+                        setTeamData(data);
+                    });
+                };
                 return (
-                    <div id="show_summmary_div" class="col-span-1 justify-center my-10 ml-10">
-                        <div class="shadow-lg py-3 bg-blue-500 rounded-2xl px-30 mb-10">
-                            <h1 class="self-center text-center text-2xl text-white text-center font-bold mb-6 mt-8 mx-20 px-20">Summary</h1>
-                            <div id="summary" class="py-5 px-5 mx-0 min-w-full flex flex-col items-center">
-                                <div id="summary-container" class="mb-6 bg-white ml-10 mr-10 rounded-2xl py-5 tracking-wide text-gray-500 md:text-gl dark:text-gray-400 px-5 my-2">
-                                    <p id="show_summary" class="w-90 sm:w-90 max-w-full overflow-y-hidden break-words">
-                                        { teamData["report"] !== undefined ?
-                                            <div className="mb-6 px-10">{teamData["report"]["summary"]}</div>
-                                            : null
-                                        }
-                                    </p>
-                                    <div>
-                                        <ul className="w-full px-10">
-                                            {teamData["report"] &&
-                                                teamData["report"]["highlights"].map(hightlight =>
-                                                    <li className="mb-3">
-                                                        <h3 className="font-bold text-sm mb-1">{hightlight.title}</h3>
-                                                        <p>{hightlight.description}</p>
-                                                    </li>
-                                                )}
-                                        </ul>
+                    <div class="grid grid-cols-3 gap-1 mb-20 mx-10">
+                        <div class="col-span-1 justify-center my-10" id="edit_summary_div">
+                            <div class="shadow-lg py-3 bg-blue-500 rounded-2xl px-30 mb-10">
+                                <form class="border-none py-3 px-2" onSubmit={handleSubmit}>
+                                    <h1 class="self-center text-center text-2xl text-white text-center font-bold mb-4 mt-5">Enter Github Data</h1>
+                                    <div class="self-center mb-6 mt-8">
+                                        <div class="py-5 px-10 mx-0 min-w-full flex flex-col items-center">
+                                            <textarea id="prompt_input" cols="40" rows="14" class="self-center border-none w-90 sm:w-90 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline" value={commentText}  onChange={e => setCommentText(e.target.value)} ></textarea>
+                                        </div>
+                                        <div class="px-10 mx-0 min-w-full flex flex-col items-center">
+                                            <button id="submit_prompt_btn" class="shadow-md w-80 sm:w-90 bg-white hover:bg-black text-blue-500 text-xl font-semibold py-4 px-10 rounded-lg mt-10"  type="submit">Generate</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div id="show_summmary_div" class="col-span-1 justify-center my-10 ml-10">
+                            <div class="shadow-lg py-3 bg-blue-500 rounded-2xl px-30 mb-10">
+                                <h1 class="self-center text-center text-2xl text-white text-center font-bold mb-6 mt-8 mx-20 px-20">Summary</h1>
+                                <div id="summary" class="py-5 px-5 mx-0 min-w-full flex flex-col items-center">
+                                    <div id="summary-container" class="mb-6 bg-white ml-10 mr-10 rounded-2xl py-5 tracking-wide text-gray-500 md:text-gl dark:text-gray-400 px-5 my-2">
+                                        <p id="show_summary" class="w-90 sm:w-90 max-w-full overflow-y-hidden break-words">
+                                            { teamData["report"] !== undefined ?
+                                                <div className="mb-6 px-10">{teamData["report"]["summary"]}</div>
+                                                : null
+                                            }
+                                        </p>
+                                        <div>
+                                            <ul className="w-full px-10">
+                                                {teamData["report"] &&
+                                                    teamData["report"]["highlights"].map(hightlight =>
+                                                        <li className="mb-3">
+                                                            <h3 className="font-bold text-sm mb-1">{hightlight.title}</h3>
+                                                            <p>{hightlight.description}</p>
+                                                        </li>
+                                                    )}
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -69,11 +92,60 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-span-3 my-12 ml-10 mr-20 mb-20 mt-10">
+                            <div class="shadow-lg py-3 bg-blue-500 rounded-2xl px-30">
+                                <h1 class="self-center text-center text-2xl text-white text-center font-bold w-100 mb-10 mt-5">Generated Email</h1>
+                                <div id ="text-content" class="bg-white ml-20 mr-20 rounded-2xl py-20 tracking-wide text-gray-500 md:text-md dark:text-gray-400 px-20 mx-20 my-10">
+                                    {#                        <h1><strong>Team Status Update</strong></h1>#}
+                                    {#                        <br>#}
+                                    {#                        <p>I hope this message finds you well. Below is a brief overview of the team's accomplishments and progress for the past week:</p>#}
+                                    {#                        <br>#}
+                                    {#                        <h2><strong>Summary:</strong></h2>#}
+                                    {#                        <p>Our team has made significant headway this week, with particular emphasis on enhancements to Debug Info and SILGen. We've also made several updates and corrections in the Parser, README files, and the CHANGELOG.</p>#}
+                                    {#                        <br>#}
+                                    {#                        <h2><strong>Key Highlights:</strong></h2>#}
+                                    {#                        <br>#}
+                                    {#                        <ul>#}
+                                    {#                            <li><strong>Debug Info and SILGen Enhancements:</strong><br>#}
+                                    {#                                Adrian Prantl has been instrumental in this sector, notably contributing to Debug Info and SILGen. His work includes adding debug info support for inlined and specialized generic variables and rectifying the source location of variable assignments. He was also involved in 67 commits, reflecting the depth of his contributions.</li>#}
+                                    {#                            <br>#}
+                                    {#                            <li><strong>Parser Updates:</strong><br>#}
+                                    {#                                Ahmad Alhashemi worked diligently on the Parser, identifying the nonbreaking space U+00A0 and implementing a solution. He further added more non-breaking space test cases. His dedication is reflected in his 5 commits this week.</li>#}
+                                    {#                        </ul>#}
+                                    {#                        <br>#}
+                                    {#                        <h2><strong>Team Member Updates:</strong></h2>#}
+                                    {#                        <br>#}
+                                    {#                        <ul>#}
+                                    {#                            <li><strong>Akshay Shrimali:</strong> Contributed by updating the README.md file.</li>#}
+                                    {#                            <br>#}
+                                    {#                            <li><strong>Alan Zeino:</strong> Rectified a typo in a code example in the libSyntax README.</li>#}
+                                    {#                            <br>#}
+                                    {#                            <li><strong>Albin Sadowski:</strong> Enhanced syntax highlighting in the CHANGELOG.</li>#}
+                                    {#                            <br>#}
+                                    {#                            <li><strong>Alejandro:</strong> Undertook multiple tasks including documentation fixes, removing a warning, and making a fix in the BinaryFloatingPoint.random(in:) open range.</li>#}
+                                    {#                            <br>#}
+                                    {#                            <li><strong>Alex Blewitt:</strong> Addressed several issues including adjusting the compare for lhs and rhs, optimizing code comparison logic, and eliminating duplicate checks.</li>#}
+                                    {#                        </ul>#}
+                                    {#                        <br>#}
+                                    {#                        <h2><strong>Conclusion:</strong></h2>#}
+                                    {#                        <p>The team showcased effective collaboration and proficiency, making appreciable advancements in multiple areas of our project. Our forward focus for the subsequent week involves a continued emphasis on enhancing the Debug Info and SILGen, paired with proactive responses to any emerging issues.</p>#}
+                                    {##}
+                                    {#                        <p>Thank you for your continued support. I look forward to updating you on our progress in the coming weeks.</p>#}
+                                    {#                        <br>#}
+                                    {#                        <p>Warm regards,<br>#}
+                                </div>
+                                <div class="py-10 px-10 min-w-full flex flex-col items-center">
+                                    <button type="button" id="generate_email_btn"
+                                            class="shadow-md w-80 sm:w-90 bg-white hover:bg-black text-blue-500 text-xl font-semibold py-4 px-10 rounded-lg">
+                                        Generate Email
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 );
             };
             const root = ReactDOM.createRoot(document.getElementById("root"));
-
             root.render(<TeamData />);
         </script>
         </body>
