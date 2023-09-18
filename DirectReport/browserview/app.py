@@ -22,10 +22,6 @@ def home():
     """
     return render_template('index.html', title='Home')
 
-@app.route("/account", methods=['GET', 'POST'])
-def account():
-    return render_template('account.html', title='Account')
-
 @app.errorhandler(404)
 def page_not_found(e):
     """
@@ -36,6 +32,9 @@ def page_not_found(e):
     """
     return render_template('404.html', error=e), 404
 
+@app.route("/account", methods=['GET', 'POST'])
+def account():
+    return render_template('account.html', title='Account')
 
 @app.route("/teamreport", methods=['GET', 'POST'])
 def team_report():
@@ -43,12 +42,12 @@ def team_report():
         print("POST")
     return render_template('teamreport.html', title='Team Report', data=[])
 
-
 @app.route("/report", methods=['GET', 'POST'])
 def report():
     prompt = ""
     if request.method == "POST":
         prompt = request.get_json()["prompt"]
+        print(prompt)
     report = get_team_summarys_from_git_shortlog(prompt)
     elements = report.choices[0].message.content
     elements = elements.replace("'", '"')
@@ -65,14 +64,6 @@ def generate_email():
     report = generate_email(prompt)
     elements = {"email": report.choices[0].message.content}
     return elements, 201
-
-def new():
-    """
-    Retrieves and renders the list of all entries.
-
-    :return: Rendered HTML template for the list page.
-    """
-    return render_template('list.html', title='New Entry', data=[])
 
 def get_team_summarys_from_git_shortlog(data):
     prompt =  prompts.GENERATE_SUMMARY_PROMPT_PREIX + data

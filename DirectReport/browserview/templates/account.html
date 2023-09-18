@@ -5,5 +5,45 @@
 {% endblock %}
 
 {% block content %}
+     <main>
+        <div id="root" class='my-10 md:max-lg:flex content-start'></div>
 
+        <script type="text/babel">
+            const { useState, useEffect } = React;
+
+            const Account = () => {
+                const [teamData, setTeamData] = useState({});
+                return (
+                    <div class="grid grid-cols-3 gap-1 mb-20 mx-10">
+                         <div class="col-span-1 justify-center my-10">
+                           <div class="self-center bg-blue-200 py-10 px-10 my-5">
+                                <h1 class="text-center py-10 bg-blue-50">Account</h1>
+                                <p class="text-center">Account page body content</p>
+                            </div>
+                        </div>
+                        <div class="col-span-1 justify-center my-10">
+                          <div class="self-center bg-blue-200 py-10 py-10 px-10 my-5">
+                                <h1 class="text-center py-10 bg-blue-50">Account</h1>
+                                <p class="text-center">Account page body content</p>
+                            </div>
+                        </div>
+                        <div class="col-span-1 justify-center my-10">
+                           <div class="self-center bg-blue-200 py-10 px-10 my-5">
+                                <h1 class="text-center py-10 bg-blue-50">Account</h1>
+                                <p class="text-center">Account page body content</p>
+                            </div>
+                        </div>
+                        <div class="col-span-3 justify-center my-10">
+                            <div class="self-center bg-blue-200 py-10 px-10 my-5">
+                                <h1 class="text-center py-10 bg-blue-50">Account</h1>
+                                <p class="text-center">Account page body content</p>
+                            </div>
+                        </div>
+                    </div>
+                );
+            };
+            const root = ReactDOM.createRoot(document.getElementById("root"));
+            root.render(<Account />);
+        </script>
+     </main>
 {% endblock %}

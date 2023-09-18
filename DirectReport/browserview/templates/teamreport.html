@@ -5,244 +5,154 @@
 {% endblock %}
 
 {% block content %}
-    <main class="mb-auto px-20 relative">
+    <main>
+        <div id="root" class='my-10 md:max-lg:flex content-start'></div>
+
         <script type="text/babel">
 
-            /* INIT */
+            const { useState, useEffect } = React;
 
-            var team_data = {{ data|tojson|safe }};
-            var email_data = {};
+            const TeamData = () => {
+                const [teamData, setTeamData] = useState({});
+                const [commentText, setCommentText] = useState("")
+                const [generatedEmail, setGeneratedEmail] = useState("")
+                const [isOpened, setIsOpened] = useState(false);
+                const [isHidden, setIsHidden] = useState(false);
 
-            // onload
 
-            $(function () {
-                $("#get_team_member_btn").hide();
-                $("#summary-container").hide();
-                $("#show_summary").hide();
-                $("#text-content").hide();
-                $("#generate_email_btn").hide();
-            });
-
-            function show_summary(data) {
-                $("#summary-container").show();
-                $("#show_summary").text(data["summary"]);
-                $("#display_highlights").empty();
-                $("#display_highlights").append("<ul class='list-none w-full px-5'>");
-
-                $.each(data["highlights"], function (i, highlight) {
-                    let new_highlight_div = $("<li class='mb-3'>")
-                    $(new_highlight_div).append("<h3 class='font-bold text-sm mb-1'>" + highlight["title"] + "</h3>");
-                    $(new_highlight_div).append("<p>" + highlight["description"] + "</p>");
-                    $(new_highlight_div).append("</li>");
-                    $("#display_highlights").append(new_highlight_div);
-                })
-                $("#display_highlights").append("</ul>");
-            }
-
-            /* TEAM */
-
-            function show_team_members(data) {
-                $("#display_team").empty();
-                $.each(data["team"], function (i, item) {
-                    let new_team_member_div = $("<button class='team_member_div py-3 mr-2 mb-2 px-4 pb-2 pt-2.5 shadow-md no-underline rounded-full bg-white text-slate-500 font-sans font-semibold text-sm border-gray btn-primary hover:text-white hover:bg-slate-300 focus:outline-none active:shadow-none'>")
-                    $(new_team_member_div).text(" " + item.name + " ").click(function (x) {
-                        console.log(" " + item.name + " ");
+                const handleSubmit = e => {
+                    e.preventDefault()
+                    var dataForm = {
+                        "prompt": commentText
+                    };
+                    const formDataJsonString = JSON.stringify(dataForm);
+                    fetch("/report", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json"
+                        },
+                        body: formDataJsonString
+                    }).then(function(res) {
+                        return res.json();
+                    }).then(function(data) {
+                        setTeamData(data);
+                        toggle();
                     });
-                    $("#display_team").append(new_team_member_div);
-                });
+                };
+
+                function toggle() {
+                    setIsOpened(wasOpened => !wasOpened);
+                }
+
+                function toggleHide() {
+                    setIsHidden(wasHidden => !wasHidden);
+                }
+
+                const handleClick = e => {
+                    e.preventDefault()
+                    var dataForm = {
+                        "prompt": JSON.stringify(teamData)
+                    };
+                    const formDataJsonString = JSON.stringify(dataForm);
+                    fetch("/generate_email", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json"
+                        },
+                        body: formDataJsonString
+                    }).then(function(res) {
+                        return res.json();
+                    }).then(function(data) {
+                        setGeneratedEmail(data["email"]);
+                        toggleHide();
+                    });
+                }
+
+                return (
+                    <div class="grid grid-cols-3 gap-1 mb-20 mx-10">
+                        <div class="col-span-1 justify-center my-10" id="edit_summary_div">
+                            <div class="shadow-lg py-3 bg-blue-500 rounded-2xl px-30 mb-10">
+                                <form class="border-none py-3 px-2" onSubmit={handleSubmit}>
+                                    <h1 class="self-center text-center text-2xl text-white text-center font-bold mb-4 mt-5">Enter Github Data</h1>
+                                    <div class="self-center mb-6 mt-8">
+                                        <div class="py-5 px-10 mx-0 min-w-full flex flex-col items-center">
+                                            <textarea id="prompt_input" cols="40" rows="14" class="self-center border-none w-90 sm:w-90 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline" value={commentText}  onChange={e => setCommentText(e.target.value)} ></textarea>
+                                        </div>
+                                        <div class="px-10 mx-0 min-w-full flex flex-col items-center">
+                                            <button id="submit_prompt_btn" class="shadow-md w-80 sm:w-90 bg-white hover:bg-black text-blue-500 text-xl font-semibold py-4 px-10 rounded-lg mt-10"  type="submit">Generate</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div id="show_summmary_div" class="col-span-1 justify-center my-10 ml-10">
+                            <div class="shadow-lg py-3 bg-blue-500 rounded-2xl px-30 mb-10">
+                                <h1 class="self-center text-center text-2xl text-white text-center font-bold mb-6 mt-8 mx-20 px-20">Summary</h1>
+                                <div id="summary" class="py-5 px-5 mx-0 min-w-full flex flex-col items-center">
+                                    {isOpened && (
+                                        <div id="summary-container" class="mb-6 bg-white ml-10 mr-10 rounded-2xl py-5 tracking-wide text-gray-500 md:text-gl dark:text-gray-400 px-5 my-2">
+                                            <p id="show_summary" class="w-90 sm:w-90 max-w-full overflow-y-hidden break-words">
+                                                { teamData["report"] !== undefined ?
+                                                    <div className="mb-6 px-10">{teamData["report"]["summary"]}</div>
+                                                    : null
+                                                }
+                                            </p>
+                                            <div>
+                                                <ul className="w-full px-10">
+                                                    {teamData["report"] &&
+                                                        teamData["report"]["highlights"].map(hightlight =>
+                                                            <li className="mb-3">
+                                                                <h3 className="font-bold text-sm mb-1">{hightlight.title}</h3>
+                                                                <p>{hightlight.description}</p>
+                                                            </li>
+                                                        )}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                        <div id="team_member_to_select" class="col-span-1 justify-center my-10 ml-10">
+                            <div class="shadow-lg py-3 bg-blue-500 rounded-2xl px-10 mb-10">
+                                <h1 class="self-center text-center text-2xl text-white text-center font-bold mb-6 mt-8 mx-20 px-20">
+                                    Team</h1>
+                                <div id="display_team" class="mb-6 my-14"></div>
+                                {isOpened && (
+                                    <div className="py-3 bg-slate-100 rounded-2xl ml-5 mx-5 px-10">
+                                        <div class="my-8 select-none">
+                                            {teamData["team"] &&
+                                                teamData["team"].map(teammember =>
+                                                    <button className="py-3 px-3 pb-2 pt-2.5 shadow-md no-underline rounded-full bg-slate-500 text-white font-sans font-semibold text-sm border-gray btn-primary hover:text-white hover:bg-slate-300 focus:outline-none active:shadow-none">{teammember.name}</button>
+                                                )}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                        <div class="col-span-3 my-12 ml-10 mr-20 mb-20 mt-10">
+                            <div class="shadow-lg py-3 bg-blue-500 rounded-2xl px-30">
+                                <h1 class="self-center text-center text-2xl text-white text-center font-bold w-100 mb-10 mt-5">Generated Email</h1>
+                                {isHidden && (
+                                    <div id ="text-content" class="bg-white ml-20 mr-20 rounded-2xl py-20 tracking-wide text-gray-500 md:text-md dark:text-gray-400 px-20 mx-20 my-10">
+                                        {generatedEmail}
+                                    </div>
+                                )}
+                                {isOpened && (
+                                    <div class="py-10 px-10 min-w-full flex flex-col items-center">
+                                        <button type="button" id="generate_email_btn" class="shadow-md w-80 sm:w-90 bg-white hover:bg-black text-blue-500 text-xl font-semibold py-4 px-10 rounded-lg" onClick={handleClick}>Generate Email</button>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                );
             };
-
-            /* TEAM MEMBERS */
-
-            $(function () {
-                $("#get_team_member_btn").click(function () {
-                    show_team_members(team_data);
-                })
-            });
-
-            $(function () {
-                $("#generate_email_btn").click(function () {
-                    generate_email(team_data);
-                })
-            });
-
-            $(function () {
-                $("#submit_prompt_btn").click(function () {
-                    submit_prompt($("#prompt_input").val());
-                })
-            });
-
-
-            function show_generated_email(data) {
-                $("#text-content").empty();
-                $("#text-content").show();
-                $("#text-content").text(data["email"])
-                {#var content = $($.parseHTML(data["email"]));#}
-                {#$("#text-content").#}
-            }
-
-            function generate_email(data) {
-
-                let email_prompt = {"prompt": JSON.parse(JSON.stringify(data))};
-
-                $.ajax({
-                    type: "POST",
-                    url: "/generate_email",
-                    dataType: "json",
-                    contentType: "application/json; charset=utf-8",
-                    data: JSON.stringify(email_prompt),
-
-                    beforeSend: function () {
-                        $("#spinner-div").show()
-                    },
-
-                    success: function (data) {
-                        email_data = JSON.parse(JSON.stringify(data));
-                        show_generated_email(email_data);
-                    },
-
-                    error: function (request, status, error) {
-                        console.log(error);
-                        console.log(request);
-                        console.log(status);
-                    },
-
-                    complete: function () {
-                        $("#spinner-div").hide();
-                    },
-                });
-            }
-
-            function submit_prompt(prompt) {
-
-                let data = {"prompt": prompt};
-
-                $.ajax({
-                    type: "POST",
-                    url: "/report",
-                    dataType: "json",
-                    contentType: "application/json; charset=utf-8",
-                    data: JSON.stringify(data),
-
-                    beforeSend: function () {
-                        $("#spinner-div").show()
-                    },
-
-                    success: function (data) {
-                        team_data = JSON.parse(JSON.stringify(data));
-                        $("#generate_email_btn").show();
-                        show_team_members(team_data);
-                        show_summary(JSON.parse(JSON.stringify(team_data["report"])));
-                    },
-
-                    error: function (request, status, error) {
-                        console.log(error);
-                        console.log(request);
-                        console.log(status);
-                    },
-
-                    complete: function () {
-                        $("#spinner-div").hide();
-                    },
-                });
-            }
+            const root = ReactDOM.createRoot(document.getElementById("root"));
+            root.render(<TeamData />);
         </script>
-        <h1 class="self-center text-center text-4xl text-gray-700 tracking-wide text-center font-bold w-100 mb-5 mt-10">Generate Team Email From Github Logs</h1>
-        <div class="grid grid-cols-3 gap-1 mb-20 mx-10">
-            <div class="col-span-1 justify-center my-10" id="edit_summary_div">
-                <div class="shadow-lg py-3 bg-blue-500 rounded-2xl px-30 mb-10">
-                    <form class="border-none py-3 px-2">
-                        <h1 class="self-center text-center text-2xl text-white text-center font-bold mb-4 mt-5">
-                            Enter Github Data</h1>
-                        <div class="self-center mb-6 mt-8">
-                            <div class="py-5 px-10 mx-0 min-w-full flex flex-col items-center">
-                                <textarea id="prompt_input" cols="40" rows="14"
-                                          class="self-center border-none w-90 sm:w-90 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
-                                          value={this.state.entry}></textarea>
-                            </div>
-                            <div class="px-10 mx-0 min-w-full flex flex-col items-center">
-                                <button id="submit_prompt_btn"
-                                        class="shadow-md w-80 sm:w-90 bg-white hover:bg-black text-blue-500 text-xl font-semibold py-4 px-10 rounded-lg mt-10"
-                                        type="button">Generate
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div id="show_summmary_div" class="col-span-1 justify-center my-10 ml-10">
-                <div class="shadow-lg py-3 bg-blue-500 rounded-2xl px-30 mb-10">
-                    <h1 class="self-center text-center text-2xl text-white text-center font-bold mb-6 mt-8 mx-20 px-20">
-                        Summary</h1>
-                    <div id="summary" class="py-5 px-5 mx-0 min-w-full flex flex-col items-center">
-                        <div id="summary-container" class="mb-6 bg-white ml-10 mr-10 rounded-2xl py-5 tracking-wide text-gray-500 md:text-gl dark:text-gray-400 px-5 my-2">
-                            <p id="show_summary" class="w-90 sm:w-90 max-w-full overflow-y-hidden break-words"></p>
-                            <div id="display_highlights" class="mb-4 px-2 mt-5"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="team_member_to_select" class="col-span-1 justify-center my-10 ml-10">
-                <div class="shadow-lg py-3 bg-blue-500 rounded-2xl px-10 mb-10">
-                    <h1 class="self-center text-center text-2xl text-white text-center font-bold mb-6 mt-8 mx-20 px-20">
-                        Team</h1>
-                    <div id="display_team" class="mb-6 my-14"></div>
-                </div>
-            </div>
-            <div class="col-span-3 my-12 ml-10 mr-20 mb-20 mt-10">
-                <div class="shadow-lg py-3 bg-blue-500 rounded-2xl px-30">
-                    <h1 class="self-center text-center text-2xl text-white text-center font-bold w-100 mb-10 mt-5">Generated Email</h1>
-                    <div id ="text-content" class="bg-white ml-20 mr-20 rounded-2xl py-20 tracking-wide text-gray-500 md:text-md dark:text-gray-400 px-20 mx-20 my-10">
-                        {#                        <h1><strong>Team Status Update</strong></h1>#}
-{#                        <br>#}
-{#                        <p>I hope this message finds you well. Below is a brief overview of the team's accomplishments and progress for the past week:</p>#}
-{#                        <br>#}
-{#                        <h2><strong>Summary:</strong></h2>#}
-{#                        <p>Our team has made significant headway this week, with particular emphasis on enhancements to Debug Info and SILGen. We've also made several updates and corrections in the Parser, README files, and the CHANGELOG.</p>#}
-{#                        <br>#}
-{#                        <h2><strong>Key Highlights:</strong></h2>#}
-{#                        <br>#}
-{#                        <ul>#}
-{#                            <li><strong>Debug Info and SILGen Enhancements:</strong><br>#}
-{#                                Adrian Prantl has been instrumental in this sector, notably contributing to Debug Info and SILGen. His work includes adding debug info support for inlined and specialized generic variables and rectifying the source location of variable assignments. He was also involved in 67 commits, reflecting the depth of his contributions.</li>#}
-{#                            <br>#}
-{#                            <li><strong>Parser Updates:</strong><br>#}
-{#                                Ahmad Alhashemi worked diligently on the Parser, identifying the nonbreaking space U+00A0 and implementing a solution. He further added more non-breaking space test cases. His dedication is reflected in his 5 commits this week.</li>#}
-{#                        </ul>#}
-{#                        <br>#}
-{#                        <h2><strong>Team Member Updates:</strong></h2>#}
-{#                        <br>#}
-{#                        <ul>#}
-{#                            <li><strong>Akshay Shrimali:</strong> Contributed by updating the README.md file.</li>#}
-{#                            <br>#}
-{#                            <li><strong>Alan Zeino:</strong> Rectified a typo in a code example in the libSyntax README.</li>#}
-{#                            <br>#}
-{#                            <li><strong>Albin Sadowski:</strong> Enhanced syntax highlighting in the CHANGELOG.</li>#}
-{#                            <br>#}
-{#                            <li><strong>Alejandro:</strong> Undertook multiple tasks including documentation fixes, removing a warning, and making a fix in the BinaryFloatingPoint.random(in:) open range.</li>#}
-{#                            <br>#}
-{#                            <li><strong>Alex Blewitt:</strong> Addressed several issues including adjusting the compare for lhs and rhs, optimizing code comparison logic, and eliminating duplicate checks.</li>#}
-{#                        </ul>#}
-{#                        <br>#}
-{#                        <h2><strong>Conclusion:</strong></h2>#}
-{#                        <p>The team showcased effective collaboration and proficiency, making appreciable advancements in multiple areas of our project. Our forward focus for the subsequent week involves a continued emphasis on enhancing the Debug Info and SILGen, paired with proactive responses to any emerging issues.</p>#}
-{##}
-{#                        <p>Thank you for your continued support. I look forward to updating you on our progress in the coming weeks.</p>#}
-{#                        <br>#}
-{#                        <p>Warm regards,<br>#}
-                    </div>
-                    <div class="py-10 px-10 min-w-full flex flex-col items-center">
-                        <button type="button" id="generate_email_btn"
-                                class="shadow-md w-80 sm:w-90 bg-white hover:bg-black text-blue-500 text-xl font-semibold py-4 px-10 rounded-lg">
-                            Generate Email
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </body>
     </main>
-    <div id="spinner-div" class="pt-5">
-        <div class="spinner-border text-primary" role="status"></div>
-    </div>
 {% endblock %}
-
