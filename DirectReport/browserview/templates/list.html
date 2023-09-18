@@ -6,137 +6,76 @@
 
 {% block content %}
     <main>
-        <script>
-            var data = {{ data|tojson|safe }};
-        </script>
-        <div id='root' className='my-10 md:max-lg:flex content-start'></div>
+        <div id="root"></div>
         <script type="text/babel">
-            const rootElement = document.getElementById('root')
-            console.log(data);
-            class EntryList extends React.Component {
-                render() {
-                    return (
-                        <div className="mx-40 my-8 h-45 flex flex-wrap">
-                            {this.props.listdata.map(item =>
-                                <article
-                                    className="mx-8 mt-8 w-80 rounded-2xl border border-gray-200 p-1 shadow-lg transition hover:shadow-xl">
-                                    <a className="block rounded-xl bg-white p-1 sm:p-6 lg:p-8" href={'/entry/' + item.uuid}>
-                                        <div className="mt-1">
-                                            <h2 className="text-2xl font-bold text-gray-800 sm:text-xl">
-                                                {'Topic: ' + item.topic}
-                                            </h2>
-                                            <p className="mt-3 text-sm text-justify line-clamp-5 text-gray-500">
-                                                {'Entry: ' + item.message}
-                                            </p>
-                                            <p className="mt-3 text-sm text-justify line-clamp-5 text-gray-500">
-                                                {'Number of notes - ' + item.notes.length}
-                                            </p>
-                                        </div>
-                                    </a>
-                                </article>
-                            )}
-                        </div>
-                    );
-                }
-            }
+            const { useState, useEffect } = React;
+            const TeamData = () => {
+                const [teamData, setTeamData] = useState({});
 
-            class NameForm extends React.Component {
-                constructor(props) {
-                    super(props);
-                    this.state = {
-                        topic: '',
-                        entry: ''};
-                    this.handleChange = this.handleChange.bind(this);
-                    this.handleChange2 = this.handleChange2.bind(this);
-                    this.handleSubmit = this.handleSubmit.bind(this);
-                }
+                useEffect(() => {
+                    fetch("/data")
+                        .then((res) => {
+                            return res.json();
+                        })
+                        .then((data) => {
+                            console.log(data);
+                            setTeamData(data);
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        });
+                }, []);
 
-                handleChange(event) {
-                    this.setState({topic: event.target.value});
-                }
 
-                handleChange2(event) {
-                    this.setState({entry: event.target.value});
-                }
-
-                handleSubmit(event) {
-                    alert('A name was submitted: ' + this.state.topic + ' entry: ' + this.state.entry);
-                    event.preventDefault();
-                    axios({
-                        method: 'post',
-                        url: "http://127.0.0.1:5000/list",
-                        headers: {'content-type': 'application/json'},
-                        data: {"topic": this.state.topic, "entry": this.state.entry}
-                    }).then(result => {
-                        console.log(result.data);
-                    }).catch(error => {
-                        console.log(error);
-                    })
-                }
-
-                render() {
-                    return (
-                        <form className="w-3/4 py-2 px-2 self-center" onSubmit={this.handleSubmit}>
-                            <div class="items-center mb-6">
-                                <div className="flex my-10 mr-40">
-                                    <div class="w-1/6">
-                                        <label
-                                            className="text-2xl text-gray-700 font-medium text-right mb-1 mb-0 pr-2">Topic:</label>
+                return (
+                    <div id="show_summmary_div" class="col-span-1 justify-center my-10 ml-10">
+                        <div class="shadow-lg py-3 bg-blue-500 rounded-2xl px-30 mb-10">
+                            <h1 class="self-center text-center text-2xl text-white text-center font-bold mb-6 mt-8 mx-20 px-20">Summary</h1>
+                            <div id="summary" class="py-5 px-5 mx-0 min-w-full flex flex-col items-center">
+                                <div id="summary-container" class="mb-6 bg-white ml-10 mr-10 rounded-2xl py-5 tracking-wide text-gray-500 md:text-gl dark:text-gray-400 px-5 my-2">
+                                    <p id="show_summary" class="w-90 sm:w-90 max-w-full overflow-y-hidden break-words">
+                                        { teamData["report"] !== undefined ?
+                                            <div className="mb-6 px-10">{teamData["report"]["summary"]}</div>
+                                            : null
+                                        }
+                                    </p>
+                                    <div>
+                                        <ul className="w-full px-10">
+                                            {teamData["report"] &&
+                                                teamData["report"]["highlights"].map(hightlight =>
+                                                    <li className="mb-3">
+                                                        <h3 className="font-bold text-sm mb-1">{hightlight.title}</h3>
+                                                        <p>{hightlight.description}</p>
+                                                    </li>
+                                                )}
+                                        </ul>
                                     </div>
-                                    <div class="w-5/6">
-                                        <input className="rounded w-full" type="text" value={this.state.topic}  onChange={this.handleChange}/>
-                                    </div>
-                                </div>
-                                <div className="flex my-6 mr-40">
-                                    <div class="w-1/6">
-                                        <label className="text-2xl text-gray-700 font-medium text-right mb-1 mb-0 pr-2">Entry:</label>
-                                    </div>
-                                    <div class="w-5/6">
-                                        <textarea cols="75" rows="14"  className="w-full text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline" value={this.state.entry} onChange={this.handleChange2}></textarea>
-                                    </div>
-                                </div>
-                                <div className="flex justify-center my-6">
-                                    <button
-                                        className="self-center bg-blue-500 hover:bg-gray-400 text-white text-xl font-semibold py-4 px-6 rounded-lg"
-                                        type="submit">Create Account
-                                    </button>
                                 </div>
                             </div>
-                        </form>
-                    );
-                }
-            }
-
-            class EmptyEntryList extends React.Component {
-                render() {
-                    return (
-                        <div className="mx-50 content-center mt-20 my-8 h-56">
-                            <div className="flex flex-col justify-center my-6 mx-60">
-                                <h1 className="self-center text-3xl text-gray-700 text-center font-bold">Add New Entry</h1>
-                                <NameForm/>
+                        </div>
+                        <div id="team_member_to_select" class="col-span-1 justify-center my-10 ml-10">
+                            <div class="shadow-lg py-3 bg-blue-500 rounded-2xl px-10 mb-10">
+                                <h1 class="self-center text-center text-2xl text-white text-center font-bold mb-6 mt-8 mx-20 px-20">
+                                    Team</h1>
+                                <div id="display_team" class="mb-6 my-14"></div>
+                                <div className="py-3 bg-slate-100 rounded-2xl ml-5 mx-5 px-10">
+                                    <h1 className="text-center text-xl text-gray-700 font-bold mb-6 mt-6 px-20 w-full">Team Members</h1>
+                                    <div class="my-8 select-none">
+                                        {teamData["team"] &&
+                                            teamData["team"].map(teammember =>
+                                                <button className="py-3 px-3 pb-2 pt-2.5 shadow-md no-underline rounded-full bg-slate-500 text-white font-sans font-semibold text-sm border-gray btn-primary hover:text-white hover:bg-slate-300 focus:outline-none active:shadow-none">{teammember.name}</button>
+                                            )}
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    );
-                }
-            }
+                    </div>
+                );
+            };
+            const root = ReactDOM.createRoot(document.getElementById("root"));
 
-            function App() {
-                if (data.length > 0) {
-                    return (
-                        <div>
-                            <EntryList name="Entry List" listdata={data}/>
-                        </div>
-                    )
-                } else {
-                    return (
-                        <div>
-                            <EmptyEntryList/>
-                        </div>
-                    )
-                }
-            }
-
-            ReactDOM.render(<App/>, rootElement)
+            root.render(<TeamData />);
         </script>
+        </body>
     </main>
 {% endblock %}
