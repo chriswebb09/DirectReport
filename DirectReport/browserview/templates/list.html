@@ -12,7 +12,8 @@
 
             const TeamData = () => {
                 const [teamData, setTeamData] = useState({});
-                const [commentText,setCommentText] = useState("")
+                const [commentText, setCommentText] = useState("")
+                const [generatedEmail, setGeneratedEmail] = useState("")
 
                 const handleSubmit = e => {
                     e.preventDefault()
@@ -33,6 +34,27 @@
                         setTeamData(data);
                     });
                 };
+
+                const handleClick = e => {
+                    e.preventDefault()
+                    var dataForm = {
+                        "prompt": JSON.stringify(teamData)
+                    };
+                    const formDataJsonString = JSON.stringify(dataForm);
+                    fetch("/generate_email", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json"
+                        },
+                         body: formDataJsonString
+                    }).then(function(res) {
+                        return res.json();
+                    }).then(function(data) {
+                        setGeneratedEmail(data["email"]);
+                    });
+                }
+
                 return (
                     <div class="grid grid-cols-3 gap-1 mb-20 mx-10">
                         <div class="col-span-1 justify-center my-10" id="edit_summary_div">
@@ -96,49 +118,10 @@
                             <div class="shadow-lg py-3 bg-blue-500 rounded-2xl px-30">
                                 <h1 class="self-center text-center text-2xl text-white text-center font-bold w-100 mb-10 mt-5">Generated Email</h1>
                                 <div id ="text-content" class="bg-white ml-20 mr-20 rounded-2xl py-20 tracking-wide text-gray-500 md:text-md dark:text-gray-400 px-20 mx-20 my-10">
-                                    {#                        <h1><strong>Team Status Update</strong></h1>#}
-                                    {#                        <br>#}
-                                    {#                        <p>I hope this message finds you well. Below is a brief overview of the team's accomplishments and progress for the past week:</p>#}
-                                    {#                        <br>#}
-                                    {#                        <h2><strong>Summary:</strong></h2>#}
-                                    {#                        <p>Our team has made significant headway this week, with particular emphasis on enhancements to Debug Info and SILGen. We've also made several updates and corrections in the Parser, README files, and the CHANGELOG.</p>#}
-                                    {#                        <br>#}
-                                    {#                        <h2><strong>Key Highlights:</strong></h2>#}
-                                    {#                        <br>#}
-                                    {#                        <ul>#}
-                                    {#                            <li><strong>Debug Info and SILGen Enhancements:</strong><br>#}
-                                    {#                                Adrian Prantl has been instrumental in this sector, notably contributing to Debug Info and SILGen. His work includes adding debug info support for inlined and specialized generic variables and rectifying the source location of variable assignments. He was also involved in 67 commits, reflecting the depth of his contributions.</li>#}
-                                    {#                            <br>#}
-                                    {#                            <li><strong>Parser Updates:</strong><br>#}
-                                    {#                                Ahmad Alhashemi worked diligently on the Parser, identifying the nonbreaking space U+00A0 and implementing a solution. He further added more non-breaking space test cases. His dedication is reflected in his 5 commits this week.</li>#}
-                                    {#                        </ul>#}
-                                    {#                        <br>#}
-                                    {#                        <h2><strong>Team Member Updates:</strong></h2>#}
-                                    {#                        <br>#}
-                                    {#                        <ul>#}
-                                    {#                            <li><strong>Akshay Shrimali:</strong> Contributed by updating the README.md file.</li>#}
-                                    {#                            <br>#}
-                                    {#                            <li><strong>Alan Zeino:</strong> Rectified a typo in a code example in the libSyntax README.</li>#}
-                                    {#                            <br>#}
-                                    {#                            <li><strong>Albin Sadowski:</strong> Enhanced syntax highlighting in the CHANGELOG.</li>#}
-                                    {#                            <br>#}
-                                    {#                            <li><strong>Alejandro:</strong> Undertook multiple tasks including documentation fixes, removing a warning, and making a fix in the BinaryFloatingPoint.random(in:) open range.</li>#}
-                                    {#                            <br>#}
-                                    {#                            <li><strong>Alex Blewitt:</strong> Addressed several issues including adjusting the compare for lhs and rhs, optimizing code comparison logic, and eliminating duplicate checks.</li>#}
-                                    {#                        </ul>#}
-                                    {#                        <br>#}
-                                    {#                        <h2><strong>Conclusion:</strong></h2>#}
-                                    {#                        <p>The team showcased effective collaboration and proficiency, making appreciable advancements in multiple areas of our project. Our forward focus for the subsequent week involves a continued emphasis on enhancing the Debug Info and SILGen, paired with proactive responses to any emerging issues.</p>#}
-                                    {##}
-                                    {#                        <p>Thank you for your continued support. I look forward to updating you on our progress in the coming weeks.</p>#}
-                                    {#                        <br>#}
-                                    {#                        <p>Warm regards,<br>#}
+                                    {generatedEmail}
                                 </div>
                                 <div class="py-10 px-10 min-w-full flex flex-col items-center">
-                                    <button type="button" id="generate_email_btn"
-                                            class="shadow-md w-80 sm:w-90 bg-white hover:bg-black text-blue-500 text-xl font-semibold py-4 px-10 rounded-lg">
-                                        Generate Email
-                                    </button>
+                                    <button type="button" id="generate_email_btn" class="shadow-md w-80 sm:w-90 bg-white hover:bg-black text-blue-500 text-xl font-semibold py-4 px-10 rounded-lg" onClick={handleClick}>Generate Email</button>
                                 </div>
                             </div>
                         </div>
