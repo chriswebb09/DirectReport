@@ -42,8 +42,8 @@
                     </div>
                 );
             };
-            const root = ReactDOM.createRoot(document.getElementById("root"));
-            root.render(<Account />);
+            const domContainer = document.querySelector('#root');
+            ReactDOM.render(<Account />, domContainer);
         </script>
      </main>
 {% endblock %}

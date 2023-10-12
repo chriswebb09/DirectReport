@@ -5,33 +5,7 @@
 {% block content %}
     <main>
         <div id='root' className='my-10 md:max-lg:flex content-start'></div>
-         <script type="text/babel">
-            const rootElement = document.getElementById('root')
-            const linearGradient= {background: "linear-gradient(90deg, #667eea 0%, #764ba2 100%)"}
-            class Home extends React.Component {
-                render() {
-                    return (
-                        <div class="py-24 flex h-100" style={linearGradient}>
-                            <div class="container mx-auto px-6">
-                                <h2 class="my-4 text-4xl font-bold mb-2 text-white">DirectReport.</h2>
-                                <h3 class="my-8 text-2xl mb-12 text-gray-200">Keep track of your accomplishments each day of the workweek.</h3>
-                                <div class="my-8">
-                                    <a href="https://github.com/chriswebb09/DirectReport" class="my-12 px-14 py-5 text-lg font-bold text-center text-white bg-gray-400 rounded-full hover:bg-blue-800 shadow-lg uppercase">Github</a>
-                                </div>
-                            </div>
-                        </div>
-                    );
-                }
-            }
-             function App() {
-                return (
-                    <div>
-                        <Home/>
-                    </div>
-                )
-            }
-            ReactDOM.render(<App/>, rootElement)
-         </script>
+        <script type="text/babel" src="{{url_for('static', filename='js/index.js')}}"></script>
     </main>
     <div class="mt-60 h-40"></div>
 {% endblock %}
