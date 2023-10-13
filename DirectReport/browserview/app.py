@@ -84,7 +84,7 @@ def request_loader(request):
 @login_required
 def account():
     print(current_user.is_authenticated())
-    return render_template('account.html', title='Account')
+    return render_template('account.html', title='Account', name=current_user.username, userid=current_user.id)
 
 @login_manager.unauthorized_handler
 def unauthorized_handler():
