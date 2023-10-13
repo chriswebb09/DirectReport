@@ -2,12 +2,9 @@
 
 import datetime
 import uuid
-
 from DirectReport.models.entry import Entry
-from DirectReport.database.entry_storage import EntryStorage
+from DirectReport.models.entry_storage import EntryStorage
 from DirectReport.models.daily_builder import DailyBuilder
-
-
 class ListBuilder:
 
     """
@@ -21,7 +18,6 @@ class ListBuilder:
     def new(entry_text, topic_text=None):
         """
         Creates a new entry with the given entry text and topic.
-
         :param entry_text: The entry text.
         :param topic_text: The topic for the entry (optional).
         """
@@ -41,7 +37,6 @@ class ListBuilder:
     def update(uid, entry_text, topic_text, created_at, weekly_id):
         """
         Updates an entry with the given entry text and topic.
-
         :param uid: The entry id.
         :param entry_text: The entry text.
         :param topic_text: The topic for the entry
@@ -59,7 +54,6 @@ class ListBuilder:
     def delete(entry_id):
         """
         Deletes an entry with the specified ID.
-
         :param entry_id: The ID of the entry to delete.
         """
         storage = EntryStorage('SQLite_Python.db')
@@ -69,7 +63,6 @@ class ListBuilder:
     def list_today():
         """
         Lists all entries for today.
-
         :return: A list of entries for today.
         """
         storage = EntryStorage('SQLite_Python.db')
@@ -81,7 +74,6 @@ class ListBuilder:
     def list_all():
         """
         Lists all entries.
-
         :return: A list of all entries.
         """
         storage = EntryStorage('SQLite_Python.db')

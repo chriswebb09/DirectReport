@@ -3,7 +3,6 @@
 import sqlite3
 import uuid
 
-
 class DailyUUIDTable:
     """
     A class to interact with SQLite database for managing daily date-UUID mappings.
@@ -12,7 +11,6 @@ class DailyUUIDTable:
     def __init__(self, db_path, conn=None):
         """
         Initializes the DailyUUIDTable object with the given SQLite database file path.
-
         :param db_path: The SQLite database file path.
         """
         self.db_path = db_path
@@ -41,11 +39,11 @@ class DailyUUIDTable:
     def add_uuid(self, date, week_uuid_str, uuid_str=None):
         """
         Adds a UUID for the specified date to the SQLite database.
-
         :param date: The date to associate with the UUID.
         :param week_uuid_str: The week UUID string.
         :param uuid_str: The day UUID string (optional). If not provided, a new UUID will be generated.
         """
+
         if uuid_str is None:
             uuid_str = str(uuid.uuid4())
         cursor = self.conn.cursor()

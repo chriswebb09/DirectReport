@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from DirectReport.models.entry import Entry
-from DirectReport.database.entry_storage import EntryStorage
+from DirectReport.models.entry_storage import EntryStorage
 from DirectReport.models.weekly_builder import WeeklyBuilder
 import tempfile
 import uuid

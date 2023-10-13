@@ -3,7 +3,6 @@
 import sqlite3
 from DirectReport.models.entry import Entry
 
-
 class EntryStorage:
     """
     A class to interact with SQLite database for storing and retrieving `Entry` objects.
@@ -31,7 +30,6 @@ class EntryStorage:
     def add_entry(self, entry):
         """
         Adds an `Entry` object to the SQLite database.
-
         :param entry: The `Entry` object to add.
         """
 
@@ -52,7 +50,6 @@ class EntryStorage:
     def get_entry(self, uuid):
         """
         Retrieves an `Entry` object from the SQLite database by its UUID.
-
         :param uuid: The UUID of the entry to retrieve.
         :return: The `Entry` object if found, otherwise `None`.
         """
@@ -70,7 +67,6 @@ class EntryStorage:
     def update_entry(self, entry):
         """
         Updates an existing `Entry` object in the SQLite database.
-
         :param entry: The `Entry` object to update.
         """
 
@@ -81,7 +77,6 @@ class EntryStorage:
     def delete_entry(self, uuid):
         """
         Deletes an `Entry` object from the SQLite database by its UUID.
-
         :param uuid: The UUID of the entry to delete.
         """
 
@@ -91,7 +86,6 @@ class EntryStorage:
     def get_entries_by_week(self, week_uuid):
         """
         Retrieves all entries for a given week.
-
         :param week_uuid: The UUID of the week for which to retrieve entries.
         :return: A list of dictionaries containing the entries' data for the specified week.
         """
@@ -108,6 +102,7 @@ class EntryStorage:
         :param date: The date to get the associated UUID for.
         :return: The UUID string if found, otherwise `None`.
         """
+
         result = self.conn.execute(
             "SELECT uuid, topic, message, created_at, modified_on, week_uuid FROM entries WHERE modified_on = ?",
             (str(date),),
@@ -120,7 +115,6 @@ class EntryStorage:
     def delete_all_entries(self):
         """
         Deletes all entries from the database.
-
         :return: None
         """
 
@@ -130,7 +124,6 @@ class EntryStorage:
     def list_all_entries(self):
         """
         Lists all date-UUID mappings from the SQLite database.
-
         :return: A list of tuples containing (date, week_uuid, day_uuid).
         """
         cursor = self.conn.cursor()

@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 
 import datetime
-
-
 class Entry:
 
     """
@@ -12,7 +10,6 @@ class Entry:
     def __init__(self, uuid, topic, message, created_at, modified_on, week_uuid):
         """
         Initialize the Entry object.
-
         :param uuid: A unique identifier for the entry.
         :type uuid: str
         :param topic: The topic of the entry.

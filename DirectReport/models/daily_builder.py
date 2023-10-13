@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
 import datetime
-from DirectReport.database.daily_storage import DailyUUIDTable
+from DirectReport.models.daily_storage import DailyUUIDTable
 import uuid
 
-
 class DailyBuilder:
+
     def __init__(self):
         pass
 
@@ -13,7 +13,6 @@ class DailyBuilder:
     def get_daily_id():
         """
         Retrieves the daily ID for the current day.
-
         :return: The daily ID.
         """
         today = datetime.date.today()
@@ -30,7 +29,6 @@ class DailyBuilder:
     def add_new_daily() -> object:
         """
         Adds a new daily ID.
-
         :return: The newly created daily ID.
         """
         today = datetime.date.today().strftime("%m/%d/%Y")
@@ -49,7 +47,6 @@ class DailyBuilder:
     def list_all_daily_ids():
         """
         Lists all daily IDs.
-
         :return: A list of all daily IDs.
         """
         storage = DailyUUIDTable('SQLite_Python.db')

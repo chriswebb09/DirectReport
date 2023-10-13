@@ -11,30 +11,25 @@ file = Path(__file__).resolve()
 package_root_directory = file.parents[1]
 sys.path.append(str(package_root_directory))
 
-
 @click.group()
 def cli():
     """Main Click group for the command line interface."""
     pass
-
 
 @cli.group()
 def list_items():
     """Click group for list items related commands."""
     pass
 
-
 @cli.group()
 def item():
     """Click group for item related commands."""
     pass
 
-
 @cli.group()
 def web_browser():
     """Click group for web browser related commands."""
     pass
-
 
 @click.command()
 @click.option('--day', 'transformation', flag_value='day')
@@ -42,14 +37,12 @@ def web_browser():
 def list(transformation):
     """
     Lists items based on the selected transformation flag.
-
     :param transformation: The selected transformation flag (week, day, or all).
     """
     if transformation == "day":
         today = ListBuilder.list_today()
         if today is not None:
             print("today - " + str(today) + "\n")
-
     elif transformation == "all":
         all_list = ListBuilder.list_all()
         if all_list is not None:
@@ -62,7 +55,6 @@ def list(transformation):
 def new(transformation):
     """
     Adds a new entry to the list.
-
     :param transformation: The entry text to add.
     """
     if transformation == "entry":
@@ -77,11 +69,9 @@ def new(transformation):
 def delete(uid):
     """
     Deletes an item with the specified ID.
-
     :param uid: The ID of the item to delete.
     """
     ListBuilder.delete(uid)
-
 
 @click.command()
 @click.option("--url", default="http://127.0.0.1:5000", help="URL to open in the web browser")
@@ -93,7 +83,6 @@ def launch(url):
     click.launch(url)
     app.run()
 
-
 @click.command()
 def mail():
     """
@@ -101,11 +90,8 @@ def mail():
     """
     recipient = "mail@test.com"
     subject = "work for week"
-
     body = ""
-
     webbrowser.open('mailto:?to=' + recipient + '&subject=' + subject + '&body=' + body, new=1)
-
 
 list_items.add_command(list)
 item.add_command(new)
