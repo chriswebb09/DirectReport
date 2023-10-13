@@ -6,7 +6,6 @@ from pathlib import Path
 import webbrowser
 from DirectReport.browserview.app import app
 from DirectReport.models.list_builder import ListBuilder
-from DirectReport.models.daily_builder import DailyBuilder
 
 file = Path(__file__).resolve()
 package_root_directory = file.parents[1]
@@ -38,9 +37,7 @@ def web_browser():
 
 
 @click.command()
-@click.option('--week', 'transformation', flag_value='week', default=True)
 @click.option('--day', 'transformation', flag_value='day')
-@click.option('--notes', 'transformation', flag_value='notes')
 @click.option('--all', 'transformation', flag_value='all')
 def list(transformation):
     """
@@ -62,9 +59,6 @@ def list(transformation):
 
 @click.command()
 @click.option('--entry', 'transformation', flag_value='entry', default=True, help="Add new entry to list")
-@click.option('--note', 'transformation', flag_value='note', help="Add new entry to list")
-@click.option('--blocker_models', 'transformation', flag_value='blocker_models', help="Add new blocker_models to list")
-@click.option('--jira_models', 'transformation', flag_value='jira_models', help="Add new jira_models to list")
 def new(transformation):
     """
     Adds a new entry to the list.
@@ -76,14 +70,6 @@ def new(transformation):
         entry = click.prompt('Goal', type=str)
         ListBuilder.new(entry, topic)
         return
-    else:
-        if transformation == "note":
-            daily_id = DailyBuilder.get_daily_id()
-            note = click.prompt('Note', type=str)
-            NoteBuilder.add_new_note(note, daily_id)
-        if transformation == "blocker_models":
-            blocker = click.prompt('Blocker', type=str)
-            BlockerBuilder.add_new_blocker(blocker, DailyBuilder.get_daily_id())
 
 
 @click.command()
