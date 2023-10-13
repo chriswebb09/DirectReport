@@ -10,7 +10,6 @@ from DirectReport.models.weekly_builder import WeeklyBuilder
 from DirectReport.models.daily_builder import DailyBuilder
 from DirectReport.models.note.note_builder import NoteBuilder
 from DirectReport.models.blocker_models.block_builder import BlockerBuilder
-from DirectReport.models.jira_models.jira_builder import JiraBuilder
 
 file = Path(__file__).resolve()
 package_root_directory = file.parents[1]
@@ -102,11 +101,6 @@ def new(transformation):
         if transformation == "blocker_models":
             blocker = click.prompt('Blocker', type=str)
             BlockerBuilder.add_new_blocker(blocker, DailyBuilder.get_daily_id())
-        if transformation == "jira_models":
-            daily_id = DailyBuilder.get_daily_id()
-            jira_ticket = click.prompt('Jira', type=str)
-            jira_tag = click.prompt('Jira', type=str)
-            JiraBuilder.add_new_jira(jira_ticket, jira_tag, daily_id)
 
 
 @click.command()

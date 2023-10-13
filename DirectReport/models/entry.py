@@ -3,7 +3,6 @@
 import datetime
 from DirectReport.models.note.note_builder import NoteBuilder
 from DirectReport.models.blocker_models.block_builder import BlockerBuilder
-from DirectReport.models.jira_models.jira_builder import JiraBuilder
 
 
 class Entry:
@@ -37,7 +36,6 @@ class Entry:
         self.week_uuid = week_uuid
         self.notes = NoteBuilder.get_notes(self.uuid)
         self.blockers = BlockerBuilder.get_blockers(self.uuid)
-        self.jiras = JiraBuilder.get_jira(self.uuid)
 
     def get_created_at_formatted(self, date_format="%Y-%m-%d %H:%M:%S"):
         """
@@ -74,7 +72,6 @@ class Entry:
             "week_uuid": str(self.week_uuid),
             "notes": self.notes,
             "blockers": self.blockers,
-            "jiras": self.jiras,
         }
 
     @classmethod
