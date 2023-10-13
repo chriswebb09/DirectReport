@@ -9,7 +9,6 @@ from DirectReport.models.list_builder import ListBuilder
 from DirectReport.models.weekly_builder import WeeklyBuilder
 from DirectReport.models.daily_builder import DailyBuilder
 from DirectReport.models.note.note_builder import NoteBuilder
-from DirectReport.models.blocker_models.block_builder import BlockerBuilder
 
 file = Path(__file__).resolve()
 package_root_directory = file.parents[1]
