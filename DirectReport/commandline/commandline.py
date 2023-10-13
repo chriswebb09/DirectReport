@@ -6,7 +6,6 @@ from pathlib import Path
 import webbrowser
 from DirectReport.browserview.app import app
 from DirectReport.models.list_builder import ListBuilder
-from DirectReport.models.weekly_builder import WeeklyBuilder
 from DirectReport.models.daily_builder import DailyBuilder
 
 file = Path(__file__).resolve()
@@ -49,15 +48,7 @@ def list(transformation):
 
     :param transformation: The selected transformation flag (week, day, or all).
     """
-    if transformation == "week":
-        week_id = WeeklyBuilder.get_weekly_id()
-        week = WeeklyBuilder.list_week(week_id)
-        if not week:
-            WeeklyBuilder.add_new_weekly()
-        if week is not None:
-            for week_item in week:
-                print(str(week_item) + "\n")
-    elif transformation == "day":
+    if transformation == "day":
         today = ListBuilder.list_today()
         if today is not None:
             print("today - " + str(today) + "\n")
@@ -124,12 +115,9 @@ def mail():
     """
     recipient = "mail@test.com"
     subject = "work for week"
-    week_id = WeeklyBuilder.get_weekly_id()
-    week = WeeklyBuilder.list_week(week_id)
+
     body = ""
-    if week is not None:
-        for week_item in week:
-            body += str(week_item["topic"]) + "\n" + str(week_item["message"]) + "\n" + "\n"
+
     webbrowser.open('mailto:?to=' + recipient + '&subject=' + subject + '&body=' + body, new=1)
 
 

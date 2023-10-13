@@ -5,7 +5,6 @@ import uuid
 
 from DirectReport.models.entry import Entry
 from DirectReport.database.entry_storage import EntryStorage
-from DirectReport.models.weekly_builder import WeeklyBuilder
 from DirectReport.models.daily_builder import DailyBuilder
 
 
@@ -32,18 +31,10 @@ class ListBuilder:
             print("Entry exists for today. Try adding a note")
             return
         DailyBuilder.add_new_daily()
-        WeeklyBuilder.add_new_weekly()
-        weekly_id = str(WeeklyBuilder.get_weekly_id())
+
         if topic_text is None or topic_text == '':
             topic_text = "Entry for work on " + str(today)
-        new_entry = Entry(
-            str(uuid.uuid4()),
-            topic_text,
-            entry_text,
-            datetime.datetime.now().timestamp(),
-            datetime.datetime.now().timestamp(),
-            weekly_id,
-        )
+
         storage.add_entry(new_entry)
 
     @staticmethod

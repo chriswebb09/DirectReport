@@ -2,7 +2,6 @@
 
 import datetime
 from DirectReport.database.daily_storage import DailyUUIDTable
-from DirectReport.models.weekly_builder import WeeklyBuilder
 import uuid
 
 
@@ -37,7 +36,7 @@ class DailyBuilder:
         today = datetime.date.today().strftime("%m/%d/%Y")
         daily = DailyUUIDTable('SQLite_Python.db')
         daily.create_table()
-        weekly_id = str(WeeklyBuilder.get_weekly_id())
+        weekly_id = ''
         if daily.get_uuid(today) is not None:
             daily_id = daily.get_uuid(today)
             return daily_id
