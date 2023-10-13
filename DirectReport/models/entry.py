@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import datetime
-from DirectReport.models.note.note_builder import NoteBuilder
 
 
 class Entry:
@@ -33,7 +32,6 @@ class Entry:
         self.created_at = created_at
         self.modified_on = modified_on
         self.week_uuid = week_uuid
-        self.notes = NoteBuilder.get_notes(self.uuid)
 
     def get_created_at_formatted(self, date_format="%Y-%m-%d %H:%M:%S"):
         """
@@ -68,7 +66,6 @@ class Entry:
             "created_at": str(self.created_at),
             "modified_on": str(self.modified_on),
             "week_uuid": str(self.week_uuid),
-            "notes": self.notes,
         }
 
     @classmethod

@@ -8,7 +8,6 @@ from DirectReport.browserview.app import app
 from DirectReport.models.list_builder import ListBuilder
 from DirectReport.models.weekly_builder import WeeklyBuilder
 from DirectReport.models.daily_builder import DailyBuilder
-from DirectReport.models.note.note_builder import NoteBuilder
 
 file = Path(__file__).resolve()
 package_root_directory = file.parents[1]
@@ -65,12 +64,6 @@ def list(transformation):
 
     elif transformation == "all":
         all_list = ListBuilder.list_all()
-        if all_list is not None:
-            for all_item in all_list:
-                print(str(all_item) + "\n")
-    elif transformation == "notes":
-        daily_id = DailyBuilder.get_daily_id()
-        all_list = NoteBuilder.get_notes(daily_id)
         if all_list is not None:
             for all_item in all_list:
                 print(str(all_item) + "\n")
