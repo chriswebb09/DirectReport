@@ -4,7 +4,7 @@ import flask
 from flask import Flask, render_template, request, redirect, jsonify, json, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 from DirectReport.models.user_model import User, UserModel
-from flask_login import LoginManager, login_user, login_required, current_user
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 # OpenAI
 import openai
 import appsecrets
@@ -62,6 +62,12 @@ def login():
             return redirect(url_for('account'))
     return render_template('login.html')
 
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('team_report'))
+
 @login_manager.user_loader
 def user_loader(email):
     user = user_model.get_user_by_email(email)
@@ -72,7 +78,6 @@ def user_loader(email):
 def request_loader(request):
     email = request.form.get('email')
     user = user_model.get_user_by_email(email)
-    user.id = email
     return user
 
 @app.route("/account", methods=['GET', 'POST'])
@@ -161,12 +166,13 @@ def report():
     #         "conclusion": "Theteamdemonstratedgoodprogressthisweek,withafocusonenhancingDebugInfoandSILGen,improvingtheParser,andimplementingvariousfixes.Theteamshouldcontinuetofocusontheseareasinthecomingweek."
     #     }
     # }
-
-    report = get_team_summarys_from_git_shortlog(prompt)
-    elements = report.choices[0].message.content
-    elements = elements.replace("'", '"')
-    elements = elements.replace('"albinek"', '')
-    json_object = json.loads(elements)
+    elements = {}
+    if prompt is not "":
+        report = get_team_summarys_from_git_shortlog(prompt)
+        elements = report.choices[0].message.content
+        elements = elements.replace("'", '"')
+        elements = elements.replace('"albinek"', '')
+        json_object = json.loads(elements)
     return elements, 201
 
 @app.route("/generate_email", methods=['POST'])

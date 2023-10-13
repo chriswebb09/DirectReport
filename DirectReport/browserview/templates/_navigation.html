@@ -4,7 +4,12 @@
         <ul class="flex px-6 font-semibold font-heading space-x-18">
             <li><a class="px-6 text-xl hover:text-gray-200" href="/teamreport">Reports</a></li>
             <li><a class="px-6 text-xl hover:text-gray-200" href="https://chriswebb09.github.io/DirectReport/">Docs</a></li>
-            <li><a class="px-6 text-xl hover:text-gray-200" href="/account">Account</a></li>
+            {% if current_user.is_authenticated %}
+                <li><a class="px-6 text-xl hover:text-gray-200" href="/account">Account</a></li>
+            {% else %}
+                <li><a class="px-6 text-xl hover:text-gray-200" href="/login">Login</a></li>
+            {% endif %}
+            
         </ul>
     </div>
 </nav>
