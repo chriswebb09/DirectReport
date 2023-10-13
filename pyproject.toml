@@ -6,6 +6,7 @@ requires = [
     "Flask",
     "click",
     "openai",
+    "Flask-Login",
     "python-Levenshtein",
     "pytest"
 ]

@@ -1,41 +1,22 @@
 #!/usr/bin/env python3
-
+import flask
 # Flask
-
-from flask import Flask, render_template, request, redirect, jsonify, json
-
-# OpenAI 
-
+from flask import Flask, render_template, request, redirect, jsonify, json, url_for
+from werkzeug.security import generate_password_hash, check_password_hash
+from DirectReport.models.user_model import User, UserModel
+from flask_login import LoginManager, login_user, login_required, current_user
+# OpenAI
 import openai
-import secrets
+import appsecrets
 import prompts
-#
-# from transformers import AutoModelForCausalLM
-# from transformers import pipeline
-# import torch
-# from transformers import AutoModelForCausalLM, AutoTokenizer
-#
 
-# def test():
-#     access_token = "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"
-#
-#     # torch.set_default_device('cuda')
-#     model = AutoModelForCausalLM.from_pretrained("microsoft/phi-1_5", trust_remote_code=True, torch_dtype="auto")
-#     tokenizer = AutoTokenizer.from_pretrained("microsoft/phi-1_5", trust_remote_code=True, torch_dtype="auto")
-#     inputs = tokenizer('''```python
-#     def print_prime(n):
-#        """
-#        Print all primes between 1 and n
-#        """''', return_tensors="pt", return_attention_mask=False)
-#
-#     outputs = model.generate(**inputs, max_length=200)
-#     text = tokenizer.batch_decode(outputs)[0]
-#     print(text)
-
-
-openai.api_key = secrets.SECRET_KEY
-
+openai.api_key = appsecrets.SECRET_KEY
+login_manager = LoginManager()
 app = Flask(__name__, template_folder="templates")
+app.secret_key = appsecrets.SECRET_KEY
+login_manager.init_app(app)
+login_manager.login_view = "login"
+user_model = UserModel()
 
 @app.route("/")
 def home():
@@ -43,7 +24,6 @@ def home():
     Renders the homepage of the web application.
     :return: Rendered HTML template for the homepage.
     """
-    #test()
     return render_template('index.html', title='Home')
 
 @app.errorhandler(404)
@@ -56,9 +36,61 @@ def page_not_found(e):
     """
     return render_template('404.html', error=e), 404
 
+@app.route('/signup')
+def signup():
+    return render_template('signup.html')
+
+@app.route('/signup', methods=['POST'])
+def signup_post():
+    # code to validate and add user to database goes here
+    email = request.form.get('email')
+    name = request.form.get('name')
+    passwordtext = request.form.get('password')
+    password = generate_password_hash(passwordtext)
+    user_model.insert_user(name, email, password)
+    return redirect(url_for('login'))
+
+@app.route('/login', methods=['POST', 'GET'])
+def login():
+    email = request.form.get('email')
+    password = request.form.get('password')
+    # remember = True if request.form.get('remember') else False
+    user = user_loader(email)
+    if request.method == 'POST':
+        login_user(user, remember=True, force=True)
+        if current_user.is_authenticated():
+            return redirect(url_for('account'))
+    return render_template('login.html')
+
+@login_manager.user_loader
+def user_loader(email):
+    user = user_model.get_user_by_email(email)
+    return user
+
+
+@login_manager.request_loader
+def request_loader(request):
+    email = request.form.get('email')
+    user = user_model.get_user_by_email(email)
+    user.id = email
+    return user
+
 @app.route("/account", methods=['GET', 'POST'])
+@login_required
 def account():
+    print(current_user.is_authenticated())
     return render_template('account.html', title='Account')
+
+@login_manager.unauthorized_handler
+def unauthorized_handler():
+    print("unauthorized_handler")
+    if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        return redirect(url_for('login'))
+    else:
+        if current_user.is_authenticated:
+            return redirect(url_for('account'))
+        else:
+            return redirect(url_for('login'))
 
 @app.route("/teamreport", methods=['GET', 'POST'])
 def team_report():
@@ -169,7 +201,6 @@ def generate_email(data):
         max_tokens=1000,
         frequency_penalty=0.0
     )
-    print(response)
     return response
 
 
