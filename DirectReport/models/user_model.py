@@ -1,7 +1,7 @@
 import sqlite3
 import uuid
 from flask_login import UserMixin
-
+from app import app as application
 class User(UserMixin):
 
     def __init__(self, id, username, email, password):

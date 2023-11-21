@@ -1,16 +1,15 @@
 #!/usr/bin/env python3
 import flask
+
 # Flask
 from flask import Flask, render_template, request, redirect, jsonify, json, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 from DirectReport.models.user_model import User, UserModel
+from .prompt_logic import get_team_summarys_from_git_shortlog, generate_email
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
-# OpenAI
-import openai
-import appsecrets
-import prompts
 
-openai.api_key = appsecrets.SECRET_KEY
+import appsecrets
+
 login_manager = LoginManager()
 app = Flask(__name__, template_folder="templates")
 app.secret_key = appsecrets.SECRET_KEY
@@ -73,7 +72,6 @@ def user_loader(email):
     user = user_model.get_user_by_email(email)
     return user
 
-
 @login_manager.request_loader
 def request_loader(request):
     email = request.form.get('email')
@@ -108,71 +106,73 @@ def report():
     prompt = ""
     if request.method == "POST":
         prompt = request.get_json()["prompt"]
-    #     print(prompt)
-    # elements = {
-    #     "team": [
-    #         {
-    #             "name": "AdrianPrantl",
-    #             "accomplishments": "AdrianmadesignificantcontributionstotheDebugInfoandSILGen,includingaddingsupportfordebuginfoforcoroutineallocas,inlinedandspecializedgenericvariables.Healsoworkedonthemanglingtestcase,fixedsourcelocationsofvariableassignmentsandfunctioncalls,andaddedbuild-scriptsupportforSwiftLLDBbackwards-compatibilitytests.",
-    #             "commits": "67"
-    #         },
-    #         {
-    #             "name": "AhmadAlhashemi",
-    #             "accomplishments": "AhmadworkedontheParser,detectingnonbreakingspaceU+00A0andprovidingafix.Healsomademinorstyleeditsandaddedmorenon-breakingspacetestcases.",
-    #             "commits": "5"
-    #         },
-    #         {
-    #             "name": "AkshayShrimali",
-    #             "accomplishments": "AkshayupdatedtheREADME.mdfile.",
-    #             "commits": "1"
-    #         },
-    #         {
-    #             "name": "AlanZeino",
-    #             "accomplishments": "AlanfixedatypointhecodeexampleinlibSyntaxREADME.",
-    #             "commits": "1"
-    #         },
-    #         {
-    #             "name": "Albin\"albinek\"Sadowski",
-    #             "accomplishments": "AlbinfixedsyntaxhighlightinginCHANGELOG.",
-    #             "commits": "1"
-    #         },
-    #         {
-    #             "name": "Alejandro",
-    #             "accomplishments": "Alejandroremovedawarning,madesomedocumentationfixes,fixedBinaryFloatingPoint.random(in:)openrangereturningupperBound,andfixedaminorcodetypoinSILPro..Man..md.",
-    #             "commits": "3"
-    #         },
-    #         {
-    #             "name": "AlexBlewitt",
-    #             "accomplishments": "Alexworkedonseveralfixesincludingcompareforlhsandrhs,using||insteadof&&forkindcomparison,removingduplicateconditionalcheckandduplicateifstatement.",
-    #             "commits": "5"
-    #         }
-    #     ],
-    #     "report": {
-    #         "summary": "Theteammadesignificantprogressthisweekwithatotalof83commits.ThemainfocuswasonDebugInfoandSILGenenhancements,Parserimprovements,andvariousfixes.",
-    #         "highlights": [
-    #             {
-    #                 "title": "DebugInfoandSILGenEnhancements",
-    #                 "description": "AdrianPrantlmadesignificantcontributionstotheDebugInfoandSILGen,includingaddingsupportfordebuginfoforcoroutineallocas,inlinedandspecializedgenericvariables."
-    #             },
-    #             {
-    #                 "title": "ParserImprovements",
-    #                 "description": "AhmadAlhashemiworkedontheParser,detectingnonbreakingspaceU+00A0andprovidingafix."
-    #             },
-    #             {
-    #                 "title": "VariousFixes",
-    #                 "description": "Theteamworkedonseveralfixesincludingcompareforlhsandrhs,using||insteadof&&forkindcomparison,removingduplicateconditionalcheckandduplicateifstatement."
-    #             }
-    #         ],
-    #         "conclusion": "Theteamdemonstratedgoodprogressthisweek,withafocusonenhancingDebugInfoandSILGen,improvingtheParser,andimplementingvariousfixes.Theteamshouldcontinuetofocusontheseareasinthecomingweek."
-    #     }
-    # }
-    elements = {}
-    if prompt is not "":
-        report = get_team_summarys_from_git_shortlog(prompt)
-        elements = report.choices[0].message.content
-        elements = elements.replace("'", '"')
-        elements = elements.replace('"albinek"', '')
-        json_object = json.loads(elements)
+    elements = {
+        "team": [
+            {
+                "name": "AdrianPrantl",
+                "accomplishments": "AdrianmadesignificantcontributionstotheDebugInfoandSILGen,includingaddingsupportfordebuginfoforcoroutineallocas,inlinedandspecializedgenericvariables.Healsoworkedonthemanglingtestcase,fixedsourcelocationsofvariableassignmentsandfunctioncalls,andaddedbuild-scriptsupportforSwiftLLDBbackwards-compatibilitytests.",
+                "commits": "67"
+            },
+            {
+                "name": "AhmadAlhashemi",
+                "accomplishments": "AhmadworkedontheParser,detectingnonbreakingspaceU+00A0andprovidingafix.Healsomademinorstyleeditsandaddedmorenon-breakingspacetestcases.",
+                "commits": "5"
+            },
+            {
+                "name": "AkshayShrimali",
+                "accomplishments": "AkshayupdatedtheREADME.mdfile.",
+                "commits": "1"
+            },
+            {
+                "name": "AlanZeino",
+                "accomplishments": "AlanfixedatypointhecodeexampleinlibSyntaxREADME.",
+                "commits": "1"
+            },
+            {
+                "name": "Albin\"albinek\"Sadowski",
+                "accomplishments": "AlbinfixedsyntaxhighlightinginCHANGELOG.",
+                "commits": "1"
+            },
+            {
+                "name": "Alejandro",
+                "accomplishments": "Alejandroremovedawarning,madesomedocumentationfixes,fixedBinaryFloatingPoint.random(in:)openrangereturningupperBound,andfixedaminorcodetypoinSILPro..Man..md.",
+                "commits": "3"
+            },
+            {
+                "name": "AlexBlewitt",
+                "accomplishments": "Alexworkedonseveralfixesincludingcompareforlhsandrhs,using||insteadof&&forkindcomparison,removingduplicateconditionalcheckandduplicateifstatement.",
+                "commits": "5"
+            }
+        ],
+        "report": {
+            "summary": "Theteammadesignificantprogressthisweekwithatotalof83commits.ThemainfocuswasonDebugInfoandSILGenenhancements,Parserimprovements,andvariousfixes.",
+            "total_commits": "83",
+            "areas_of_focus": ["DebugInfoandSILGenEnhancements", "ParserImprovements", "VariousFixes"],
+            "highlights": [
+                {
+                    "title": "DebugInfoandSILGenEnhancements",
+                    "description": "AdrianPrantlmadesignificantcontributionstotheDebugInfoandSILGen,includingaddingsupportfordebuginfoforcoroutineallocas,inlinedandspecializedgenericvariables."
+                },
+                {
+                    "title": "ParserImprovements",
+                    "description": "AhmadAlhashemiworkedontheParser,detectingnonbreakingspaceU+00A0andprovidingafix."
+                },
+                {
+                    "title": "VariousFixes",
+                    "description": "Theteamworkedonseveralfixesincludingcompareforlhsandrhs,using||insteadof&&forkindcomparison,removingduplicateconditionalcheckandduplicateifstatement."
+                }
+            ],
+            "conclusion": "Theteamdemonstratedgoodprogressthisweek,withafocusonenhancingDebugInfoandSILGen,improvingtheParser,andimplementingvariousfixes.Theteamshouldcontinuetofocusontheseareasinthecomingweek."
+        }
+    }
+    # elements = {}
+    # if prompt is not "":
+    #     report = get_team_summarys_from_git_shortlog(prompt)
+    #     elements = report.choices[0].message.content
+    #     print(elements)
+    #     elements = elements.replace("'", '"')
+    #     elements = elements.replace('"albinek"', '')
+    #     json_object = json.loads(elements)
     return elements, 201
 
 @app.route("/generate_email", methods=['POST'])
@@ -180,34 +180,9 @@ def generate_email():
     prompt = ""
     if request.method == "POST":
         prompt = json.dumps(request.get_json()["prompt"])
-    print(prompt)
     report = generate_email(prompt)
     elements = {"email": report.choices[0].message.content}
     return elements, 201
-
-def get_team_summarys_from_git_shortlog(data):
-    prompt =  prompts.GENERATE_SUMMARY_PROMPT_PREIX + data
-    message=[{"role": "user", "content": prompt}]
-    response = openai.ChatCompletion.create(
-        model="gpt-4",
-        messages = message,
-        temperature=0.1,
-        max_tokens=1000,
-        frequency_penalty=0.0
-    )
-    return response
-
-def generate_email(data):
-    prompt =  prompts.GENERATE_EMAIL_PROMPT_PREFIX + data
-    message=[{"role": "user", "content": prompt}]
-    response = openai.ChatCompletion.create(
-        model="gpt-4",
-        messages = message,
-        temperature=0.1,
-        max_tokens=1000,
-        frequency_penalty=0.0
-    )
-    return response
 
 
 if __name__ == "__main__":

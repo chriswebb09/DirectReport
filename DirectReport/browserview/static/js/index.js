@@ -1,9 +1,9 @@
 'use strict';
-const e = React.createElement;
+const elem = React.createElement;
 
 class Home extends React.Component {
     render() {
-        return e(
+        return elem(
             'div',
             null,
             React.createElement(
@@ -52,4 +52,4 @@ class Home extends React.Component {
 }
 
 const domContainer = document.querySelector('#root');
-ReactDOM.render(e(Home), domContainer);
+ReactDOM.render(elem(Home), domContainer);
