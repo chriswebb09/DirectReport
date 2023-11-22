@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
-import flask
 
 # Flask
-from flask import Flask, render_template, request, redirect, jsonify, json, url_for
-from werkzeug.security import generate_password_hash, check_password_hash
-from DirectReport.models.user_model import User, UserModel
-from .prompt_logic import get_team_summarys_from_git_shortlog, generate_email
+from flask import Flask, render_template, request, redirect, json, url_for
+from werkzeug.security import generate_password_hash
+from DirectReport.models.user_model import UserModel
+from .prompt_logic import generate_email
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 
-import appsecrets
+from DirectReport.datadependencies import appsecrets
 
 login_manager = LoginManager()
 app = Flask(__name__, template_folder="templates")
@@ -83,6 +82,24 @@ def request_loader(request):
 def account():
     print(current_user.is_authenticated())
     return render_template('account.html', title='Account', name=current_user.username, userid=current_user.id)
+
+
+@app.route("/list", methods=['GET', 'POST'])
+@login_required
+def list_entries():
+    """
+    Retrieves and renders the list of all entries.
+
+    :return: Rendered HTML template for the list page.
+    """
+    # if request.method == "POST":
+    #     json_data = request.get_json()
+    #     ListBuilder.new(json_data["entry"], json_data["topic"])
+    # week_id = WeeklyBuilder.get_weekly_id()
+    # week = WeeklyBuilder.list_week(week_id)
+    return render_template('list.html', title='List', data=[])
+
+
 
 @login_manager.unauthorized_handler
 def unauthorized_handler():

@@ -9,7 +9,7 @@ class Home extends React.Component {
             React.createElement(
                 'div',
                 {
-                    className: "py-24 flex h-100",
+                    className: "py-20 flex h-50",
                     style: {background: "linear-gradient(90deg, #667eea 0%, #764ba2 100%)"}
                 },
                 React.createElement(
@@ -20,14 +20,14 @@ class Home extends React.Component {
                     React.createElement(
                         "h2",
                         {
-                            className: "my-4 text-4xl font-bold mb-2 text-white"
+                            className: "my-2 text-3xl font-bold mb-8 text-white"
                         },
                         "DirectReport."
                     ),
                     React.createElement(
                         "h3",
                         {
-                            className: "my-8 text-2xl mb-12 text-gray-200"
+                            className: "my-3 text-lg mb-12 text-gray-200"
                         },
                         "Keep track of your accomplishments each day of the workweek."
                     ),
@@ -39,10 +39,10 @@ class Home extends React.Component {
                         React.createElement(
                             "a",
                             {
-                                className: "my-12 px-14 py-5 text-lg font-bold text-center text-white bg-gray-400 rounded-full hover:bg-blue-800 shadow-lg uppercase",
-                                href: "https://github.com/chriswebb09/DirectReport"
+                                className: "my-12 px-10 py-5 text-lg font-bold text-center text-white bg-gray-400 rounded-full hover:bg-blue-800 shadow-lg uppercase",
+                                href: "/account"
                             },
-                            "Github"
+                            "Get Started"
                         )
                     )
                 )

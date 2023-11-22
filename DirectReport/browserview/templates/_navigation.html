@@ -1,13 +1,11 @@
 <nav class="bg-gray-900 text-white w-screen">
     <div class="px-14 py-6 flex w-full items-center">
-        <a class="ml-14 w-3/4 text-2xl font-bold" href="/">DirectReport.</a>
-        <ul class="flex px-6 font-semibold font-heading space-x-18">
-            <li><a class="px-6 text-xl hover:text-gray-200" href="/teamreport">Reports</a></li>
-            <li><a class="px-6 text-xl hover:text-gray-200" href="https://chriswebb09.github.io/DirectReport/">Docs</a></li>
+        <a class="ml-14 w-3/4 text-xl font-bold" href="/">DirectReport.</a>
+        <ul class="flex pl-2 pr-12 font-semibold font-heading space-x-18">
             {% if current_user.is_authenticated %}
-                <li><a class="px-6 text-xl hover:text-gray-200" href="/account">Account</a></li>
+                <li><a class="px-12 text-md hover:text-gray-200" href="/account">Account</a></li>
             {% else %}
-                <li><a class="px-6 text-xl hover:text-gray-200" href="/login">Login</a></li>
+                <li><a class="px-12 text-md hover:text-gray-200" href="/login">Login</a></li>
             {% endif %}
         </ul>
     </div>

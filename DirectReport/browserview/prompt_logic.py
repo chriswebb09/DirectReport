@@ -1,10 +1,9 @@
 import openai
-import prompts
-import appsecrets
+from DirectReport.datadependencies import appsecrets, prompts
 
 openai.api_key = appsecrets.SECRET_KEY
 def generate_email(data):
-    prompt =  prompts.GENERATE_EMAIL_PROMPT_PREFIX + data
+    prompt = prompts.GENERATE_EMAIL_PROMPT_PREFIX + data
     message=[{"role": "user", "content": prompt}]
     response = openai.ChatCompletion.create(
         model="gpt-4",
@@ -16,7 +15,7 @@ def generate_email(data):
     return response
 
 def get_team_summarys_from_git_shortlog(data):
-    prompt =  prompts.GENERATE_SUMMARY_PROMPT_PREIX + data
+    prompt = prompts.GENERATE_SUMMARY_PROMPT_PREIX + data
     message=[{"role": "user", "content": prompt}]
     response = openai.ChatCompletion.create(
         model="gpt-4",
