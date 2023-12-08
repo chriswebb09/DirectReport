@@ -7,7 +7,7 @@ class Entry:
     A class to represent a journal entry.
     """
 
-    def __init__(self, uuid, topic, message, created_at, modified_on, week_uuid):
+    def __init__(self, uuid, topic, message, created_at, modified_on):
         """
         Initialize the Entry object.
         :param uuid: A unique identifier for the entry.
@@ -28,7 +28,6 @@ class Entry:
         self.message = message
         self.created_at = created_at
         self.modified_on = modified_on
-        self.week_uuid = week_uuid
 
     def get_created_at_formatted(self, date_format="%Y-%m-%d %H:%M:%S"):
         """
@@ -61,8 +60,7 @@ class Entry:
             "topic": self.topic,
             "message": self.message,
             "created_at": str(self.created_at),
-            "modified_on": str(self.modified_on),
-            "week_uuid": str(self.week_uuid),
+            "modified_on": str(self.modified_on)
         }
 
     @classmethod
@@ -79,7 +77,6 @@ class Entry:
         message = data.get("message")
         created_at = datetime.datetime.fromisoformat(data.get("created_at")).timestamp()
         modified_on = datetime.datetime.fromisoformat(data.get("modified_on")).timestamp()
-        week_uuid = data.get("week_uuid")
         return cls(uuid, topic, message, created_at, modified_on, week_uuid)
 
     def mark_modified(self):

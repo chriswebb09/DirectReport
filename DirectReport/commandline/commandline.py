@@ -70,6 +70,8 @@ def launch(url):
     Launches the web browser and runs the app.
     :param url: The URL to open in the web browser.
     """
+    # ListBuilder.new("test", "test")
+    # print(ListBuilder.list_all())
     click.launch(url)
     app.run()
 @click.command()
