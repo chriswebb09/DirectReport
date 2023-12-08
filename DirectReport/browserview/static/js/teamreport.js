@@ -80,62 +80,60 @@ const TeamData = () => {
     function stringify (x) {
         console.log(Object.prototype.toString.call(x));
     }
-    function showGraphics(data) {
-        var newData = data
-        var stringData = JSON.stringify(newData['shortlog']);
-
-        stringify(newData)
-        console.log(stringData)
-        // console.log(teamData.toString())
-        // console.log(teamData);
-        var values = Object.keys(newData['shortlog']).map(function(key){
-            return Number(newData['shortlog'][key]);
-        });
-        console.log(values);
-        var dataset = values
-            // [5, 2, 10, 15, 20, 25]
-
-        var chartWidth = 240
-        var chartHeight = 120
-        var padding = 20
-        var heightScalingFactor = chartHeight / getMax(dataset)
-
-        var svg = d3
-            .select('#map-container')
-            .append('svg')
-            .attr('width', chartWidth)
-            .attr('height', chartHeight)
-
-        svg.selectAll('rect')
-            .data(dataset)
-            .enter()
-            .append('rect')
-            .attr('x', function (value, index) {
-                return (index * (chartWidth / dataset.length)) + padding
-            })
-            .attr('y', function (value, index) {
-                return chartHeight - (value * heightScalingFactor)
-            })
-            .attr('width', (chartWidth / dataset.length) - padding)
-            .attr('height', function (value, index) {
-                return value * heightScalingFactor
-            })
-            .attr('fill', 'pink')
-
-        /**
-         *  Gets the maximum value in a collection of numbers.
-         */
-
-    }
-
-    function getMax(collection) {
-        var max = 0
-        collection.forEach(function (element) {
-            max = element > max ? element : max
-        })
-        return max
-    }
-
+    // function showGraphics(data) {
+    //     var newData = data
+    //     var stringData = JSON.stringify(newData['shortlog']);
+    //
+    //     stringify(newData)
+    //     console.log(stringData)
+    //     var values = Object.keys(newData['shortlog']).map(function(key){
+    //         return Number(newData['shortlog'][key]);
+    //     });
+    //     console.log(values);
+    //     var dataset = values
+    //         // [5, 2, 10, 15, 20, 25]
+    //
+    //     var chartWidth = 240
+    //     var chartHeight = 120
+    //     var padding = 20
+    //     var heightScalingFactor = chartHeight / getMax(dataset)
+    //
+    //     var svg = d3
+    //         .select('#map-container')
+    //         .append('svg')
+    //         .attr('width', chartWidth)
+    //         .attr('height', chartHeight)
+    //
+    //     svg.selectAll('rect')
+    //         .data(dataset)
+    //         .enter()
+    //         .append('rect')
+    //         .attr('x', function (value, index) {
+    //             return (index * (chartWidth / dataset.length)) + padding
+    //         })
+    //         .attr('y', function (value, index) {
+    //             return chartHeight - (value * heightScalingFactor)
+    //         })
+    //         .attr('width', (chartWidth / dataset.length) - padding)
+    //         .attr('height', function (value, index) {
+    //             return value * heightScalingFactor
+    //         })
+    //         .attr('fill', 'pink')
+    //
+    //     /**
+    //      *  Gets the maximum value in a collection of numbers.
+    //      */
+    //
+    // }
+    //
+    // function getMax(collection) {
+    //     var max = 0
+    //     collection.forEach(function (element) {
+    //         max = element > max ? element : max
+    //     })
+    //     return max
+    // }
+    //
 
     return (
         <div>

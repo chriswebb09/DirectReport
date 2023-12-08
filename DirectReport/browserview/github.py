@@ -37,7 +37,7 @@ class GithubClient:
         """
 
         url = f"https://api.github.com/repos/chriswebb09/DirectReport/pulls/comments"
-        headers = {"Authorization": "token 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"}
+        headers = {"Authorization": "token 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"}
 
         response = requests.get(url, headers=headers)
         response.raise_for_status()
@@ -58,7 +58,7 @@ class GithubClient:
         """
 
         url = f"https://api.github.com/repos/chriswebb09/DirectReport/pulls"
-        headers = {"Authorization": "token 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"}
+        headers = {"Authorization": "token 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"}
 
         response = requests.get(url, headers=headers)
         response.raise_for_status()
