@@ -1,7 +1,6 @@
 import re
 import requests
 
-
 class GithubClient:
     # Define a function to parse the git shortlog
     def parse_git_shortlog(self, shortlog):
