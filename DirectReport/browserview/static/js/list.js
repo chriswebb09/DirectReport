@@ -21,9 +21,6 @@ class EntryList extends React.Component {
     }
 }
 
-
-
-
 class EmptyEntryList extends React.Component {
     render() {
         return (

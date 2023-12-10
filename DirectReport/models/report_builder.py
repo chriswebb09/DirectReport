@@ -31,23 +31,6 @@ class ReportBuilder:
         )
         storage.add_report(new_report)
 
-    # @staticmethod
-    # def update(uid, summary_text, created_at):
-    #     """
-    #     Updates an entry with the given entry text and topic.
-    #     :param uid: The entry id.
-    #     :param entry_text: The entry text.
-    #     :param topic_text: The topic for the entry
-    #     :param created_at: The date entry was created.
-    #     :param weekly_id: The weekly id.
-    #     """
-    #     storage = ReportModel('EntryStorage.db')
-    #     storage.create_table()
-    #     new_entry = Report(
-    #         str(uuid.UUID(uid)), summary_text, created_at, datetime.datetime.now().timestamp()
-    #     )
-    #     storage(new_entry)
-
     @staticmethod
     def delete(entry_id):
         """

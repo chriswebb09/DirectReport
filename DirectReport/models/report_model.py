@@ -61,16 +61,6 @@ class ReportModel:
         else:
             return None
 
-    # def update_entry(self, entry):
-    #     """
-    #     Updates an existing `Entry` object in the SQLite database.
-    #     :param entry: The `Entry` object to update.
-    #     """
-    #
-    #     values = (entry.message, entry.modified_on, str(entry.uuid))
-    #     self.conn.execute("UPDATE entries SET message = ?, modified_on = ? WHERE uuid = ?", values)
-    #     self.conn.commit()
-
     def delete_entry(self, uuid):
         """
         Deletes an `Entry` object from the SQLite database by its UUID.
