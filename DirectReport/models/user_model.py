@@ -1,13 +1,18 @@
+#!/usr/bin/env python3
+
 import sqlite3
 import uuid
 from flask_login import UserMixin
 # from app import app as application
+
 class User(UserMixin):
 
-    def __init__(self, id, username, email, password):
+    def __init__(self, id, username, firstname, lastname, email, password):
         self.id = email
         self.uid = id
         self.username = username
+        self.firstname = firstname
+        self.lastname = lastname
         self.email = email
         self.password = password
         self.authenticated = True
@@ -27,6 +32,7 @@ class User(UserMixin):
     def get_id(self):
         return self.id
 
+
 class UserModel:
     def __init__(self, db_name="users.db"):
         self.conn = sqlite3.connect(db_name, check_same_thread=False)
@@ -39,17 +45,19 @@ class UserModel:
                 id TEXT NOT NULL,
                 uid TEXT NOT NULL,
                 username TEXT NOT NULL,
+                firstname TEXT NOT NULL,
+                lastname TEXT NOT NULL,
                 email TEXT UNIQUE NOT NULL PRIMARY KEY,
                 password TEXT NOT NULL
             )
         """)
         self.conn.commit()
 
-    def insert_user(self, id, username, email, password):
+    def insert_user(self, id, username, firstname, lastname, email, password):
         cursor = self.conn.cursor()
         uuid_str = str(uuid.uuid4())
         try:
-            cursor.execute("INSERT INTO users (id, uid, username, email, password) VALUES (?, ?, ?, ?, ?)", (id, uuid_str, username, email, password))
+            cursor.execute("INSERT INTO users (id, uid, username, firstname, lastname, email, password) VALUES (?, ?, ?, ?, ?, ?, ?)", (id, uuid_str, username, firstname, lastname, email, password))
             self.conn.commit()
             print("User added successfully!")
         except sqlite3.IntegrityError:
@@ -57,15 +65,16 @@ class UserModel:
 
     def get_user_by_email(self, email):
         cursor = self.conn.cursor()
-        cursor.execute("SELECT id, uid, username, email, password FROM users WHERE email=?", (email,))
+        cursor.execute("SELECT id, uid, username, firstname, lastname, email, password FROM users WHERE email=?", (email,))
         result = cursor.fetchone()
         if result:
-            return User(result[0], result[2], result[3], result[4])
+            return User(result[0], result[2], result[3], result[4], result[5], result[6])
+                # User(result[0], result[2], result[3], result[4]))
         return None
 
     def get_all_users(self):
         cursor = self.conn.cursor()
-        cursor.execute("SELECT id, uid, username, email FROM users")
+        cursor.execute("SELECT id, uid, username, firstname, lastname, email FROM users")
         return cursor.fetchall()
 
     def close(self):

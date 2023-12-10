@@ -5,6 +5,7 @@ import uuid
 from DirectReport.models.report import Report
 from DirectReport.models.report_model import ReportModel
 
+
 class ReportBuilder:
 
     """

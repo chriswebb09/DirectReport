@@ -35,16 +35,6 @@ class Report:
         """
         return datetime.datetime.fromtimestamp(self.created_at).strftime(date_format)
 
-    # def get_modified_on_formatted(self, date_format="%Y-%m-%d %H:%M:%S"):
-    #     """
-    #     Get the modified_on timestamp formatted as a string.
-    #     :param date_format: The desired format of the timestamp, default is "%Y-%m-%d %H:%M:%S".
-    #     :type date_format: str
-    #     :return: The formatted modified_on timestamp.
-    #     :rtype: str
-    #     """
-    #     return datetime.datetime.fromtimestamp(self.modified_on).strftime(date_format)
-
     def to_dict(self):
         """
         Convert the Entry object to a dictionary.
@@ -74,12 +64,6 @@ class Report:
         report = data.get("report")
         created_at = datetime.datetime.fromisoformat(data.get("created_at")).timestamp()
         return cls(uuid, user_id, raw_input, report, created_at)
-
-    # def mark_modified(self):
-    #     """
-    #     Update the modified_on timestamp to the current time.
-    #     """
-    #     self.modified_on = datetime.datetime.now().strftime("%m/%d/%Y")
 
     def is_recent(self, days=7):
         """

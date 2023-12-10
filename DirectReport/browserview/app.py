@@ -46,12 +46,14 @@ def signup():
     if request.method == 'POST':
         # code to validate and add user to database goes here
         email = request.form.get('email')
-        name = request.form.get('name')
         username = request.form.get('username')
+        firstname= request.form.get('firstname')
+        lastname = request.form.get('lastname')
         passwordtext = request.form.get('password')
         password = generate_password_hash(passwordtext)
-        user_model.insert_user(username, name, email, password)
-         # insert_user(name, email, password))
+        user_model = UserModel()
+        user_model.insert_user(email, username, firstname, lastname, email, password)
+         # insert_user(username, firstname, lastname, email, password))
         return redirect(url_for('login'))
     return render_template('auth/signup.html')
 
@@ -76,10 +78,6 @@ def logout():
 @login_manager.user_loader
 def user_loader(email):
     user = user_model.get_user_by_email(email)
-    users = user_model.get_all_users()
-    print("user loader")
-    print(user)
-    print(users)
     return user
 
 @login_manager.request_loader
@@ -96,11 +94,17 @@ def account():
 @app.route("/account_data", methods=['GET'])
 @login_required
 def account_data():
-    entries_list  = {
-        "name": current_user.username,
-        "userid": current_user.id
+    user_account  = {
+        "name": current_user.firstname + " " + current_user.lastname,
+        "first_name": current_user.firstname,
+        "last_name": current_user.lastname,
+        "userid": current_user.id,
+        "email": current_user.email,
+        "username": current_user.username,
+        "firstname": current_user.firstname,
+        "lastname": current_user.lastname
     }
-    return entries_list, 201
+    return user_account, 201
 
 
 @app.route("/list", methods=['GET', 'POST'])
@@ -170,12 +174,6 @@ def team_report():
 def team():
     return render_template('team.html', title='Team', data=[])
 
-# @app.route("/team/<uid>", methods=['GET', 'POST'])
-# def team_report():
-#     if request.method == "POST":
-#         print("POST")
-#     return render_template('team_member.html', title='Team Member', data=[])
-
 @app.route("/report", methods=['GET', 'POST'])
 @login_required
 def report():
@@ -183,16 +181,9 @@ def report():
     prompt = request.get_json()["prompt"]
     elements = TEST_DATA_ELEMENTS
     client = GithubClient()
-    # elements["shortlog"] = client.parse_git_shortlog(logitem)
-    # ReportBuilder.new(elements["report"], prompt, current_user.id)
+    logitem = "Adrian Prantl (67):\n add mangling testcase\n Debug Info: Represent private discriminators in DWARF.\n Revert \"Debug Info: Represent private discriminators in DWARF.\"\n Debug Info: Represent private discriminators in DWARF.\n Un-XFAIL and update test.\n Move the logic for ignoring the debug locations for closure setup code into SILGen. NFC-ish.\n Debug Info: Associate a function call with the beginning of the expression.\n Debug Info / SILGen: fix the source location of variable assignments\n typo\n Fix the debug locations of inserted operations in AvailableValueAggregator.\n Don't emit shadow copies for anonymous variables.\n Remove dead API IRGenDebugInfo::setArtificialTrapLocation().\n Use compiler-generated location for func.-sig.-spec. thunks\n whitespace\n Fix the missing inlined-at field of function-level SILDebugScopes.\n Add debug info support for inlined and specialized generic variables.\n Revert \"Add debug info support for inlined and specialized generic variables.\"\n Add debug info support for inlined and specialized generic variables.\n Update mangling prefix in Mangling.rst\n Add initial support for debug info for coroutine allocas.\n Temporarily disable failing test case, rdar://problem/43340064\n Add build-script support for the Swift LLDB backwards-compatibility tests.\n Remove accidentally committed debugging code\n Deserialize Swift compatibility version in CompilerInvocation::loadFromSerializedAST()\n SILGen: Preserve function argument debug info for arguments needing alloc_stack\n Use as the filename for SILLocation-less functions to avoid misleading source locatio\nns in backtraces.\n Add a -verify-linetable LLVM option.\n Enable debug info for inlined generics by default. It works now.\n Fix nonasserts compilation\n\nAhmad Alhashemi (5):\n [Parser] Detect nonbreaking space U+00A0 and fixit\n Move non-breaking space handling to lexUnknown\n Add more non-breaking space test cases\n Minor style edits\n Add tests for non-breaking space detect and fix-it\n\nAkshay Shrimali (1):\n Update README.md\n\nAlan Zeino (1):\n Fix typo in code example in libSyntax README\n\nAlbin \"albinek\" Sadowski (1):\n Fix syntax highlighting in CHANGELOG (#15107)\n\nAlejandro (3):\n Remove a warning, some doc fixes (#16863)\n [SR-8178] Fix BinaryFloatingPoint.random(in:) open range returning upperBound (#17794)\n [Docs] Fix minor code typo in SILPro..Man..md\n\nAlex Blewitt (5):\n [SR-7032] Fix compare for lhs and rhs\n [SR-7036] Use || instead of && for kind comparison\n [SR-7041] Remove duplicate conditional check\n Remove duplicate verb\n [SR-7043] Remove duplicate if statement"
+    elements["shortlog"] = client.parse_git_shortlog(logitem)
     print(ReportBuilder.get_reports_for_user_id(current_user.id))
-    # if request.method == "POST":
-    #
-    #
-    # # builder = ReportBuilder()
-    # ReportBuilder.new(elements["report"])
-    # list = ReportBuilder.list_all()
-    # print(list)
     return elements, 201
 
 @app.route("/generate_email", methods=['POST'])

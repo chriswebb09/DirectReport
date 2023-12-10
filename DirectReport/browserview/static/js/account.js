@@ -39,7 +39,7 @@ const Account = () => {
                 <div className="lg:col-span-1 md: col-span-1 sm:col-span-3 justify-center my-1">
                     <div className="shadow-lg self-center bg-blue-200 py-10 px-8 my-2 shadow-lg rounded-2xl">
                         <h1 className="text-center py-10 mb-10 bg-blue-50 rounded-2xl">Account: {userData.name}</h1>
-                        <p className="text-center">{userData.userid} content</p>
+                        <p className="text-center">{userData.username}</p>
                     </div>
                 </div>
                 <div className="lg:col-span-1 sm:col-span-3 justify-center my-1">
