@@ -23,7 +23,7 @@ TEST_DATA_ELEMENTS = elements = {
                 "commits": "1"
             },
             {
-                "name": "Albin\"albinek\"Sadowski",
+                "name": "Albin \"albinek\" Sadowski",
                 "accomplishments": "Albin fixed syntax highlighting in CHANGELOG.",
                 "commits": "1"
             },

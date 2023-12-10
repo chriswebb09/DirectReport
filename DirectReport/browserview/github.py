@@ -23,7 +23,7 @@ class GithubClient:
         return authors
 
     # def get_pull_request_comments_count(repo_owner, repo_name, pull_request_number):
-    def get_pull_request_comments(self):
+    def get_pull_request_comments(self, repo_owner, repo_name):
         """
         Gets the number of comments on a pull request.
 
@@ -36,15 +36,14 @@ class GithubClient:
           The number of comments on the pull request.
         """
 
-        url = f"https://api.github.com/repos/chriswebb09/DirectReport/pulls/comments"
+        url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/pulls/comments"
         headers = {"Authorization": f"token {appsecrets.GITHUB_TOKEN}"}
 
         response = requests.get(url, headers=headers)
         response.raise_for_status()
-        print(response.content)
-        print(response)
+        return response.json()
 
-    def get_pull_requests(self):
+    def get_pull_requests(self, repo_owner, repo_name):
         """
         Gets the number of comments on a pull request.
 
@@ -57,7 +56,7 @@ class GithubClient:
           The number of comments on the pull request.
         """
 
-        url = f"https://api.github.com/repos/chriswebb09/DirectReport/pulls"
+        url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/pulls"
         headers = {"Authorization": f"token {appsecrets.GITHUB_TOKEN}"}
         response = requests.get(url, headers=headers)
         response.raise_for_status()

@@ -5,6 +5,7 @@ const TeamData = () => {
     const [generatedEmail, setGeneratedEmail] = useState("")
     const [isOpened, setIsOpened] = useState(false);
     const [isHidden, setIsHidden] = useState(false);
+    const [popoverHidden, setPopoverHidden] = useState(false);
     const handleSubmit = e => {
 
         e.preventDefault()
@@ -56,6 +57,13 @@ const TeamData = () => {
         });
     }
 
+    const closePopover = () => {
+        document.getElementById('popover-id-left-purple').classList.toggle("hidden");
+        // <button onClick={sayHello}>
+        //     Say Hello
+        //     <button>
+    }
+
     const openPopover = (e: ChangeEvent<HTMLInputElement>, teammember) => {
         e.preventDefault();
         let element = e.target;
@@ -66,8 +74,8 @@ const TeamData = () => {
             strategy: 'fixed'
         });
         document.getElementById('popover-id-left-purple').classList.toggle("hidden");
-        const popoverTitle = document.getElementById('popoverTitle');
-        popoverTitle.innerHTML = teammember.name;
+        const popoverTitle = document.getElementById('popoverTitleContent');
+        popoverTitle.innerHTML = teammember.name
         const popoverContent = document.getElementById('popoverContent');
         popoverContent.innerHTML = teammember.accomplishments;
         const popoverCommits = document.getElementById('popoverCommits');
@@ -78,16 +86,19 @@ const TeamData = () => {
         return (
             <div className="hidden bg-purple-600 border-0 mr-3 block z-50 font-normal leading-normal text-sm max-w-xs text-left no-underline break-words rounded-lg" id="popover-id-left-purple">
                 <div>
-                    <div id="popoverTitle"
-                         className="bg-purple-600 text-white opacity-75 font-semibold p-3 mb-0 border-b border-solid border-blueGray-100 uppercase rounded-t-lg">
+                    <div id="popoverTitle" className="bg-purple-600 text-white opacity-75 font-semibold p-3 mb-0 border-b border-solid border-blueGray-100 uppercase rounded-t-lg py-3">
+                        <span id="popoverTitleContent"></span>
+                        <button className="float-right" onClick={closePopover}>X</button>
                     </div>
+
                     <div id="popoverContent" className="text-white px-6 py-4">
                     </div>
                     <div id="popoverCommits" className="text-white px-6 pb-4">
                     </div>
                     <div id="profileButton" className="text-white px-6 py-4 border-t border-solid border-blueGray-100">
-                        <a className="text-md hover:text-gray-200" href="/teammember">
-                            <button type="button" className="w-full text-purple-600 bg-white hover:bg-gray focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                        <a className="text-md hover:text-gray-200" href="/team">
+                            <button type="button"
+                                    className="w-full text-purple-600 bg-white hover:bg-gray focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                                 Profile
                             </button>
                         </a>

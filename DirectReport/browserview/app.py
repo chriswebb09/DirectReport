@@ -152,13 +152,20 @@ def unauthorized_handler():
 def team_report():
     if request.method == "POST":
         print("POST")
+        # json_data = request.get_json()
+        # report_model = ReportModel(json_data["id"], json_data['summary'], json_data['created_at'])
+        # print("POST")
     return render_template('teamreport.html', title='Team Report', data=[])
 
-@app.route("/team/<uid>", methods=['GET', 'POST'])
-def team_report():
-    if request.method == "POST":
-        print("POST")
-    return render_template('team_member.html', title='Team Member', data=[])
+@app.route("/team", methods=['GET'])
+def team():
+    return render_template('team.html', title='Team', data=[])
+
+# @app.route("/team/<uid>", methods=['GET', 'POST'])
+# def team_report():
+#     if request.method == "POST":
+#         print("POST")
+#     return render_template('team_member.html', title='Team Member', data=[])
 
 @app.route("/report", methods=['GET', 'POST'])
 def report():
