@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
 {% block header %}
-    {% block title %} {% endblock %}
+    {% block title %}{% endblock %}
 {% endblock %}
 
 {% block content %}
      <main>
         <div id="root" class='mt-18 pt-10 mb-20 md:max-lg:flex content-start'></div>
-        <script type="text/babel" src="{{url_for('static', filename='../js/login.js')}}"></script>
+        <script type="text/babel" src="{{url_for('static', filename='/js/login.js')}}"></script>
     </main>
 {% endblock %}
