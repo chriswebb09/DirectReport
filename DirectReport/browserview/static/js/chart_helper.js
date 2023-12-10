@@ -1,18 +1,18 @@
 
 function showGraphics(data) {
-    var newData = data
-    var stringData = JSON.stringify(newData['shortlog']);
-    var values = Object.keys(newData['shortlog']).map(function(key){
+    const newData = data
+    const stringData = JSON.stringify(newData['shortlog']);
+    const values = Object.keys(newData['shortlog']).map(function(key){
         return Number(newData['shortlog'][key]);
     });
     console.log(values);
-    var dataset = values
-    var chartWidth = 240
-    var chartHeight = 120
-    var padding = 20
-    var heightScalingFactor = chartHeight / getMax(dataset)
+    const dataset = values
+    const chartWidth = 240
+    const chartHeight = 120
+    const padding = 20
+    const heightScalingFactor = chartHeight / getMax(dataset)
 
-    var svg = d3
+    const svg = d3
         .select('#map-container')
         .append('svg')
         .attr('width', chartWidth)

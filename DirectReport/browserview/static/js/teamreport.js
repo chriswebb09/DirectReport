@@ -5,7 +5,6 @@ const TeamData = () => {
     const [generatedEmail, setGeneratedEmail] = useState("")
     const [isOpened, setIsOpened] = useState(false);
     const [isHidden, setIsHidden] = useState(false);
-    const [popoverHidden, setPopoverHidden] = useState(false);
     const handleSubmit = e => {
 
         e.preventDefault()
@@ -59,9 +58,6 @@ const TeamData = () => {
 
     const closePopover = () => {
         document.getElementById('popover-id-left-purple').classList.toggle("hidden");
-        // <button onClick={sayHello}>
-        //     Say Hello
-        //     <button>
     }
 
     const openPopover = (e: ChangeEvent<HTMLInputElement>, teammember) => {
@@ -90,15 +86,13 @@ const TeamData = () => {
                         <span id="popoverTitleContent"></span>
                         <button className="float-right" onClick={closePopover}>X</button>
                     </div>
-
                     <div id="popoverContent" className="text-white px-6 py-4">
                     </div>
                     <div id="popoverCommits" className="text-white px-6 pb-4">
                     </div>
                     <div id="profileButton" className="text-white px-6 py-4 border-t border-solid border-blueGray-100">
                         <a className="text-md hover:text-gray-200" href="/team">
-                            <button type="button"
-                                    className="w-full text-purple-600 bg-white hover:bg-gray focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                            <button type="button" className="w-full text-purple-600 bg-white hover:bg-gray focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" onClick={closePopover}>
                                 Profile
                             </button>
                         </a>

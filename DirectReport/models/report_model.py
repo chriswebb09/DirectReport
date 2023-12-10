@@ -21,28 +21,30 @@ class ReportModel:
         """
         Creates the `entries` table in the SQLite database if it doesn't exist.
         """
-        query = "CREATE TABLE IF NOT EXISTS reports (uuid TEXT PRIMARY KEY, summary TEXT,created_at TEXT)"
+        query = "CREATE TABLE IF NOT EXISTS reports (uuid TEXT PRIMARY KEY, user_id TEXT, raw_input TEXT, report TEXT, created_at TEXT)"
         self.conn.execute(query)
         self.conn.commit()
 
-    def add_report(self, entry):
+    def add_report(self, report):
         """
         Adds an `Entry` object to the SQLite database.
         :param entry: The `Entry` object to add.
         """
 
         values = (
-            entry.uuid.__str__(),
-            entry.summary,
-            entry.created_at.__str__()
+            report.uuid.__str__(),
+            report.user_id.__str__(),
+            report.raw_input.__str__(),
+            report.report.__str__(),
+            report.created_at.__str__()
         )
         self.conn.execute(
-            "INSERT OR IGNORE INTO reports (uuid, summary, created_at) VALUES (?, ?, ?)",
+            "INSERT OR IGNORE INTO reports (uuid, user_id, raw_input, report, created_at) VALUES (?, ?, ?, ?, ?)",
             values,
         )
         self.conn.commit()
 
-    def get_report(self, uuid):
+    def get_report(self, user_id):
         """
         Retrieves an `Entry` object from the SQLite database by its UUID.
         :param uuid: The UUID of the entry to retrieve.
@@ -50,8 +52,8 @@ class ReportModel:
         """
 
         result = self.conn.execute(
-            "SELECT uuid, summary, created_at FROM reports WHERE uuid = ?",
-            (str(uuid),),
+            "SELECT uuid, user_id, raw_input, report, created_at FROM reports WHERE user_id = ?",
+            (str(user_id),),
         )
         row = result.fetchone()
         if row:
@@ -86,7 +88,7 @@ class ReportModel:
         """
 
         result = self.conn.execute(
-            "SELECT uuid, summary, created_at FROM reports WHERE modified_on = ?",
+            "SELECT uuid, user_id, raw_input, report, created_at FROM reports WHERE modified_on = ?",
             (str(date),),
         )
         if result is not None:
@@ -118,7 +120,7 @@ class ReportModel:
 
         results_list = []
         for result in results:
-            entry = Entry(*result)
+            entry = Report(*result)
             entry_dict = entry.to_dict()
             results_list.append(entry_dict)
         return results_list

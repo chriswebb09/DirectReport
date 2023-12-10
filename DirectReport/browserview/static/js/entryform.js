@@ -25,7 +25,7 @@ class EntryForm extends React.Component {
         event.preventDefault();
         axios({
             method: 'post',
-            url: "http://127.0.0.1:5000/list",
+            url: "/list",
             headers: {'content-type': 'application/json'},
             data: {"topic": this.state.topic, "entry": this.state.entry}
         }).then(result => {

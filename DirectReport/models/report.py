@@ -9,7 +9,7 @@ class Report:
     A class to represent a journal entry.
     """
 
-    def __init__(self, uuid, summary, created_at):
+    def __init__(self, uuid, user_id, raw_input, report, created_at):
         """
         Initialize the Entry object.
         :param uuid: A unique identifier for the entry.
@@ -20,7 +20,9 @@ class Report:
         :type created_at: float
         """
         self.uuid = uuid
-        self.summary = summary
+        self.user_id = user_id
+        self.raw_input = raw_input
+        self.report = report
         self.created_at = created_at
 
     def get_created_at_formatted(self, date_format="%Y-%m-%d %H:%M:%S"):
@@ -33,15 +35,15 @@ class Report:
         """
         return datetime.datetime.fromtimestamp(self.created_at).strftime(date_format)
 
-    def get_modified_on_formatted(self, date_format="%Y-%m-%d %H:%M:%S"):
-        """
-        Get the modified_on timestamp formatted as a string.
-        :param date_format: The desired format of the timestamp, default is "%Y-%m-%d %H:%M:%S".
-        :type date_format: str
-        :return: The formatted modified_on timestamp.
-        :rtype: str
-        """
-        return datetime.datetime.fromtimestamp(self.modified_on).strftime(date_format)
+    # def get_modified_on_formatted(self, date_format="%Y-%m-%d %H:%M:%S"):
+    #     """
+    #     Get the modified_on timestamp formatted as a string.
+    #     :param date_format: The desired format of the timestamp, default is "%Y-%m-%d %H:%M:%S".
+    #     :type date_format: str
+    #     :return: The formatted modified_on timestamp.
+    #     :rtype: str
+    #     """
+    #     return datetime.datetime.fromtimestamp(self.modified_on).strftime(date_format)
 
     def to_dict(self):
         """
@@ -51,7 +53,9 @@ class Report:
         """
         return {
             "uuid": str(self.uuid),
-            "summary": self.topic,
+            "user_id": self.user_id,
+            "raw_input": self.raw_input,
+            "report": self.report,
             "created_at": str(self.created_at)
         }
 
@@ -65,9 +69,11 @@ class Report:
         :rtype: Entry
         """
         uuid = data.get("uuid")
-        summary = data.get("summary")
+        user_id = data.get("user_id")
+        raw_input = data.get("raw_input")
+        report = data.get("report")
         created_at = datetime.datetime.fromisoformat(data.get("created_at")).timestamp()
-        return cls(uuid, summary, created_at)
+        return cls(uuid, user_id, raw_input, report, created_at)
 
     # def mark_modified(self):
     #     """
@@ -87,13 +93,13 @@ class Report:
         difference = datetime.datetime.now() - delta
         return self.created_at >= difference.timestamp()
 
-    def set_summary(self, summary):
+    def set_summary(self, report):
         """
         Update the message of the entry and set the modified_on timestamp to the current time.
         :param new_message: The new message/content for the entry.
         :type new_message: str
         """
-        self.summary = summary
+        self.report = report
 
     def __iter__(self):
         return self
@@ -105,4 +111,4 @@ class Report:
         return self.__str__()
 
     def __len__(self):
-        return len(self.summary)
+        return len(self.report)
