@@ -1,17 +1,17 @@
 
-function showGraphics(data) {
+function showGraphics(data, divtag) {
     const newData = data
     const stringData = JSON.stringify(newData['broad_categories']);
     const values = Object.keys(newData['broad_categories']).map(function (key) {
         return [key, Number(newData['broad_categories'][key])]
     });
 
-    const chartWidth = 400
+    const chartWidth = 350
     const chartHeight = 300
-    const padding = 35
+    const padding = 25
     var data = values
     const heightScalingFactor = chartHeight / 67
-    var container = d3.select('#map-container')
+    var container = d3.select(divtag)
         .append('svg')
         .attr('width', chartWidth)
         .attr('height', chartHeight)
@@ -52,13 +52,139 @@ function showGraphics(data) {
 
         })
         .attr('y', function (value, index) {
+            return (chartHeight + 10)
+        })
+        .attr("dy", "-1em")
+        .style("font-size", "11px")
+        .style("text-anchor", "center")
+        .text(function (value, index) {
+            return value[0].split("_")[0].slice(0, 6)
+        })
+}
+
+function showGraphics2(data, divtag) {
+    const newData = data
+    const stringData = JSON.stringify(newData['broad_categories']);
+    const values = Object.keys(newData['broad_categories']).map(function (key) {
+        return [key, Number(newData['broad_categories'][key])]
+    });
+
+    const chartWidth = 350
+    const chartHeight = 300
+    const padding = 25
+    var data = values
+    const heightScalingFactor = chartHeight / 67
+    var container = d3.select(divtag)
+        .append('svg')
+        .attr('width', chartWidth)
+        .attr('height', chartHeight)
+
+     var svg = d3.select(divtag).select("svg")
+    var groups = svg.selectAll(".groups")
+        .data(data)
+        .enter()
+        .append("g")
+        .attr("class", "gbar");
+
+    groups.append("rect")
+        .attr('x', function (value, index) {
+            if (index === 0) {
+                return 0
+            } else {
+                return (index * (chartWidth / data.length))
+            }
+        })
+        .attr('y', function (value, index) {
+            return (chartHeight - 18) - (value[1] * 20)
+        })
+        .attr("width", function (value, index) {
+            return (chartWidth / data.length) - padding
+        })
+        .attr("height", function (value, index) {
+            return value[1] * 20
+        })
+        .attr("fill", "steelblue");
+
+    groups.append("text")
+        .attr('x', function (value, index) {
+            if (index == 0) {
+                return 0
+            } else {
+                return (index * (chartWidth / data.length))
+            }
+
+        })
+        .attr('y', function (value, index) {
             return (chartHeight + 5)
         })
         .attr("dy", "-1em")
         .style("font-size", "11px")
         .style("text-anchor", "center")
         .text(function (value, index) {
-            return value[0].split("_")[0].slice(0, 8)
+            return value[0].split("_")[0].slice(0, 6)
+        })
+}
+
+function showGraphics3(data, divtag) {
+    const newData = data
+    const stringData = JSON.stringify(newData['broad_categories']);
+    const values = Object.keys(newData['broad_categories']).map(function (key) {
+        return [key, Number(newData['broad_categories'][key])]
+    });
+
+    const chartWidth = 350
+    const chartHeight = 300
+    const padding = 25
+    var data = values
+    const heightScalingFactor = chartHeight / 67
+    var container = d3.select(divtag)
+        .append('svg')
+        .attr('width', chartWidth)
+        .attr('height', chartHeight)
+
+    var svg = d3.select(divtag).select("svg")
+    var groups = svg.selectAll(".groups")
+        .data(data)
+        .enter()
+        .append("g")
+        .attr("class", "gbar");
+
+    groups.append("rect")
+        .attr('x', function (value, index) {
+            if (index === 0) {
+                return 0
+            } else {
+                return (index * (chartWidth / data.length))
+            }
+        })
+        .attr('y', function (value, index) {
+            return (chartHeight - 18) - (value[1] * 20)
+        })
+        .attr("width", function (value, index) {
+            return (chartWidth / data.length) - padding
+        })
+        .attr("height", function (value, index) {
+            return value[1] * 20
+        })
+        .attr("fill", "yellow");
+
+    groups.append("text")
+        .attr('x', function (value, index) {
+            if (index == 0) {
+                return 0
+            } else {
+                return (index * (chartWidth / data.length))
+            }
+
+        })
+        .attr('y', function (value, index) {
+            return (chartHeight + 5)
+        })
+        .attr("dy", "-1em")
+        .style("font-size", "11px")
+        .style("text-anchor", "center")
+        .text(function (value, index) {
+            return value[0].split("_")[0].slice(0, 6)
         })
 }
 function getMax(collection) {
