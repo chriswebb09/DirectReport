@@ -14,6 +14,7 @@ from flask_login import LoginManager, login_user, login_required, logout_user, c
 from DirectReport.datadependencies import appsecrets
 from .auth.auth import auth
 from .modelclient import TEST_DATA_ELEMENTS
+from .modelclient import RAW_REPORT_DATA
 
 login_manager = LoginManager()
 app = Flask(__name__, template_folder="templates")
@@ -53,7 +54,6 @@ def signup():
         password = generate_password_hash(passwordtext)
         user_model = UserModel()
         user_model.insert_user(email, username, firstname, lastname, email, password)
-         # insert_user(username, firstname, lastname, email, password))
         return redirect(url_for('login'))
     return render_template('auth/signup.html')
 
@@ -62,9 +62,9 @@ def login():
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
-        # remember = True if request.form.get('remember') else False
+        remember = True if request.form.get('remember') else False
         user = user_loader(email)
-        login_user(user, remember=True, force=True)
+        login_user(user, remember=remember, force=True)
         if current_user.is_authenticated():
             return redirect(url_for('account'))
     return render_template('auth/login.html')
@@ -94,17 +94,27 @@ def account():
 @app.route("/account_data", methods=['GET'])
 @login_required
 def account_data():
+    saved_reports = ReportBuilder.get_reports_for_user_id(current_user.id)
+    report_results = []
+    for report in saved_reports:
+        report_element = {
+            "report": report
+        }
+        report_results.append(report_element)
+
     user_account  = {
         "name": current_user.firstname + " " + current_user.lastname,
-        "first_name": current_user.firstname,
-        "last_name": current_user.lastname,
-        "userid": current_user.id,
-        "email": current_user.email,
-        "username": current_user.username,
         "firstname": current_user.firstname,
-        "lastname": current_user.lastname
+        "lastname": current_user.lastname,
+        "userid": current_user.id,
+        "username": current_user.username,
+        "email": current_user.email
     }
-    return user_account, 201
+    user_element = {
+        "user": user_account,
+        "reports": report_results
+    }
+    return user_element, 201
 
 
 @app.route("/list", methods=['GET', 'POST'])
@@ -114,14 +124,20 @@ def list_entries():
     Retrieves and renders the list of all entries.
     :return: Rendered HTML template for the list page.
     """
-    entries_list = ListBuilder.list_all()
-    return render_template('list.html', title='List', data=entries_list)
+    reports = ReportBuilder.get_reports_for_user_id(current_user.id)
+    report_results = []
+    for report in reports:
+        report_element = {
+            "report": report
+        }
+        report_results.append(report_element)
+    return render_template('list.html', title='List', data=report_results)
 
 @app.route("/getlist", methods=['GET'])
 @login_required
 def get_list():
-    entries_list = ListBuilder.list_all()
-    return entries_list, 201
+    reports = ReportBuilder.get_reports_for_user_id(current_user.id)
+    return reports, 201
 
 @app.route('/entry/<uid>', methods=['GET', 'POST'])
 @login_required
@@ -132,14 +148,17 @@ def detail(uid=None):
     :param uid: The ID of the entry to display.
     :return: Rendered HTML template for the entry details page.
     """
-    item = EntryStorage('SQLite_Python.db')
-    if request.method == "POST":
-        json_data = request.get_json()
-        ListBuilder.update(
-            json_data["id"], json_data['entry'], json_data['topic'], json_data['created_at'], json_data['week_id']
-        )
-    entry = item.get_entry(uid).to_dict()
-    return render_template('detail.html', title='Detail', data=entry)
+    reports = ReportBuilder.get_reports_for_user_id(current_user.id)
+    report = filter(lambda report: report["uuid"] == uid, reports)
+    # report = {}
+    # item = EntryStorage('SQLite_Python.db')
+    # if request.method == "POST":
+    #     json_data = request.get_json()
+    #     ListBuilder.update(
+    #         json_data["id"], json_data['entry'], json_data['topic'], json_data['created_at'], json_data['week_id']
+    #     )
+    # entry = item.get_entry(uid).to_dict()
+    return render_template('detail.html', title='Detail', data=report)
 
 @app.route("/new", methods=['GET', 'POST'])
 @login_required
@@ -183,7 +202,7 @@ def report():
     client = GithubClient()
     logitem = "Adrian Prantl (67):\n add mangling testcase\n Debug Info: Represent private discriminators in DWARF.\n Revert \"Debug Info: Represent private discriminators in DWARF.\"\n Debug Info: Represent private discriminators in DWARF.\n Un-XFAIL and update test.\n Move the logic for ignoring the debug locations for closure setup code into SILGen. NFC-ish.\n Debug Info: Associate a function call with the beginning of the expression.\n Debug Info / SILGen: fix the source location of variable assignments\n typo\n Fix the debug locations of inserted operations in AvailableValueAggregator.\n Don't emit shadow copies for anonymous variables.\n Remove dead API IRGenDebugInfo::setArtificialTrapLocation().\n Use compiler-generated location for func.-sig.-spec. thunks\n whitespace\n Fix the missing inlined-at field of function-level SILDebugScopes.\n Add debug info support for inlined and specialized generic variables.\n Revert \"Add debug info support for inlined and specialized generic variables.\"\n Add debug info support for inlined and specialized generic variables.\n Update mangling prefix in Mangling.rst\n Add initial support for debug info for coroutine allocas.\n Temporarily disable failing test case, rdar://problem/43340064\n Add build-script support for the Swift LLDB backwards-compatibility tests.\n Remove accidentally committed debugging code\n Deserialize Swift compatibility version in CompilerInvocation::loadFromSerializedAST()\n SILGen: Preserve function argument debug info for arguments needing alloc_stack\n Use as the filename for SILLocation-less functions to avoid misleading source locatio\nns in backtraces.\n Add a -verify-linetable LLVM option.\n Enable debug info for inlined generics by default. It works now.\n Fix nonasserts compilation\n\nAhmad Alhashemi (5):\n [Parser] Detect nonbreaking space U+00A0 and fixit\n Move non-breaking space handling to lexUnknown\n Add more non-breaking space test cases\n Minor style edits\n Add tests for non-breaking space detect and fix-it\n\nAkshay Shrimali (1):\n Update README.md\n\nAlan Zeino (1):\n Fix typo in code example in libSyntax README\n\nAlbin \"albinek\" Sadowski (1):\n Fix syntax highlighting in CHANGELOG (#15107)\n\nAlejandro (3):\n Remove a warning, some doc fixes (#16863)\n [SR-8178] Fix BinaryFloatingPoint.random(in:) open range returning upperBound (#17794)\n [Docs] Fix minor code typo in SILPro..Man..md\n\nAlex Blewitt (5):\n [SR-7032] Fix compare for lhs and rhs\n [SR-7036] Use || instead of && for kind comparison\n [SR-7041] Remove duplicate conditional check\n Remove duplicate verb\n [SR-7043] Remove duplicate if statement"
     elements["shortlog"] = client.parse_git_shortlog(logitem)
-    print(ReportBuilder.get_reports_for_user_id(current_user.id))
+    ReportBuilder.new(elements, RAW_REPORT_DATA, current_user.id)
     return elements, 201
 
 @app.route("/generate_email", methods=['POST'])

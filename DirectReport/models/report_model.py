@@ -116,6 +116,7 @@ class ReportModel:
             entry = Report(*result)
             entry_dict = entry.to_dict()
             results_list.append(entry_dict)
+        print(results_list)
         return results_list
 
     def list_all_reports(self):
@@ -131,3 +132,26 @@ class ReportModel:
         )
         results = cursor.fetchall()
         return results
+
+    def get_reports_userid(self, user_id):
+        """
+        Retrieves an `Entry` object from the SQLite database by its UUID.
+        :param uuid: The UUID of the entry to retrieve.
+        :return: The `Entry` object if found, otherwise `None`.
+        """
+        cursor = self.conn.cursor()
+        result = cursor.execute(
+            "SELECT uuid, user_id, raw_input, report, created_at FROM reports WHERE user_id = ?",
+            (str(user_id),),
+        )
+        results = cursor.fetchall()
+        results_list = []
+        for result in results:
+            entry = Report(*result)
+            entry_dict = entry.to_dict()
+            results_list.append(entry_dict)
+        return results_list
+        # if row:
+        #     return Report(*row)
+        # else:
+        #     return None

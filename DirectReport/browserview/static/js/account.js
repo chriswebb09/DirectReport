@@ -3,6 +3,7 @@ const { useState, useEffect } = React;
 const Account = () => {
 
     const [userData, setUserData] = useState({});
+    const [reportData, setReportData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -17,12 +18,14 @@ const Account = () => {
                 return response.json();
             })
             .then((actualData) => {
-                setUserData(actualData)
+                setUserData(actualData["user"]);
+                setReportData(actualData["reports"]);
                 setError(null);
             })
             .catch((err) => {
                 setError(err.message);
                 setUserData(null)
+                setReportData(null)
             })
             .finally(() => {
                 setLoading(false);
@@ -40,6 +43,10 @@ const Account = () => {
                     <div className="shadow-lg self-center bg-blue-200 py-10 px-8 my-2 shadow-lg rounded-2xl">
                         <h1 className="text-center py-10 mb-10 bg-blue-50 rounded-2xl">Account: {userData.name}</h1>
                         <p className="text-center">{userData.username}</p>
+                        <p className="text-center">Number of reports saved: {reportData.length}</p>
+                        {/*{reportData && reportData.map(hightlight =>*/}
+                        {/*    <h3 className="font-bold text-md mb-1 tracking-wide text-blue-700">{hightlight.report.raw_input}</h3>*/}
+                        {/*)}*/}
                     </div>
                 </div>
                 <div className="lg:col-span-1 sm:col-span-3 justify-center my-1">

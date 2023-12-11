@@ -48,7 +48,7 @@ class ReportBuilder:
         :param entry_id: The ID of the entry to delete.
         """
         storage = ReportModel('ReportStorage.db')
-        user_reports = storage.get_report(user_id)
+        user_reports = storage.get_reports_userid(user_id)
         return user_reports
 
     @staticmethod
