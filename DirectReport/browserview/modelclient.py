@@ -11,9 +11,14 @@ TEST_DATA_ELEMENTS = elements = {
                 "commits": "67"
             },
             {
-                "name": "Ahmad Alhashemi",
-                "accomplishments": "Ahmad worked on the Parser, detecting non breaking space U+00A0 and providing a fix.He also made minor style edits and added more non-breaking space testcases.",
-                "commits": "5"
+                "name": "Alan Zeino",
+                "accomplishments": "Alan fixed a typo in the code example in libSyntax README.",
+                "commits": "1"
+            },
+            {
+                "name": "Alejandro",
+                "accomplishments": "Alejandro removed awarning, made some documentation fixes, fixed Binary Floating Point. random(in:) open range returning upperBound, and fixed a minor code typo in SILPro.",
+                "commits": "3"
             },
             {
                 "name": "Akshay Shrimali",
@@ -21,19 +26,14 @@ TEST_DATA_ELEMENTS = elements = {
                 "commits": "1"
             },
             {
-                "name": "Alan Zeino",
-                "accomplishments": "Alan fixed a typo in the code example in libSyntax README.",
-                "commits": "1"
+                "name": "Ahmad Alhashemi",
+                "accomplishments": "Ahmad worked on the Parser, detecting non breaking space U+00A0 and providing a fix.He also made minor style edits and added more non-breaking space testcases.",
+                "commits": "5"
             },
             {
                 "name": "Albin \"albinek\" Sadowski",
                 "accomplishments": "Albin fixed syntax highlighting in CHANGELOG.",
                 "commits": "1"
-            },
-            {
-                "name": "Alejandro",
-                "accomplishments": "Alejandro removed awarning, made some documentation fixes, fixed Binary Floating Point. random(in:) open range returning upperBound, and fixed a minor code typo in SILPro.",
-                "commits": "3"
             },
             {
                 "name": "Alex Blewitt",
@@ -60,6 +60,16 @@ TEST_DATA_ELEMENTS = elements = {
                 }
             ],
             "conclusion": "The team demonstrated good progress this week, with a focus on enhancing DebugInfo and SILGen, improving the Parser, and implementing various fixes. The team should continue to focus on these areas in the coming week."
-        }
+        },
+    "broad_categories": {
+        "debug_info": 16,
+        "code_maintenance": 9,
+        "documentation": 7,
+        "test_related": 6,
+        "nonbreaking_space_handling": 5,
+        "readme_update": 1,
+        "syntax_fix": 1
+    }
+
     }
 

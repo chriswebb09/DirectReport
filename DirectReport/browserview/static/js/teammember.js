@@ -31,7 +31,7 @@ const TeamMember = () => {
 
     if (loading) {
         return (
-            <div>{`There is a problem fetching the post data - ${error}`}</div>
+            <div>{`There is a problem fetching the data - ${error}`}</div>
         )
     } else {
         return (

@@ -23,6 +23,7 @@ const TeamData = () => {
         }).then(function(res) {
             return res.json();
         }).then(function(data) {
+            console.log(data);
             setTeamData(data);
             toggle();
             showGraphics(data);
@@ -104,18 +105,18 @@ const TeamData = () => {
 
     const formUI = () => {
         return (
-            <div className="shadow-lg py-1 border-4 bg-blue-500 rounded-2xl px-30">
+            <div className="py-1 bg-blue-500 rounded-3xl px-30">
                 <form onSubmit={handleSubmit}>
                     <h1 className="self-center text-center text-white text-xl text-center font-semibold mb-1 mt-3">Enter
                         Github Data
                     </h1>
-                    <div className="self-center mb-6 mt-2">
+                    <div className="self-center mb-4 mt-2">
                         <div className="py-2 px-10 mx-0 min-w-full flex flex-col items-center">
-                            <textarea id="prompt_input" cols="30" rows="13" className="self-center shadow-lg py-2 border-4 border-gray-200 w-90 sm:w-90 text-base tracking-wide text-indigo-700 placeholder-white border rounded-2xl focus:shadow-outline" value={commentText} onChange={e => setCommentText(e.target.value)}>
+                            <textarea id="prompt_input" cols="34" rows="9" className="self-center py-2 border-2 bg-slate-100 border-gray-200 w-90 h-78 sm:w-90 text-base tracking-wide text-indigo-700 placeholder-white border rounded-3xl focus:shadow-outline" value={commentText} onChange={e => setCommentText(e.target.value)}>
                             </textarea>
                         </div>
                         <div className="px-10 mx-0 min-w-full flex flex-col items-center">
-                            <button id="submit_prompt_btn" className="shadow-md w-80 sm:w-90 bg-white hover:bg-blue-700 text-blue-500 hover:text-white border-4 border-gray hover:border-gray-200 text-lg font-semibold py-2 px-10 rounded-lg mt-5" type="submit">
+                            <button id="submit_prompt_btn" className="w-80 sm:w-90 bg-slate-100 hover:bg-blue-400 text-blue-500 hover:text-white hover:border-gray-200 text-lg font-semibold py-2 px-5 rounded-2xl mt-2" type="submit">
                                 Generate
                             </button>
                         </div>
@@ -138,27 +139,27 @@ const TeamData = () => {
             <h1 class="self-center text-center text-2xl text-blue-800 text-center font-bold mb-3 mt-2 mx-10 px-20">
                 Generate Team Report From Metadata
             </h1>
-            <div className="grid grid-cols-3 gap-8 mb-2 mx-10">
+            <div className="grid grid-cols-3 gap-6 mb-2 rounded-3xl mx-10">
                 <div className="lg:col-span-1 sm:col-span-3 justify-center my-2" id="edit_summary_div">
                     {formUI()}
                 </div>
                 <div id="show_summmary_div" className="lg:col-span-1 sm:col-span-3 justify-center my-2">
-                    <div className="shadow-lg py-2 border-4 bg-blue-500 rounded-2xl px-30">
+                    <div className="py-2 bg-blue-500 rounded-3xl px-30">
                         <h1 class="self-center text-center text-xl text-white text-center font-semibold mb-1 mt-2 mx-20 px-20">Summary</h1>
-                        <div id="summary" className="px-2 mx-0 mb-2 mt-2">
+                        <div id="summary" className="px-4 mx-0 mb-6 mt-2">
                             {isOpened && (
-                                <div id="summary-container" className="bg-white ml-3 mr-3 overflow-y-scroll h-90 rounded-2xl border-4 border-gray tracking-wide text-gray-500 md:text-gl dark:text-gray-400 mt-3 mb-6 px-1 py-4">
+                                <div id="summary-container" className="ml-3 mr-3 bg-slate-100 overflow-y-scroll h-80 rounded-3xl tracking-wide text-gray-500 md:text-gl dark:text-gray-400 mt-3 px-3 py-5">
                                     <p id="show_summary" class="w-97 sm:w-97 overflow-y-auto break-words">
                                         {teamData["report"] !== undefined ?
-                                            <div className="px-2 text-sm tracking-wide text-blue-700">{teamData["report"]["summary"]}</div> : null
+                                            <div className="px-2 mb-1 text-xs text-blue-700">{teamData["report"]["summary"]}</div> : null
                                         }
                                     </p>
-                                    <div className="h-80">
-                                        <ul className="px-2">
+                                    <div className="h-70">
+                                        <ul className="px-2 pt-2">
                                             {teamData["report"] && teamData["report"]["highlights"].map(hightlight =>
-                                                <li className="mb-3">
-                                                    <h3 className="font-bold text-md mb-1 tracking-wide text-blue-700">{hightlight.title}</h3>
-                                                    <p class="w-90 sm:w-90 overflow-y-auto text-sm font-sm break-words tracking-wide text-blue-600">{hightlight.description}</p>
+                                                <li className="mt-1 mb-3">
+                                                    <h3 className="font-bold text-sm mb-1 mt-1 text-blue-700">{hightlight.title}</h3>
+                                                    <p class="w-90 sm:w-90 overflow-y-auto text-xs font-sm break-words tracking-wide text-blue-600">{hightlight.description}</p>
                                                 </li>
                                             )}
                                         </ul>
@@ -169,17 +170,21 @@ const TeamData = () => {
                     </div>
                 </div>
                 <div id="team_member_to_select" className="lg:col-span-1 sm:col-span-3 justify-center my-2">
-                    <div className="shadow-lg py-1 border-4 bg-blue-500 rounded-2xl px-4 mb-2">
+                    <div className="py-1 bg-blue-500 rounded-3xl px-4 mb-2">
                         <h1 class="self-center text-center text-xl text-white text-center font-semibold mb-1 mt-3 mx-20 px-20">Team</h1>
                         {popoverUI()}
-                        <div id="display_team" className="my-3"></div>
+
                         {isOpened && (
-                            <div className="content-center py-2 h-90 rounded-2xl ml-3 mb-4 border-4 bg-slate-100 mx-2 px-2">
-                                <div className="items-center my-2 mx-2 px-2 select-none">
-                                    {teamData["team"] &&
-                                        teamData["team"].map(teammember =>
-                                            <button class="bg-blue-600 py-1 px-3 pb-2 pt-2.5 mr-2 my-2 shadow-md no-underline rounded-full text-white font-sans border-2 border-gray font-medium text-sm btn-primary hover:text-white hover:bg-indigo-700 focus:outline-none active:shadow-none" onClick={((e) => openPopover(e, teammember))}>{teammember.name}</button>
-                                        )}
+                            <div id="display_team" className="my-3 mx-1">
+                                <div className="content-center py-2 h-90 rounded-3xl mb-6 bg-slate-100 mx-1 px-1">
+                                    <div className="items-center my-1 select-none mx-2">
+                                        {teamData["team"] &&
+                                            teamData["team"].map(teammember =>
+                                                <button
+                                                    class="bg-blue-600 py-1 px-2 pb-1 pt-1 mr-0.5 my-0.5 no-underline rounded-full text-white font-sans border-2 border-gray text-xs btn-primary hover:text-white hover:bg-indigo-700 focus:outline-none active:shadow-none"
+                                                    onClick={((e) => openPopover(e, teammember))}>{teammember.name}</button>
+                                            )}
+                                    </div>
                                 </div>
                             </div>
                         )}
@@ -187,24 +192,27 @@ const TeamData = () => {
                 </div>
             </div>
             {isOpened && (
-                <div className="grid grid-cols-3 gap-10 mt-5 mb-5 mx-10 border-4 border-indigo-700 shadow-lg rounded-2xl px-30">
-                    <div className="lg:col-span-1 sm:col-span-3 justify-center my-10 border-4 border-indigo-700 rounded-2xl px-30 ml-10" id="dd">
-                        <div className="col-span-1 justify-center my-10 px-5" id="data_display_div">
-                            <div className="border-4 rounded-2xl px-2 mx-5 mb-8 mt-8">
-                                <div id="map-container" className="py-5"></div>
+                <div className="grid grid-cols-3 gap-3 mt-3 mb-3 mx-10 border-2 bg-blue-500 rounded-3xl px-30">
+                    <div
+                        className="lg:col-span-1 sm:col-span-3 justify-center my-5 bg-white border-2 rounded-3xl px-30 ml-4"
+                        id="dd">
+                        <div className="col-span-1 flex justify-center my-4 px-3" id="data_display_div">
+                            <div className="rounded-3xl">
+                                <div id="map-container" className="pl-10"></div>
                             </div>
                         </div>
                     </div>
-                    <div className="lg:col-span-1 sm:col-span-3 justify-center my-10  border-4 border-indigo-700 rounded-2xl px-30 mx-5" id="dd">
-                        <div className="col-span-1 justify-center my-10 px-5" id="data_display_div-r">
-                            <div id="new" className="border-4 rounded-2xl px-30 px-2 mx-0 mb-8 mt-8">
+                    <div
+                        className="lg:col-span-1 sm:col-span-3 justify-center my-5  border-2 bg-white rounded-3xl px-30 mx-2" id="dd">
+                        <div className="col-span-1 justify-center my-5 px-3" id="data_display_div-r">
+                            <div id="new" className="border-2 border-blueGray-300 rounded-3xl px-30 px-2 mx-0 mb-5 mt-5">
                                 <div id="map-con" className="py-5"></div>
                             </div>
                         </div>
                     </div>
-                    <div className="lg:col-span-1 sm:col-span-3 justify-center my-10  border-4 border-indigo-700 rounded-2xl px-30 mr-10" id="dd">
-                        <div className="col-span-1 justify-center my-10 px-5" id="data_display_div-rr">
-                            <div id="newr" className="border-4 rounded-2xl px-30 px-2 mx-0 mb-8 mt-8">
+                    <div className="lg:col-span-1 sm:col-span-3 justify-center my-5 border-2 bg-white rounded-3xl px-30 mr-4" id="dd">
+                        <div className="col-span-1 justify-center my-5 px-3" id="data_display_div-rr">
+                            <div id="newr" className="border-2 border-blueGray-300 rounded-3xl px-30 px-2 mx-0 mb-5 mt-5">
                                 <div id="map-corn" className="py-5"></div>
                             </div>
                         </div>

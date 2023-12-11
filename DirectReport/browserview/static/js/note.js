@@ -1,9 +1,5 @@
 'use strict';
-const elem = React.createElement;
 const { useState, useEffect } = React;
-
-
-const rootElement = document.getElementById('root')
 
 class ReportItem extends React.Component {
     render() {
@@ -52,7 +48,9 @@ const App = () => {
     } else {
         if (reportData != null) {
             return (
-                <div><ReportItem name="Report" report={reportData}/></div>
+                <div>
+                    <ReportItem name="Report" report={reportData}/>
+                </div>
             )
         } else {
             return (
