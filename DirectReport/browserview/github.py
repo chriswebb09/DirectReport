@@ -30,10 +30,9 @@ class GithubClient:
         Args:
           repo_owner: The owner of the GitHub repository.
           repo_name: The name of the GitHub repository.
-          pull_request_number: The number of the pull request.
 
         Returns:
-          The number of comments on the pull request.
+           comments on pull requests.
         """
 
         url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/pulls/comments"
@@ -43,7 +42,7 @@ class GithubClient:
         response.raise_for_status()
         return response.json()
 
-    def get_pull_requests(self, repo_owner, repo_name):
+    def get_pull_requests_count(self, repo_owner, repo_name):
         """
         Gets the number of comments on a pull request.
 
@@ -62,3 +61,28 @@ class GithubClient:
         response.raise_for_status()
         return len(response.json())
 
+    def get_user_repos(self, repo_owner):
+        url = f"https://api.github.com/users/{repo_owner}/repos?sort=updated&order=desc"
+        headers = {"Authorization": f"token {appsecrets.GITHUB_TOKEN}"}
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()
+        return response.json()
+
+
+class HuggingFaceClient:
+
+
+
+    def query(self, payload):
+        API_URL = "https://api-inference.huggingface.co/models/meta-llama/Llama-2-7b-chat-hf"
+        headers = {"Authorization": "Bearer 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"}
+        response = requests.post(API_URL, headers=headers, json=payload)
+        return response.json()
+
+
+
+    # def runIt() {
+    #     output = query({
+    #     "inputs": "Can you please let us know more details about your ",
+    # })
+    # }

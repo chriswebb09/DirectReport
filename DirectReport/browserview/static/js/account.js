@@ -44,7 +44,7 @@ const Account = () => {
             <div>{`There is a problem fetching the post data - ${error}`}</div>
         )
     } else {
-        // {showGraphics(actualData)}
+
         return (
             <div className="grid grid-cols-3 gap-8 mb-1 mx-20 justify-cente">
                 <div className="lg:col-span-1 md: col-span-1 sm:col-span-3 justify-center my-1">

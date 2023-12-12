@@ -151,7 +151,3 @@ class ReportModel:
             entry_dict = entry.to_dict()
             results_list.append(entry_dict)
         return results_list
-        # if row:
-        #     return Report(*row)
-        # else:
-        #     return None

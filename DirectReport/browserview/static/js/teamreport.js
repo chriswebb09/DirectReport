@@ -179,7 +179,7 @@ const TeamData = () => {
                         {popoverUI()}
                         <div id="display_team" className="my-3"></div>
                         {isOpened && (
-                            <div className="content-center py-1 h-90 rounded-3xl mb-4 bg-slate-100 shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.28)] mx-1 px-2">
+                            <div className="content-center py-1 h-90 rounded-3xl mb-4 bg-slate-100 shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.28)] mx-1 px-3">
                                 <div className="items-center my-1 select-none">
                                     {teamData["team"] &&
                                         teamData["team"].map(teammember =>
