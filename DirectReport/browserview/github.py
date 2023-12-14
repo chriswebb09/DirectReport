@@ -3,7 +3,7 @@
 import re
 import requests
 import json
-from DirectReport.datadependencies import appsecrets
+from DirectReport.datadependencies import appsecrets, prompts
 
 
 class GithubClient:
@@ -88,11 +88,20 @@ class HuggingFaceClient:
         return response.json()
 
 class GoogleAIClient:
+
+
     def query(self, prompt):
-        # API_URL = f"https://generativelanguage.googleapis.com/v1beta3/models/text-bison-001:generateText?key={appsecrets.GOOGLE_AI_TOKEN}"
-        API_URL = f"https://generativelanguage.googleapis.com/v1beta3/models/gemini-pro:generateText?key={appsecrets.GOOGLE_AI_TOKEN}"
+        print(prompts.GENERATE_SUMMARY_PROMPT_PREIX)
+        API_URL = f"https://generativelanguage.googleapis.com/v1beta3/models/text-bison-001:generateText?key={appsecrets.GOOGLE_AI_TOKEN}"
         headers = {"Content-Type": "application/json"}
-       # ["candidates"][0]["output"]
-        data = {"prompt": { "text": f"{prompt}"}}
+        prompt_data = prompts.GENERATE_SUMMARY_PROMPT_PREIX + prompt
+        data = {"prompt": { "text": f"{prompt_data}"}}
         response = requests.post(API_URL, data=json.dumps(data), headers=headers)
-        return response.json()
+        data = json.loads(response.text)
+        return data
+
+    def get_data_from(self, prompt):
+        response = self.query(prompt)
+        response_data = response["candidates"][0]["output"]
+        return response_data
+

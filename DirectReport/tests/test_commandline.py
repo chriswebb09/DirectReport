@@ -2,15 +2,10 @@
 
 from DirectReport.commandline.commandline import list
 from DirectReport.commandline.commandline import mail
-from DirectReport.commandline.commandline import delete
-from DirectReport.models.entry_storage import EntryStorage
-from DirectReport.models.entry import Entry
 from click.testing import CliRunner
-from datetime import datetime
 import tempfile
 import pytest
 import os
-import uuid
 
 
 runner = CliRunner()
@@ -26,9 +21,6 @@ def temp_db():
 
 def test_cli_prompt_new():
     pass
-    # response = runner.invoke(new, input='From the main menu, select Edit | Find | Find in Files Ctrl+Shift+F . In the search field, type your search string. Alternatively, in the editor, highlight the string you want to find and press Ctrl+Shift+F')
-    # assert response.exit_code is not None
-    # assert "What have you been working on" in response.output
 
 
 def test_cli_list():
@@ -39,7 +31,6 @@ def test_cli_list():
 def test_cli_list_daily():
     result = runner.invoke(list, ['--day'])
     assert result.exit_code == 0
-
 
 
 def test_cli_list_all():

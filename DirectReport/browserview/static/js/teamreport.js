@@ -21,11 +21,12 @@ const TeamData = () => {
         }).then(function(res) {
             return res.json();
         }).then(function(data) {
+            console.log(data);
             setTeamData(data);
             toggle();
-            showGraphics(data["report"], '#map-container');
-            showGraphics2(data["report"], '#map-container2');
-            showGraphics3(data["report"], '#map-container3');
+            showGraphics(data, '#map-container');
+            showGraphics2(data, '#map-container2');
+            showGraphics3(data, '#map-container3');
         }).then(function() {
             console.log('done');
 
@@ -155,13 +156,13 @@ const TeamData = () => {
                                     <p id="show_summary" class="w-97 sm:w-97 overflow-y-auto break-words">
                                         {teamData["report"] !== undefined ?
                                             <div className="px-2 mb-1 text-xs text-blue-700">
-                                                {teamData["report"]["report"]["summary"]}
+                                                {teamData["report"]["summary"]}
                                             </div> : null
                                         }
                                     </p>
                                     <div className="h-40">
                                         <ul className="px-2 pt-2 pb-2">
-                                            {teamData["report"]["report"] && teamData["report"]["report"]["highlights"].map(hightlight =>
+                                            {teamData["report"]["highlights"] && teamData["report"]["highlights"].map(hightlight =>
                                                 <li className="mt-1 mb-3">
                                                     <h3 className="font-bold text-sm mb-1 mt-1 text-blue-700">
                                                         {hightlight.title}
@@ -186,8 +187,8 @@ const TeamData = () => {
                         {isOpened && (
                             <div className="content-center py-1 h-90 rounded-3xl mb-4 bg-slate-100 shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.28)] mx-1 px-3">
                                 <div className="items-center my-1 select-none">
-                                    {teamData["report"]["team"] &&
-                                        teamData["report"]["team"].map(teammember =>
+                                    {teamData["team"] &&
+                                        teamData["team"].map(teammember =>
                                             <button class="bg-blue-600 py-1 px-2 pb-1 pt-1 mr-0.5 my-0.5 no-underline rounded-full text-white font-sans border-2 border-gray text-xs btn-primary hover:text-white hover:bg-indigo-700 focus:outline-none active:shadow-none" onClick={((e) => openPopover(e, teammember))}>{teammember.name}</button>
                                         )}
                                 </div>

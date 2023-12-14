@@ -85,7 +85,6 @@ class UserModel:
         result = cursor.fetchone()
         if result:
             return User(result[0], result[2], result[3], result[4], result[5], result[6])
-                # User(result[0], result[2], result[3], result[4]))
         return None
 
     def get_all_users(self):

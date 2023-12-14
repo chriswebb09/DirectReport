@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import ast
 from flask import Flask, render_template, request, json
 from flask import Blueprint
 from DirectReport.browserview.app import login_required
@@ -8,6 +9,7 @@ from .modelclient import RAW_REPORT_DATA
 from .modelclient import RAW_REPORT_DATA_2
 from DirectReport.models.report_builder import ReportBuilder
 from DirectReport.browserview.github import GithubClient
+from DirectReport.browserview.github import GoogleAIClient
 
 reportsbp = Blueprint('reportsbp', __name__)
 
@@ -19,21 +21,25 @@ def report():
     elements = RAW_REPORT_DATA_2
     client = GithubClient()
     user_repos = client.get_user_repos("chriswebb09")
-    # print(user_repos)
     for repo in user_repos:
-        print(repo["name"])
-        print(repo["full_name"])
-        print(repo["html_url"])
-        print(repo["language"])
-        print(repo["description"])
-        print(repo["stargazers_count"])
-        print(repo["watchers_count"])
-        print("\n")
-    # logitem = "Adrian Prantl (67):\n add mangling testcase\n Debug Info: Represent private discriminators in DWARF.\n Revert \"Debug Info: Represent private discriminators in DWARF.\n Debug Info: Represent private discriminators in DWARF.\n Un-XFAIL and update test.\n Move the logic for ignoring the debug locations for closure setup code into SILGen. NFC-ish.\n Debug Info: Associate a function call with the beginning of the expression.\n Debug Info / SILGen: fix the source location of variable assignments\n typo\n Fix the debug locations of inserted operations in AvailableValueAggregator.\n Don't emit shadow copies for anonymous variables.\n Remove dead API IRGenDebugInfo::setArtificialTrapLocation().\n Use compiler-generated location for func.-sig.-spec. thunks\n whitespace\n Fix the missing inlined-at field of function-level SILDebugScopes.\n Add debug info support for inlined and specialized generic variables.\n Revert Add debug info support for inlined and specialized generic variables.\n Add debug info support for inlined and specialized generic variables.\n Update mangling prefix in Mangling.rst\n Add initial support for debug info for coroutine allocas.\n Temporarily disable failing test case, rdar://problem/43340064\n Add build-script support for the Swift LLDB backwards-compatibility tests.\n Remove accidentally committed debugging code\n Deserialize Swift compatibility version in CompilerInvocation::loadFromSerializedAST()\n SILGen: Preserve function argument debug info for arguments needing alloc_stack\n Use as the filename for SILLocation-less functions to avoid misleading source locatio\nns in backtraces.\n Add a -verify-linetable LLVM option.\n Enable debug info for inlined generics by default. It works now.\n Fix nonasserts compilation\n\nAhmad Alhashemi (5):\n [Parser] Detect nonbreaking space U+00A0 and fixit\n Move non-breaking space handling to lexUnknown\n Add more non-breaking space test cases\n Minor style edits\n Add tests for non-breaking space detect and fix-it\n\nAkshay Shrimali (1):\n Update README.md\n\nAlan Zeino (1):\n Fix typo in code example in libSyntax README\n\nAlbin Sadowski (1):\n Fix syntax highlighting in CHANGELOG (#15107)\n\nAlejandro (3):\n Remove a warning, some doc fixes (#16863)\n [SR-8178] Fix BinaryFloatingPoint.random(in:) open range returning upperBound (#17794)\n [Docs] Fix minor code typo in SILPro..Man..md\n\nAlex Blewitt (5):\n [SR-7032] Fix compare for lhs and rhs\n [SR-7036] Use || instead of && for kind comparison\n [SR-7041] Remove duplicate conditional check\n Remove duplicate verb\n [SR-7043] Remove duplicate if statement"
-    # elements["shortlog"] = client.parse_git_shortlog(logitem)
-    elem2 = json.loads(json.dumps(RAW_REPORT_DATA_2))
-    ReportBuilder.new(elem2, RAW_REPORT_DATA, current_user.id)
-    return elements, 201
+        print(repo)
+        # print(repo["name"])
+        # print(repo["full_name"])
+        # print(repo["html_url"])
+        # print(repo["language"])
+        # print(repo["description"])
+        # print(repo["stargazers_count"])
+        # print(repo["watchers_count"])
+        # print("\n")
+    logitem = "Adrian Prantl (67):\n add mangling testcase\n Debug Info: Represent private discriminators in DWARF.\n Revert \"Debug Info: Represent private discriminators in DWARF.\n Debug Info: Represent private discriminators in DWARF.\n Un-XFAIL and update test.\n Move the logic for ignoring the debug locations for closure setup code into SILGen. NFC-ish.\n Debug Info: Associate a function call with the beginning of the expression.\n Debug Info / SILGen: fix the source location of variable assignments\n typo\n Fix the debug locations of inserted operations in AvailableValueAggregator.\n Don't emit shadow copies for anonymous variables.\n Remove dead API IRGenDebugInfo::setArtificialTrapLocation().\n Use compiler-generated location for func.-sig.-spec. thunks\n whitespace\n Fix the missing inlined-at field of function-level SILDebugScopes.\n Add debug info support for inlined and specialized generic variables.\n Revert Add debug info support for inlined and specialized generic variables.\n Add debug info support for inlined and specialized generic variables.\n Update mangling prefix in Mangling.rst\n Add initial support for debug info for coroutine allocas.\n Temporarily disable failing test case, rdar://problem/43340064\n Add build-script support for the Swift LLDB backwards-compatibility tests.\n Remove accidentally committed debugging code\n Deserialize Swift compatibility version in CompilerInvocation::loadFromSerializedAST()\n SILGen: Preserve function argument debug info for arguments needing alloc_stack\n Use as the filename for SILLocation-less functions to avoid misleading source locatio\nns in backtraces.\n Add a -verify-linetable LLVM option.\n Enable debug info for inlined generics by default. It works now.\n Fix nonasserts compilation\n\nAhmad Alhashemi (5):\n [Parser] Detect nonbreaking space U+00A0 and fixit\n Move non-breaking space handling to lexUnknown\n Add more non-breaking space test cases\n Minor style edits\n Add tests for non-breaking space detect and fix-it\n\nAkshay Shrimali (1):\n Update README.md\n\nAlan Zeino (1):\n Fix typo in code example in libSyntax README\n\nAlbin Sadowski (1):\n Fix syntax highlighting in CHANGELOG (#15107)\n\nAlejandro (3):\n Remove a warning, some doc fixes (#16863)\n [SR-8178] Fix BinaryFloatingPoint.random(in:) open range returning upperBound (#17794)\n [Docs] Fix minor code typo in SILPro..Man..md\n\nAlex Blewitt (5):\n [SR-7032] Fix compare for lhs and rhs\n [SR-7036] Use || instead of && for kind comparison\n [SR-7041] Remove duplicate conditional check\n Remove duplicate verb\n [SR-7043] Remove duplicate if statement"
+    googleAi = GoogleAIClient()
+    response_data = googleAi.get_data_from(prompt).replace("\'", "\"")
+    response_data = response_data.replace("\n", " ")
+    data_json = json.loads(response_data)
+    data_json["broad_categories"] = {"debug_info": 16, "code_maintenance": 9, "documentation": 7, "test_related": 6, "nonbreaking_space_handling": 5, "readme_update": 1, "syntax_fix": 1}
+    data_json["shortlog"] = client.parse_git_shortlog(logitem)
+    ReportBuilder.new(data_json, prompt, current_user.id)
+    return data_json, 201
 
 @reportsbp.route("/teamreport", methods=['GET', 'POST'])
 @login_required

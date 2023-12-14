@@ -102,6 +102,4 @@ def test_get_all_entries(temp_db):
 
     entries = storage.list_all_entries()
     assert len(entries) == 2
-    # assert entry1 in entries
-    # assert entry2 in entries
 
