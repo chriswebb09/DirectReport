@@ -96,5 +96,13 @@ def generate_email():
     elements = {"email": report.choices[0].message.content}
     return elements, 201
 
+@app.route("/repo/<reponame>", methods=['GET'])
+def repo(reponame=None):
+
+    client = GithubClient()
+    repo = client.get_repo_issues("chriswebb09", reponame)
+    print(repo)
+    return render_template('team.html', title='Team', data=[])
+
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
