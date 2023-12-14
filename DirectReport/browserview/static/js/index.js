@@ -20,14 +20,14 @@ class Home extends React.Component {
                     React.createElement(
                         "h2",
                         {
-                            className: "my-2 text-3xl font-bold mb-8 text-white"
+                            className: "my-1 text-3xl font-bold mb-5 text-white"
                         },
                         "DirectReport."
                     ),
                     React.createElement(
                         "h3",
                         {
-                            className: "my-3 text-lg mb-12 text-gray-200"
+                            className: "my-1 text-lg mb-8 text-gray-200"
                         },
                         "Keep track of your accomplishments each day of the workweek."
                     ),
@@ -39,7 +39,7 @@ class Home extends React.Component {
                         React.createElement(
                             "a",
                             {
-                                className: "my-12 px-10 py-5 text-lg font-bold text-center text-white bg-gray-400 rounded-full hover:bg-blue-800 shadow-lg uppercase",
+                                className: "my-14 px-10 py-5 text-md font-bold tracking-wide text-center text-indigo-500  bg-white rounded-full hover:bg-blue-800 hover:text-white shadow-lg uppercase",
                                 href: "/account"
                             },
                             "Get Started"

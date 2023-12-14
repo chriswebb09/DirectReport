@@ -1,5 +1,6 @@
+#!/usr/bin/env python3
 
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash
 from flask import Blueprint
 from werkzeug.security import generate_password_hash
 from DirectReport.models.user_model import UserModel
@@ -18,12 +19,12 @@ def signup():
         # code to validate and add user to database goes here
         email = request.form.get('email')
         username = request.form.get('username')
-        firstname= request.form.get('firstname')
+        firstname = request.form.get('firstname')
         lastname = request.form.get('lastname')
-        passwordtext = request.form.get('password')
-        password = generate_password_hash(passwordtext)
+        password_text = request.form.get('password')
+        password = generate_password_hash(password_text)
         user_model.insert_user(email, username, firstname, lastname, email, password)
-        return redirect(url_for('login'))
+        return redirect(url_for('auth.login'))
     return render_template('auth/signup.html')
 
 @auth.route('/logout')
@@ -39,9 +40,13 @@ def login():
         password = request.form.get('password')
         remember = True if request.form.get('remember') else False
         user = app.user_loader(email)
-        login_user(user, remember=remember, force=True)
-        if current_user.is_authenticated():
-            return redirect(url_for('account'))
+        if user.check_password(password):
+            login_user(user, remember=remember, force=True)
+            if current_user.is_authenticated():
+                return redirect(url_for('auth.account'))
+        else:
+            print("password no match")
+            flash("Please check your login details and try again.")
     return render_template('auth/login.html')
 
 @auth.route("/account", methods=['GET', 'POST'])

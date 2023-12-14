@@ -1,9 +1,9 @@
-from flask import Flask, render_template, request, redirect, json, url_for
+#!/usr/bin/env python3
+
+from flask import Flask, render_template, request, json
 from flask import Blueprint
 from DirectReport.browserview.app import login_required
-# from werkzeug.security import generate_password_hash
-# from DirectReport.models.user_model import UserModel
-from flask_login import LoginManager, login_user, login_required, logout_user, current_user
+from flask_login import login_required, current_user
 from .modelclient import RAW_REPORT_DATA
 from .modelclient import RAW_REPORT_DATA_2
 from DirectReport.models.report_builder import ReportBuilder

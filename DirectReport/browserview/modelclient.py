@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 global TEST_DATA_ELEMENTS
 global RAW_REPORT_DATA
 global RAW_REPORT_DATA_2

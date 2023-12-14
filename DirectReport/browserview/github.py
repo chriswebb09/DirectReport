@@ -1,6 +1,10 @@
+#!/usr/bin/env python3
+
 import re
 import requests
+import json
 from DirectReport.datadependencies import appsecrets
+
 
 class GithubClient:
     # Define a function to parse the git shortlog
@@ -68,10 +72,14 @@ class GithubClient:
         response.raise_for_status()
         return response.json()
 
+    def get_repo_issues(self, repo_owner, repo_name):
+        headers = {"Authorization": f"token {appsecrets.GITHUB_TOKEN}"}
+        url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/issues"
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()
+        return response.json()
 
 class HuggingFaceClient:
-
-
 
     def query(self, payload):
         API_URL = "https://api-inference.huggingface.co/models/meta-llama/Llama-2-7b-chat-hf"
@@ -79,10 +87,12 @@ class HuggingFaceClient:
         response = requests.post(API_URL, headers=headers, json=payload)
         return response.json()
 
-
-
-    # def runIt() {
-    #     output = query({
-    #     "inputs": "Can you please let us know more details about your ",
-    # })
-    # }
+class GoogleAIClient:
+    def query(self, prompt):
+        # API_URL = f"https://generativelanguage.googleapis.com/v1beta3/models/text-bison-001:generateText?key={appsecrets.GOOGLE_AI_TOKEN}"
+        API_URL = f"https://generativelanguage.googleapis.com/v1beta3/models/gemini-pro:generateText?key={appsecrets.GOOGLE_AI_TOKEN}"
+        headers = {"Content-Type": "application/json"}
+       # ["candidates"][0]["output"]
+        data = {"prompt": { "text": f"{prompt}"}}
+        response = requests.post(API_URL, data=json.dumps(data), headers=headers)
+        return response.json()

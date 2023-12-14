@@ -3,7 +3,9 @@
 import sqlite3
 import uuid
 from flask_login import UserMixin
-# from app import app as application
+from werkzeug.security import generate_password_hash, check_password_hash
+
+
 
 class User(UserMixin):
 
@@ -31,6 +33,20 @@ class User(UserMixin):
 
     def get_id(self):
         return self.id
+
+    def check_password(self, password):
+       return check_password_hash(self.password, password)
+        # return verify_password(self.password, password)   # from Flask-Security
+        # return verify_and_update_password(self.password, password) # from Flask-Security
+        # return check_password(self.password, password)  # from werkzeug.security
+
+    # def is_password_correct(self, password_plaintext: str):
+    #     return check_password_hash(self.password_hashed, password_plaintext)
+    #
+    # def set_password(self, password_plaintext: str):
+    #     self.password_hashed = generate_password_hash(password_plaintext)
+
+    # from app import app as application
 
 
 class UserModel:

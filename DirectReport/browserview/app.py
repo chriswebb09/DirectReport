@@ -9,6 +9,7 @@ from DirectReport.models.report_builder import ReportBuilder
 from DirectReport.models.report import Report
 from DirectReport.browserview.prompt_logic import generate_email
 from DirectReport.browserview.github import GithubClient
+from DirectReport.browserview.github import GoogleAIClient
 from DirectReport.browserview.github import HuggingFaceClient
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from DirectReport.datadependencies import appsecrets
@@ -17,6 +18,13 @@ from .reportbp import reportsbp
 from .modelclient import TEST_DATA_ELEMENTS
 from .modelclient import RAW_REPORT_DATA
 from .modelclient import RAW_REPORT_DATA_2
+
+import sys
+from pathlib import Path
+
+file = Path(__file__).resolve()
+package_root_directory = file.parents[1]
+sys.path.append(str(package_root_directory))
 
 login_manager = LoginManager()
 app = Flask(__name__, template_folder="templates")
