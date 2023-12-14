@@ -1,5 +1,13 @@
 {% extends "base.html" %}
 
+{% block style %}
+
+{{ super() }}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"/>
+
+{% endblock %}
+
 {% block header %}
     {% block title %} {% endblock %}
 {% endblock %}
@@ -7,45 +15,7 @@
 {% block content %}
      <main>
         <div id="root" class='my-10 md:max-lg:flex content-start'></div>
-
-        <script type="text/babel">
-            const { useState, useEffect } = React;
-
-            const Account = () => {
-                const [teamData, setTeamData] = useState({});
-                return (
-                    <div class="grid grid-cols-3 gap-1 mb-20 mx-10">
-                         <div class="col-span-1 justify-center my-10">
-                           <div class="self-center bg-blue-200 py-10 px-10 my-5">
-                                <h1 class="text-center py-10 bg-blue-50">Account: {{ name }}</h1>
-                                <p class="text-center">{{ userid }} content</p>
-                            </div>
-                        </div>
-                        <div class="col-span-1 justify-center my-10">
-                          <div class="self-center bg-blue-200 py-10 py-10 px-10 my-5">
-                                <h1 class="text-center py-10 bg-blue-50">Account: {{ name }}</h1>
-                               <form method="GET" action="/logout">
-                                    <button class="button is-block is-info is-large is-fullwidth">Logout</button>
-                               </form>
-                            </div>
-                        </div>
-                        <div class="col-span-1 justify-center my-10">
-                           <div class="self-center bg-blue-200 py-10 px-10 my-5">
-                                <h1 class="text-center py-10 bg-blue-50">Account: {{ name }}</h1>
-                                <p class="text-center">{{ userid }} content</p>
-                            </div>
-                        </div>
-                        <div class="col-span-3 justify-center my-10">
-                            <div class="self-center bg-blue-200 py-10 px-10 my-5">
-                                <h1 class="text-center py-10 bg-blue-50">Account: {{ name }}</h1>
-                                <p class="text-center">{{ userid }} content</p>
-                            </div>
-                        </div>
-                    </div>
-                );
-            };
-            const domContainer = document.querySelector('#root');
-            ReactDOM.render(<Account />, domContainer);
-        </script>
+         <script type="text/babel" src="{{url_for('static', filename='js/account.js')}}"></script>
+         <script type="text/babel" src="{{url_for('static', filename='js/chart_helper.js')}}"></script>
      </main>
 {% endblock %}

@@ -20,7 +20,7 @@ def test_index_route():
 
 def test_list_route():
     response = app.test_client().get('/list')
-    assert response.status_code == 200
+    assert response.status_code == 302
 
 
 def test_404_route():

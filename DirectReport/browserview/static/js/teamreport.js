@@ -1,13 +1,10 @@
 const { useState, useEffect } = React;
-
 const TeamData = () => {
     const [teamData, setTeamData] = useState({});
     const [commentText, setCommentText] = useState("")
     const [generatedEmail, setGeneratedEmail] = useState("")
     const [isOpened, setIsOpened] = useState(false);
     const [isHidden, setIsHidden] = useState(false);
-
-
     const handleSubmit = e => {
         e.preventDefault()
         var dataForm = {
@@ -24,22 +21,22 @@ const TeamData = () => {
         }).then(function(res) {
             return res.json();
         }).then(function(data) {
+            console.log(data);
             setTeamData(data);
             toggle();
+            showGraphics(data, '#map-container');
+            showGraphics2(data, '#map-container2');
+            showGraphics3(data, '#map-container3');
+        }).then(function() {
+            console.log('done');
+
         });
     };
 
-    function toggle() {
-        setIsOpened(wasOpened => !wasOpened);
-    }
-
-    function toggleHide() {
-        setIsHidden(wasHidden => !wasHidden);
-    }
-
-
     const handleClick = e => {
+
         e.preventDefault()
+
         var dataForm = {
             "prompt": JSON.stringify(teamData)
         };
@@ -59,46 +56,122 @@ const TeamData = () => {
         });
     }
 
-    return (
-        <div>
-            <h1 class="self-center text-center text-4xl text-indigo-800 tracking-wide text-center font-black mb-14 mx-20 px-20">Generate Team Report From Metadata</h1>
-            <div class="grid grid-cols-3 gap-10 mt-10 mb-20 mx-20">
-                <div class="col-span-1 justify-center my-10" id="edit_summary_div">
-                    <div class="shadow-lg py-1 border-4 border-indigo-600 rounded-2xl px-30 mb-10">
-                        <form class=" py-2 px-2" onSubmit={handleSubmit}>
-                            <h1 class="self-center text-center text-indigo-700 tracking-wide text-2xl text-center font-bold mb-4 mt-6">Enter Github Data</h1>
-                            <div class="self-center mb-6 mt-5">
-                                <div class="py-4 px-10 mx-0 min-w-full flex flex-col items-center">
-                                    <textarea id="prompt_input" cols="40" rows="13" class="self-center border-4 border-indigo-700 w-90 sm:w-90 text-base tracking-wide text-indigo-700 placeholder-white border rounded-2xl focus:shadow-outline" value={commentText}  onChange={e => setCommentText(e.target.value)} ></textarea>
-                                </div>
-                                <div class="px-10 mx-0 min-w-full flex flex-col items-center">
-                                    <button id="submit_prompt_btn" class="shadow-md w-80 sm:w-90 tracking-wide bg-white hover:bg-indigo-700 text-indigo-700 hover:text-white border-4 border-indigo-700 hover:border-gray-200 text-xl font-semibold py-4 px-10 rounded-lg mt-10"  type="submit">Generate</button>
-                                </div>
-                            </div>
-                        </form>
+    const closePopover = () => {
+        document.getElementById('popover-id-left-purple').classList.toggle("hidden");
+    }
+
+    const openPopover = (e: ChangeEvent<HTMLInputElement>, teammember) => {
+        e.preventDefault();
+        let element = e.target;
+        while("BUTTON" !== element.nodeName) {
+            element = element.parentNode;
+        }
+        Popper.createPopper(element, document.getElementById('popover-id-left-purple'), {
+            strategy: 'fixed'
+        });
+        document.getElementById('popover-id-left-purple').classList.toggle("hidden");
+        const popoverTitle = document.getElementById('popoverTitleContent');
+        popoverTitle.innerHTML = teammember.name
+        const popoverContent = document.getElementById('popoverContent');
+        popoverContent.innerHTML = teammember.accomplishments;
+        const popoverCommits = document.getElementById('popoverCommits');
+        popoverCommits.innerHTML = "Commits: " + teammember.commits;
+    }
+
+    const popoverUI = () => {
+        return (
+            <div className="hidden bg-indigo-600 border-0 mr-3 block z-50 font-normal leading-normal text-sm max-w-xs text-left no-underline break-words rounded-lg" id="popover-id-left-purple">
+                <div>
+                    <div id="popoverTitle" className="bg-indigo-600 text-white opacity-75 font-semibold p-3 mb-0 border-b border-solid border-blueGray-100 uppercase rounded-t-lg py-3">
+                        <span id="popoverTitleContent">
+                        </span>
+                        <button className="float-right" onClick={closePopover}>
+                            X
+                        </button>
+                    </div>
+                    <div id="popoverContent" className="text-white px-6 py-4">
+                    </div>
+                    <div id="popoverCommits" className="text-white px-6 pb-4">
+                    </div>
+                    <div id="profileButton" className="text-white px-6 py-4 border-t border-solid border-blueGray-100">
+                        <a className="text-md hover:text-gray-200" href="/team">
+                            <button type="button" className="w-full text-indigo-600 bg-white hover:bg-gray focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" onClick={closePopover}>
+                                Profile
+                            </button>
+                        </a>
                     </div>
                 </div>
-                <div id="show_summmary_div" class="col-span-1 justify-center my-10">
-                    <div class="shadow-lg border-4 border-indigo-700 rounded-2xl px-30 mb-10">
-                        <h1 class="self-center text-center text-2xl tracking-wide text-indigo-700 text-center font-bold mb-10 mt-10 mx-20 px-20">Summary</h1>
-                        <div id="summary" class="px-5 mx-0 mb-9 mt-9">
+            </div>
+        )
+    }
+
+    const formUI = () => {
+        return (
+            <div className="py-1 bg-blue-500 rounded-3xl px-30 shadow-[1.0px_1.0px_5.0px_0.0px_rgba(0,0,0,0.48)]">
+                <form onSubmit={handleSubmit}>
+                    <h1 className="self-center text-center text-white text-xl text-center font-semibold font-mono mb-1 mt-3">Enter
+                        Github Data
+                    </h1>
+                    <div className="self-center mb-4 mt-2">
+                        <div className="py-2 px-10 mx-0 min-w-full flex flex-col items-center">
+                            <textarea id="prompt_input" cols="34" rows="11" className="self-center py-2 border-2 bg-slate-100 shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.28)] border-gray-200 w-90 h-78 sm:w-90 text-base tracking-wide text-indigo-700 placeholder-white border rounded-3xl focus:shadow-outline" value={commentText} onChange={e => setCommentText(e.target.value)}>
+                            </textarea>
+                        </div>
+                        <div className="px-10 mx-0 min-w-full flex flex-col items-center">
+                            <button id="submit_prompt_btn" className="w-80 sm:w-90 bg-slate-100 hover:bg-blue-400 text-blue-500 hover:text-white hover:border-gray-200 text-lg font-semibold py-2 px-5 rounded-2xl mt-2" type="submit">
+                                Generate
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        )
+    }
+
+    function toggle() {
+        setIsOpened(isOpened => !isOpened);
+    }
+
+    function toggleHide() {
+        setIsHidden(isHidden => !isHidden);
+    }
+
+    return (
+        <div>
+            <h1 className="self-center text-center text-2xl text-blue-800 text-center font-bold font-mono pt-3 pb-2 mb-2 pt-4 mx-10 px-20">
+                Generate Team Report From Metadata
+            </h1>
+            <div className="grid grid-cols-3 gap-8 rounded-3xl mx-10 mt-6">
+                <div className="lg:col-span-1 sm:col-span-3 justify-center" id="edit_summary_div">
+                    {formUI()}
+                </div>
+                <div id="show_summmary_div" className="lg:col-span-1 sm:col-span-3 justify-center">
+                    <div className="pb-6 pt-2 bg-blue-500 rounded-3xl px-30 shadow-[1.0px_1.0px_5.0px_0.0px_rgba(0,0,0,0.48)]">
+                        <h1 className="self-center text-center text-xl text-white text-center font-semibold font-mono mb-1 mt-2 mx-20 px-20">
+                            Summary
+                        </h1>
+                        <div id="summary" className="px-4 mx-0 mb-3 mt-2">
                             {isOpened && (
-                                <div id="summary-container" class="bg-white ml-10 mr-10 overflow-y-scroll h-90 rounded-2xl border-4 border-indigo-700 tracking-wide text-gray-500 md:text-gl dark:text-gray-400 mt-8 mb-14 px-1 py-4">
-                                    <p id="show_summary" class="w-90 sm:w-90 overflow-y-auto break-words">
-                                        { teamData["report"] !== undefined ?
-                                            <div className="my-7 px-5 text-lg tracking-wide text-indigo-700">{teamData["report"]["summary"]}</div>
-                                            : null
+                                <div id="summary-container" className="ml-3 mr-3 bg-slate-100 shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.28)] overflow-y-scroll h-100 rounded-3xl tracking-wide text-gray-500 md:text-gl dark:text-gray-400 mt-3 px-3 pt-6 pb-20">
+                                    <p id="show_summary" class="w-97 sm:w-97 overflow-y-auto break-words">
+                                        {teamData["report"] !== undefined ?
+                                            <div className="px-2 mb-1 text-xs text-blue-700">
+                                                {teamData["report"]["summary"]}
+                                            </div> : null
                                         }
                                     </p>
-                                    <div class="h-80">
-                                        <ul className="px-5">
-                                            {teamData["report"] &&
-                                                teamData["report"]["highlights"].map(hightlight =>
-                                                    <li className="mb-3">
-                                                        <h3 className="font-bold text-lg mb-1 tracking-wide text-indigo-700">{hightlight.title}</h3>
-                                                        <p class="w-90 sm:w-90 overflow-y-auto text-lg font-md break-words tracking-wide text-indigo-700">{hightlight.description}</p>
-                                                    </li>
-                                                )}
+                                    <div className="h-40">
+                                        <ul className="px-2 pt-2 pb-2">
+                                            {teamData["report"]["highlights"] && teamData["report"]["highlights"].map(hightlight =>
+                                                <li className="mt-1 mb-3">
+                                                    <h3 className="font-bold text-sm mb-1 mt-1 text-blue-700">
+                                                        {hightlight.title}
+                                                    </h3>
+                                                    <p class="w-90 sm:w-90 overflow-y-auto text-xs font-sm break-words tracking-wide text-blue-600">
+                                                        {hightlight.description}
+                                                    </p>
+                                                </li>
+                                            )}
                                         </ul>
                                     </div>
                                 </div>
@@ -106,43 +179,55 @@ const TeamData = () => {
                         </div>
                     </div>
                 </div>
-                <div id="team_member_to_select" class="col-span-1 justify-center my-10">
-                    <div class="shadow-lg py-1 border-4 border-indigo-700 rounded-2xl px-9 mb-9">
-                        <h1 class="self-center text-center text-2xl tracking-wide text-indigo-700 text-center font-bold mb-6 mt-8 mx-20 px-20">
-                            Team</h1>
-                        <div id="display_team" class="mb-6 my-9"></div>
+                <div id="team_member_to_select" className="lg:col-span-1 sm:col-span-3 justify-center">
+                    <div className="pb-6 pt-2 bg-blue-500 rounded-3xl px-4 mb-2 shadow-[1.0px_1.0px_5.0px_0.0px_rgba(0,0,0,0.48)]">
+                        <h1 className="self-center text-center text-xl text-white text-center font-semibold font-mono mb-1 mt-2 mx-20 px-20">Team</h1>
+                        {popoverUI()}
+                        <div id="display_team" className="my-3"></div>
                         {isOpened && (
-                            <div className="content-center py-2 h-90 rounded-2xl ml-6 mb-12 border-4 border-indigo-700 mx-5 px-3">
-                                <div class="items-center my-6 mx-2 px-4 select-none">
+                            <div className="content-center py-1 h-90 rounded-3xl mb-4 bg-slate-100 shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.28)] mx-1 px-3">
+                                <div className="items-center my-1 select-none">
                                     {teamData["team"] &&
                                         teamData["team"].map(teammember =>
-                                            <button className="py-1 px-4 pb-2 pt-2.5 mr-3 my-2 shadow-md no-underline rounded-full text-indigo-700 font-sans border-4 font-bold text-sm border-indigo-700 btn-primary hover:text-white hover:bg-indigo-700 focus:outline-none active:shadow-none">{teammember.name}</button>
+                                            <button class="bg-blue-600 py-1 px-2 pb-1 pt-1 mr-0.5 my-0.5 no-underline rounded-full text-white font-sans border-2 border-gray text-xs btn-primary hover:text-white hover:bg-indigo-700 focus:outline-none active:shadow-none" onClick={((e) => openPopover(e, teammember))}>{teammember.name}</button>
                                         )}
                                 </div>
                             </div>
                         )}
                     </div>
                 </div>
-                <div class="col-span-3 my-12 ml-10 mr-10 mb-10 mt-40">
-                    <div class="shadow-lg py-3 border-4 border-indigo-700 rounded-2xl px-30">
-                        <h1 class="self-center text-center text-2xl text-indigo-700 tracking-wide font-bold w-100 mb-10 mt-10">Generated Email</h1>
-                        {isHidden && (
-                            <div id ="text-content" class="bg-white ml-20 mr-20 rounded-2xl py-20 tracking-wide text-gray-500 md:text-md dark:text-gray-400 px-20 mx-20 my-10">
-                                {generatedEmail}
+            </div>
+
+            {isOpened && (
+                <div>
+                    <h3 className="text-xl text-blue-800 text-left font-mono font-semibold mt-10 mb-5 mx-5 px-12">
+                        Data
+                    </h3>
+                    <div className="grid grid-cols-3 gap-6 mt-5 mx-10 bg-blue-500 shadow-[1.0px_1.0px_5.0px_0.0px_rgba(0,0,0,0.48)] rounded-3xl px-30 py-3">
+                        <div className="lg:col-span-1 sm:col-span-3 justify-center mt-7 mb-7 bg-white shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.28)] rounded-3xl px-30 ml-10" id="dd">
+                            <div className="col-span-1 flex justify-center my-2 px-3" id="data_display_div">
+                                <div id="map-container" className="pl-10 pr-5">
+                                </div>
                             </div>
-                        )}
-                        {isOpened && (
-                            <div class="py-10 px-10 min-w-full flex flex-col items-center">
-                                <button type="button" id="generate_email_btn" class="shadow-md w-80 sm:w-90 bg-white hover:bg-black border-4 border-indigo-700 text-indigo-700 text-xl font-semibold py-4 px-10 rounded-lg" onClick={handleClick}>Generate Email</button>
+                        </div>
+                        <div className="lg:col-span-1 sm:col-span-3 justify-center mt-7 mb-7 bg-white shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.28)] rounded-3xl px-30 mx-6" id="dd">
+                            <div className="col-span-1 justify-center my-2 px-3" id="data_display_div-r">
+                                <div id="map-container2" className="pl-5 pr-5">
+                                </div>
                             </div>
-                        )}
+                        </div>
+                        <div className="lg:col-span-1 sm:col-span-3 justify-center mt-7 mb-7 bg-white shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.28)] rounded-3xl px-30 mr-10" id="dd">
+                            <div className="col-span-1 justify-center my-2 px-3" id="data_display_div-rr">
+                                <div id="map-container3" className="pl-5 pr-10">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            )}
         </div>
-
     );
 };
 
 const domContainer = document.querySelector('#root');
-ReactDOM.render(<TeamData />, domContainer);
+ReactDOM.render(<TeamData/>, domContainer);

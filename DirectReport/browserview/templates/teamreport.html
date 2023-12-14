@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 
 {% block header %}
-    {% block title %} {% endblock %}
+    {% block title %}{% endblock %}
 {% endblock %}
 
 {% block content %}
-    <main>
-        <div id="root" class='mt-18 pt-10 mb-20 md:max-lg:flex content-start'></div>
+    <main className="">
+        <div id="root" class='md:max-lg:flex content-start bg-slate-200 pb-[120px]'></div>
         <script type="text/babel" src="{{url_for('static', filename='js/teamreport.js')}}"></script>
+        <script type="text/babel" src="{{url_for('static', filename='js/chart_helper.js')}}"></script>
     </main>
 {% endblock %}

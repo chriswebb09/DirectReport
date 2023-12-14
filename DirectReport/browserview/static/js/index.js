@@ -1,15 +1,15 @@
 'use strict';
-const e = React.createElement;
+const elem = React.createElement;
 
 class Home extends React.Component {
     render() {
-        return e(
+        return elem(
             'div',
             null,
             React.createElement(
                 'div',
                 {
-                    className: "py-24 flex h-100",
+                    className: "py-20 flex h-50",
                     style: {background: "linear-gradient(90deg, #667eea 0%, #764ba2 100%)"}
                 },
                 React.createElement(
@@ -20,14 +20,14 @@ class Home extends React.Component {
                     React.createElement(
                         "h2",
                         {
-                            className: "my-4 text-4xl font-bold mb-2 text-white"
+                            className: "my-1 text-3xl font-bold mb-5 text-white"
                         },
                         "DirectReport."
                     ),
                     React.createElement(
                         "h3",
                         {
-                            className: "my-8 text-2xl mb-12 text-gray-200"
+                            className: "my-1 text-lg mb-8 text-gray-200"
                         },
                         "Keep track of your accomplishments each day of the workweek."
                     ),
@@ -39,10 +39,10 @@ class Home extends React.Component {
                         React.createElement(
                             "a",
                             {
-                                className: "my-12 px-14 py-5 text-lg font-bold text-center text-white bg-gray-400 rounded-full hover:bg-blue-800 shadow-lg uppercase",
-                                href: "https://github.com/chriswebb09/DirectReport"
+                                className: "my-14 px-10 py-5 text-md font-bold tracking-wide text-center text-indigo-500  bg-white rounded-full hover:bg-blue-800 hover:text-white shadow-lg uppercase",
+                                href: "/account"
                             },
-                            "Github"
+                            "Get Started"
                         )
                     )
                 )
@@ -52,4 +52,4 @@ class Home extends React.Component {
 }
 
 const domContainer = document.querySelector('#root');
-ReactDOM.render(e(Home), domContainer);
+ReactDOM.render(elem(Home), domContainer);

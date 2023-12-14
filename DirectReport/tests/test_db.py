@@ -37,8 +37,7 @@ def test_add_get_entry(temp_db):
         topic="My topic",
         message="Test message",
         created_at=datetime.now().timestamp(),
-        modified_on=datetime.now().timestamp(),
-        week_uuid=str(uuid.uuid4()),
+        modified_on=datetime.now().timestamp()
     )
 
     storage.add_entry(entry)
@@ -54,8 +53,7 @@ def test_update_entry(temp_db):
         topic="Test Topic",
         message="Test message",
         created_at=datetime.now().timestamp(),
-        modified_on=datetime.now().timestamp(),
-        week_uuid=str(uuid.uuid4()),
+        modified_on=datetime.now().timestamp()
     )
     storage.add_entry(entry)
     entry.message = "Updated message"
@@ -72,8 +70,7 @@ def test_delete_entry(temp_db):
         topic="New Topic",
         message="Test message",
         created_at=datetime.now().timestamp(),
-        modified_on=datetime.now().timestamp(),
-        week_uuid=str(uuid.uuid4()),
+        modified_on=datetime.now().timestamp()
     )
 
     storage.add_entry(entry)
@@ -90,16 +87,14 @@ def test_get_all_entries(temp_db):
         topic="New",
         message="Test message 1",
         created_at=datetime.now().timestamp(),
-        modified_on=datetime.now().timestamp(),
-        week_uuid=str(uuid.uuid4()),
+        modified_on=datetime.now().timestamp()
     )
     entry2 = Entry(
         uuid=str(uuid.uuid4()),
         topic="Topic new",
         message="Test message 2",
         created_at=datetime.now().timestamp(),
-        modified_on=datetime.now().timestamp(),
-        week_uuid=str(uuid.uuid4()),
+        modified_on=datetime.now().timestamp()
     )
 
     storage.add_entry(entry1)
@@ -107,33 +102,4 @@ def test_get_all_entries(temp_db):
 
     entries = storage.list_all_entries()
     assert len(entries) == 2
-    # assert entry1 in entries
-    # assert entry2 in entries
 
-
-def test_get_entries_by_week(temp_db):
-    storage = EntryStorage(temp_db)
-    week_uuid = uuid.uuid4()
-    entry1 = Entry(
-        uuid=str(uuid.uuid4()),
-        topic="Topic",
-        message="Test message 1",
-        created_at=datetime.now().timestamp(),
-        modified_on=datetime.now().timestamp(),
-        week_uuid=str(week_uuid),
-    )
-    entry2: Entry = Entry(
-        uuid=str(uuid.uuid4()),
-        topic="Topic 3",
-        message="Test message 2",
-        created_at=datetime.now().timestamp(),
-        modified_on=datetime.now().timestamp(),
-        week_uuid=str(uuid.uuid4()),
-    )
-
-    storage.add_entry(entry1)
-    storage.add_entry(entry2)
-
-    entries = storage.get_entries_by_week(week_uuid)
-    # et_entries_by_week(week_uuid)
-    assert len(entries) == 1

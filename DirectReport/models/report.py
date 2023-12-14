@@ -3,33 +3,27 @@
 import datetime
 
 
-class Entry:
+class Report:
 
     """
     A class to represent a journal entry.
     """
 
-    def __init__(self, uuid, topic, message, created_at, modified_on):
+    def __init__(self, uuid, user_id, raw_input, report, created_at):
         """
         Initialize the Entry object.
         :param uuid: A unique identifier for the entry.
         :type uuid: str
-        :param topic: The topic of the entry.
-        :type topic: str
-        :param message: The message/content of the entry.
-        :type message: str
+        :param summary: The summary of the entry.
+        :type summary: str
         :param created_at: The timestamp when the entry was created.
         :type created_at: float
-        :param modified_on: The timestamp when the entry was last modified.
-        :type modified_on: float
-        :param week_uuid: The unique identifier for the week.
-        :type week_uuid: str
         """
         self.uuid = uuid
-        self.topic = topic
-        self.message = message
+        self.user_id = user_id
+        self.raw_input = raw_input
+        self.report = report
         self.created_at = created_at
-        self.modified_on = modified_on
 
     def get_created_at_formatted(self, date_format="%Y-%m-%d %H:%M:%S"):
         """
@@ -41,16 +35,6 @@ class Entry:
         """
         return datetime.datetime.fromtimestamp(self.created_at).strftime(date_format)
 
-    def get_modified_on_formatted(self, date_format="%Y-%m-%d %H:%M:%S"):
-        """
-        Get the modified_on timestamp formatted as a string.
-        :param date_format: The desired format of the timestamp, default is "%Y-%m-%d %H:%M:%S".
-        :type date_format: str
-        :return: The formatted modified_on timestamp.
-        :rtype: str
-        """
-        return datetime.datetime.fromtimestamp(self.modified_on).strftime(date_format)
-
     def to_dict(self):
         """
         Convert the Entry object to a dictionary.
@@ -59,10 +43,10 @@ class Entry:
         """
         return {
             "uuid": str(self.uuid),
-            "topic": self.topic,
-            "message": self.message,
-            "created_at": str(self.created_at),
-            "modified_on": str(self.modified_on)
+            "user_id": self.user_id,
+            "raw_input": self.raw_input,
+            "report": self.report,
+            "created_at": str(self.created_at)
         }
 
     @classmethod
@@ -75,17 +59,11 @@ class Entry:
         :rtype: Entry
         """
         uuid = data.get("uuid")
-        topic = data.get("topic")
-        message = data.get("message")
+        user_id = data.get("user_id")
+        raw_input = data.get("raw_input")
+        report = data.get("report")
         created_at = datetime.datetime.fromisoformat(data.get("created_at")).timestamp()
-        modified_on = datetime.datetime.fromisoformat(data.get("modified_on")).timestamp()
-        return cls(uuid, topic, message, created_at, modified_on, week_uuid)
-
-    def mark_modified(self):
-        """
-        Update the modified_on timestamp to the current time.
-        """
-        self.modified_on = datetime.datetime.now().strftime("%m/%d/%Y")
+        return cls(uuid, user_id, raw_input, report, created_at)
 
     def is_recent(self, days=7):
         """
@@ -99,14 +77,13 @@ class Entry:
         difference = datetime.datetime.now() - delta
         return self.created_at >= difference.timestamp()
 
-    def set_message(self, new_message):
+    def set_summary(self, report):
         """
         Update the message of the entry and set the modified_on timestamp to the current time.
         :param new_message: The new message/content for the entry.
         :type new_message: str
         """
-        self.message = new_message
-        self.modified_on = datetime.datetime.now().timestamp()
+        self.report = report
 
     def __iter__(self):
         return self
@@ -118,4 +95,4 @@ class Entry:
         return self.__str__()
 
     def __len__(self):
-        return len(self.message)
+        return len(self.report)

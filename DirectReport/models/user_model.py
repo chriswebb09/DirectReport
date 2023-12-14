@@ -1,13 +1,20 @@
+#!/usr/bin/env python3
+
 import sqlite3
 import uuid
 from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
+
+
 
 class User(UserMixin):
 
-    def __init__(self, id, username, email, password):
+    def __init__(self, id, username, firstname, lastname, email, password):
         self.id = email
         self.uid = id
         self.username = username
+        self.firstname = firstname
+        self.lastname = lastname
         self.email = email
         self.password = password
         self.authenticated = True
@@ -27,6 +34,21 @@ class User(UserMixin):
     def get_id(self):
         return self.id
 
+    def check_password(self, password):
+       return check_password_hash(self.password, password)
+        # return verify_password(self.password, password)   # from Flask-Security
+        # return verify_and_update_password(self.password, password) # from Flask-Security
+        # return check_password(self.password, password)  # from werkzeug.security
+
+    # def is_password_correct(self, password_plaintext: str):
+    #     return check_password_hash(self.password_hashed, password_plaintext)
+    #
+    # def set_password(self, password_plaintext: str):
+    #     self.password_hashed = generate_password_hash(password_plaintext)
+
+    # from app import app as application
+
+
 class UserModel:
     def __init__(self, db_name="users.db"):
         self.conn = sqlite3.connect(db_name, check_same_thread=False)
@@ -37,18 +59,21 @@ class UserModel:
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS users (
                 id TEXT NOT NULL,
+                uid TEXT NOT NULL,
                 username TEXT NOT NULL,
+                firstname TEXT NOT NULL,
+                lastname TEXT NOT NULL,
                 email TEXT UNIQUE NOT NULL PRIMARY KEY,
                 password TEXT NOT NULL
             )
         """)
         self.conn.commit()
 
-    def insert_user(self, username, email, password):
+    def insert_user(self, id, username, firstname, lastname, email, password):
         cursor = self.conn.cursor()
         uuid_str = str(uuid.uuid4())
         try:
-            cursor.execute("INSERT INTO users (id, username, email, password) VALUES (?, ?, ?, ?)", (uuid_str, username, email, password))
+            cursor.execute("INSERT INTO users (id, uid, username, firstname, lastname, email, password) VALUES (?, ?, ?, ?, ?, ?, ?)", (id, uuid_str, username, firstname, lastname, email, password))
             self.conn.commit()
             print("User added successfully!")
         except sqlite3.IntegrityError:
@@ -56,15 +81,15 @@ class UserModel:
 
     def get_user_by_email(self, email):
         cursor = self.conn.cursor()
-        cursor.execute("SELECT id, username, email, password FROM users WHERE email=?", (email,))
+        cursor.execute("SELECT id, uid, username, firstname, lastname, email, password FROM users WHERE email=?", (email,))
         result = cursor.fetchone()
         if result:
-            return User(result[0], result[1], result[2], result[3])
+            return User(result[0], result[2], result[3], result[4], result[5], result[6])
         return None
 
     def get_all_users(self):
         cursor = self.conn.cursor()
-        cursor.execute("SELECT id, username, email FROM users")
+        cursor.execute("SELECT id, uid, username, firstname, lastname, email FROM users")
         return cursor.fetchall()
 
     def close(self):

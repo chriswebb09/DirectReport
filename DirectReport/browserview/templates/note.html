@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block header %}
+    {% block title %} {% endblock %}
+{% endblock %}
+
+{% block content %}
+    <main>
+        <div id='root' class='md:max-lg:flex content-start'></div>
+        <script type="text/babel" src="{{url_for('static', filename='js/note.js')}}"></script>
+    </main>
+{% endblock %}

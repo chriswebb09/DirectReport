@@ -5,6 +5,7 @@ requires = [
     "wheel",
     "Flask",
     "click",
+    "langchain",
     "openai",
     "Flask-Login",
     "python-Levenshtein",

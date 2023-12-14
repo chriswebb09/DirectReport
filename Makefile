@@ -6,6 +6,8 @@ TMPREPO=/tmp/docs/DirectReport
 develop:  ## install dependencies and build library
 	python3 -m pip install Flask --user
 	python3 -m pip install Flask-Login --user
+	python3 -m pip install langchain --user
+
 	python3 -m pip install -e .[develop]
 
 build:  ## build the python library
