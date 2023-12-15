@@ -20,4 +20,3 @@ def temp_db():
     yield db_path
     os.close(db_fd)
     os.remove(db_path)
-

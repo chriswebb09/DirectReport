@@ -4,8 +4,8 @@ import datetime
 from DirectReport.models.daily_storage import DailyUUIDTable
 import uuid
 
-class DailyBuilder:
 
+class DailyBuilder:
     def __init__(self):
         pass
 

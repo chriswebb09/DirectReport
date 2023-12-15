@@ -22,8 +22,6 @@ class Entry:
         :type created_at: float
         :param modified_on: The timestamp when the entry was last modified.
         :type modified_on: float
-        :param week_uuid: The unique identifier for the week.
-        :type week_uuid: str
         """
         self.uuid = uuid
         self.topic = topic
@@ -62,7 +60,7 @@ class Entry:
             "topic": self.topic,
             "message": self.message,
             "created_at": str(self.created_at),
-            "modified_on": str(self.modified_on)
+            "modified_on": str(self.modified_on),
         }
 
     @classmethod
@@ -79,7 +77,7 @@ class Entry:
         message = data.get("message")
         created_at = datetime.datetime.fromisoformat(data.get("created_at")).timestamp()
         modified_on = datetime.datetime.fromisoformat(data.get("modified_on")).timestamp()
-        return cls(uuid, topic, message, created_at, modified_on, week_uuid)
+        return cls(uuid, topic, message, created_at, modified_on)
 
     def mark_modified(self):
         """

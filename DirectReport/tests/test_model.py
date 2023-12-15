@@ -3,4 +3,3 @@
 from DirectReport.models.entry import Entry
 import datetime
 import uuid
-

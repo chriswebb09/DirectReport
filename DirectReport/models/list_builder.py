@@ -5,6 +5,7 @@ import uuid
 from DirectReport.models.entry import Entry
 from DirectReport.models.entry_storage import EntryStorage
 
+
 class ListBuilder:
 
     """
@@ -26,9 +27,7 @@ class ListBuilder:
         storage.create_table()
         if topic_text is None or topic_text == '':
             topic_text = "Entry for work on " + str(today)
-        new_entry = Entry(
-            str(uuid.uuid1()), topic_text, entry_text, today, datetime.datetime.now().timestamp()
-        )
+        new_entry = Entry(str(uuid.uuid1()), topic_text, entry_text, today, datetime.datetime.now().timestamp())
         storage.add_entry(new_entry)
 
     @staticmethod
@@ -43,9 +42,7 @@ class ListBuilder:
         """
         storage = EntryStorage('EntryStorage.db')
         storage.create_table()
-        new_entry = Entry(
-            str(uuid.UUID(uid)), topic_text, entry_text, created_at, datetime.datetime.now().timestamp()
-        )
+        new_entry = Entry(str(uuid.UUID(uid)), topic_text, entry_text, created_at, datetime.datetime.now().timestamp())
         storage.update_entry(new_entry)
 
     @staticmethod

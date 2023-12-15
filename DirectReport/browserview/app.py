@@ -26,6 +26,7 @@ login_manager.init_app(app)
 login_manager.login_view = "login"
 user_model = UserModel()
 
+
 @app.route("/")
 def home():
     """
@@ -33,6 +34,7 @@ def home():
     :return: Rendered HTML template for the homepage.
     """
     return render_template('index.html', title='Home')
+
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -44,16 +46,19 @@ def page_not_found(e):
     """
     return render_template('404.html', error=e), 404
 
+
 @login_manager.user_loader
 def user_loader(email):
     user = user_model.get_user_by_email(email)
     return user
+
 
 @login_manager.request_loader
 def request_loader(request):
     email = request.form.get('email')
     user = user_model.get_user_by_email(email)
     return user
+
 
 @app.route("/new", methods=['GET', 'POST'])
 @login_required
@@ -63,6 +68,7 @@ def new():
     :return: Rendered HTML template for the list page.
     """
     return render_template('list.html', title='New Entry', data=[])
+
 
 @login_manager.unauthorized_handler
 def unauthorized_handler():
@@ -74,12 +80,14 @@ def unauthorized_handler():
         else:
             return redirect(url_for('auth.login'))
 
+
 @app.route("/team", methods=['GET'])
 def team():
     return render_template('team/team.html', title='Team', data=[])
 
+
 @app.route("/generate_email", methods=['POST'])
-def generate_email():
+def generateemail():
     prompt = ""
     if request.method == "POST":
         prompt = json.dumps(request.get_json()["prompt"])
@@ -87,13 +95,14 @@ def generate_email():
     elements = {"email": report.choices[0].message.content}
     return elements, 201
 
+
 @app.route("/repo/<reponame>", methods=['GET'])
 def repo(reponame=None):
-
     client = GithubClient()
     repo = client.get_repo_issues("chriswebb09", reponame)
     print(repo)
     return render_template('team/team.html', title='Team', data=[])
+
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)

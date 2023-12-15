@@ -3,6 +3,7 @@
 import sqlite3
 import uuid
 
+
 class DailyUUIDTable:
     """
     A class to interact with SQLite database for managing daily date-UUID mappings.

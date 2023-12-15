@@ -13,6 +13,7 @@ auth = Blueprint('auth', __name__)
 
 user_model = UserModel()
 
+
 @auth.route('/signup', methods=['POST', 'GET'])
 def signup():
     if request.method == 'POST':
@@ -27,11 +28,13 @@ def signup():
         return redirect(url_for('auth.login'))
     return render_template('auth/signup.html')
 
+
 @auth.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('reportsbp.team_report'))
+
 
 @auth.route('/login', methods=['POST', 'GET'])
 def login():
@@ -49,10 +52,12 @@ def login():
             flash("Please check your login details and try again.")
     return render_template('auth/login.html')
 
+
 @auth.route("/account", methods=['GET', 'POST'])
 @login_required
 def account():
     return render_template('account.html', title='Account', name=current_user.username, userid=current_user.id)
+
 
 @auth.route("/account_data", methods=['GET'])
 @login_required
@@ -63,22 +68,16 @@ def account_data():
     shortlog = client.parse_git_shortlog(logitem)
     report_results = []
     for report in saved_reports:
-        report_element = {
-            "report": report
-        }
+        report_element = {"report": report}
         report_results.append(report_element)
 
-    user_account  = {
+    user_account = {
         "name": current_user.firstname + " " + current_user.lastname,
         "firstname": current_user.firstname,
         "lastname": current_user.lastname,
         "userid": current_user.id,
         "username": current_user.username,
-        "email": current_user.email
+        "email": current_user.email,
     }
-    user_element = {
-        "user": user_account,
-        "reports": report_results,
-        "shortlog": shortlog
-    }
+    user_element = {"user": user_account, "reports": report_results, "shortlog": shortlog}
     return user_element, 201

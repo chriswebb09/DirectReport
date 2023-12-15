@@ -13,6 +13,7 @@ from DirectReport.models.report_model import ReportModel
 
 reportsbp = Blueprint('reportsbp', __name__)
 
+
 @reportsbp.route("/report", methods=['GET', 'POST'])
 @login_required
 def report():
@@ -30,11 +31,20 @@ def report():
     response_data = googleAi.get_data_from(prompt).replace("\'", "\"")
     response_data = response_data.replace("\n", " ")
     data_json = json.loads(response_data)
-    data_json["broad_categories"] = {"debug_info": 16, "code_maintenance": 9, "documentation": 7, "test_related": 6, "nonbreaking_space_handling": 5, "readme_update": 1, "syntax_fix": 1}
+    data_json["broad_categories"] = {
+        "debug_info": 16,
+        "code_maintenance": 9,
+        "documentation": 7,
+        "test_related": 6,
+        "nonbreaking_space_handling": 5,
+        "readme_update": 1,
+        "syntax_fix": 1,
+    }
     data_json["shortlog"] = client.parse_git_shortlog(log_item)
     data_json["repos"] = repodata
     ReportBuilder.new(data_json, prompt, current_user.id)
     return data_json, 201
+
 
 @reportsbp.route("/teamreport", methods=['GET', 'POST'])
 @login_required
@@ -42,7 +52,9 @@ def team_report():
     if request.method == "POST":
         json_data = request.get_json()
         report_model = ReportModel(json_data["id"], json_data['summary'], json_data['created_at'])
+        print(report_model)
     return render_template('team/teamreport.html', title='Team Report', data=[])
+
 
 @reportsbp.route('/entry/<uid>', methods=['GET', 'POST'])
 @login_required
@@ -63,7 +75,9 @@ def detail(uid=None):
             json_data["id"], json_data['entry'], json_data['topic'], json_data['created_at'], json_data['week_id']
         )
     entry = item.get_entry(uid).to_dict()
-    return render_template('detail.html', title='Detail', data=reportJSON)
+    print(entry)
+    return render_template('detail.html', title='Detail', data=entry)
+
 
 @reportsbp.route("/getreport/<uid>", methods=['GET'])
 @login_required
@@ -72,11 +86,13 @@ def get_report(uid=None):
     report = list(filter(lambda report: report["uuid"] == uid, reports))[0]
     return report, 201
 
+
 @reportsbp.route("/getlist", methods=['GET'])
 @login_required
 def get_list():
     reports = ReportBuilder.get_reports_for_user_id(current_user.id)
     return reports, 201
+
 
 @reportsbp.route("/list", methods=['GET', 'POST'])
 @login_required
@@ -88,8 +104,6 @@ def list_entries():
     reports = ReportBuilder.get_reports_for_user_id(current_user.id)
     report_results = []
     for report in reports:
-        report_element = {
-            "report": report
-        }
+        report_element = {"report": report}
         report_results.append(report_element)
     return render_template('list.html', title='List', data=report_results)

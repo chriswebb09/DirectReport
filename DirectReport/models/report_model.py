@@ -39,7 +39,7 @@ class ReportModel:
             report.user_id.__str__(),
             report.raw_input.__str__(),
             report.report.__str__(),
-            report.created_at.__str__()
+            report.created_at.__str__(),
         )
         self.conn.execute(
             "INSERT OR IGNORE INTO reports (uuid, user_id, raw_input, report, created_at) VALUES (?, ?, ?, ?, ?)",
