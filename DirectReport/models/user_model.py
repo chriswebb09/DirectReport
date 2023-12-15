@@ -6,9 +6,7 @@ from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
-
 class User(UserMixin):
-
     def __init__(self, id, username, firstname, lastname, email, password):
         self.id = email
         self.uid = id
@@ -35,7 +33,7 @@ class User(UserMixin):
         return self.id
 
     def check_password(self, password):
-       return check_password_hash(self.password, password)
+        return check_password_hash(self.password, password)
         # return verify_password(self.password, password)   # from Flask-Security
         # return verify_and_update_password(self.password, password) # from Flask-Security
         # return check_password(self.password, password)  # from werkzeug.security
@@ -56,7 +54,8 @@ class UserModel:
 
     def create_table(self):
         cursor = self.conn.cursor()
-        cursor.execute("""
+        cursor.execute(
+            """
             CREATE TABLE IF NOT EXISTS users (
                 id TEXT NOT NULL,
                 uid TEXT NOT NULL,
@@ -66,14 +65,18 @@ class UserModel:
                 email TEXT UNIQUE NOT NULL PRIMARY KEY,
                 password TEXT NOT NULL
             )
-        """)
+        """
+        )
         self.conn.commit()
 
     def insert_user(self, id, username, firstname, lastname, email, password):
         cursor = self.conn.cursor()
         uuid_str = str(uuid.uuid4())
         try:
-            cursor.execute("INSERT INTO users (id, uid, username, firstname, lastname, email, password) VALUES (?, ?, ?, ?, ?, ?, ?)", (id, uuid_str, username, firstname, lastname, email, password))
+            cursor.execute(
+                "INSERT INTO users (id, uid, username, firstname, lastname, email, password) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                (id, uuid_str, username, firstname, lastname, email, password),
+            )
             self.conn.commit()
             print("User added successfully!")
         except sqlite3.IntegrityError:
@@ -81,7 +84,9 @@ class UserModel:
 
     def get_user_by_email(self, email):
         cursor = self.conn.cursor()
-        cursor.execute("SELECT id, uid, username, firstname, lastname, email, password FROM users WHERE email=?", (email,))
+        cursor.execute(
+            "SELECT id, uid, username, firstname, lastname, email, password FROM users WHERE email=?", (email,)
+        )
         result = cursor.fetchone()
         if result:
             return User(result[0], result[2], result[3], result[4], result[5], result[6])

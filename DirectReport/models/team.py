@@ -5,7 +5,6 @@ import uuid
 
 
 class Team:
-
     def __init__(self, team_id, team_name, team_email):
         self.team_id = team_id
         self.team_name = team_name

@@ -62,7 +62,7 @@ class Entry:
             "topic": self.topic,
             "message": self.message,
             "created_at": str(self.created_at),
-            "modified_on": str(self.modified_on)
+            "modified_on": str(self.modified_on),
         }
 
     @classmethod

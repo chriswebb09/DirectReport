@@ -3,6 +3,7 @@
 import sqlite3
 from DirectReport.models.entry import Entry
 
+
 class EntryStorage:
     """
     A class to interact with SQLite database for storing and retrieving `Entry` objects.
@@ -38,7 +39,7 @@ class EntryStorage:
             entry.topic,
             entry.message,
             entry.created_at.__str__(),
-            entry.modified_on.__str__()
+            entry.modified_on.__str__(),
         )
         self.conn.execute(
             "INSERT OR IGNORE INTO entries (uuid, topic, message, created_at, modified_on) VALUES (?, ?, ?, ?, ?)",

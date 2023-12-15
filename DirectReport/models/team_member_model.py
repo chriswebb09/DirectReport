@@ -5,27 +5,30 @@ import uuid
 
 
 class TeamMemberModel:
-
     def __init__(self, db_name="teammember.db"):
         self.conn = sqlite3.connect(db_name, check_same_thread=False)
         self.create_table()
 
     def create_table(self):
         cursor = self.conn.cursor()
-        cursor.execute("""
+        cursor.execute(
+            """
             CREATE TABLE IF NOT EXISTS teammember (
                 id TEXT UNIQUE NOT NULL PRIMARY KEY,
                 team_id TEXT NOT NULL,
                 username TEXT NOT NULL
             )
-        """)
+        """
+        )
         self.conn.commit()
 
     def insert_team(self, team_id, username):
         cursor = self.conn.cursor()
         uuid_str = str(uuid.uuid4())
         try:
-            cursor.execute("INSERT INTO teammember (id, team_id, username) VALUES (?, ?, ?)", (uuid_str, team_id, username))
+            cursor.execute(
+                "INSERT INTO teammember (id, team_id, username) VALUES (?, ?, ?)", (uuid_str, team_id, username)
+            )
             self.conn.commit()
             print("User added successfully!")
         except sqlite3.IntegrityError:
@@ -37,5 +40,6 @@ class TeamMemberModel:
         result = cursor.fetchone()
         if result:
             return TeamMember(result[0], result[1], result[2])
+
     def close(self):
         self.conn.close()

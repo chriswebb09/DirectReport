@@ -46,7 +46,7 @@ class Report:
             "user_id": self.user_id,
             "raw_input": self.raw_input,
             "report": self.report,
-            "created_at": str(self.created_at)
+            "created_at": str(self.created_at),
         }
 
     @classmethod
