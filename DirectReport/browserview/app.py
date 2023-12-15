@@ -1,26 +1,17 @@
 #!/usr/bin/env python3
 
-from flask import Flask, render_template, request, redirect, json, url_for
-from werkzeug.security import generate_password_hash
-from DirectReport.models.user_model import UserModel
-from DirectReport.models.list_builder import ListBuilder
-from DirectReport.models.report_model import ReportModel
-from DirectReport.models.report_builder import ReportBuilder
-from DirectReport.models.report import Report
-from DirectReport.browserview.prompt_logic import generate_email
-from DirectReport.browserview.github import GithubClient
-from DirectReport.browserview.github import GoogleAIClient
-from DirectReport.browserview.github import HuggingFaceClient
-from flask_login import LoginManager, login_user, login_required, logout_user, current_user
-from DirectReport.datadependencies import appsecrets
-from .auth.auth import auth
-from .reportbp import reportsbp
-from .modelclient import TEST_DATA_ELEMENTS
-from .modelclient import RAW_REPORT_DATA
-from .modelclient import RAW_REPORT_DATA_2
-
 import sys
 from pathlib import Path
+
+from flask import Flask, render_template, request, redirect, json, url_for
+from flask_login import LoginManager, login_required, current_user
+
+from DirectReport.browserview.github import GithubClient
+from DirectReport.browserview.prompt_logic import generate_email
+from DirectReport.datadependencies import appsecrets
+from DirectReport.models.user_model import UserModel
+from .auth.auth import auth
+from .reportbp import reportsbp
 
 file = Path(__file__).resolve()
 package_root_directory = file.parents[1]
@@ -85,7 +76,7 @@ def unauthorized_handler():
 
 @app.route("/team", methods=['GET'])
 def team():
-    return render_template('team.html', title='Team', data=[])
+    return render_template('team/team.html', title='Team', data=[])
 
 @app.route("/generate_email", methods=['POST'])
 def generate_email():
@@ -102,7 +93,7 @@ def repo(reponame=None):
     client = GithubClient()
     repo = client.get_repo_issues("chriswebb09", reponame)
     print(repo)
-    return render_template('team.html', title='Team', data=[])
+    return render_template('team/team.html', title='Team', data=[])
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)

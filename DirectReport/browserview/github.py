@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 
-import re
-import requests
 import json
+import re
+
+import requests
+
 from DirectReport.datadependencies import appsecrets, prompts
 
 

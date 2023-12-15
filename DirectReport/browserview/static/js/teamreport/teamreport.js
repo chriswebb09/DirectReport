@@ -2,9 +2,10 @@ const { useState, useEffect } = React;
 
 const TeamData = () => {
 
-    const [teamData, setTeamData] = useState({});
+    const [teamData, setTeamData] = useState({})
     const [commentText, setCommentText] = useState("")
-    const [isOpened, setIsOpened] = useState(false);
+    const [isOpened, setIsOpened] = useState(false)
+
     const handleSubmit = e => {
         e.preventDefault()
         var dataForm = {
@@ -131,18 +132,6 @@ const TeamData = () => {
         setIsOpened(isOpened => !isOpened);
     }
 
-    const ShowSummary = (report) => {
-        return (
-            <p id="show_summary" className="w-97 sm:w-97 overflow-y-auto break-words">
-                {report !== undefined ?
-                    <div className="px-2 mb-1 text-xs text-blue-700">
-                        {report["summary"]}
-                    </div> : null
-                }
-            </p>
-        )
-    }
-
     return (
         <div>
             <h1 className="self-center text-center text-2xl text-blue-800 text-center font-bold font-mono pt-3 pb-2 mb-2 pt-4 mx-10 px-20">
@@ -169,7 +158,7 @@ const TeamData = () => {
                 <div id="team_member_to_select" className="lg:col-span-1 sm:col-span-3 justify-center">
                     <div className="pb-6 pt-2 bg-blue-500 rounded-3xl px-4 mb-2 shadow-[1.0px_1.0px_5.0px_0.0px_rgba(0,0,0,0.48)]">
                         <h1 className="self-center text-center text-xl text-white text-center font-semibold font-mono mb-1 mt-2 mx-20 px-20">Team</h1>
-                        <PopoverUI closePopover={closePopover}/>
+                        {PopoverUI(closePopover)}
                         <div id="display_team" className="my-3"></div>
                         {isOpened && (
                             <div className="content-center py-1 h-90 rounded-3xl mb-4 bg-slate-100 shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.28)] mx-1 px-3">
@@ -180,10 +169,7 @@ const TeamData = () => {
                 </div>
             </div>
             {isOpened && (
-                <div>
-                    <h3 className="text-xl text-blue-800 text-left font-mono font-semibold mt-10 mb-5 mx-5 px-12">Data</h3>
-                    <GraphDiv/>
-                </div>
+                <GraphicsUI/>
             )}
         </div>
     );

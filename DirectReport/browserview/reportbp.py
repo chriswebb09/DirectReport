@@ -1,16 +1,15 @@
 #!/usr/bin/env python3
 
-import ast
-from flask import Flask, render_template, request, json
 from flask import Blueprint
-from DirectReport.browserview.app import login_required
+from flask import render_template, request, json
 from flask_login import login_required, current_user
-from DirectReport.models.report_builder import ReportBuilder
-from DirectReport.models.report_model import ReportModel
-from DirectReport.models.entry_storage import EntryStorage
-from DirectReport.models.list_builder import ListBuilder
+
 from DirectReport.browserview.github import GithubClient
 from DirectReport.browserview.github import GoogleAIClient
+from DirectReport.models.entry_storage import EntryStorage
+from DirectReport.models.list_builder import ListBuilder
+from DirectReport.models.report_builder import ReportBuilder
+from DirectReport.models.report_model import ReportModel
 
 reportsbp = Blueprint('reportsbp', __name__)
 
@@ -43,7 +42,7 @@ def team_report():
     if request.method == "POST":
         json_data = request.get_json()
         report_model = ReportModel(json_data["id"], json_data['summary'], json_data['created_at'])
-    return render_template('teamreport.html', title='Team Report', data=[])
+    return render_template('team/teamreport.html', title='Team Report', data=[])
 
 @reportsbp.route('/entry/<uid>', methods=['GET', 'POST'])
 @login_required
