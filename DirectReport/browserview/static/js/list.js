@@ -3,10 +3,13 @@ const { useState, useEffect } = React;
 class EntryList extends React.Component {
     render() {
         return (
-            <div class="grid grid-cols-3 gap-1 mb-20 mx-10">
+            <div className="grid grid-cols-3 gap-1 mb-20 mx-20">
+                <h1 className="col-span-3 text-2xl text-blue-800 text-left font-bold font-mono mb-4 mx-10">
+                   Saved Reports
+                </h1>
                 {this.props.listdata.map(item =>
-                    <div class="col-span-1 justify-center my-5">
-                        <article className="mx-8 mt-8 w-90 rounded-2xl border border-gray-200 p-1 shadow-lg transition hover:shadow-xl">
+                    <div className="col-span-1 justify-center mt-3 mb-3">
+                        <article className="mx-4 mt-2 w-90 rounded-2xl border border-gray-200 p-1 shadow-lg transition hover:shadow-xl">
                             <a className="block rounded-xl bg-white p-1 sm:p-6 lg:p-8" href={'/entry/' + item.uuid}>
                                 <div className="mt-1">
                                     <h2 className="text-2xl font-bold text-gray-800 sm:text-xl">{'Topic: ' + item.user_id}</h2>
@@ -36,6 +39,7 @@ class EmptyEntryList extends React.Component {
 
 
 const App = () => {
+
     const [listData, setListData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -70,7 +74,9 @@ const App = () => {
     } else {
         if (listData.length > 0) {
             return (
-                <div><EntryList name="Entry List" listdata={listData}/></div>
+                <div>
+                    <EntryList name="Entry List" listdata={listData}/>
+                </div>
             )
         } else {
             return (

@@ -11,15 +11,14 @@ class ReportItem extends React.Component {
         console.log(this.props.report["total_commits"])
         console.log(this.props.report["conclusion"])
         console.log(this.props.report["highlights"])
-        return (
 
+        return (
             <div className="mx-50 content-center mt-20 my-28 h-150">
                 <div className="flex flex-col justify-center my-6 mx-60">
                     <h1 className="self-center text-3xl text-gray-700 text-center font-bold">Report</h1>
                     {this.props.report !== undefined ?
                         <div className="px-2 mb-1 text-xs text-blue-700">{this.props.report["summary"]}</div> : null
                     }
-
                     {this.props.report !== undefined ?
                         <div className="px-2 mb-1 text-xs text-blue-700">{this.props.report["conclusion"]}</div> : null
                     }
@@ -36,6 +35,7 @@ class ReportItem extends React.Component {
 }
 
 const App = () => {
+
     const [reportData, setReportData] = useState(null);
     const [teamData, setTeamData] = useState([]);
     const [loading, setLoading] = useState(true);

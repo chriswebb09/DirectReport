@@ -20,21 +20,21 @@ class Home extends React.Component {
                     React.createElement(
                         "h2",
                         {
-                            className: "my-1 text-3xl font-bold mb-5 text-white"
+                            className: "mt-1 text-3xl font-bold mb-3 text-white"
                         },
                         "DirectReport."
                     ),
                     React.createElement(
                         "h3",
                         {
-                            className: "my-1 text-lg mb-8 text-gray-200"
+                            className: "mt-4 text-lg mb-11 text-gray-200"
                         },
                         "Keep track of your accomplishments each day of the workweek."
                     ),
                     React.createElement(
                         "div",
                         {
-                            className: "my-8"
+                            className: "my-15"
                         },
                         React.createElement(
                             "a",

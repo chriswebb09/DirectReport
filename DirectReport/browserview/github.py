@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 
-import re
-import requests
 import json
+import re
+
+import requests
+
 from DirectReport.datadependencies import appsecrets, prompts
 
 
@@ -91,7 +93,6 @@ class GoogleAIClient:
 
 
     def query(self, prompt):
-        print(prompts.GENERATE_SUMMARY_PROMPT_PREIX)
         API_URL = f"https://generativelanguage.googleapis.com/v1beta3/models/text-bison-001:generateText?key={appsecrets.GOOGLE_AI_TOKEN}"
         headers = {"Content-Type": "application/json"}
         prompt_data = prompts.GENERATE_SUMMARY_PROMPT_PREIX + prompt

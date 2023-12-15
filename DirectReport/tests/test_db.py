@@ -96,10 +96,8 @@ def test_get_all_entries(temp_db):
         created_at=datetime.now().timestamp(),
         modified_on=datetime.now().timestamp()
     )
-
     storage.add_entry(entry1)
     storage.add_entry(entry2)
-
     entries = storage.list_all_entries()
     assert len(entries) == 2
 

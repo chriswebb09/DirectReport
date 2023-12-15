@@ -1,7 +1,10 @@
 
 function showGraphics(data, divtag) {
+
     const newData = data
+
     const stringData = JSON.stringify(newData['broad_categories']);
+
     const values = Object.keys(newData['broad_categories']).map(function (key) {
         return [key, Number(newData['broad_categories'][key])]
     });
@@ -9,8 +12,10 @@ function showGraphics(data, divtag) {
     const chartWidth = 350
     const chartHeight = 300
     const padding = 25
+
     var data = values
     const heightScalingFactor = chartHeight / 67
+
     var container = d3.select(divtag)
         .append('svg')
         .attr('width', chartWidth)
@@ -63,8 +68,11 @@ function showGraphics(data, divtag) {
 }
 
 function showGraphics2(data, divtag) {
+
     const newData = data
+
     const stringData = JSON.stringify(newData['broad_categories']);
+
     const values = Object.keys(newData['broad_categories']).map(function (key) {
         return [key, Number(newData['broad_categories'][key])]
     });
@@ -72,14 +80,16 @@ function showGraphics2(data, divtag) {
     const chartWidth = 350
     const chartHeight = 300
     const padding = 25
+
     var data = values
     const heightScalingFactor = chartHeight / 67
+
     var container = d3.select(divtag)
         .append('svg')
         .attr('width', chartWidth)
         .attr('height', chartHeight)
 
-     var svg = d3.select(divtag).select("svg")
+    var svg = d3.select(divtag).select("svg")
     var groups = svg.selectAll(".groups")
         .data(data)
         .enter()
@@ -126,8 +136,11 @@ function showGraphics2(data, divtag) {
 }
 
 function showGraphics3(data, divtag) {
+
     const newData = data
+
     const stringData = JSON.stringify(newData['broad_categories']);
+
     const values = Object.keys(newData['broad_categories']).map(function (key) {
         return [key, Number(newData['broad_categories'][key])]
     });
@@ -135,6 +148,7 @@ function showGraphics3(data, divtag) {
     const chartWidth = 350
     const chartHeight = 300
     const padding = 25
+
     var data = values
     const heightScalingFactor = chartHeight / 67
     var container = d3.select(divtag)
