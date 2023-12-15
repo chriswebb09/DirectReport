@@ -19,7 +19,6 @@ class EntryList extends React.Component {
             </div>
         );
     }
-    // Thest
 }
 
 class EmptyEntryList extends React.Component {
@@ -37,6 +36,7 @@ class EmptyEntryList extends React.Component {
 
 
 const App = () => {
+
     const [listData, setListData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -71,7 +71,9 @@ const App = () => {
     } else {
         if (listData.length > 0) {
             return (
-                <div><EntryList name="Entry List" listdata={listData}/></div>
+                <div>
+                    <EntryList name="Entry List" listdata={listData}/>
+                </div>
             )
         } else {
             return (
