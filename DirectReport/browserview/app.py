@@ -87,7 +87,7 @@ def team():
 
 
 @app.route("/generate_email", methods=['POST'])
-def generate_email():
+def generateemail():
     prompt = ""
     if request.method == "POST":
         prompt = json.dumps(request.get_json()["prompt"])

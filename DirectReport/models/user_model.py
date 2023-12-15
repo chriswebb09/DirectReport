@@ -26,9 +26,6 @@ class User(UserMixin):
     def is_authenticated(self):
         return self.authenticated
 
-    def is_active(self):
-        return True
-
     def get_id(self):
         return self.id
 
