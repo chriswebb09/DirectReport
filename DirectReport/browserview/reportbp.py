@@ -52,6 +52,7 @@ def team_report():
     if request.method == "POST":
         json_data = request.get_json()
         report_model = ReportModel(json_data["id"], json_data['summary'], json_data['created_at'])
+        print(report_model)
     return render_template('team/teamreport.html', title='Team Report', data=[])
 
 
@@ -74,7 +75,8 @@ def detail(uid=None):
             json_data["id"], json_data['entry'], json_data['topic'], json_data['created_at'], json_data['week_id']
         )
     entry = item.get_entry(uid).to_dict()
-    return render_template('detail.html', title='Detail', data=reportJSON)
+    print(entry)
+    return render_template('detail.html', title='Detail', data=entry)
 
 
 @reportsbp.route("/getreport/<uid>", methods=['GET'])

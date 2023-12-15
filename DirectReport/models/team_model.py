@@ -2,6 +2,7 @@
 
 import sqlite3
 import uuid
+from .team import Team
 
 
 class TeamModel:
