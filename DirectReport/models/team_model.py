@@ -12,11 +12,13 @@ class TeamModel:
 
     def create_table(self):
         cursor = self.conn.cursor()
-        cursor.execute("""CREATE TABLE IF NOT EXISTS team (
+        cursor.execute(
+            """CREATE TABLE IF NOT EXISTS team (
                 id TEXT UNIQUE NOT NULL PRIMARY KEY,
                 team_name TEXT NOT NULL,
                 team_email TEXT NOT NULL
-                )""")
+                )"""
+        )
 
     def insert_team(self, team_name, team_email):
         cursor = self.conn.cursor()
