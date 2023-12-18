@@ -24,7 +24,7 @@ class ReportModel:
         """
         Creates the `entries` table in the SQLite database if it doesn't exist.
         """
-        query = "CREATE TABLE IF NOT EXISTS reports (uuid TEXT PRIMARY KEY, user_id TEXT, raw_input TEXT, report TEXT, created_at TEXT)"
+        query = "CREATE TABLE IF NOT EXISTS reports (uuid TEXT PRIMARY KEY, user_id TEXT, raw_input TEXT, report TEXT, repo_name TEXT, created_at TEXT)"
         self.conn.execute(query)
         self.conn.commit()
 
@@ -39,10 +39,11 @@ class ReportModel:
             report.user_id.__str__(),
             report.raw_input.__str__(),
             report.report.__str__(),
-            report.created_at.__str__(),
+            report.repo_name.__str__(),
+            report.created_at.__str__()
         )
         self.conn.execute(
-            "INSERT OR IGNORE INTO reports (uuid, user_id, raw_input, report, created_at) VALUES (?, ?, ?, ?, ?)",
+            "INSERT OR IGNORE INTO reports (uuid, user_id, raw_input, report, repo_name, created_at) VALUES (?, ?, ?, ?, ?, ?)",
             values,
         )
         self.conn.commit()
@@ -55,7 +56,7 @@ class ReportModel:
         """
 
         result = self.conn.execute(
-            "SELECT uuid, user_id, raw_input, report, created_at FROM reports WHERE user_id = ?",
+            "SELECT uuid, user_id, raw_input, report, repo_name, created_at FROM reports WHERE user_id = ?",
             (str(user_id),),
         )
         row = result.fetchone()
@@ -81,7 +82,7 @@ class ReportModel:
         """
 
         result = self.conn.execute(
-            "SELECT uuid, user_id, raw_input, report, created_at FROM reports WHERE modified_on = ?",
+            "SELECT uuid, user_id, raw_input, report, repo_name, created_at FROM reports WHERE modified_on = ?",
             (str(date),),
         )
         if result is not None:
@@ -141,7 +142,7 @@ class ReportModel:
         """
         cursor = self.conn.cursor()
         result = cursor.execute(
-            "SELECT uuid, user_id, raw_input, report, created_at FROM reports WHERE user_id = ?",
+            "SELECT uuid, user_id, raw_input, report, repo_name, created_at FROM reports WHERE user_id = ?",
             (str(user_id),),
         )
         results = cursor.fetchall()

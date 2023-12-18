@@ -77,7 +77,7 @@ def account_data():
         "lastname": current_user.lastname,
         "userid": current_user.id,
         "username": current_user.username,
-        "email": current_user.email,
+        "email": current_user.email
     }
     user_element = {"user": user_account, "reports": report_results, "shortlog": shortlog}
     return user_element, 201

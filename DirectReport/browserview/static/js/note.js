@@ -6,6 +6,7 @@ function jsonEscape(str)  {
 }
 class ReportItem extends React.Component {
     render() {
+
         console.log(this.props.report["summary"])
         console.log(this.props.report["areas_of_focus"])
         console.log(this.props.report["total_commits"])

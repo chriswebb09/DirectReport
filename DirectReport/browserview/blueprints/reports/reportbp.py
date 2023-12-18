@@ -42,7 +42,7 @@ def report():
     }
     data_json["shortlog"] = client.parse_git_shortlog(log_item)
     data_json["repos"] = repodata
-    ReportBuilder.new(data_json, prompt, current_user.id)
+    ReportBuilder.new(data_json, prompt, current_user.id, "DirectReport")
     return data_json, 201
 
 

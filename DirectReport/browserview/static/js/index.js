@@ -9,7 +9,7 @@ class Home extends React.Component {
             React.createElement(
                 'div',
                 {
-                    className: "py-20 flex h-50",
+                    className: "pt-20 pb-20 flex h-50",
                     style: {background: "linear-gradient(90deg, #667eea 0%, #764ba2 100%)"}
                 },
                 React.createElement(
@@ -20,7 +20,7 @@ class Home extends React.Component {
                     React.createElement(
                         "h2",
                         {
-                            className: "mt-1 text-3xl font-bold mb-3 text-white"
+                            className: "text-3xl font-bold mb-3 text-white"
                         },
                         "DirectReport."
                     ),

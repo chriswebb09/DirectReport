@@ -31,18 +31,6 @@ class User(UserMixin):
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
-        # return verify_password(self.password, password)   # from Flask-Security
-        # return verify_and_update_password(self.password, password) # from Flask-Security
-        # return check_password(self.password, password)  # from werkzeug.security
-
-    # def is_password_correct(self, password_plaintext: str):
-    #     return check_password_hash(self.password_hashed, password_plaintext)
-    #
-    # def set_password(self, password_plaintext: str):
-    #     self.password_hashed = generate_password_hash(password_plaintext)
-
-    # from app import app as application
-
 
 class UserModel:
     def __init__(self, db_name="users.db"):

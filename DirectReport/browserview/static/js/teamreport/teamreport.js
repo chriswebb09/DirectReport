@@ -77,28 +77,16 @@ const TeamReport = () => {
         document.getElementById('popoverCommits').innerHTML = "Commits: " + teammember.commits;
     }
 
-    const openRepoPopover = (e: ChangeEvent<HTMLInputElement>) => {
-        const element = document.getElementById('formUI');
+     const openRepoPopover = (e: ChangeEvent<HTMLInputElement>) => {
+        const element = document.getElementById('h1content');
         Popper.createPopper(element, document.getElementById('popover-repo-left-purple'), {
-            strategy: 'fixed',
-            modifiers: [{
-                name: "offset",  // offsets popper from the reference/button
-                options: {
-                    offset: [0, 8]
-                }
-            }, {
-                name: "flip", // flips popper with allowed placements
-                options: {
-                    allowedAutoPlacements: ["right", "left", "top", "bottom"],
-                    rootBoundary: "viewport"
-                }
-            }]
+           strategy: 'fixed'
         });
         document.getElementById('popover-repo-left-purple').classList.toggle("hidden");
         document.getElementById('popover-repo-TitleContent').innerHTML = "Repos" + "(" + teamData["repos"].length + ")";
-        var list = '<ul className="px-30 py-30">';
+        var list = '<ul>';
         for (var i = 0; i < teamData["repos"].length; i++) {
-            list += '<li>' + '<a href=/repo/' + teamData["repos"][i] + '>' + teamData["repos"][i] + '' + '</li>';
+            list += '<li class="px-1 py-2 border-b border-solid border-blueGray-100 hover:bg-gray-400">' + '<a className="px-8 py-10" href=/repo/' + teamData["repos"][i] + '>' + teamData["repos"][i] + '' + '</li>';
         }
         list += '</ul>';
         document.getElementById('popover-repo-Content').innerHTML = list;
@@ -106,13 +94,14 @@ const TeamReport = () => {
 
     const repoPopoverUI = () => {
         return (
-            <div className="hidden bg-indigo-600 border-0 mr-3 block z-50 font-normal leading-normal text-sm max-w-xs text-left no-underline break-words rounded-lg" id="popover-repo-left-purple" style={{zIndex: -1}}>
+            <div className="hidden bg-indigo-600 border-0 mx-3 block z-50 font-normal leading-normal text-sm max-w-xs text-left no-underline break-words rounded-2xl h-58" id="popover-repo-left-purple" style={{zIndex: 2}}>
                 <div>
-                    <div id="popover-repo-Title" className="bg-indigo-600 text-white opacity-75 font-semibold p-3 mb-0 border-b border-solid border-blueGray-100 uppercase rounded-t-lg py-3">
+                    <div id="popover-repo-Title" className="bg-indigo-600 text-white opacity-75 font-semibold p-3 mb-0 border-b border-solid border-blueGray-100 uppercase rounded-t-2xl py-3">
                         <span id="popover-repo-TitleContent"></span>
                         <button className="float-right" onClick={closeRepoPopover}>X</button>
                     </div>
-                    <div id="popover-repo-Content" className="text-white px-6 py-4"></div>
+                    <div id="popover-repo-Content" className="text-white px-6 py-4 h-2/3 overflow-y-scroll h-28"></div>
+                    <div id="profile-repo-Button" className="text-white px-6 py-4"></div>
                     {/*<div id="profile-repo-Button" className="text-white px-6 py-4 border-t border-solid border-blueGray-100">*/}
                     {/*</div>*/}
                 </div>
@@ -134,9 +123,9 @@ const TeamReport = () => {
 
     const FormDiv = (handleSubmit, openRepoPopover, commentText) => {
         return (
-            <div className="py-1 bg-blue-500 rounded-3xl px-30 shadow-[1.0px_1.0px_2.0px_1.0px_rgba(0,0,0,0.58)]">
-                <form onSubmit={handleSubmit} className="w-97 sm:w-97">
-                    <h1 className="self-center text-center text-white text-xl text-center font-semibold font-mono mb-1 mt-3">Enter
+            <div className="py-1 bg-blue-500 rounded-3xl px-20 shadow-[1.0px_1.0px_2.0px_1.0px_rgba(0,0,0,0.58)]">
+                <form onSubmit={handleSubmit}>
+                    <h1 id="title_element" className="self-center text-center text-white text-xl text-center font-semibold font-mono mb-1 mt-3">Enter
                         Github Data
                     </h1>
                     <div className="self-center mb-4 mt-2">
@@ -159,13 +148,12 @@ const TeamReport = () => {
 
     return (
         <div>
-            <h1 className="self-center text-center text-2xl text-blue-800 text-center font-bold font-mono pt-3 pb-2 mb-2 pt-4 mx-10 px-20">
+            <h1 id="h1content" className="self-center text-center text-2xl text-blue-800 text-center font-bold font-mono pt-10 pb-2 mb-2 pt-8 mx-30 px-20">
                 Generate Team Report From Metadata
             </h1>
-            {/*{repoPopoverUI()}*/}
-            <div id="topRow" className="grid grid-cols-3 gap-8 rounded-3xl mx-10 mt-6">
+            {repoPopoverUI()}
+            <div id="topRow" className="grid grid-cols-3 gap-10 rounded-3xl mx-20 mt-6">
                 <div className="lg:col-span-1 sm:col-span-3 justify-center" id="edit_summary_div">
-                    {/*<FormDiv handleSum/>*/}
                     {FormDiv(handleSubmit, openRepoPopover, commentText)}
                 </div>
                 <div id="show_summmary_div" className="lg:col-span-1 sm:col-span-3 justify-center">

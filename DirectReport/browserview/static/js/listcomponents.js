@@ -1,24 +1,26 @@
 const { useState, useEffect } = React;
 
-class EntryList extends React.Component {
+class SavedReportList extends React.Component {
     render() {
         return (
-            <div className="grid grid-cols-3 gap-1 mb-20 mx-20">
-                <h1 className="col-span-3 text-2xl text-blue-800 text-left font-bold font-mono mb-4 mx-10">
-                   Saved Reports
+            <div className="mx-20 pb-10">
+                <h1 className="text-2xl text-blue-800 text-left font-bold font-mono mb-4 mx-10">
+                    Saved Reports
                 </h1>
-                {this.props.listdata.map(item =>
-                    <div className="col-span-1 justify-center mt-3 mb-3">
-                        <article className="mx-4 mt-2 w-90 rounded-2xl border border-gray-200 p-1 shadow-lg transition hover:shadow-xl">
-                            <a className="block rounded-xl bg-white p-1 sm:p-6 lg:p-8" href={'/getreport/' + item.uuid}>
-                                <div className="mt-1">
-                                    <h2 className="text-2xl font-bold text-gray-800 sm:text-xl">{'Topic: ' + item.user_id}</h2>
-                                    <p className="mt-3 text-sm text-justify line-clamp-5 text-gray-500">{'Entry: ' + item.raw_input}</p>
-                                </div>
-                            </a>
-                        </article>
-                    </div>
-                )}
+                <div className="grid grid-cols-3 gap-1 mb-20 mx-10">
+                    {this.props.listdata.map(item =>
+                        <div className="col-span-1 justify-center mt-3 mb-3">
+                            <article className="mx-4 mt-2 w-90 rounded-2xl border border-gray-200 p-1 shadow-lg transition hover:shadow-xl">
+                                <a className="block rounded-xl bg-white p-1 sm:p-6 lg:p-8" href={'/getreport/' + item.uuid}>
+                                    <div className="mt-1">
+                                        <h2 className="text-2xl font-bold text-gray-800 sm:text-xl">{'User: ' + item.user_id}</h2>
+                                        <p className="mt-3 text-sm text-justify line-clamp-3 text-gray-500">{'Raw Input: ' + item.raw_input}</p>
+                                    </div>
+                                </a>
+                            </article>
+                        </div>
+                    )}
+                </div>
             </div>
         );
     }

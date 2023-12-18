@@ -1,6 +1,6 @@
 const { useState, useEffect } = React;
 
-const ListApp = () => {
+const SavedReportListApp = () => {
 
     const [listData, setListData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -37,7 +37,7 @@ const ListApp = () => {
         if (listData.length > 0) {
             return (
                 <div>
-                    <EntryList name="Entry List" listdata={listData}/>
+                    <SavedReportList name="Entry List" listdata={listData}/>
                 </div>
             )
         } else {
@@ -51,4 +51,4 @@ const ListApp = () => {
 }
 
 const domContainer = document.querySelector("#root");
-ReactDOM.render(<ListApp/>, domContainer);
+ReactDOM.render(<SavedReportListApp/>, domContainer);
