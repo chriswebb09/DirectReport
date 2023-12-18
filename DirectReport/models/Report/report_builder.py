@@ -27,7 +27,9 @@ class ReportBuilder:
         storage.create_table()
         if report is None or report == '':
             report = "Entry for work on " + str(today)
-        new_report = Report(str(uuid.uuid1()), user_id, raw_input, report, repo_name, datetime.datetime.now().timestamp())
+        new_report = Report(
+            str(uuid.uuid1()), user_id, raw_input, report, repo_name, datetime.datetime.now().timestamp()
+        )
         storage.add_report(new_report)
 
     @staticmethod
