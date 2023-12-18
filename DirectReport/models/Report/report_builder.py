@@ -2,8 +2,8 @@
 
 import datetime
 import uuid
-from DirectReport.models.report import Report
-from DirectReport.models.report_model import ReportModel
+from DirectReport.models.Report.report import Report
+from DirectReport.models.Report.report_model import ReportModel
 
 
 class ReportBuilder:

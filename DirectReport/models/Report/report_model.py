@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import sqlite3
-from DirectReport.models.report import Report
+from DirectReport.models.Report.report import Report
 
 
 class ReportModel:

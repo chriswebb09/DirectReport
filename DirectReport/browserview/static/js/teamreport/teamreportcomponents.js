@@ -47,18 +47,18 @@ const ShowTeamList = (team, openPopover) => {
 class GraphDiv extends React.Component {
     render() {
         return (
-            <div className="grid grid-cols-3 gap-6 mt-5 mx-10 bg-blue-500 shadow-[1.0px_1.0px_5.0px_0.0px_rgba(0,0,0,0.48)] rounded-3xl px-30 py-3">
-                <div className="lg:col-span-1 sm:col-span-3 justify-center mt-7 mb-7 bg-white shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.28)] rounded-3xl px-30 ml-10" id="dd">
+            <div className="grid grid-cols-3 gap-6 mt-5 mx-10 bg-blue-500 shadow-[1.0px_1.0px_5.0px_0.0px_rgba(0,0,0,0.58)] rounded-3xl px-30 py-3">
+                <div className="lg:col-span-1 sm:col-span-3 justify-center mt-7 mb-7 bg-white shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.58)] rounded-3xl px-30 ml-10" id="dd">
                     <div className="col-span-1 flex justify-center my-2 px-3" id="data_display_div">
                         <div id="map-container" className="pl-10 pr-5"></div>
                     </div>
                 </div>
-                <div className="lg:col-span-1 sm:col-span-3 justify-center mt-7 mb-7 bg-white shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.28)] rounded-3xl px-30 mx-6" id="dd">
+                <div className="lg:col-span-1 sm:col-span-3 justify-center mt-7 mb-7 bg-white shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.58)] rounded-3xl px-30 mx-6" id="dd">
                     <div className="col-span-1 justify-center my-2 px-3" id="data_display_div-r">
                         <div id="map-container2" className="pl-5 pr-5"></div>
                     </div>
                 </div>
-                <div className="lg:col-span-1 sm:col-span-3 justify-center mt-7 mb-7 bg-white shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.28)] rounded-3xl px-30 mr-10" id="dd">
+                <div className="lg:col-span-1 sm:col-span-3 justify-center mt-7 mb-7 bg-white shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.58)] rounded-3xl px-30 mr-10" id="dd">
                     <div className="col-span-1 justify-center my-2 px-3" id="data_display_div-rr">
                         <div id="map-container3" className="pl-5 pr-10"></div>
                     </div>
@@ -77,30 +77,7 @@ const GraphicsUI = () => {
     )
 }
 
-const FormDiv = (handleSubmit, openRepoPopover, commentText) => {
-    return (
-        <div className="py-1 bg-blue-500 rounded-3xl px-30 shadow-[1.0px_1.0px_5.0px_0.0px_rgba(0,0,0,0.48)]">
-            <form onSubmit={handleSubmit}>
-                <h1 className="self-center text-center text-white text-xl text-center font-semibold font-mono mb-1 mt-3">Enter
-                    Github Data
-                </h1>
-                <div className="self-center mb-4 mt-2">
-                    <div className="py-2 px-10 mx-0 min-w-full flex flex-col items-center">
-                            <textarea id="prompt_input" cols="34" rows="11" className="self-center py-2 border-2 bg-slate-100 shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.28)] border-gray-200 w-90 h-78 sm:w-90 text-base tracking-wide text-indigo-700 placeholder-white border rounded-3xl focus:shadow-outline" value={commentText} onChange={e => setCommentText(e.target.value)}>
-                            </textarea>
-                    </div>
-                    <div className="px-10 mx-0 min-w-full flex flex-col items-center">
-                        <button id="submit_prompt_btn" className="w-80 sm:w-90 bg-slate-100 hover:bg-blue-400 text-blue-500 hover:text-white hover:border-gray-200 text-lg font-semibold py-2 px-5 rounded-2xl mt-2" type="submit">
-                            Generate
-                        </button>
-                        <p></p>
-                        <button className="w-80 sm:w-90 bg-slate-100 hover:bg-blue-400 text-blue-500 hover:text-white hover:border-gray-200 text-lg font-semibold py-2 px-5 rounded-2xl mt-2" onClick={(e) => openRepoPopover(e)} type="button">Repos</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    )
-}
+
 
 const PopoverUI = (closePopover) => {
     return (

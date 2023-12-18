@@ -4,12 +4,12 @@ from flask import Blueprint
 from flask import render_template, request, json
 from flask_login import login_required, current_user
 
-from DirectReport.browserview.github import GithubClient
-from DirectReport.browserview.github import GoogleAIClient
+from DirectReport.browserview.services.github import GithubClient
+from DirectReport.browserview.services.github import GoogleAIClient
 from DirectReport.models.entry_storage import EntryStorage
 from DirectReport.models.list_builder import ListBuilder
-from DirectReport.models.report_builder import ReportBuilder
-from DirectReport.models.report_model import ReportModel
+from DirectReport.models.Report.report_builder import ReportBuilder
+from DirectReport.models.Report.report_model import ReportModel
 
 reportsbp = Blueprint('reportsbp', __name__)
 
