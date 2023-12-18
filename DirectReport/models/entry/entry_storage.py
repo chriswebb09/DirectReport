@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import sqlite3
-from DirectReport.models.entry import Entry
+from DirectReport.models.entry.entry import Entry
 
 
 class EntryStorage:

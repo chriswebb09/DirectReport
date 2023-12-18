@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-from DirectReport.models.entry import Entry
-from DirectReport.models.entry_storage import EntryStorage
+from DirectReport.models.entry.entry import Entry
+from DirectReport.models.entry.entry_storage import EntryStorage
 from datetime import datetime
 from pathlib import Path
 import tempfile
