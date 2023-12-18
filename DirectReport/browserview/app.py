@@ -6,12 +6,12 @@ from pathlib import Path
 from flask import Flask, render_template, request, redirect, json, url_for
 from flask_login import LoginManager, login_required, current_user
 
-from DirectReport.browserview.github import GithubClient
-from DirectReport.browserview.prompt_logic import generate_email
+from DirectReport.browserview.services.github import GithubClient
+from DirectReport.browserview.services.prompt_logic import generate_email
 from DirectReport.datadependencies import appsecrets
 from DirectReport.models.user_model import UserModel
-from .auth.auth import auth
-from .reportbp import reportsbp
+from DirectReport.browserview.blueprints.auth.auth import auth
+from DirectReport.browserview.blueprints.reports.reportbp import reportsbp
 
 file = Path(__file__).resolve()
 package_root_directory = file.parents[1]
@@ -100,8 +100,7 @@ def generateemail():
 def repo(reponame=None):
     client = GithubClient()
     repo = client.get_repo_issues("chriswebb09", reponame)
-    print(repo)
-    return render_template('team/team.html', title='Team', data=[])
+    return render_template('team/team.html', title='Team', data=repo)
 
 
 if __name__ == "__main__":

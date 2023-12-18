@@ -9,7 +9,7 @@ class Report:
     A class to represent a journal entry.
     """
 
-    def __init__(self, uuid, user_id, raw_input, report, created_at):
+    def __init__(self, uuid, user_id, raw_input, report, repo_name, created_at):
         """
         Initialize the Entry object.
         :param uuid: A unique identifier for the entry.
@@ -23,6 +23,7 @@ class Report:
         self.user_id = user_id
         self.raw_input = raw_input
         self.report = report
+        self.repo_name = repo_name
         self.created_at = created_at
 
     def get_created_at_formatted(self, date_format="%Y-%m-%d %H:%M:%S"):
@@ -46,6 +47,7 @@ class Report:
             "user_id": self.user_id,
             "raw_input": self.raw_input,
             "report": self.report,
+            "repo_name": self.repo_name,
             "created_at": str(self.created_at),
         }
 
@@ -62,8 +64,9 @@ class Report:
         user_id = data.get("user_id")
         raw_input = data.get("raw_input")
         report = data.get("report")
+        repo_name = data.get("repo_name")
         created_at = datetime.datetime.fromisoformat(data.get("created_at")).timestamp()
-        return cls(uuid, user_id, raw_input, report, created_at)
+        return cls(uuid, user_id, raw_input, report, repo_name, created_at)
 
     def is_recent(self, days=7):
         """

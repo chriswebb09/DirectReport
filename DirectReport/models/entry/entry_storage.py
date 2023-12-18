@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
 import sqlite3
-from DirectReport.models.report import Report
+from DirectReport.models.entry.entry import Entry
 
 
-class ReportModel:
+class EntryStorage:
     """
     A class to interact with SQLite database for storing and retrieving `Entry` objects.
     """
@@ -24,30 +24,30 @@ class ReportModel:
         """
         Creates the `entries` table in the SQLite database if it doesn't exist.
         """
-        query = "CREATE TABLE IF NOT EXISTS reports (uuid TEXT PRIMARY KEY, user_id TEXT, raw_input TEXT, report TEXT, created_at TEXT)"
+        query = "CREATE TABLE IF NOT EXISTS entries (uuid TEXT PRIMARY KEY, topic TEXT, message TEXT, created_at TEXT, modified_on TEXT)"
         self.conn.execute(query)
         self.conn.commit()
 
-    def add_report(self, report):
+    def add_entry(self, entry):
         """
         Adds an `Entry` object to the SQLite database.
         :param entry: The `Entry` object to add.
         """
 
         values = (
-            report.uuid.__str__(),
-            report.user_id.__str__(),
-            report.raw_input.__str__(),
-            report.report.__str__(),
-            report.created_at.__str__(),
+            entry.uuid.__str__(),
+            entry.topic,
+            entry.message,
+            entry.created_at.__str__(),
+            entry.modified_on.__str__(),
         )
         self.conn.execute(
-            "INSERT OR IGNORE INTO reports (uuid, user_id, raw_input, report, created_at) VALUES (?, ?, ?, ?, ?)",
+            "INSERT OR IGNORE INTO entries (uuid, topic, message, created_at, modified_on) VALUES (?, ?, ?, ?, ?)",
             values,
         )
         self.conn.commit()
 
-    def get_report(self, user_id):
+    def get_entry(self, uuid):
         """
         Retrieves an `Entry` object from the SQLite database by its UUID.
         :param uuid: The UUID of the entry to retrieve.
@@ -55,14 +55,24 @@ class ReportModel:
         """
 
         result = self.conn.execute(
-            "SELECT uuid, user_id, raw_input, report, created_at FROM reports WHERE user_id = ?",
-            (str(user_id),),
+            "SELECT uuid, topic, message, created_at, modified_on FROM entries WHERE uuid = ?",
+            (str(uuid),),
         )
         row = result.fetchone()
         if row:
-            return Report(*row)
+            return Entry(*row)
         else:
             return None
+
+    def update_entry(self, entry):
+        """
+        Updates an existing `Entry` object in the SQLite database.
+        :param entry: The `Entry` object to update.
+        """
+
+        values = (entry.message, entry.modified_on, str(entry.uuid))
+        self.conn.execute("UPDATE entries SET message = ?, modified_on = ? WHERE uuid = ?", values)
+        self.conn.commit()
 
     def delete_entry(self, uuid):
         """
@@ -70,7 +80,7 @@ class ReportModel:
         :param uuid: The UUID of the entry to delete.
         """
 
-        self.conn.execute("DELETE FROM reports WHERE uuid = ?", (str(uuid),))
+        self.conn.execute("DELETE FROM entries WHERE uuid = ?", (str(uuid),))
         self.conn.commit()
 
     def get_uuid(self, date):
@@ -81,7 +91,7 @@ class ReportModel:
         """
 
         result = self.conn.execute(
-            "SELECT uuid, user_id, raw_input, report, created_at FROM reports WHERE modified_on = ?",
+            "SELECT uuid, topic, message, created_at, modified_on, week_uuid FROM entries WHERE modified_on = ?",
             (str(date),),
         )
         if result is not None:
@@ -89,16 +99,16 @@ class ReportModel:
         else:
             return None
 
-    def delete_all_reports(self):
+    def delete_all_entries(self):
         """
         Deletes all entries from the database.
         :return: None
         """
 
-        self.conn.execute("DELETE FROM reports")
+        self.conn.execute("DELETE FROM entries")
         self.conn.commit()
 
-    def list_all_reports_as_dict(self):
+    def list_all_entries_as_dict(self):
         """
         Lists all date-UUID mappings from the SQLite database.
         :return: A list of tuples containing (date, week_uuid, day_uuid).
@@ -106,20 +116,19 @@ class ReportModel:
         cursor = self.conn.cursor()
         cursor.execute(
             '''
-            SELECT * FROM reports
+            SELECT * FROM entries
             '''
         )
         results = cursor.fetchall()
 
         results_list = []
         for result in results:
-            entry = Report(*result)
+            entry = Entry(*result)
             entry_dict = entry.to_dict()
             results_list.append(entry_dict)
-        print(results_list)
         return results_list
 
-    def list_all_reports(self):
+    def list_all_entries(self):
         """
         Lists all date-UUID mappings from the SQLite database.
         :return: A list of tuples containing (date, week_uuid, day_uuid).
@@ -127,27 +136,8 @@ class ReportModel:
         cursor = self.conn.cursor()
         cursor.execute(
             '''
-            SELECT * FROM reports
+            SELECT * FROM entries
             '''
         )
         results = cursor.fetchall()
         return results
-
-    def get_reports_userid(self, user_id):
-        """
-        Retrieves an `Entry` object from the SQLite database by its UUID.
-        :param uuid: The UUID of the entry to retrieve.
-        :return: The `Entry` object if found, otherwise `None`.
-        """
-        cursor = self.conn.cursor()
-        result = cursor.execute(
-            "SELECT uuid, user_id, raw_input, report, created_at FROM reports WHERE user_id = ?",
-            (str(user_id),),
-        )
-        results = cursor.fetchall()
-        results_list = []
-        for result in results:
-            entry = Report(*result)
-            entry_dict = entry.to_dict()
-            results_list.append(entry_dict)
-        return results_list

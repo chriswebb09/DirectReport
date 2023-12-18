@@ -6,8 +6,8 @@ from werkzeug.security import generate_password_hash
 from DirectReport.models.user_model import UserModel
 from flask_login import login_user, login_required, logout_user, current_user
 from DirectReport.browserview import app
-from DirectReport.models.report_builder import ReportBuilder
-from DirectReport.browserview.github import GithubClient
+from DirectReport.models.Report.report_builder import ReportBuilder
+from DirectReport.browserview.services.github import GithubClient
 
 auth = Blueprint('auth', __name__)
 

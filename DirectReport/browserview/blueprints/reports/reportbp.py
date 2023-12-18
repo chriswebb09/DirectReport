@@ -4,12 +4,10 @@ from flask import Blueprint
 from flask import render_template, request, json
 from flask_login import login_required, current_user
 
-from DirectReport.browserview.github import GithubClient
-from DirectReport.browserview.github import GoogleAIClient
-from DirectReport.models.entry_storage import EntryStorage
-from DirectReport.models.list_builder import ListBuilder
-from DirectReport.models.report_builder import ReportBuilder
-from DirectReport.models.report_model import ReportModel
+from DirectReport.browserview.services.github import GithubClient
+from DirectReport.browserview.services.github import GoogleAIClient
+from DirectReport.models.Report.report_builder import ReportBuilder
+from DirectReport.models.Report.report_model import ReportModel
 
 reportsbp = Blueprint('reportsbp', __name__)
 
@@ -56,35 +54,13 @@ def team_report():
     return render_template('team/teamreport.html', title='Team Report', data=[])
 
 
-@reportsbp.route('/entry/<uid>', methods=['GET', 'POST'])
-@login_required
-def detail(uid=None):
-    """
-    Retrieves and renders the details of a specific entry.
-
-    :param uid: The ID of the entry to display.
-    :return: Rendered HTML template for the entry details page.
-    """
-    reports = ReportBuilder.get_reports_for_user_id(current_user.id)
-    report = list(filter(lambda report: report["uuid"] == uid, reports))[0]
-    json.loads(json.dumps(report))
-    item = EntryStorage('SQLite_Python.db')
-    if request.method == "POST":
-        json_data = request.get_json()
-        ListBuilder.update(
-            json_data["id"], json_data['entry'], json_data['topic'], json_data['created_at'], json_data['week_id']
-        )
-    entry = item.get_entry(uid).to_dict()
-    print(entry)
-    return render_template('detail.html', title='Detail', data=entry)
-
-
 @reportsbp.route("/getreport/<uid>", methods=['GET'])
 @login_required
 def get_report(uid=None):
     reports = ReportBuilder.get_reports_for_user_id(current_user.id)
     report = list(filter(lambda report: report["uuid"] == uid, reports))[0]
-    return report, 201
+    print(report["report"])
+    return render_template('team/teamreport.html', title='Team Report', teamData=report["report"])
 
 
 @reportsbp.route("/getlist", methods=['GET'])

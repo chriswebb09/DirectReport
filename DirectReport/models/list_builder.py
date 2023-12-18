@@ -2,8 +2,8 @@
 
 import datetime
 import uuid
-from DirectReport.models.entry import Entry
-from DirectReport.models.entry_storage import EntryStorage
+from DirectReport.models.entry.entry import Entry
+from DirectReport.models.entry.entry_storage import EntryStorage
 
 
 class ListBuilder:

@@ -2,8 +2,8 @@
 
 import datetime
 import uuid
-from DirectReport.models.report import Report
-from DirectReport.models.report_model import ReportModel
+from DirectReport.models.Report.report import Report
+from DirectReport.models.Report.report_model import ReportModel
 
 
 class ReportBuilder:
@@ -16,7 +16,7 @@ class ReportBuilder:
         pass
 
     @staticmethod
-    def new(report, raw_input, user_id):
+    def new(report, raw_input, user_id, repo_name):
         """
         Creates a new entry with the given entry text and topic.
         :param entry_text: The entry text.
@@ -27,7 +27,9 @@ class ReportBuilder:
         storage.create_table()
         if report is None or report == '':
             report = "Entry for work on " + str(today)
-        new_report = Report(str(uuid.uuid1()), user_id, raw_input, report, datetime.datetime.now().timestamp())
+        new_report = Report(
+            str(uuid.uuid1()), user_id, raw_input, report, repo_name, datetime.datetime.now().timestamp()
+        )
         storage.add_report(new_report)
 
     @staticmethod
