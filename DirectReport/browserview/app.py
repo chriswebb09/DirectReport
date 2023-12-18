@@ -100,7 +100,7 @@ def generateemail():
 def repo(reponame=None):
     client = GithubClient()
     repo = client.get_repo_issues("chriswebb09", reponame)
-    return render_template('team/team.html', title='Team', data=[])
+    return render_template('team/team.html', title='Team', data=repo)
 
 
 if __name__ == "__main__":

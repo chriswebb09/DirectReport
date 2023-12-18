@@ -32,6 +32,7 @@ class User(UserMixin):
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
+
 class UserModel:
     def __init__(self, db_name="users.db"):
         self.conn = sqlite3.connect(db_name, check_same_thread=False)

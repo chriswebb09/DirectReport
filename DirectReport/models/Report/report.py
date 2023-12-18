@@ -66,7 +66,7 @@ class Report:
         report = data.get("report")
         repo_name = data.get("repo_name")
         created_at = datetime.datetime.fromisoformat(data.get("created_at")).timestamp()
-        return cls(uuid, user_id, raw_input, report, created_at)
+        return cls(uuid, user_id, raw_input, report, repo_name, created_at)
 
     def is_recent(self, days=7):
         """

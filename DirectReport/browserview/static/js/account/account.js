@@ -39,7 +39,7 @@ const Account = () => {
         )
     } else {
         return (
-            <div className="mx-50 content-center mt-0 mb-48 h-150">
+            <div className="mx-30 content-center mt-0 mb-48 h-150">
                 <div className="pt-5 pb-3 mt-0 mb-5 ml-20 px-20">
                     <h1 className="text-2xl text-blue-800 text-left font-bold font-mono pt-5">
                         User Account

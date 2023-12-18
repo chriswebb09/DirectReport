@@ -8,8 +8,8 @@
     <main className="">
         <div id="root" class='bg-slate-200 mx-50 pb-[120px]'></div>
         <script>
-            const chart_data = {{ teamData|tojson }}
-            console.log(chart_data);
+            {#const chart_data = {{ teamData|tojson }}#}
+            {#console.log(chart_data);#}
         </script>
         <script type="text/babel" src="{{url_for('static', filename='js/teamreport/teamreportcomponents.js')}}"></script>
         <script type="text/babel" src="{{url_for('static', filename='js/chart_helper.js')}}"></script>

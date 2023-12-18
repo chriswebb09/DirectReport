@@ -58,7 +58,7 @@ const TeamReport = () => {
     }
 
     const closeRepoPopover = () => {
-        document.getElementById('popover-repos').classList.toggle("hidden");
+        document.getElementById('popover-repo-left-purple').classList.toggle("hidden");
     }
 
 
