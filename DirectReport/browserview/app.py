@@ -49,9 +49,7 @@ user_model = UserModel()
 
 @app.route('/authorize/github')
 def oauth2_authorize():
-    return redirect(
-        "https://github.com/login/oauth/authorize?scope=user:email&client_id=clientid&client_secret=clientsecret&redirect_uri=http%3A%2F%2F127.0.0.1%3A5000%2Fcallback%2Fgithub"
-    )
+    return redirect("/")
 
 
 @app.route('/callback/github')
