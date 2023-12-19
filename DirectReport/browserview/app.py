@@ -6,7 +6,8 @@ from pathlib import Path
 import urllib
 import requests
 
-from flask import Flask, render_template, request, redirect, json, url_for
+from flask import Flask, render_template, session, request, redirect, json, url_for
+from flask import make_response
 from flask_login import LoginManager, login_required, current_user
 
 from DirectReport.browserview.services.github import GithubClient
@@ -28,6 +29,14 @@ app.secret_key = appsecrets.SECRET_KEY
 
 client_id = appsecrets.GITHUB_CLIENT_ID
 client_secret = appsecrets.GITHUB_CLIENT_SECRET
+global HEADER_TOKEN
+HEADER_TOKEN = ""
+
+headers3 = {
+    'Accept': 'application/vnd.github+json',
+    'Authorization': 'Bearer ' + HEADER_TOKEN,
+    'X-GitHub-Api-Version': '2022-11-28'
+}
 
 app.config['OAUTH2_PROVIDERS'] = {
     'github': {
@@ -49,23 +58,44 @@ user_model = UserModel()
 
 @app.route('/authorize/github')
 def oauth2_authorize():
-    return redirect(
-        "https://github.com/login/oauth/authorize?scope=user:email&client_id=" + client_id + " &client_secret=" + client_secret + "&redirect_uri=http%3A%2F%2F127.0.0.1%3A5000%2Fcallback%2Fgithub"
+    github_url = "https://github.com/login/oauth/authorize?scope=user:email&client_id=" + client_id + "&client_secret=" + client_secret + "&redirect_uri=http%3A%2F%2F127.0.0.1%3A5000%2Fcallback%2Fgithub"
+    return redirect(github_url)
+
+
+@app.route('/repo', methods=['GET', 'POST'])
+def reponame():
+    args_url = request.args.get('repo_url')
+    h_token = session['header_token']
+    reponame = "https://api.github.com/repos/" + args_url + "/commits"
+    print(reponame)
+    headers443 = {
+        'Accept': 'application/vnd.github+json',
+        'Authorization': 'Bearer ' + h_token,
+        'X-GitHub-Api-Version': '2022-11-28'
+    }
+    response3 = requests.get(
+        url=reponame,
+        headers=headers443,
+        auth=(client_id, client_secret)
     )
+    json_Data3 = json.loads(response3.content)
+    return json_Data3, 200
 
-
-@app.route('/callback/github')
+@app.route('/callback/github', methods=['GET', 'POST'])
 def ouath2_callback():
     data = {'client_id': client_id, 'client_secret': client_secret, 'code': request.args.get("code")}
     response = requests.post('https://github.com/login/oauth/access_token', data=data)
     res = response.text.split('&', 1)
     token = res[0].split('=')[1]
+    HEADER_TOKEN = token
+    session['header_token'] = token
     headers2 = {
         'Accept': 'application/vnd.github+json',
         'X-GitHub-Api-Version': '2022-11-28',
         'Content-Type': 'application/x-www-form-urlencoded',
     }
-    data2 = '{\n' + '  "access_token": "' + token + '" \n}'
+    HEADER_TOKEN = token
+    data2 = '{\n' + '  "access_token": "' + HEADER_TOKEN + '" \n}'
     response2 = requests.post(
         url="https://api.github.com/applications/" + client_id + "/token",
         headers=headers2,
@@ -73,13 +103,22 @@ def ouath2_callback():
         auth=(client_id, client_secret),
     )
     json_Data = json.loads(response2.content)
-    repos = requests.get(json_Data["user"]['repos_url'], data=data2, auth=(client_id, client_secret))
+    repos = requests.get(json_Data["user"]['repos_url'] + "?sort=updated&direction=desc", data=data2, auth=(client_id, client_secret))
     json_Data2 = json.loads(repos.content)
+    results = []
     for repo in json_Data2:
-        print(repo)
-        print("\n")
-    return json_Data, 200
+        owner = repo['owner']
+        url_repo = "https://api.github.com/repos/" + owner['login'] + "/" + repo['name']
 
+        data_res = {
+            "name": repo['name'],
+            "description": repo['description'],
+            "url": repo['url'],
+            'url_repo': url_repo,
+            "owner_url": owner['url']
+        }
+        results.append(data_res)
+    return render_template('team/teamreport.html', title='Team', data=results)
 
 @app.route("/")
 def home():

@@ -1,5 +1,6 @@
 const { useState, useEffect } = React;
 
+const { axios } = axios;
 class EntryForm extends React.Component {
     constructor(props) {
         super(props);

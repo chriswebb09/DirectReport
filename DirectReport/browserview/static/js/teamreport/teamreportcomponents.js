@@ -1,7 +1,5 @@
 const { useState, useEffect } = React;
 
-
-// 0492e5ba85984dc0447f46fb82e149d5e897ca8e
 const ShowSummary = (report) => {
     return (
         <p id="show_summary" className="w-97 sm:w-97 overflow-y-auto break-words">
@@ -60,21 +58,6 @@ const openPopover = (e: ChangeEvent<HTMLInputElement>, teammember) => {
     document.getElementById('popoverCommits').innerHTML = "Commits: " + teammember.commits;
 }
 
-const openRepoPopover = (e: ChangeEvent<HTMLInputElement>, teamData) => {
-    const element = document.getElementById('h1content');
-    Popper.createPopper(element, document.getElementById('popover-repo-left-purple'), {
-        strategy: 'fixed'
-    });
-    document.getElementById('popover-repo-left-purple').classList.toggle("hidden");
-    document.getElementById('popover-repo-TitleContent').innerHTML = "Repos" + "(" + teamData["repos"].length + ")";
-    var list = '<ul>';
-    for (var i = 0; i < teamData["repos"].length; i++) {
-        list += '<li class="py-2 px-2 border-b border-solid border-blueGray-100 hover:bg-gray-400">' + '<a class="py-2 px-10" href=/repo/' + teamData["repos"][i] + '>' + teamData["repos"][i] + '' + '</li>';
-    }
-    list += '</ul>';
-    document.getElementById('popover-repo-Content').innerHTML = list;
-}
-
 const repoPopoverUI = () => {
     return (
         <div className="hidden bg-indigo-600 border-0 mx-3 block z-50 font-normal leading-normal text-sm max-w-xs text-left no-underline break-words rounded-2xl h-58" id="popover-repo-left-purple" style={{zIndex: 2}}>
@@ -130,8 +113,6 @@ const GraphicsUI = () => {
         </div>
     )
 }
-
-
 
 const PopoverUI = (closePopover) => {
     return (

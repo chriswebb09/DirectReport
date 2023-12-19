@@ -8,12 +8,16 @@
     <main className="">
         <div id="root" class='bg-slate-200 mx-50 pb-[120px]'></div>
 
+        <script type="text/babel">
+            var data = {{data|tojson|safe}}
+        </script>
         <script type="text/babel" src="{{url_for('static', filename='js/teamreport/teamreportcomponents.js')}}"></script>
         <script type="text/babel" src="{{url_for('static', filename='js/chart_helper.js')}}"></script>
         <script type="text/babel" src="{{url_for('static', filename='js/teamreport/teamreport.js')}}"></script>
         <script type="text/babel">
+            console.log(data);
             const domContainer = document.querySelector('#root');
-            ReactDOM.render(<TeamReport/>, domContainer);
+            ReactDOM.render(<TeamReport repos={data} commit={[]}/>, domContainer);
         </script>
     </main>
 {% endblock %}
