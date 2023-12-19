@@ -1,0 +1,31 @@
+
+<nav class="bg-gray-900 text-white ">
+    <div class="flex w-full items-center">
+        <a class="ml-20 w-3/4 text-2xl font-bold" href="/">DirectReport.</a>
+        <div class="dropdown inline-block relative px-20">
+            <button class="text-white font-semibold inline-flex mt-2 pt-5 pb-5 pl-2 pr-0 hover:border-gray-200">
+                {% if current_user.is_authenticated %}
+                    <span class="mr-8 ml-8 text-md hover:text-gray-200">Account</span>
+                {% else %}
+                    <a class="mr-8 ml-8 text-md hover:text-gray-200" href="/login">Login</a>
+                {% endif %}
+            </button>
+            <ul class="dropdown-menu absolute hidden text-gray-700">
+                {% if current_user.is_authenticated %}
+                     <li class="">
+                         <a class="bg-gray-900 hover:bg-gray-400 py-5 pl-8 pr-8 block whitespace-no-wrap text-white border-b-2 border-t-2 border-gray-200" href="/account">Dashboard</a>
+                     </li>
+                    <li class="">
+                        <a class="bg-gray-900 hover:bg-gray-400 py-5 pl-8 pr-8 block whitespace-no-wrap text-white border-b-2 border-gray-200" href="/reports/new">New Report</a>
+                    </li>
+                    <li class="">
+                        <a class="bg-gray-900 hover:bg-gray-400 py-5 pl-8 pr-8 block whitespace-no-wrap text-white border-b-2 border-gray-200" href="/reports">Saved Reports</a>
+                    </li>
+                     <li class="">
+                         <a class="bg-gray-900 hover:bg-gray-400 pt-5 pb-5 pl-8 pr-8 block whitespace-no-wrap text-white" href="/logout">Log Out</a>
+                     </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

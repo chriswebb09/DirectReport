@@ -6,8 +6,8 @@ from flask_login import login_required, current_user
 
 from DirectReport.browserview.services.github import GithubClient
 from DirectReport.browserview.services.github import GoogleAIClient
-from DirectReport.models.Report.report_builder import ReportBuilder
-from DirectReport.models.Report.report_model import ReportModel
+from DirectReport.models.report.report_builder import ReportBuilder
+from DirectReport.models.report.report_model import ReportModel
 
 reportsbp = Blueprint('reportsbp', __name__)
 
@@ -28,24 +28,7 @@ def report():
     googleAi = GoogleAIClient()
     response_data = googleAi.get_data_from(prompt).replace("\'", "\"")
     response_data = response_data.replace("\n", " ")
-    try:
-        data_json = json.loads(response_data)
-    except ValueError as e:
-        print(e)
-        data_json = {}
-        data_json["repos"] = repodata
-        data_json["report"] = {
-            "summary": "The Swift team has been hard at work over the past month, making significant improvements to the compiler, debugger, and documentation. Highlights include adding debug info support for inlined and specialized generic variables, fixing the debug locations of inserted operations in AvailableValueAggregator, and updating the README.md file.",
-            "highlights": [{"title": "Test", "description": "Test"}],
-        }
-    else:
-        print(data_json)
-        data_json = {}
-        data_json["repos"] = repodata
-        data_json["report"] = {
-            "summary": "The Swift team has been hard at work over the past month, making significant improvements to the compiler, debugger, and documentation. Highlights include adding debug info support for inlined and specialized generic variables, fixing the debug locations of inserted operations in AvailableValueAggregator, and updating the README.md file.",
-            "highlights": [{"title": "Test", "description": "Test"}],
-        }
+    data_json = json.loads(response_data)
     data_json["broad_categories"] = {
         "debug_info": 16,
         "code_maintenance": 9,
@@ -56,6 +39,7 @@ def report():
         "syntax_fix": 1,
     }
     data_json["shortlog"] = client.parse_git_shortlog(log_item)
+    data_json["repos"] = repodata
     ReportBuilder.new(data_json, prompt, current_user.id, "DirectReport")
     return data_json, 201
 

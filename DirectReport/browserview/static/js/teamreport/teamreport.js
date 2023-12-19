@@ -100,7 +100,7 @@ const TeamReport = () => {
                         <h1 className="self-center text-center text-xl text-white text-center font-semibold font-mono mb-1 mt-2 mx-20 px-20">Summary</h1>
                         <div id="summary" className="px-4 mx-0 mb-3 mt-2">
                             {isOpened && (
-                                <div id="summary-container" className="ml-3 mr-3 bg-slate-100 shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.58)] overflow-y-scroll h-100 rounded-3xl tracking-wide text-gray-500 md:text-gl dark:text-gray-400 mt-3 px-3 pt-6 pb-20">
+                                <div id="summary-container" className="ml-3 mr-3 bg-slate-100 shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.58)] overflow-y-scroll h-100 rounded-3xl tracking-wide text-gray-500 md:text-gl dark:text-gray-400 mt-3 px-3 pt-6">
                                     {ShowSummary(teamData["report"])}
                                     {ShowHighlights(teamData["report"])}
                                 </div>
