@@ -4,11 +4,7 @@ import sqlite3
 from DirectReport.models.entry.entry import Entry
 
 
-class EntryStorage:
-    """
-    A class to interact with SQLite database for storing and retrieving `Entry` objects.
-    """
-
+class Storage:
     def __init__(self, db_path, conn=None):
         """
         Initializes the EntryStorage object with the given SQLite database file path.
@@ -20,6 +16,8 @@ class EntryStorage:
             self.conn = conn
         self.create_table()
 
+
+class EntryStorage(Storage):
     def create_table(self):
         """
         Creates the `entries` table in the SQLite database if it doesn't exist.

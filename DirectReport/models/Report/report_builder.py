@@ -2,8 +2,8 @@
 
 import datetime
 import uuid
-from DirectReport.models.Report.report import Report
-from DirectReport.models.Report.report_model import ReportModel
+from DirectReport.models.report.report import Report
+from DirectReport.models.report.report_model import ReportModel
 
 
 class ReportBuilder:
@@ -23,7 +23,7 @@ class ReportBuilder:
         :param topic_text: The topic for the entry (optional).
         """
         today = datetime.date.today().strftime("%m/%d/%Y")
-        storage = ReportModel('ReportStorage.db')
+        storage = ReportModel('reports.db')
         storage.create_table()
         if report is None or report == '':
             report = "Entry for work on " + str(today)
@@ -38,7 +38,7 @@ class ReportBuilder:
         Deletes an entry with the specified ID.
         :param entry_id: The ID of the entry to delete.
         """
-        storage = ReportModel('ReportStorage.db')
+        storage = ReportModel('reports.db')
         storage.delete_entry(entry_id)
 
     @staticmethod
@@ -57,7 +57,7 @@ class ReportBuilder:
         Lists all entries for today.
         :return: A list of entries for today.
         """
-        storage = ReportModel('ReportStorage.db')
+        storage = ReportModel('reports.db')
         list = storage.list_all_reports()
         return list
 
@@ -67,6 +67,6 @@ class ReportBuilder:
         Lists all entries.
         :return: A list of all entries.
         """
-        storage = ReportModel('ReportStorage.db')
+        storage = ReportModel('reports.db')
         list_items = storage.list_all_reports_as_dict()
         return list_items

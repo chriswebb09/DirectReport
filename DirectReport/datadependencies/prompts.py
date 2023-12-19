@@ -1,1 +1,5 @@
 #!/usr/bin/env python3
+
+global GENERATE_EMAIL_PROMPT_PREFIX
+global GENERATE_SUMMARY_PROMPT_PREIX
+

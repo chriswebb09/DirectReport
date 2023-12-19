@@ -18,7 +18,8 @@ const LoginForm = () => {
                                     placeholder="name@company.com" required=""/>
                          </div>
                          <div>
-                             <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                             <label htmlFor="password"
+                                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                  Password
                              </label>
                              <input type="password" name="password" id="password" placeholder="••••••••"
@@ -29,7 +30,8 @@ const LoginForm = () => {
                              <div className="flex items-start">
                                  {RememberMe()}
                              </div>
-                             <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">
+                             <a href="#"
+                                className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">
                                  Forgot password?
                              </a>
                          </div>
@@ -37,9 +39,16 @@ const LoginForm = () => {
                                  className="w-full text-white bg-indigo-700 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                              Sign in
                          </button>
+                         <button
+                             className="w-80 sm:w-90 bg-slate-100 hover:bg-blue-400 text-blue-500 shadow-[1.5px_2px_1.0px_0.5px_rgba(0,0,0,0.48)] hover:text-white hover:border-gray-200 text-lg font-semibold py-2 px-5 rounded-2xl mt-2"
+                             type="button">
+                             <a className="btn btn-primary" href="/authorize/github">Login
+                                 with GitHub</a>
+                         </button>
                          <p className="text-sm font-light text-gray-500 dark:text-gray-400 ml-14">
                              Don’t have an account yet?
-                             <a href="/signup" className="font-medium text-primary-600 ml-3 hover:underline dark:text-primary-500">
+                             <a href="/signup"
+                                className="font-medium text-primary-600 ml-3 hover:underline dark:text-primary-500">
                                  Sign up
                              </a>
                          </p>

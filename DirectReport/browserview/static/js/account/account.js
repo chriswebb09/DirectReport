@@ -3,7 +3,6 @@ const { useState, useEffect } = React;
 
 const Account = () => {
     const [userData, setUserData] = useState({});
-    const [actualData, setActualData] = useState({});
     const [reportData, setReportData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -18,10 +17,9 @@ const Account = () => {
                 }
                 return response.json();
             })
-            .then((actualData) => {
-                setUserData(actualData["user"]);
-                setReportData(actualData["reports"]);
-                setActualData(actualData);
+            .then((responseData) => {
+                setUserData(responseData["user"]);
+                setReportData(responseData["reports"]);
                 setError(null);
             })
             .catch((err) => {
@@ -39,14 +37,14 @@ const Account = () => {
         )
     } else {
         return (
-            <div className="mx-30 content-center mt-0 mb-48 h-150">
-                <div className="pt-5 pb-3 mt-0 mb-5 ml-20 px-20">
+            <div className="mx-10 content-center mt-0 mb-28 h-130">
+                <div className="pt-2 pb-3 mt-0 mb-5 ml-20 px-0">
                     <h1 className="text-2xl text-blue-800 text-left font-bold font-mono pt-5">
                         User Account
                     </h1>
                 </div>
 
-                <div className="grid grid-cols-3 gap-8 mb-1 mx-20 px-20 justify-center">
+                <div className="grid grid-cols-3 gap-8 mb-1 mx-10 px-10 justify-center">
                     {userData && AccountUserInfo(userData, reportData)}
                 </div>
             </div>

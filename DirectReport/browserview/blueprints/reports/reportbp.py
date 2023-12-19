@@ -6,8 +6,8 @@ from flask_login import login_required, current_user
 
 from DirectReport.browserview.services.github import GithubClient
 from DirectReport.browserview.services.github import GoogleAIClient
-from DirectReport.models.Report.report_builder import ReportBuilder
-from DirectReport.models.Report.report_model import ReportModel
+from DirectReport.models.report.report_builder import ReportBuilder
+from DirectReport.models.report.report_model import ReportModel
 
 reportsbp = Blueprint('reportsbp', __name__)
 
@@ -40,11 +40,11 @@ def report():
     }
     data_json["shortlog"] = client.parse_git_shortlog(log_item)
     data_json["repos"] = repodata
-    ReportBuilder.new(data_json, prompt, current_user.id)
+    ReportBuilder.new(data_json, prompt, current_user.id, "DirectReport")
     return data_json, 201
 
 
-@reportsbp.route("/teamreport", methods=['GET', 'POST'])
+@reportsbp.route("/reports/new", methods=['GET', 'POST'])
 @login_required
 def team_report():
     if request.method == "POST":
@@ -54,7 +54,7 @@ def team_report():
     return render_template('team/teamreport.html', title='Team Report', data=[])
 
 
-@reportsbp.route("/getreport/<uid>", methods=['GET'])
+@reportsbp.route("/reports/<uid>", methods=['GET'])
 @login_required
 def get_report(uid=None):
     reports = ReportBuilder.get_reports_for_user_id(current_user.id)
@@ -63,14 +63,14 @@ def get_report(uid=None):
     return render_template('team/teamreport.html', title='Team Report', teamData=report["report"])
 
 
-@reportsbp.route("/getlist", methods=['GET'])
+@reportsbp.route("/reports/list/new", methods=['GET'])
 @login_required
 def get_list():
     reports = ReportBuilder.get_reports_for_user_id(current_user.id)
     return reports, 201
 
 
-@reportsbp.route("/list", methods=['GET', 'POST'])
+@reportsbp.route("/reports", methods=['GET', 'POST'])
 @login_required
 def list_entries():
     """

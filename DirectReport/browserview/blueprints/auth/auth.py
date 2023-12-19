@@ -6,6 +6,7 @@ from werkzeug.security import generate_password_hash
 from DirectReport.models.user_model import UserModel
 from flask_login import login_user, login_required, logout_user, current_user
 from DirectReport.browserview import app
+from DirectReport.datadependencies import appsecrets
 from DirectReport.models.Report.report_builder import ReportBuilder
 from DirectReport.browserview.services.github import GithubClient
 
@@ -50,7 +51,9 @@ def login():
         else:
             print("password no match")
             flash("Please check your login details and try again.")
-    return render_template('auth/login.html')
+    return render_template(
+        'auth/login.html', client_id=appsecrets.GITHUB_CLIENT_ID, client_secret=appsecrets.GITHUB_CLIENT_SECRET
+    )
 
 
 @auth.route("/account", methods=['GET', 'POST'])
