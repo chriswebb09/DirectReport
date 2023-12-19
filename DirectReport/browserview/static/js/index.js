@@ -1,6 +1,7 @@
 'use strict';
 const elem = React.createElement;
 
+
 class Home extends React.Component {
     render() {
         return elem(

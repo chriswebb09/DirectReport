@@ -28,7 +28,24 @@ def report():
     googleAi = GoogleAIClient()
     response_data = googleAi.get_data_from(prompt).replace("\'", "\"")
     response_data = response_data.replace("\n", " ")
-    data_json = json.loads(response_data)
+    try:
+        data_json = json.loads(response_data)
+    except ValueError as e:
+        print(e)
+        data_json = {}
+        data_json["repos"] = repodata
+        data_json["report"] = {
+            "summary": "The Swift team has been hard at work over the past month, making significant improvements to the compiler, debugger, and documentation. Highlights include adding debug info support for inlined and specialized generic variables, fixing the debug locations of inserted operations in AvailableValueAggregator, and updating the README.md file.",
+            "highlights": [{"title": "Test", "description": "Test"}],
+        }
+    else:
+        print(data_json)
+        data_json = {}
+        data_json["repos"] = repodata
+        data_json["report"] = {
+            "summary": "The Swift team has been hard at work over the past month, making significant improvements to the compiler, debugger, and documentation. Highlights include adding debug info support for inlined and specialized generic variables, fixing the debug locations of inserted operations in AvailableValueAggregator, and updating the README.md file.",
+            "highlights": [{"title": "Test", "description": "Test"}],
+        }
     data_json["broad_categories"] = {
         "debug_info": 16,
         "code_maintenance": 9,
@@ -39,12 +56,11 @@ def report():
         "syntax_fix": 1,
     }
     data_json["shortlog"] = client.parse_git_shortlog(log_item)
-    data_json["repos"] = repodata
-    ReportBuilder.new(data_json, prompt, current_user.id)
+    ReportBuilder.new(data_json, prompt, current_user.id, "DirectReport")
     return data_json, 201
 
 
-@reportsbp.route("/teamreport", methods=['GET', 'POST'])
+@reportsbp.route("/reports/new", methods=['GET', 'POST'])
 @login_required
 def team_report():
     if request.method == "POST":
@@ -54,7 +70,7 @@ def team_report():
     return render_template('team/teamreport.html', title='Team Report', data=[])
 
 
-@reportsbp.route("/getreport/<uid>", methods=['GET'])
+@reportsbp.route("/reports/<uid>", methods=['GET'])
 @login_required
 def get_report(uid=None):
     reports = ReportBuilder.get_reports_for_user_id(current_user.id)
@@ -63,14 +79,14 @@ def get_report(uid=None):
     return render_template('team/teamreport.html', title='Team Report', teamData=report["report"])
 
 
-@reportsbp.route("/getlist", methods=['GET'])
+@reportsbp.route("/reports/list/new", methods=['GET'])
 @login_required
 def get_list():
     reports = ReportBuilder.get_reports_for_user_id(current_user.id)
     return reports, 201
 
 
-@reportsbp.route("/list", methods=['GET', 'POST'])
+@reportsbp.route("/reports", methods=['GET', 'POST'])
 @login_required
 def list_entries():
     """

@@ -1,6 +1,5 @@
 const { useState, useEffect } = React;
 
-
 const ShowSummary = (report) => {
     return (
         <p id="show_summary" className="w-97 sm:w-97 overflow-y-auto break-words">
@@ -15,7 +14,7 @@ const ShowSummary = (report) => {
 
 const ShowHighlights = (report) => {
     return (
-        <div className="h-40">
+        <div className="h-30">
             <ul className="px-2 pt-2 pb-2">
                 {report["highlights"] && report["highlights"].map(hightlight =>
                     <li className="mt-1 mb-3">
@@ -42,6 +41,59 @@ const ShowTeamList = (team, openPopover) => {
             }
         </div>
     )
+}
+
+const openPopover = (e: ChangeEvent<HTMLInputElement>, teammember) => {
+    e.preventDefault();
+    let element = e.target;
+    while("BUTTON" !== element.nodeName) {
+        element = element.parentNode;
+    }
+    Popper.createPopper(element, document.getElementById('popover-id-left-purple'), {
+        strategy: 'fixed'
+    });
+    document.getElementById('popover-id-left-purple').classList.toggle("hidden");
+    document.getElementById('popoverTitleContent').innerHTML = teammember.name
+    document.getElementById('popoverContent').innerHTML = teammember.accomplishments;
+    document.getElementById('popoverCommits').innerHTML = "Commits: " + teammember.commits;
+}
+
+const openRepoPopover = (e: ChangeEvent<HTMLInputElement>, teamData) => {
+    const element = document.getElementById('h1content');
+    Popper.createPopper(element, document.getElementById('popover-repo-left-purple'), {
+        strategy: 'fixed'
+    });
+    document.getElementById('popover-repo-left-purple').classList.toggle("hidden");
+    document.getElementById('popover-repo-TitleContent').innerHTML = "Repos" + "(" + teamData["repos"].length + ")";
+    var list = '<ul>';
+    for (var i = 0; i < teamData["repos"].length; i++) {
+        list += '<li class="py-2 px-2 border-b border-solid border-blueGray-100 hover:bg-gray-400">' + '<a class="py-2 px-10" href=/repo/' + teamData["repos"][i] + '>' + teamData["repos"][i] + '' + '</li>';
+    }
+    list += '</ul>';
+    document.getElementById('popover-repo-Content').innerHTML = list;
+}
+
+const repoPopoverUI = () => {
+    return (
+        <div className="hidden bg-indigo-600 border-0 mx-3 block z-50 font-normal leading-normal text-sm max-w-xs text-left no-underline break-words rounded-2xl h-58" id="popover-repo-left-purple" style={{zIndex: 2}}>
+            <div>
+                <div id="popover-repo-Title" className="bg-indigo-600 text-white opacity-75 font-semibold p-3 mb-0 border-b border-solid border-blueGray-100 uppercase rounded-t-2xl py-3">
+                    <span id="popover-repo-TitleContent"></span>
+                    <button className="float-right" onClick={closeRepoPopover}>X</button>
+                </div>
+                <div id="popover-repo-Content" className="text-white px-6 py-4 h-2/3 overflow-y-scroll h-36"></div>
+                <div id="profile-repo-Button" className="text-white px-6 py-4"></div>
+            </div>
+        </div>
+    )
+}
+
+const closeRepoPopover = () => {
+    document.getElementById('popover-repo-left-purple').classList.toggle("hidden");
+}
+
+const closePopover = () => {
+    document.getElementById('popover-id-left-purple').classList.toggle("hidden");
 }
 
 class GraphDiv extends React.Component {

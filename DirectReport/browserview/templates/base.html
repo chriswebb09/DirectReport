@@ -19,11 +19,11 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/main.css') }}">
 </head>
 <header class="sticky top-0 z-50">
-    {% include "_navigation.html" %}
+    {% include "components/_navigation.html" %}
 </header>
 <body>
 {% block content %}
 {% endblock %}
 </body>
-{% include "_footer.html" %}
+{% include "components/_footer.html" %}
 </html>

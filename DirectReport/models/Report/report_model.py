@@ -2,24 +2,10 @@
 
 import sqlite3
 from DirectReport.models.Report.report import Report
+from DirectReport.models.entry.entry_storage import Storage
 
 
-class ReportModel:
-    """
-    A class to interact with SQLite database for storing and retrieving `Entry` objects.
-    """
-
-    def __init__(self, db_path, conn=None):
-        """
-        Initializes the EntryStorage object with the given SQLite database file path.
-        :param db_path: The SQLite database file path.
-        """
-        if conn is None:
-            self.conn = sqlite3.connect(db_path)
-        else:
-            self.conn = conn
-        self.create_table()
-
+class ReportModel(Storage):
     def create_table(self):
         """
         Creates the `entries` table in the SQLite database if it doesn't exist.
@@ -141,7 +127,7 @@ class ReportModel:
         :return: The `Entry` object if found, otherwise `None`.
         """
         cursor = self.conn.cursor()
-        result = cursor.execute(
+        cursor.execute(
             "SELECT uuid, user_id, raw_input, report, repo_name, created_at FROM reports WHERE user_id = ?",
             (str(user_id),),
         )

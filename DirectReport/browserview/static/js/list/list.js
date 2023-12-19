@@ -7,7 +7,7 @@ const SavedReportListApp = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetch(`/getlist`)
+        fetch(`/reports/list/new`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error(
