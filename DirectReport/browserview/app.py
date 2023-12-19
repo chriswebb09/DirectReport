@@ -32,7 +32,7 @@ client_secret = appsecrets.GITHUB_CLIENT_SECRET
 app.config['OAUTH2_PROVIDERS'] = {
     'github': {
         'client_id': appsecrets.GITHUB_CLIENT_ID,
-        'client_secret':appsecrets.GITHUB_CLIENT_SECRET,
+        'client_secret': appsecrets.GITHUB_CLIENT_SECRET,
         'authorize_url': 'https://github.com/login/oauth/authorize',
         'token_url': 'https://github.com/login/oauth/access_token',
         'userinfo': {
@@ -46,17 +46,17 @@ login_manager.init_app(app)
 login_manager.login_view = "login"
 user_model = UserModel()
 
+
 @app.route('/authorize/github')
 def oauth2_authorize():
-    return redirect("https://github.com/login/oauth/authorize?scope=user:email&client_id=clientid&client_secret=clientsecret&redirect_uri=http%3A%2F%2F127.0.0.1%3A5000%2Fcallback%2Fgithub")
+    return redirect(
+        "https://github.com/login/oauth/authorize?scope=user:email&client_id=clientid&client_secret=clientsecret&redirect_uri=http%3A%2F%2F127.0.0.1%3A5000%2Fcallback%2Fgithub"
+    )
+
 
 @app.route('/callback/github')
 def ouath2_callback():
-    data = {
-        'client_id': client_id,
-        'client_secret': client_secret,
-        'code': request.args.get("code")
-    }
+    data = {'client_id': client_id, 'client_secret': client_secret, 'code': request.args.get("code")}
     response = requests.post('https://github.com/login/oauth/access_token', data=data)
     res = response.text.split('&', 1)
     token = res[0].split('=')[1]
@@ -70,7 +70,7 @@ def ouath2_callback():
         url="https://api.github.com/applications/" + client_id + "/token",
         headers=headers2,
         data=data2,
-        auth=(client_id, client_secret)
+        auth=(client_id, client_secret),
     )
     json_Data = json.loads(response2.content)
     repos = requests.get(json_Data["user"]['repos_url'], data=data2, auth=(client_id, client_secret))

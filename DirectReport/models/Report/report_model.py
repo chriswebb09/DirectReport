@@ -6,7 +6,6 @@ from DirectReport.models.entry.entry_storage import Storage
 
 
 class ReportModel(Storage):
-
     def create_table(self):
         """
         Creates the `entries` table in the SQLite database if it doesn't exist.

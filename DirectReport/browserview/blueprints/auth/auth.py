@@ -14,6 +14,7 @@ auth = Blueprint('auth', __name__)
 
 user_model = UserModel()
 
+
 @auth.route('/signup', methods=['POST', 'GET'])
 def signup():
     if request.method == 'POST':
@@ -50,7 +51,9 @@ def login():
         else:
             print("password no match")
             flash("Please check your login details and try again.")
-    return render_template('auth/login.html', client_id=appsecrets.GITHUB_CLIENT_ID, client_secret=appsecrets.GITHUB_CLIENT_SECRET)
+    return render_template(
+        'auth/login.html', client_id=appsecrets.GITHUB_CLIENT_ID, client_secret=appsecrets.GITHUB_CLIENT_SECRET
+    )
 
 
 @auth.route("/account", methods=['GET', 'POST'])
