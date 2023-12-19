@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 
 import sys
+import os
 from pathlib import Path
+import urllib
+import requests
 
 from flask import Flask, render_template, request, redirect, json, url_for
 from flask_login import LoginManager, login_required, current_user
@@ -22,9 +25,60 @@ app = Flask(__name__, template_folder="templates")
 app.register_blueprint(auth)
 app.register_blueprint(reportsbp)
 app.secret_key = appsecrets.SECRET_KEY
+
+client_id = appsecrets.GITHUB_CLIENT_ID
+client_secret = appsecrets.GITHUB_CLIENT_SECRET
+
+app.config['OAUTH2_PROVIDERS'] = {
+    'github': {
+        'client_id': appsecrets.GITHUB_CLIENT_ID,
+        'client_secret':appsecrets.GITHUB_CLIENT_SECRET,
+        'authorize_url': 'https://github.com/login/oauth/authorize',
+        'token_url': 'https://github.com/login/oauth/access_token',
+        'userinfo': {
+            'url': 'https://api.github.com/user/emails',
+            'email': lambda json: json[0]['email'],
+        },
+        'scopes': ['user:email'],
+    },
+}
 login_manager.init_app(app)
 login_manager.login_view = "login"
 user_model = UserModel()
+
+@app.route('/authorize/github')
+def oauth2_authorize():
+    return redirect("https://github.com/login/oauth/authorize?scope=user:email&client_id=clientid&client_secret=clientsecret&redirect_uri=http%3A%2F%2F127.0.0.1%3A5000%2Fcallback%2Fgithub")
+
+@app.route('/callback/github')
+def ouath2_callback():
+    data = {
+        'client_id': client_id,
+        'client_secret': client_secret,
+        'code': request.args.get("code")
+    }
+    response = requests.post('https://github.com/login/oauth/access_token', data=data)
+    res = response.text.split('&', 1)
+    token = res[0].split('=')[1]
+    headers2 = {
+        'Accept': 'application/vnd.github+json',
+        'X-GitHub-Api-Version': '2022-11-28',
+        'Content-Type': 'application/x-www-form-urlencoded',
+    }
+    data2 = '{\n' + '  "access_token": "' + token + '" \n}'
+    response2 = requests.post(
+        url="https://api.github.com/applications/" + client_id + "/token",
+        headers=headers2,
+        data=data2,
+        auth=(client_id, client_secret)
+    )
+    json_Data = json.loads(response2.content)
+    repos = requests.get(json_Data["user"]['repos_url'], data=data2, auth=(client_id, client_secret))
+    json_Data2 = json.loads(repos.content)
+    for repo in json_Data2:
+        print(repo)
+        print("\n")
+    return json_Data, 200
 
 
 @app.route("/")

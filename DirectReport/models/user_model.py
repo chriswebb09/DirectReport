@@ -34,6 +34,7 @@ class User(UserMixin):
 
 
 class UserModel:
+
     def __init__(self, db_name="users.db"):
         self.conn = sqlite3.connect(db_name, check_same_thread=False)
         self.create_table()

@@ -73,11 +73,16 @@ const TeamReport = () => {
                             </textarea>
                         </div>
                         <div className="px-10 mx-0 min-w-full flex flex-col items-center">
-                            <button id="submit_prompt_btn" className="w-80 sm:w-90 bg-slate-100 shadow-[1.5px_2px_1.0px_0.5px_rgba(0,0,0,0.48)] hover:bg-blue-400 text-blue-500 hover:text-white hover:border-gray-200 text-lg font-semibold py-2 px-5 rounded-2xl mt-2" type="submit">
+                            <button id="submit_prompt_btn"
+                                    className="w-80 sm:w-90 bg-slate-100 shadow-[1.5px_2px_1.0px_0.5px_rgba(0,0,0,0.48)] hover:bg-blue-400 text-blue-500 hover:text-white hover:border-gray-200 text-lg font-semibold py-2 px-5 rounded-2xl mt-2"
+                                    type="submit">
                                 Generate
                             </button>
                             <p></p>
-                            <button className="w-80 sm:w-90 bg-slate-100 hover:bg-blue-400 text-blue-500 shadow-[1.5px_2px_1.0px_0.5px_rgba(0,0,0,0.48)] hover:text-white hover:border-gray-200 text-lg font-semibold py-2 px-5 rounded-2xl mt-2" onClick={(e) => openRepoPopover(e, teamData)} type="button">Repos</button>
+                            <button
+                                className="w-80 sm:w-90 bg-slate-100 hover:bg-blue-400 text-blue-500 shadow-[1.5px_2px_1.0px_0.5px_rgba(0,0,0,0.48)] hover:text-white hover:border-gray-200 text-lg font-semibold py-2 px-5 rounded-2xl mt-2"
+                                onClick={(e) => openRepoPopover(e, teamData)} type="button">Repos
+                            </button>
                         </div>
                     </div>
                 </form>

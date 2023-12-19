@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 
 import sqlite3
-from DirectReport.models.Report.report import Report
+from DirectReport.models.report.report import Report
 from DirectReport.models.entry.entry_storage import Storage
 
 
 class ReportModel(Storage):
+
     def create_table(self):
         """
         Creates the `entries` table in the SQLite database if it doesn't exist.

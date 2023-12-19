@@ -3,7 +3,6 @@ const { useState, useEffect } = React;
 
 const Account = () => {
     const [userData, setUserData] = useState({});
-    const [actualData, setActualData] = useState({});
     const [reportData, setReportData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -18,10 +17,9 @@ const Account = () => {
                 }
                 return response.json();
             })
-            .then((actualData) => {
-                setUserData(actualData["user"]);
-                setReportData(actualData["reports"]);
-                setActualData(actualData);
+            .then((responseData) => {
+                setUserData(responseData["user"]);
+                setReportData(responseData["reports"]);
                 setError(null);
             })
             .catch((err) => {
