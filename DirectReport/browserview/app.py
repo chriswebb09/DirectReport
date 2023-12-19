@@ -124,8 +124,12 @@ def reponame():
         }
         results.append(commit_data_res)
     result_log = " ".join(results_2)
+    res_json = {
+        "json_array": json_Data3,
+        "result_log": result_log
+    }
     print(result_log)
-    return json_Data3, 200
+    return res_json, 200
 
 
 

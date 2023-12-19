@@ -103,4 +103,5 @@ class GoogleAIClient:
     def get_data_from(self, prompt):
         response = self.query(prompt)
         response_data = response["candidates"][0]["output"]
+        print(response_data)
         return response_data
