@@ -62,11 +62,11 @@ const repoPopoverUI = () => {
     return (
         <div className="hidden bg-indigo-600 border-0 mx-3 block z-50 font-normal leading-normal text-sm max-w-xs text-left no-underline break-words rounded-2xl h-58" id="popover-repo-left-purple" style={{zIndex: 2}}>
             <div>
-                <div id="popover-repo-Title" className="bg-indigo-600 text-white opacity-75 font-semibold p-3 mb-0 border-b border-solid border-blueGray-100 uppercase rounded-t-2xl py-3">
+                <div id="popover-repo-Title" className="bg-indigo-600 text-white opacity-75 font-semibold p-3 mb-0 border-b border-solid border-blueGray-100 uppercase rounded-t-2xl py-4">
                     <span id="popover-repo-TitleContent"></span>
                     <button className="float-right" onClick={closeRepoPopover}>X</button>
                 </div>
-                <div id="popover-repo-Content" className="text-white px-6 py-4 h-2/3 overflow-y-scroll h-36"></div>
+                <div id="popover-repo-Content" className="text-white px-6 py-2 h-2/3 overflow-y-scroll h-36"></div>
                 <div id="profile-repo-Button" className="text-white px-6 py-4"></div>
             </div>
         </div>
