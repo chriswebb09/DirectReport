@@ -35,7 +35,7 @@ class ReportItem extends React.Component {
     }
 }
 
-const App = () => {
+const Note = () => {
 
     const [reportData, setReportData] = useState(null);
     const [teamData, setTeamData] = useState([]);
@@ -89,4 +89,4 @@ const App = () => {
 }
 
 const domContainer = document.querySelector("#root");
-ReactDOM.render(<App/>, domContainer);
+ReactDOM.render(<Note/>, domContainer);
