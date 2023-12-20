@@ -5,12 +5,14 @@ const { useState, useCallback, useEffect } = React;
 class TeamReport extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
             teamData: [],
             reportData: {},
             commits: [],
             commentText: ''
         }
+
         this.handleTeamDataChange = this.handleTeamDataChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this)
         this.openRepoPopover = this.openRepoPopover.bind(this);
@@ -43,13 +45,7 @@ class TeamReport extends React.Component {
 
     setComments(commentData) {
         this.setState({commentText: commentData});
-        // data = this.handleSubmit();
-        // this.handleTeamDataChange(data)
     }
-
-    // setCo(commitsData) {
-    //     this.setState({commits: commitsData});
-    // }
 
     handleSubmit() {
         let payload = { "prompt" : this.state.commentText };
@@ -81,8 +77,7 @@ class TeamReport extends React.Component {
             headers: {'content-type': 'application/json'}
         }).then(result => {
             this.setComments(result.data['result_log'])
-            const results = result.data['json_array'].map((commit) =>{
-                console.log(commit)
+            const results = result.data['json_array'].map((commit) => {
                 return {
                     'message': commit['commit']['message'],
                     'name': commit['commit']['author']['name'],
@@ -98,7 +93,6 @@ class TeamReport extends React.Component {
                     'type': 'commit'
                 }
             })
-            // this.handleSubmit(result.data['result_log']);
             this.setCommits(results);
             this.handleSubmit();
             console.log(results)
@@ -106,8 +100,6 @@ class TeamReport extends React.Component {
             console.log(error);
         })
     }
-
-
 
 
     openRepoPopover(repos, state) {
@@ -177,7 +169,9 @@ class TeamReport extends React.Component {
                                     {this.props.repos.length > 0 && (
                                         <button className="bg-slate-100 hover:bg-blue-400 text-blue-500 shadow-[1.5px_2px_1.0px_0.5px_rgba(0,0,0,0.48)] hover:text-white hover:border-gray-200 text-lg font-semibold py-3 px-20 rounded-2xl mt-2"
                                                 onClick={(e) => this.openRepoPopover(this.props.repos, this.state)}
-                                                type="button"><span className="px-10 py-2">Select</span></button>
+                                                type="button">
+                                            <span className="px-10 py-2">Select</span>
+                                        </button>
                                     )}
                                     {this.props.repos.length <= 0 && (
                                         <button className="bg-slate-100 shadow-[1.5px_2px_1.0px_0.5px_rgba(0,0,0,0.48)] hover:bg-blue-400 text-blue-500 hover:text-white hover:border-gray-200 text-lg font-semibold py-3 px-20 rounded-2xl mt-2" type="button">
@@ -200,12 +194,12 @@ class TeamReport extends React.Component {
                         </div>
                     </div>
                     <div id="team_member_to_select" className="lg:col-span-1 sm:col-span-3 justify-center">
-                        <div
-                            className="pb-6 pt-2 bg-blue-500 rounded-3xl px-4 mb-2 shadow-[1.0px_1.0px_5.0px_0.0px_rgba(0,0,0,0.58)]">
-                            <h1 className="self-center text-center text-xl text-white text-center font-semibold font-mono mb-1 mt-2 mx-20 px-20">Team</h1>
+                        <div className="pb-6 pt-2 bg-blue-500 rounded-3xl px-4 mb-2 shadow-[1.0px_1.0px_5.0px_0.0px_rgba(0,0,0,0.58)]">
+                            <h1 className="self-center text-center text-xl text-white text-center font-semibold font-mono mb-4 mt-2 mx-20 px-20">Team</h1>
                             {PopoverUI(closePopover)}
-                            <div id="display_team" className="my-3"></div>
-                            <div className="content-center py-1 h-90 rounded-3xl mb-4 bg-slate-100 shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.58)] mx-1 px-3">
+                            {/*<div id="display_team" className="my-3">*/}
+                            {/*</div>*/}
+                            <div className="content-center py-1 h-90 rounded-3xl mb-4 bg-slate-100 shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.58)] mx-1 mt-2 px-3">
                                 {ShowTeamList(this.state.teamData)}
                             </div>
                         </div>
