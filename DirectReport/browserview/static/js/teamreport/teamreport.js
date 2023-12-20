@@ -5,16 +5,22 @@ const { useState, useCallback, useEffect } = React;
 class TeamReport extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
-            teamData: {},
-            commits: []
+            teamData: [],
+            reportData: {},
+            commits: [],
+            commentText: ''
         }
+
         this.handleTeamDataChange = this.handleTeamDataChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this)
         this.openRepoPopover = this.openRepoPopover.bind(this);
         this.setCommits = this.setCommits.bind(this);
         this.toggle =  this.toggle.bind(this);
         this.toggleHide = this.toggleHide.bind(this);
+        this.setComments = this.setComments.bind(this);
+        this.handleReportDataChange = this.handleReportDataChange.bind(this);
     }
 
     toggle() {
@@ -25,12 +31,43 @@ class TeamReport extends React.Component {
         this.setState({isHidden: !this.state.isHidden});
     }
 
-    handleTeamDataChange(team) {
-        this.setState({teamData: team});
+    handleTeamDataChange(teamD) {
+        this.setState({teamData: teamD});
+    }
+
+    handleReportDataChange(reportD) {
+        this.setState({reportData: reportD});
     }
 
     setCommits(commitsData) {
         this.setState({commits: commitsData});
+    }
+
+    setComments(commentData) {
+        this.setState({commentText: commentData});
+    }
+
+    handleSubmit() {
+        let payload = { "prompt" : this.state.commentText };
+        axios({
+            method: 'post',
+            url: '/report',
+            data: payload,
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            }
+        }).then(result => {
+            console.log(result.data);
+            this.handleTeamDataChange(result.data["team"]);
+            this.handleReportDataChange(result.data["report"]);
+            showGraphics(result.data, '#map-container');
+            showGraphics2(result.data, '#map-container2');
+            showGraphics3(result.data, '#map-container3');
+            this.toggle()
+        }).catch(function (response) {
+            console.log(response);
+        });
     }
 
     update(repoURL) {
@@ -39,9 +76,8 @@ class TeamReport extends React.Component {
             url: "/repo" + repoURL,
             headers: {'content-type': 'application/json'}
         }).then(result => {
-
-            const results = result.data.map((commit) =>{
-                console.log(commit)
+            this.setComments(result.data['result_log'])
+            const results = result.data['json_array'].map((commit) => {
                 return {
                     'message': commit['commit']['message'],
                     'name': commit['commit']['author']['name'],
@@ -57,38 +93,14 @@ class TeamReport extends React.Component {
                     'type': 'commit'
                 }
             })
-            console.log(results)
             this.setCommits(results);
+            this.handleSubmit();
+            console.log(results)
         }).catch(error => {
             console.log(error);
         })
     }
 
-
-    handleSubmit(event) {
-        var dataForm = {
-            "prompt": this.state.commentText
-        };
-        const formDataJsonString = JSON.stringify(dataForm);
-        fetch("/report", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: formDataJsonString
-        }).then(function(res) {
-            return res.json();
-        }).then(function(data) {
-            this.handleTeamDataChange(data);
-            this.toggle();
-            showGraphics(data, '#map-container');
-            showGraphics2(data, '#map-container2');
-            showGraphics3(data, '#map-container3');
-        }).then(function() {
-            console.log('done');
-        });
-    }
 
     openRepoPopover(repos, state) {
         const element = document.getElementById('h1content');
@@ -157,11 +169,13 @@ class TeamReport extends React.Component {
                                     {this.props.repos.length > 0 && (
                                         <button className="bg-slate-100 hover:bg-blue-400 text-blue-500 shadow-[1.5px_2px_1.0px_0.5px_rgba(0,0,0,0.48)] hover:text-white hover:border-gray-200 text-lg font-semibold py-3 px-20 rounded-2xl mt-2"
                                                 onClick={(e) => this.openRepoPopover(this.props.repos, this.state)}
-                                                type="button">Select</button>
+                                                type="button">
+                                            <span className="px-10 py-2">Select</span>
+                                        </button>
                                     )}
                                     {this.props.repos.length <= 0 && (
                                         <button className="bg-slate-100 shadow-[1.5px_2px_1.0px_0.5px_rgba(0,0,0,0.48)] hover:bg-blue-400 text-blue-500 hover:text-white hover:border-gray-200 text-lg font-semibold py-3 px-20 rounded-2xl mt-2" type="button">
-                                            <a href='/authorize/github'>Authorize</a>
+                                            <a className="px-10 py-2" href='/authorize/github'>Authorize</a>
                                         </button>
                                     )}
                                 </div>
@@ -172,31 +186,29 @@ class TeamReport extends React.Component {
                         <div className="pb-6 pt-2 bg-blue-500 rounded-3xl px-30 shadow-[1.0px_1.0px_5.0px_0.0px_rgba(0,0,0,0.58)]">
                             <h1 className="self-center text-center text-xl text-white text-center font-semibold font-mono mb-1 mt-2 mx-20 px-20">Summary</h1>
                             <div id="summary" className="px-4 mx-0 mb-3 mt-2">
-                                {this.props.isOpened && (
-                                    <div id="summary-container" className="ml-3 mr-3 bg-slate-100 shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.58)] overflow-y-scroll h-100 rounded-3xl tracking-wide text-gray-500 md:text-gl dark:text-gray-400 mt-3 px-3 pt-6">
-                                        {ShowSummary(this.props.teamData["report"])}
-                                        {ShowHighlights(this.props.teamData["report"])}
-                                    </div>
-                                )}
+                                <div id="summary-container" className="ml-3 mr-3 bg-slate-100 shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.58)] overflow-y-scroll h-100 rounded-3xl tracking-wide text-gray-500 md:text-gl dark:text-gray-400 mt-3 px-3 pt-6">
+                                    {ShowSummary(this.state.reportData)}
+                                    {ShowHighlights(this.state.reportData)}
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div id="team_member_to_select" className="lg:col-span-1 sm:col-span-3 justify-center">
                         <div className="pb-6 pt-2 bg-blue-500 rounded-3xl px-4 mb-2 shadow-[1.0px_1.0px_5.0px_0.0px_rgba(0,0,0,0.58)]">
-                            <h1 className="self-center text-center text-xl text-white text-center font-semibold font-mono mb-1 mt-2 mx-20 px-20">Team</h1>
+                            <h1 className="self-center text-center text-xl text-white text-center font-semibold font-mono mb-4 mt-2 mx-20 px-20">Team</h1>
                             {PopoverUI(closePopover)}
-                            <div id="display_team" className="my-3"></div>
-                            {this.props.isOpened && (
-                                <div className="content-center py-1 h-90 rounded-3xl mb-4 bg-slate-100 shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.58)] mx-1 px-3">
-                                    {ShowTeamList(this.props.teamData["team"], openPopover)}
-                                </div>
-                            )}
+                            {/*<div id="display_team" className="my-3">*/}
+                            {/*</div>*/}
+                            <div className="content-center py-1 h-90 rounded-3xl mb-4 bg-slate-100 shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.58)] mx-1 mt-2 px-3">
+                                {ShowTeamList(this.state.teamData)}
+                            </div>
                         </div>
                     </div>
                 </div>
-                {this.props.isOpened && (
-                    <GraphicsUI/>
-                )}
+                <GraphicsUI/>
+                {/*{this.state.isOpened && (*/}
+                {/*    */}
+                {/*)}*/}
             </div>
         )
     }

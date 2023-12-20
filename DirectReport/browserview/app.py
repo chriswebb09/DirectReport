@@ -38,7 +38,13 @@ user_model = UserModel()
 
 @app.route('/authorize/github')
 def oauth2_authorize():
-    github_url = "https://github.com/login/oauth/authorize?scope=user:email&client_id=" + client_id + "&client_secret=" + client_secret + "&redirect_uri=http%3A%2F%2F127.0.0.1%3A5000%2Fcallback%2Fgithub"
+    github_url = (
+        "https://github.com/login/oauth/authorize?scope=user:email&client_id="
+        + client_id
+        + "&client_secret="
+        + client_secret
+        + "&redirect_uri=http%3A%2F%2F127.0.0.1%3A5000%2Fcallback%2Fgithub"
+    )
     return redirect(github_url)
 
 
@@ -62,6 +68,7 @@ def get_commits_last_month():
         print(f"Error: {response.status_code}")
         print(response.text)
 
+
 @app.route('/repo', methods=['GET', 'POST'])
 def reponame():
     args_url = request.args.get('repo_url')
@@ -70,13 +77,9 @@ def reponame():
     headers443 = {
         'Accept': 'application/vnd.github+json',
         'Authorization': 'Bearer ' + h_token,
-        'X-GitHub-Api-Version': '2022-11-28'
+        'X-GitHub-Api-Version': '2022-11-28',
     }
-    response3 = requests.get(
-        url=reponame,
-        headers=headers443,
-        auth=(client_id, client_secret)
-    )
+    response3 = requests.get(url=reponame, headers=headers443, auth=(client_id, client_secret))
     json_Data3 = json.loads(response3.content)
 
     USERNAME = "chriswebb09"
@@ -120,13 +123,13 @@ def reponame():
             "verified": commit["commit"]["verification"]["verified"],
             "verification_reason": commit["commit"]["verification"]["reason"],
             "verification_signature": commit["commit"]["verification"]["signature"],
-            "type": "commit"
+            "type": "commit",
         }
         results.append(commit_data_res)
     result_log = " ".join(results_2)
+    res_json = {"json_array": json_Data3, "result_log": result_log}
     print(result_log)
-    return json_Data3, 200
-
+    return res_json, 200
 
 
 @app.route('/callback/github', methods=['GET', 'POST'])
@@ -151,7 +154,9 @@ def ouath2_callback():
         auth=(client_id, client_secret),
     )
     json_Data = json.loads(response2.content)
-    repos = requests.get(json_Data["user"]['repos_url'] + "?sort=updated&direction=desc", data=data2, auth=(client_id, client_secret))
+    repos = requests.get(
+        json_Data["user"]['repos_url'] + "?sort=updated&direction=desc", data=data2, auth=(client_id, client_secret)
+    )
     json_Data2 = json.loads(repos.content)
     results = []
     for repo in json_Data2:
@@ -163,10 +168,11 @@ def ouath2_callback():
             "description": repo['description'],
             "url": repo['url'],
             'url_repo': url_repo,
-            "owner_url": owner['url']
+            "owner_url": owner['url'],
         }
         results.append(data_res)
     return render_template('team/teamreport.html', title='Team', data=results)
+
 
 @app.route("/")
 def home():

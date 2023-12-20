@@ -1,6 +1,7 @@
 const { useState, useEffect } = React;
 
 const ShowSummary = (report) => {
+
     return (
         <p id="show_summary" className="w-97 sm:w-97 overflow-y-auto break-words">
             {report !== undefined ?
@@ -13,44 +14,50 @@ const ShowSummary = (report) => {
 }
 
 const ShowHighlights = (report) => {
+
     return (
         <div className="h-30">
             <ul className="px-2 pt-2 pb-2">
-                {report["highlights"] && report["highlights"].map(hightlight =>
-                    <li className="mt-1 mb-3">
-                        <h3 className="font-bold text-xs mb-1 mt-1 text-blue-700">
-                            {hightlight.title}
-                        </h3>
-                        <p class="w-90 sm:w-90 overflow-y-auto text-xs font-sm break-words tracking-wide text-blue-600">
-                            {hightlight.description}
-                        </p>
-                    </li>
-                )}
+                {report["highlights"] !== undefined ?
+                    report["highlights"].map(hightlight =>
+                        <li className="mt-1 mb-3">
+                            <h3 className="font-bold text-xs mb-1 mt-1 text-blue-700">
+                                {hightlight.title}
+                            </h3>
+                            <p className="w-90 sm:w-90 overflow-y-auto text-xs font-sm break-words tracking-wide text-blue-600">
+                                {hightlight.description}
+                            </p>
+                        </li>
+                    ) : null
+                }
             </ul>
         </div>
     )
 }
 
-const ShowTeamList = (team, openPopover) => {
+
+const ShowTeamList = (team) => {
     return (
-        <div className="items-center my-1 select-none">
-            {team
-                && team.map(teammember =>
-                    <button class="bg-blue-600 py-1 px-2 pb-1 pt-1 mr-0.5 my-0.5 no-underline rounded-full text-white font-sans border-2 border-gray text-xs btn-primary hover:text-white hover:bg-indigo-700 focus:outline-none active:shadow-none" onClick={((e) => openPopover(e, teammember))}>{teammember.name}</button>
-                )
+        <div className="items-center my-2 pt-2 pb-2 select-none">
+            {team !== undefined ?
+                team.map(team_member =>
+                    <button clasName="bg-blue-600 py-1 px-2 pb-1 pt-1 mr-0.5 my-0.5 no-underline rounded-full text-white font-sans border-2 border-gray text-xs btn-primary hover:text-white hover:bg-indigo-700 focus:outline-none active:shadow-none">
+                        {team_member.name}
+                    </button>
+                ) : null
             }
         </div>
     )
 }
-
 const openPopover = (e: ChangeEvent<HTMLInputElement>, teammember) => {
     e.preventDefault();
     let element = e.target;
-    while("BUTTON" !== element.nodeName) {
+    while ("BUTTON" !== element.nodeName) {
         element = element.parentNode;
     }
     Popper.createPopper(element, document.getElementById('popover-id-left-purple'), {
-        strategy: 'fixed'
+        strategy: "fixed",
+        resize: true
     });
     document.getElementById('popover-id-left-purple').classList.toggle("hidden");
     document.getElementById('popoverTitleContent').innerHTML = teammember.name
@@ -60,11 +67,11 @@ const openPopover = (e: ChangeEvent<HTMLInputElement>, teammember) => {
 
 const repoPopoverUI = () => {
     return (
-        <div className="hidden bg-indigo-600 border-0 mx-3 block z-50 font-normal leading-normal text-sm max-w-xs text-left no-underline break-words rounded-2xl h-58" id="popover-repo-left-purple" style={{zIndex: 2}}>
+        <div className="hidden bg-indigo-600 border-0 mx-10 px-15 block z-50 font-normal leading-normal text-sm max-w-xs text-left no-underline break-words rounded-2xl h-68" id="popover-repo-left-purple" style={{zIndex: 2}}>
             <div>
                 <div id="popover-repo-Title" className="bg-indigo-600 text-white opacity-75 font-semibold p-3 mb-0 border-b border-solid border-blueGray-100 uppercase rounded-t-2xl py-4">
-                    <span id="popover-repo-TitleContent"></span>
-                    <button className="float-right" onClick={closeRepoPopover}>X</button>
+                    <span id="popover-repo-TitleContent" className="mx-5"></span>
+                    <button className="mx-5 float-right" onClick={closeRepoPopover}>X</button>
                 </div>
                 <div id="popover-repo-Content" className="text-white px-6 py-2 h-2/3 overflow-y-scroll h-36"></div>
                 <div id="profile-repo-Button" className="text-white px-6 py-4"></div>
@@ -82,6 +89,7 @@ const closePopover = () => {
 }
 
 class GraphDiv extends React.Component {
+
     render() {
         return (
             <div className="grid grid-cols-3 gap-6 mt-5 mx-20 bg-blue-500 shadow-[1.0px_1.0px_5.0px_0.0px_rgba(0,0,0,0.58)] rounded-3xl px-30 py-3">
