@@ -5,8 +5,8 @@ from app.api.errors import error_response as api_error_response
 
 
 def wants_json_response():
-    return request.accept_mimetypes['application/json'] >= \
-        request.accept_mimetypes['text/html']
+    return request.accept_mimetypes['application/json'] >= request.accept_mimetypes['text/html']
+
 
 @bp.errorhandler(404)
 def page_not_found(e):
@@ -19,6 +19,7 @@ def page_not_found(e):
     if wants_json_response():
         return api_error_response(404)
     return render_template('404.html', error=e), 404
+
 
 @bp.app_errorhandler(500)
 def internal_error(error):

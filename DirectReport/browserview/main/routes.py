@@ -12,22 +12,25 @@ from DirectReport.browserview.main import bp
 client_id = appsecrets.GITHUB_CLIENT_ID
 client_secret = appsecrets.GITHUB_CLIENT_SECRET
 
+
 @bp.before_app_request
 def before_request():
     print(current_user)
+
 
 @bp.route('/', methods=['GET', 'POST'])
 def home():
     return render_template('index.html', title='Home')
 
+
 @bp.route('/authorize/github')
 def oauth2_authorize():
     github_url = (
-            "https://github.com/login/oauth/authorize?scope=user:email&client_id="
-            + client_id
-            + "&client_secret="
-            + client_secret
-            + "&redirect_uri=http%3A%2F%2F127.0.0.1%3A5000%2Fcallback%2Fgithub"
+        "https://github.com/login/oauth/authorize?scope=user:email&client_id="
+        + client_id
+        + "&client_secret="
+        + client_secret
+        + "&redirect_uri=http%3A%2F%2F127.0.0.1%3A5000%2Fcallback%2Fgithub"
     )
     return redirect(github_url)
 
@@ -163,7 +166,6 @@ def team():
     return render_template('team/team.html', title='Team', data=[])
 
 
-
 @bp.route("/generate_email", methods=['POST'])
 def generateemail():
     prompt = ""
@@ -179,4 +181,6 @@ def repo(reponame=None):
     client = GithubClient()
     repo = client.get_repo_issues("chriswebb09", reponame)
     return render_template('team/team.html', title='Team', data=repo)
+
+
 #

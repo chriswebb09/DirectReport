@@ -24,6 +24,7 @@ client_secret = appsecrets.GITHUB_CLIENT_SECRET
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
 
+
 @login_manager.user_loader
 def user_loader(email):
     user = UserModel().get_user_by_email(email)
@@ -36,6 +37,7 @@ def request_loader(request):
     user = UserModel().get_user_by_email(email)
     return user
 
+
 @login_manager.unauthorized_handler
 def unauthorized_handler():
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
@@ -46,21 +48,25 @@ def unauthorized_handler():
         else:
             return redirect(url_for('auth.login'))
 
+
 def create_app(config_class=Config):
     user_model = UserModel()
     app = Flask(__name__, template_folder="templates")
 
-
     from DirectReport.browserview.auth import bp as auth_bp
+
     app.register_blueprint(auth_bp)
 
     from DirectReport.browserview.main import bp as main_bp
+
     app.register_blueprint(main_bp)
 
     from DirectReport.browserview.api import bp as api_bp
+
     app.register_blueprint(api_bp)
 
     from DirectReport.browserview.errors import bp as errors_bp
+
     app.register_blueprint(errors_bp)
 
     app.secret_key = appsecrets.SECRET_KEY

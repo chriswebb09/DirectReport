@@ -1,4 +1,3 @@
-
 from flask import render_template, request, json
 from flask_login import login_required, current_user
 

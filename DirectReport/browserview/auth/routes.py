@@ -9,6 +9,7 @@ from DirectReport.browserview.auth import bp
 
 user_model = UserModel()
 
+
 @bp.route('/signup', methods=['POST', 'GET'])
 def signup():
     if request.method == 'POST':
@@ -23,11 +24,13 @@ def signup():
         return redirect(url_for('auth.login'))
     return render_template('auth/signup.html')
 
+
 @bp.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('main.home'))
+
 
 @bp.route('/login', methods=['POST', 'GET'])
 def login():
@@ -47,11 +50,13 @@ def login():
         'auth/login.html', client_id=appsecrets.GITHUB_CLIENT_ID, client_secret=appsecrets.GITHUB_CLIENT_SECRET
     )
 
+
 #
 @bp.route("/account", methods=['GET', 'POST'])
 @login_required
 def account():
     return render_template('account.html', title='Account', name=current_user.username, userid=current_user.id)
+
 
 @bp.route("/account_data", methods=['GET'])
 @login_required
@@ -74,5 +79,3 @@ def account_data():
     }
     user_element = {"user": user_account, "reports": report_results, "shortlog": shortlog}
     return user_element, 201
-
-
