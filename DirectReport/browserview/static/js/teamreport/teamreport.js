@@ -139,16 +139,14 @@ class TeamReport extends React.Component {
                 {repoPopoverUI()}
                 <div id="topRow" className="grid grid-cols-3 gap-10 rounded-3xl mx-20 mt-6">
                     <div className="lg:col-span-1 sm:col-span-3 justify-center" id="edit_summary_div">
-                        <div className="py-1 bg-blue-500 rounded-3xl px-10 shadow-[1.0px_1.0px_2.0px_1.0px_rgba(0,0,0,0.58)]">
+                        <div className="py-1 bg-blue-500 rounded-3xl px-6 shadow-[1.0px_1.0px_2.0px_1.0px_rgba(0,0,0,0.58)]">
                             {this.props.repos.length > 0 && (
-                                <h1 id="title_element"
-                                    className="self-center text-center text-white text-xl text-center font-semibold font-mono mb-1 mt-3 py-2">
+                                <h1 id="title_element" className="self-center text-center text-white text-xl text-center font-bold font-mono mb-1 mt-3 py-2">
                                     Github Repo For Report
                                 </h1>
                             )}
                             {this.props.repos.length <= 0 && (
-                                <h1 id="title_element"
-                                    className="self-center text-center text-white text-xl text-center font-semibold font-mono mb-1 mt-3 py-2">
+                                <h1 id="title_element" className="self-center text-center text-white text-xl text-center font-bold font-mono mb-1 mt-3 py-2">
                                     Github Account
                                 </h1>
                             )}
@@ -168,15 +166,15 @@ class TeamReport extends React.Component {
                             <div className="self-center mb-4 mt-2">
                                 <div className="mx-0 min-w-full flex flex-col items-center">
                                     {this.props.repos.length > 0 && (
-                                        <button className="bg-sky-500 hover:bg-slate-100 self-center text-white font-mono tracking-wide shadow-[1.5px_2px_1.0px_0.5px_rgba(0,0,0,0.48)] hover:white hover:text-blue-500 hover:border-gray-200 text-md font-semibold py-3 px-10 rounded-3xl mt-2 mb-3"
+                                        <button className="bg-cyan-400 hover:bg-slate-100 self-center text-white font-mono tracking-wide shadow-[1.5px_2px_1.0px_0.5px_rgba(0,0,0,0.48)] hover:white hover:text-blue-500 hover:border-gray-200 text-md font-bold py-3 px-10 rounded-3xl mt-2 mb-3"
                                                 onClick={(e) => this.openRepoPopover(this.props.repos, this.state)}
                                                 type="button">
                                             <span className="px-10 py-2 tracking-wide">Select Repo</span>
                                         </button>
                                     )}
                                     {this.props.repos.length <= 0 && (
-                                        <button className="bg-sky-500 hover:bg-slate-100 self-center text-white font-mono tracking-wide shadow-[1.5px_2px_1.0px_0.5px_rgba(0,0,0,0.48)] hover:white hover:text-blue-500 hover:border-gray-200 text-md font-semibold py-3 px-10 rounded-3xl mt-2 mb-3" type="button">
-                                            <a className="px-10 py-2 tracking-wide" href='/authorize/github'>Select Repo</a>
+                                        <button className="bg-cyan-400 hover:bg-slate-100 self-center text-white font-mono tracking-wide shadow-[1.5px_2px_1.0px_0.5px_rgba(0,0,0,0.48)] hover:white hover:text-blue-500 hover:border-gray-200 text-md font-bold py-3 px-5 rounded-3xl mt-2 mb-3" type="button">
+                                            <a className="px-20 py-2 tracking-wide" href='/authorize/github'>Select Repo</a>
                                         </button>
                                     )}
                                 </div>
@@ -185,8 +183,8 @@ class TeamReport extends React.Component {
                     </div>
                     <div id="show_summmary_div" className="lg:col-span-1 sm:col-span-3 justify-center">
                         <div className="pb-6 pt-2 bg-blue-500 rounded-3xl px-30 shadow-[1.0px_1.0px_5.0px_0.0px_rgba(0,0,0,0.58)]">
-                            <h1 className="self-center text-center text-xl text-white text-center font-semibold font-mono mb-1 mt-3 py-2 mt-2 mx-20 px-20">Summary</h1>
-                            <div id="summary" className="px-4 mx-0 mb-3 mt-2">
+                            <h1 className="self-center text-center text-xl text-white text-center font-bold font-mono mb-1 mt-3 py-2 mt-2 mx-20 px-20">Summary</h1>
+                            <div id="summary" className="px-4 mx-0 mb-1 mt-1">
                                 {this.props.repos.length > 0 && (
                                     <div id="summary-container"
                                          className="ml-3 mr-3 bg-slate-100 shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.58)] overflow-y-scroll h-100 rounded-3xl tracking-wide text-gray-500 md:text-gl dark:text-gray-400 mt-3 px-3">
@@ -201,11 +199,10 @@ class TeamReport extends React.Component {
                     <div id="team_member_to_select" className="lg:col-span-1 sm:col-span-3 justify-center">
                         <div
                             className="pb-6 pt-2 bg-blue-500 rounded-3xl px-4 mb-2 shadow-[1.0px_1.0px_5.0px_0.0px_rgba(0,0,0,0.58)]">
-                            <h1 className="self-center text-center text-xl text-white text-center font-semibold font-mono mb-1 mt-3 py-2 mx-20 px-20">Team</h1>
+                            <h1 className="self-center text-center text-xl text-white text-center font-bold font-mono mb-1 mt-3 py-2 mx-20 px-20">Team</h1>
                             {PopoverUI(closePopover)}
                             {this.props.repos.length > 0 && (
-                                <div
-                                    className="content-center py-2 h-90 rounded-3xl mb-4 bg-slate-100 shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.58)] mx-1 mt-3 px-3">
+                                <div className="content-center py-2 h-90 rounded-3xl mb-1 bg-slate-100 shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.58)] mx-1 mt-3 px-3">
                                     {ShowTeamList(this.state.teamData)}
                                 </div>
 

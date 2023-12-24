@@ -41,7 +41,7 @@ class Home extends React.Component {
                             "a",
                             {
                                 className: "my-14 px-10 py-5 text-md font-bold tracking-wide text-center text-indigo-500  bg-white rounded-full hover:bg-blue-800 hover:text-white shadow-[1.0px_1.0px_5.0px_0.0px_rgba(0,0,0,0.58)] uppercase",
-                                href: "/account"
+                                href: "/dashboard/home"
                             },
                             "Get Started"
                         )
