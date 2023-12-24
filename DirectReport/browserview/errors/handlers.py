@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from flask import render_template, request
 from DirectReport.browserview.errors import bp
 from DirectReport.browserview.api.errors import error_response as api_error_response

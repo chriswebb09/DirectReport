@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from datetime import datetime, timedelta
 
 import requests
@@ -181,6 +183,3 @@ def repo(reponame=None):
     client = GithubClient()
     repo = client.get_repo_issues("chriswebb09", reponame)
     return render_template('team/team.html', title='Team', data=repo)
-
-
-#

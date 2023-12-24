@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash
@@ -43,7 +45,7 @@ def login():
         if user and user.check_password(password):
             login_user(user, remember=remember, force=True)
             if current_user.is_authenticated():
-                return redirect(url_for('auth.account'))
+                return redirect(url_for('dashboard.dashboard_home'))
         else:
             print("password no match")
             flash("Please check your login details and try again.")
@@ -52,11 +54,10 @@ def login():
     )
 
 
-#
-@bp.route("/account", methods=['GET', 'POST'])
-@login_required
-def account():
-    return render_template('account.html', title='Account', name=current_user.username, userid=current_user.id)
+# @bp.route("/account", methods=['GET', 'POST'])
+# @login_required
+# def account():
+#     return render_template('account.html', title='Account', name=current_user.username, userid=current_user.id)
 
 
 @bp.route("/account_data", methods=['GET'])

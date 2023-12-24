@@ -37,14 +37,8 @@ const Account = () => {
         )
     } else {
         return (
-            <div className="mx-10 content-center mt-0 mb-28 h-130">
-                <div className="pt-2 pb-3 mt-0 mb-5 ml-20 px-0">
-                    <h1 className="text-2xl text-blue-800 text-left font-bold font-mono pt-5">
-                        User Account
-                    </h1>
-                </div>
-
-                <div className="grid grid-cols-3 gap-8 mb-1 mx-10 px-10 justify-center">
+            <div className="mx-20 content-center mt-0 mb-0 h-50">
+                <div className="grid grid-cols-3 gap-8 mx-10 px-10 mt-2 justify-center">
                     {userData && AccountUserInfo(userData, reportData)}
                 </div>
             </div>

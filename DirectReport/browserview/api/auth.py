@@ -1,7 +1,6 @@
-import sqlalchemy as sa
-from flask_httpauth import HTTPBasicAuth, HTTPTokenAuth
+#!/usr/bin/env python3
 
-# from app import db
+from flask_httpauth import HTTPBasicAuth, HTTPTokenAuth
 from DirectReport.models.user_model import UserModel
 from DirectReport.browserview.api.errors import error_response
 

@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import sys
 from pathlib import Path
 from flask import Flask, request
@@ -12,7 +14,6 @@ from DirectReport.models.user_model import UserModel
 file = Path(__file__).resolve()
 package_root_directory = file.parents[1]
 sys.path.append(str(package_root_directory))
-
 
 client_id = appsecrets.GITHUB_CLIENT_ID
 client_secret = appsecrets.GITHUB_CLIENT_SECRET
@@ -57,11 +58,15 @@ def create_app(config_class=Config):
 
     from DirectReport.browserview.api import bp as api_bp
 
-    app.register_blueprint(api_bp)
+    app.register_blueprint(api_bp, url_prefix='/api')
 
     from DirectReport.browserview.errors import bp as errors_bp
 
     app.register_blueprint(errors_bp)
+
+    from DirectReport.browserview.dashboard import bp as dashboard_bp
+
+    app.register_blueprint(dashboard_bp, url_prefix='/dashboard')
 
     app.secret_key = appsecrets.SECRET_KEY
     login_manager.init_app(app)
