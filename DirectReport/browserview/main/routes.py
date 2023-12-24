@@ -1,42 +1,29 @@
-#!/usr/bin/env python3
-
-import sys
-import os
-from pathlib import Path
-import urllib
-import requests
-
-from flask import Flask, render_template, session, request, redirect, json, url_for
-from flask import make_response
 from datetime import datetime, timedelta
-from flask_login import LoginManager, login_required, current_user
 
+import requests
+from flask import render_template, session, request, redirect, json
+from flask_login import current_user
+
+from DirectReport.browserview.main import bp
 from DirectReport.browserview.services.github import GithubClient
 from DirectReport.browserview.services.prompt_logic import generate_email
 from DirectReport.datadependencies import appsecrets
-from DirectReport.models.user_model import UserModel
-from DirectReport.browserview.blueprints.auth.auth import auth
-from DirectReport.browserview.blueprints.reports.reportbp import reportsbp
-
-file = Path(__file__).resolve()
-package_root_directory = file.parents[1]
-sys.path.append(str(package_root_directory))
-
-login_manager = LoginManager()
-app = Flask(__name__, template_folder="templates")
-app.register_blueprint(auth)
-app.register_blueprint(reportsbp)
-app.secret_key = appsecrets.SECRET_KEY
 
 client_id = appsecrets.GITHUB_CLIENT_ID
 client_secret = appsecrets.GITHUB_CLIENT_SECRET
 
-login_manager.init_app(app)
-login_manager.login_view = "login"
-user_model = UserModel()
+
+@bp.before_app_request
+def before_request():
+    print(current_user)
 
 
-@app.route('/authorize/github')
+@bp.route('/', methods=['GET', 'POST'])
+def home():
+    return render_template('index.html', title='Home')
+
+
+@bp.route('/authorize/github')
 def oauth2_authorize():
     github_url = (
         "https://github.com/login/oauth/authorize?scope=user:email&client_id="
@@ -69,7 +56,7 @@ def get_commits_last_month():
         print(response.text)
 
 
-@app.route('/repo', methods=['GET', 'POST'])
+@bp.route('/repo', methods=['GET', 'POST'])
 def reponame():
     args_url = request.args.get('repo_url')
     h_token = session['header_token']
@@ -132,7 +119,7 @@ def reponame():
     return res_json, 200
 
 
-@app.route('/callback/github', methods=['GET', 'POST'])
+@bp.route('/callback/github', methods=['GET', 'POST'])
 def ouath2_callback():
     data = {'client_id': client_id, 'client_secret': client_secret, 'code': request.args.get("code")}
     response = requests.post('https://github.com/login/oauth/access_token', data=data)
@@ -174,66 +161,12 @@ def ouath2_callback():
     return render_template('team/teamreport.html', title='Team', data=results)
 
 
-@app.route("/")
-def home():
-    """
-    Renders the homepage of the web application.
-    :return: Rendered HTML template for the homepage.
-    """
-    return render_template('index.html', title='Home')
-
-
-@app.errorhandler(404)
-def page_not_found(e):
-    """
-    Custom error handler for 404 errors (page not found).
-
-    :param e: The error object.
-    :return: Rendered HTML template for the 404 error page.
-    """
-    return render_template('404.html', error=e), 404
-
-
-@login_manager.user_loader
-def user_loader(email):
-    user = user_model.get_user_by_email(email)
-    return user
-
-
-@login_manager.request_loader
-def request_loader(request):
-    email = request.form.get('email')
-    user = user_model.get_user_by_email(email)
-    return user
-
-
-@app.route("/new", methods=['GET', 'POST'])
-@login_required
-def new():
-    """
-    Retrieves and renders the list of all entries.
-    :return: Rendered HTML template for the list page.
-    """
-    return render_template('list.html', title='New Entry', data=[])
-
-
-@login_manager.unauthorized_handler
-def unauthorized_handler():
-    if request.headers.get("X-Requested-With") == "XMLHttpRequest":
-        return redirect(url_for('auth.login'))
-    else:
-        if current_user.is_authenticated:
-            return redirect(url_for('auth.account'))
-        else:
-            return redirect(url_for('auth.login'))
-
-
-@app.route("/team", methods=['GET'])
+@bp.route("/team", methods=['GET'])
 def team():
     return render_template('team/team.html', title='Team', data=[])
 
 
-@app.route("/generate_email", methods=['POST'])
+@bp.route("/generate_email", methods=['POST'])
 def generateemail():
     prompt = ""
     if request.method == "POST":
@@ -243,12 +176,11 @@ def generateemail():
     return elements, 201
 
 
-@app.route("/repo/<reponame>", methods=['GET'])
+@bp.route("/repo/<reponame>", methods=['GET'])
 def repo(reponame=None):
     client = GithubClient()
     repo = client.get_repo_issues("chriswebb09", reponame)
     return render_template('team/team.html', title='Team', data=repo)
 
 
-if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+#

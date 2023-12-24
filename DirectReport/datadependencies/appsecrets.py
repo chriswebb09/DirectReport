@@ -1,0 +1,11 @@
+global SECRET_KEY
+
+global GITHUB_TOKEN
+
+global GOOGLE_AI_TOKEN
+
+global MISTRAL_API_KEY
+
+global GITHUB_CLIENT_ID
+
+global GITHUB_CLIENT_SECRET

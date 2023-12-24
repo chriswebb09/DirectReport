@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-
-from flask import Blueprint
 from flask import render_template, request, json
 from flask_login import login_required, current_user
 
@@ -9,10 +6,10 @@ from DirectReport.browserview.services.github import GoogleAIClient
 from DirectReport.models.report.report_builder import ReportBuilder
 from DirectReport.models.report.report_model import ReportModel
 
-reportsbp = Blueprint('reportsbp', __name__)
+from DirectReport.browserview.api import bp
 
 
-@reportsbp.route("/report", methods=['GET', 'POST'])
+@bp.route("/report", methods=['GET', 'POST'])
 @login_required
 def report():
     prompt = ""
@@ -45,7 +42,7 @@ def report():
     return data_json, 201
 
 
-@reportsbp.route("/reports/new", methods=['GET', 'POST'])
+@bp.route("/reports/new", methods=['GET', 'POST'])
 @login_required
 def team_report():
     if request.method == "POST":
@@ -55,7 +52,7 @@ def team_report():
     return render_template('team/teamreport.html', title='Team Report', data=[])
 
 
-@reportsbp.route("/reports/<uid>", methods=['GET'])
+@bp.route("/reports/<uid>", methods=['GET'])
 @login_required
 def get_report(uid=None):
     reports = ReportBuilder.get_reports_for_user_id(current_user.id)
@@ -64,14 +61,14 @@ def get_report(uid=None):
     return render_template('team/teamreport.html', title='Team Report', teamData=report["report"])
 
 
-@reportsbp.route("/reports/list/new", methods=['GET'])
+@bp.route("/reports/list/new", methods=['GET'])
 @login_required
 def get_list():
     reports = ReportBuilder.get_reports_for_user_id(current_user.id)
     return reports, 201
 
 
-@reportsbp.route("/reports", methods=['GET', 'POST'])
+@bp.route("/reports", methods=['GET', 'POST'])
 @login_required
 def list_entries():
     """

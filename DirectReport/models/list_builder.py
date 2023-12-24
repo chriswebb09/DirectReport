@@ -40,7 +40,7 @@ class ListBuilder:
         :param created_at: The date entry was created.
         :param weekly_id: The weekly id.
         """
-        storage = EntryStorage('EntryStorage.db')
+        storage = EntryStorage('entries.db')
         storage.create_table()
         new_entry = Entry(str(uuid.UUID(uid)), topic_text, entry_text, created_at, datetime.datetime.now().timestamp())
         storage.update_entry(new_entry)
@@ -51,7 +51,7 @@ class ListBuilder:
         Deletes an entry with the specified ID.
         :param entry_id: The ID of the entry to delete.
         """
-        storage = EntryStorage('SQLite_Python.db')
+        storage = EntryStorage('entries.db')
         storage.delete_entry(entry_id)
 
     @staticmethod
@@ -60,7 +60,7 @@ class ListBuilder:
         Lists all entries for today.
         :return: A list of entries for today.
         """
-        storage = EntryStorage('EntryStorage.db')
+        storage = EntryStorage('entries.db')
         # daily_id = str(DailyBuilder.get_daily_id())
         # daily_list = storage.get_entry(daily_id)
         list = storage.list_all_entries()
@@ -72,7 +72,7 @@ class ListBuilder:
         Lists all entries.
         :return: A list of all entries.
         """
-        storage = EntryStorage('EntryStorage.db')
+        storage = EntryStorage('entries.db')
         list_items = storage.list_all_entries_as_dict()
 
         return list_items

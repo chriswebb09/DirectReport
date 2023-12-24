@@ -4,10 +4,12 @@ const { axios } = axios;
 class EntryForm extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
             topic: '',
             entry: ''
         };
+
         this.handleTopicChange = this.handleTopicChange.bind(this);
         this.handleEntryChange = this.handleEntryChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);

@@ -47,7 +47,7 @@ class ReportBuilder:
         Deletes an entry with the specified ID.
         :param entry_id: The ID of the entry to delete.
         """
-        storage = ReportModel('ReportStorage.db')
+        storage = ReportModel('reports.db')
         user_reports = storage.get_reports_userid(user_id)
         return user_reports
 
