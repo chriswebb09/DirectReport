@@ -77,7 +77,10 @@ exclude=[
     'tests/*'
 ]
 per-file-ignores= [
-    'DirectReport/__init__.py:F401, F403'
+    'DirectReport/__init__.py:F401, F403, E402',
+    'DirectReport/browserview/api/__init__.py:F401, F403, E402',
+    'DirectReport/browserview/main/routes.py:F401, F403, E402, W503',
+    'DirectReport/datadependencies/prompts.py:F401, F403, E402, W503'
 ]
 
 

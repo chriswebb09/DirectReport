@@ -1,23 +1,18 @@
 import sys
 from pathlib import Path
-
+from flask import Flask, request
 from flask import redirect, url_for
-from flask import Flask, request, current_app
-from flask_login import LoginManager, current_user, login_required
-from DirectReport.config import Config
-
-
+from flask_login import LoginManager, current_user
 from DirectReport.browserview.services.github import GithubClient
 from DirectReport.browserview.services.prompt_logic import generate_email
+from DirectReport.config import Config
 from DirectReport.datadependencies import appsecrets
 from DirectReport.models.user_model import UserModel
-
 
 file = Path(__file__).resolve()
 package_root_directory = file.parents[1]
 sys.path.append(str(package_root_directory))
-#
-# login_manager = LoginManager()
+
 
 client_id = appsecrets.GITHUB_CLIENT_ID
 client_secret = appsecrets.GITHUB_CLIENT_SECRET
@@ -50,7 +45,6 @@ def unauthorized_handler():
 
 
 def create_app(config_class=Config):
-    user_model = UserModel()
     app = Flask(__name__, template_folder="templates")
 
     from DirectReport.browserview.auth import bp as auth_bp

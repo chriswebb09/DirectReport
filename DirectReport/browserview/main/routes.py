@@ -1,13 +1,13 @@
-import requests
-
-from flask import render_template, session, request, redirect, json
 from datetime import datetime, timedelta
+
+import requests
+from flask import render_template, session, request, redirect, json
 from flask_login import current_user
 
+from DirectReport.browserview.main import bp
 from DirectReport.browserview.services.github import GithubClient
 from DirectReport.browserview.services.prompt_logic import generate_email
 from DirectReport.datadependencies import appsecrets
-from DirectReport.browserview.main import bp
 
 client_id = appsecrets.GITHUB_CLIENT_ID
 client_secret = appsecrets.GITHUB_CLIENT_SECRET

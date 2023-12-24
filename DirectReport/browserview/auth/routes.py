@@ -1,11 +1,12 @@
 from flask import render_template, request, redirect, url_for, flash
-from werkzeug.security import generate_password_hash
-from DirectReport.models.user_model import UserModel
 from flask_login import login_user, login_required, logout_user, current_user
+from werkzeug.security import generate_password_hash
+
+from DirectReport.browserview.auth import bp
+from DirectReport.browserview.services.github import GithubClient
 from DirectReport.datadependencies import appsecrets
 from DirectReport.models.report.report_builder import ReportBuilder
-from DirectReport.browserview.services.github import GithubClient
-from DirectReport.browserview.auth import bp
+from DirectReport.models.user_model import UserModel
 
 user_model = UserModel()
 
