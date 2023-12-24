@@ -4,7 +4,7 @@ import click
 import sys
 from pathlib import Path
 import webbrowser
-from DirectReport.browserview.app import app
+from DirectReport.browserview import create_app
 from DirectReport.models.list_builder import ListBuilder
 
 file = Path(__file__).resolve()
@@ -86,10 +86,10 @@ def launch(url):
     Launches the web browser and runs the app.
     :param url: The URL to open in the web browser.
     """
-    # ListBuilder.new("test", "test")
-    # print(ListBuilder.list_all())
     click.launch(url)
-    app.run()
+    app = create_app()
+    app.run(host="127.0.0.1", port=5000, debug=True)
+
 
 
 @click.command()

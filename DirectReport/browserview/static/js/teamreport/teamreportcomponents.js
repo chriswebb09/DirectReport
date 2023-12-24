@@ -1,16 +1,17 @@
 const { useState, useEffect } = React;
 
-const ShowSummary = (report) => {
+
+const ShowSummary = ({ report }) => {
     return (
         <p id="show_summary" className="w-97 sm:w-97 overflow-y-auto break-words">
-            {report !== undefined ?
+            {report && report.summary &&
                 <div className="px-2 mb-1 text-xs text-blue-700">
-                    {report["summary"]}
-                </div> : null
+                    {report.summary}
+                </div>
             }
         </p>
-    )
-}
+    );
+};
 
 const ShowHighlights = (report) => {
 

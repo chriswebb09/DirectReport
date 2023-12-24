@@ -48,7 +48,7 @@ class TeamReport extends React.Component {
     }
 
     handleSubmit() {
-        let payload = { "prompt" : this.state.commentText };
+         const payload = {prompt: commentText};
         axios({
             method: 'post',
             url: '/report',
@@ -207,3 +207,4 @@ class TeamReport extends React.Component {
         )
     }
 };
+

@@ -1,21 +1,15 @@
-#!/usr/bin/env python3
-
 from flask import render_template, request, redirect, url_for, flash
-from flask import Blueprint
 from werkzeug.security import generate_password_hash
 from DirectReport.models.user_model import UserModel
 from flask_login import login_user, login_required, logout_user, current_user
-from DirectReport.browserview import app
 from DirectReport.datadependencies import appsecrets
-from DirectReport.models.Report.report_builder import ReportBuilder
+from DirectReport.models.report.report_builder import ReportBuilder
 from DirectReport.browserview.services.github import GithubClient
-
-auth = Blueprint('auth', __name__)
+from DirectReport.browserview.auth import bp
 
 user_model = UserModel()
 
-
-@auth.route('/signup', methods=['POST', 'GET'])
+@bp.route('/signup', methods=['POST', 'GET'])
 def signup():
     if request.method == 'POST':
         # code to validate and add user to database goes here
@@ -29,22 +23,20 @@ def signup():
         return redirect(url_for('auth.login'))
     return render_template('auth/signup.html')
 
-
-@auth.route('/logout')
+@bp.route('/logout')
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('reportsbp.team_report'))
+    return redirect(url_for('main.home'))
 
-
-@auth.route('/login', methods=['POST', 'GET'])
+@bp.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
         remember = True if request.form.get('remember') else False
-        user = app.user_loader(email)
-        if user.check_password(password):
+        user = user_model.get_user_by_email(email)
+        if user and user.check_password(password):
             login_user(user, remember=remember, force=True)
             if current_user.is_authenticated():
                 return redirect(url_for('auth.account'))
@@ -55,14 +47,13 @@ def login():
         'auth/login.html', client_id=appsecrets.GITHUB_CLIENT_ID, client_secret=appsecrets.GITHUB_CLIENT_SECRET
     )
 
-
-@auth.route("/account", methods=['GET', 'POST'])
+#
+@bp.route("/account", methods=['GET', 'POST'])
 @login_required
 def account():
     return render_template('account.html', title='Account', name=current_user.username, userid=current_user.id)
 
-
-@auth.route("/account_data", methods=['GET'])
+@bp.route("/account_data", methods=['GET'])
 @login_required
 def account_data():
     saved_reports = ReportBuilder.get_reports_for_user_id(current_user.id)
@@ -73,7 +64,6 @@ def account_data():
     for report in saved_reports:
         report_element = {"report": report}
         report_results.append(report_element)
-
     user_account = {
         "name": current_user.firstname + " " + current_user.lastname,
         "firstname": current_user.firstname,
@@ -84,3 +74,5 @@ def account_data():
     }
     user_element = {"user": user_account, "reports": report_results, "shortlog": shortlog}
     return user_element, 201
+
+
