@@ -1,5 +1,8 @@
+#!/usr/bin/env python3
+
 from werkzeug.http import HTTP_STATUS_CODES
 from werkzeug.exceptions import HTTPException
+
 from DirectReport.browserview.api import bp
 
 
