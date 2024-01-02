@@ -6,6 +6,8 @@ from flask import Flask, request
 from flask import redirect, url_for
 from flask_login import LoginManager, current_user
 from DirectReport.browserview.services.github import GithubClient
+from DirectReport.browserview.services.huggingface_client import HuggingFaceClient
+from DirectReport.browserview.services.googleai_client import GoogleAIClient
 from DirectReport.browserview.services.prompt_logic import generate_email
 from DirectReport.config import Config
 from DirectReport.datadependencies import appsecrets

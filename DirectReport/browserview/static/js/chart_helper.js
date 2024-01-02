@@ -180,7 +180,7 @@ function showGraphics3(data, divtag) {
         .attr("height", function (value, index) {
             return value[1] * 20
         })
-        .attr("fill", "yellow");
+        .attr("fill", "teal");
 
     groups.append("text")
         .attr('x', function (value, index) {
