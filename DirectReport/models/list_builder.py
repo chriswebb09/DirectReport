@@ -23,7 +23,7 @@ class ListBuilder:
         :param topic_text: The topic for the entry (optional).
         """
         today = datetime.date.today().strftime("%m/%d/%Y")
-        storage = EntryStorage('EntryStorage.db')
+        storage = EntryStorage('entries.db')
         storage.create_table()
         if topic_text is None or topic_text == '':
             topic_text = "Entry for work on " + str(today)

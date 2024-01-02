@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block header %}
+    {% block title %}{% endblock %}
+{% endblock %}
+
+{% block content %}
+    <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flex justify-center items-center py-5 bg-red-600 text-white">
+                    <ul class=flashes>
+                        {% for category, message in messages %}
+                            <li class="{{ category }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        {% endwith %}
+        <div id="root" class='md:max-lg:flex content-start'>
+        </div>
+        <script type="text/babel" src="{{url_for('static', filename='js/account/edit_account.js')}}"></script>
+    </main>
+{% endblock %}

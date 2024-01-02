@@ -38,14 +38,15 @@ const Account = () => {
     } else {
         return (
             <div className="mx-20 content-center mt-0 mb-0 h-50">
-                <div className="grid grid-cols-3 gap-8 mx-10 px-10 mt-2 justify-center">
+                <div className="py-2 px-2 mt-0 mb-2"></div>
+                <div className="grid grid-cols-3 gap-8 mx-10 px-10 mt-0 justify-center">
                     {userData && AccountUserInfo(userData, reportData)}
                 </div>
+                <div className="py-1 px-2 mt-0 mb-2"></div>
             </div>
         )
     }
 };
-
 
 
 const domContainer = document.querySelector('#root');

@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 
-
 import openai
-
 from DirectReport.datadependencies import appsecrets, prompts
 
 openai.api_key = appsecrets.SECRET_KEY
