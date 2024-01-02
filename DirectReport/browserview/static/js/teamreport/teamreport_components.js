@@ -1,6 +1,5 @@
 const { useState, useEffect } = React;
 
-
 const ShowSummary = ({ report }) => {
     return (
         <p id="show_summary" className="w-97 sm:w-97 overflow-y-auto break-words">

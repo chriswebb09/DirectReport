@@ -67,9 +67,9 @@ class GithubClient:
         response.raise_for_status()
         return len(response.json())
 
-    def get_user_repos(self, repo_owner):
+    def get_user_repos(self, repo_owner, token):
         url = f"https://api.github.com/users/{repo_owner}/repos?sort=updated&order=desc"
-        headers = {"Authorization": f"token {appsecrets.GITHUB_TOKEN}"}
+        headers = {"Authorization": f"token {token}"}
         response = requests.get(url, headers=headers)
         response.raise_for_status()
         return response.json()
@@ -102,6 +102,7 @@ class GoogleAIClient:
 
     def get_data_from(self, prompt):
         response = self.query(prompt)
+        print(response)
         response_data = response["candidates"][0]["output"]
         json_loaded = json.loads(response_data)
         return json_loaded
