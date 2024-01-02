@@ -6,7 +6,6 @@ TMPREPO=/tmp/docs/DirectReport
 develop:  ## install dependencies and build library
 	python3 -m pip install Flask --user
 	python3 -m pip install Flask-Login --user
-	python3 -m pip install langchain --user
 	python3 -m pip install flask_httpauth --user
 	python3 -m pip install -e .[develop]
 
@@ -52,7 +51,7 @@ coverage:  ## clean and run unit tests with coverage
 	python3 -m pytest -v DirectReport/tests --cov=DirectReport --cov-branch --cov-fail-under=5 --cov-report term-missing
 
 # Alias
-tests: test
+tests: clean develop build test
 
 ###########
 # VERSION #
