@@ -247,7 +247,7 @@ class TeamReport extends React.Component {
                     </div>
                 </div>
                  {this.state.teamData.length <= 0 && (
-                    <div className="pb-50 pt-40 mt-30 h-30">
+                    <div className="pb-[200px] pt-40 mt-30 h-30">
                     </div>
                 )}
                 {this.state.teamData.length > 0 && (

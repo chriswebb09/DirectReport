@@ -54,7 +54,9 @@ def dashboard_reports_update():
     prompt = ""
     prompt = request.get_json()["prompt"]
     client = GithubClient()
-    user_repos = client.get_user_repos(current_user.github_username)
+    h_token = session['header_token']
+    print(current_user.github_username)
+    user_repos = client.get_user_repos(current_user.github_username, h_token)
     repodata = []
     for repo in user_repos:
         repodata.append(repo["name"])

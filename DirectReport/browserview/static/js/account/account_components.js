@@ -24,21 +24,22 @@ const AccountUserInfo = (userData, reportData) => {
                                     </button>
                                 </div>
                             </div>
-                            <div
-                                className="col-span-2 bg-gray-200 shadow-[1.0px_1.0px_7.0px_0.0px_rgba(0,0,0,0.58)] rounded-3xl py-8 px-5 border-solid border-2 border-gray-400">
+                            <div className="col-span-2 bg-gray-200 shadow-[1.0px_1.0px_7.0px_0.0px_rgba(0,0,0,0.58)] rounded-3xl py-8 px-5 border-solid border-2 border-gray-400">
                                 <p className="text-justify ml-20 pt-1 text-md font-mono tracking-wide text-sky-800">
-                                    <span
-                                        className="ml-10 font-black font-mono">NUMBER OF REPORTS SAVED:  </span> {reportData.length}
+                                    <span className="ml-10 font-black font-mono">NUMBER OF REPORTS SAVED:  </span>
+                                    {reportData.length}
                                 </p>
                                 <p className="text-justify ml-20 pt-1 text-md font-mono tracking-wide text-sky-800">
-                                    <span className="ml-10 font-black font-mono">LAST REPORT:  </span> DEC
-                                    12, 2021
+                                    <span className="ml-10 font-black font-mono">LAST REPORT:  </span>
+                                    DEC 12, 2021
                                 </p>
                                 <p className="text-justify ml-20 pt-1 text-md font-mono tracking-wide text-sky-800">
-                                    <span className="ml-10 font-black font-mono">GITHUB ACOUNT USERNAME:  </span> {userData.github_username}
+                                    <span className="ml-10 font-black font-mono">GITHUB ACOUNT USERNAME:  </span>
+                                    {userData.github_username}
                                 </p>
                                 <p className="text-justify ml-20 pt-1 text-md font-mono tracking-wide text-sky-800">
-                                    <span className="ml-10 font-black font-mono">SELECTED REPO:  </span> DirectReport
+                                    <span className="ml-10 font-black font-mono">SELECTED REPO:  </span>
+                                    DirectReport
                                 </p>
                                 <div className=" rounded-2xl flex items-center justify-center">
                                     <button
