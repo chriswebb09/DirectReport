@@ -46,7 +46,6 @@ def login():
             if current_user.is_authenticated():
                 return redirect(url_for('dashboard.dashboard_home'))
         else:
-            print("password no match")
             flash("Please check your login details and try again.")
     return render_template(
         'auth/login.html', client_id=appsecrets.GITHUB_CLIENT_ID, client_secret=appsecrets.GITHUB_CLIENT_SECRET

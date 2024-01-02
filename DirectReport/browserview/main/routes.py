@@ -38,13 +38,10 @@ def oauth2_authorize():
     return redirect(github_url)
 
 
-def get_commits_last_month():
-    owner = 'chriswebb09'
-    repo = 'your_repository'
-    url = f'https://api.github.com/repos/{owner}/{repo}/pulls'
-    # Replace 'your_token' with your personal access token
+def get_commits_last_month(repo_name):
+    owner = current_user.github_username
+    url = f'https://api.github.com/repos/{owner}/{repo_name}/pulls'
     headers = {'Authorization': 'token your_token'}
-    # Calculate the date one month ago
     since_date = (datetime.utcnow() - timedelta(days=30)).strftime('%Y-%m-%dT%H:%M:%SZ')
     params = {'state': 'all', 'sort': 'created', 'direction': 'desc', 'since': since_date}
     response = requests.get(url, headers=headers, params=params)
@@ -61,33 +58,22 @@ def reponame():
     args_url = request.args.get('repo_url')
     h_token = session['header_token']
     reponame = "https://api.github.com/repos/" + args_url + "/commits"
-    headers443 = {
+    headers = {
         'Accept': 'application/vnd.github+json',
         'Authorization': 'Bearer ' + h_token,
         'X-GitHub-Api-Version': '2022-11-28',
     }
-    response3 = requests.get(url=reponame, headers=headers443, auth=(client_id, client_secret))
+    response3 = requests.get(url=reponame, headers=headers, auth=(client_id, client_secret))
     json_Data3 = json.loads(response3.content)
-
     USERNAME = current_user.github_username
-    REPO = "DirectReport"
-
-    # Calculate the date one month ago
     last_month = datetime.utcnow() - timedelta(days=30)
     last_month_str = last_month.strftime("%Y-%m-%dT%H:%M:%SZ")
-
-    # API endpoint to retrieve commits for a repository since the last month
-    api_url = f"https://api.github.com/repos/{USERNAME}/{REPO}/commits?since={last_month_str}"
-
-    # Fetch commits using requests and your GitHub token
+    api_url = f"https://api.github.com/repos/{USERNAME}/{args_url}/commits?since={last_month_str}"
     headers = {"Authorization": f"token {appsecrets.GITHUB_TOKEN}"}
     response = requests.get(api_url, headers=headers)
-
-    # Check if the request was successful (status code 200)
     results_2 = []
     if response.status_code == 200:
         commits = response.json()
-
         # Format and print the commits
         for commit in commits:
             author_name = commit["commit"]["author"]["name"]
@@ -115,7 +101,6 @@ def reponame():
         results.append(commit_data_res)
     result_log = " ".join(results_2)
     res_json = {"json_array": json_Data3, "result_log": result_log}
-    print(result_log)
     return res_json, 200
 
 
@@ -141,7 +126,6 @@ def ouath2_callback():
     )
     json_Data = json.loads(response2.content)
     user_info = json_Data["user"]
-
     user_model = UserModel()
     user_model.update_github_username(current_user.email, user_info["login"])
     return render_template('team/teamreport.html', title='Team', data=[])
@@ -149,9 +133,8 @@ def ouath2_callback():
 
 @bp.route('/repos', methods=['GET', 'POST'])
 def repos():
-    # args_url = request.args.get('repo_url')
     h_token = session['header_token']
-    username = current_user.github_username  # Replace with the GitHub username
+    username = current_user.github_username
     url = f"https://api.github.com/users/{username}/repos" + "?sort=updated&direction=desc"
     headers = {
         'Accept': 'application/vnd.github+json',
