@@ -41,8 +41,7 @@ const ShowTeamList = (team) => {
         <div class="items-center pt-1 select-none">
             {team !== undefined ?
                 team.map(team_member =>
-                     <button class="bg-blue-600 py-1 px-2 pb-1 pt-1 mr-0.5 my-0.5 no-underline rounded-full text-white font-sans border-2 border-gray text-xs btn-primary hover:text-white hover:bg-indigo-700 focus:outline-none active:shadow-none">
-                        {team_member.name}
+                     <button class="bg-blue-600 py-1 px-2 pb-1 pt-1 mr-0.5 my-0.5 no-underline rounded-full text-white font-sans border-2 border-gray text-xs btn-primary hover:text-white hover:bg-indigo-700 focus:outline-none active:shadow-none" onClick={(event) => openPopover(event, team_member)}>{team_member.name}
                     </button>
                 ) : null
             }
@@ -50,7 +49,7 @@ const ShowTeamList = (team) => {
     )
 }
 const openPopover = (e: ChangeEvent<HTMLInputElement>, teammember) => {
-    e.preventDefault();
+    // e.preventDefault();
     let element = e.target;
     while ("BUTTON" !== element.nodeName) {
         element = element.parentNode;
@@ -75,7 +74,6 @@ const repoPopoverUI = () => {
                 </div>
                 <div id="popover-repo-Content" className="text-white font-semibold tracking-wide px-6 py-2 h-2/3 overflow-y-scroll h-36"></div>
                 <div id="profile-repo-Button" className="text-white tracking-wide px-6 py-4"></div>
-                {/*text-xs font-sm break-words tracking-wide text-blue-600*/}
             </div>
         </div>
     )

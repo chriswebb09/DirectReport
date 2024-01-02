@@ -3,7 +3,6 @@
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash
-
 from DirectReport.browserview.auth import bp
 from DirectReport.browserview.services.github import GithubClient
 from DirectReport.datadependencies import appsecrets
@@ -54,12 +53,6 @@ def login():
     )
 
 
-# @bp.route("/account", methods=['GET', 'POST'])
-# @login_required
-# def account():
-#     return render_template('account.html', title='Account', name=current_user.username, userid=current_user.id)
-
-
 @bp.route("/account_data", methods=['GET'])
 @login_required
 def account_data():
@@ -78,6 +71,7 @@ def account_data():
         "userid": current_user.id,
         "username": current_user.username,
         "email": current_user.email,
+        "github_username": current_user.github_username,
     }
     user_element = {"user": user_account, "reports": report_results, "shortlog": shortlog}
     return user_element, 201

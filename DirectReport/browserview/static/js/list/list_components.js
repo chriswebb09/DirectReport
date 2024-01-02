@@ -11,7 +11,7 @@ class SavedReportList extends React.Component {
                     {this.props.listdata.map(item =>
                         <div className="col-span-1 justify-center mt-1 mb-1">
                             <article className="mx-4 mt-2 w-90 rounded-3xl bg-white p-1 shadow-[1.0px_1.0px_2.0px_1.0px_rgba(0,0,0,0.58)]">
-                                <a className="block rounded-xl bg-white sm:p-6 lg:p-8" href={'/reports/' + item.uuid}>
+                                <a className="block rounded-xl bg-white sm:p-6 lg:p-8" href={'/dashboard/reports/' + item.uuid}>
                                     <div>
                                         <h2 className="text-2xl font-bold text-gray-800 sm:text-xl">{'User: ' + item.user_id}</h2>
                                         <p className="mt-3 text-sm text-justify line-clamp-3 text-gray-500">{'Raw Input: ' + item.raw_input}</p>

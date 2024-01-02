@@ -7,7 +7,7 @@ const SavedReportListApp = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetch(`/reports/list/new`)
+        fetch('/api/reports/list')
             .then((response) => {
                 if (!response.ok) {
                     throw new Error(
@@ -17,6 +17,7 @@ const SavedReportListApp = () => {
                 return response.json();
             })
             .then((actualData) => {
+                console.log(actualData);
                 setListData(actualData);
                 setError(null);
             })

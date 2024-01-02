@@ -16,7 +16,7 @@ class DailyBuilder:
         :return: The daily ID.
         """
         today = datetime.date.today()
-        daily = DailyUUIDTable('SQLite_Python.db')
+        daily = DailyUUIDTable('daily_entry.db')
         daily.create_table()
         result = daily.find_uuid_by_date(today)
         if result is None:
@@ -32,7 +32,7 @@ class DailyBuilder:
         :return: The newly created daily ID.
         """
         today = datetime.date.today().strftime("%m/%d/%Y")
-        daily = DailyUUIDTable('SQLite_Python.db')
+        daily = DailyUUIDTable('daily_entry.db')
         daily.create_table()
         weekly_id = ''
         if daily.get_uuid(today) is not None:
@@ -49,6 +49,6 @@ class DailyBuilder:
         Lists all daily IDs.
         :return: A list of all daily IDs.
         """
-        storage = DailyUUIDTable('SQLite_Python.db')
+        storage = DailyUUIDTable('daily_entry.db')
         list_all = storage.list_all_entries()
         return list_all

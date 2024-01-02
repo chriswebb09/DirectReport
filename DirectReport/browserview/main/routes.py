@@ -3,9 +3,10 @@
 from datetime import datetime, timedelta
 
 import requests
-from flask import render_template, session, request, redirect, json
+from flask import render_template, session, request, redirect, json, jsonify
 from flask_login import current_user
 
+from DirectReport.models.user_model import UserModel
 from DirectReport.browserview.main import bp
 from DirectReport.browserview.services.github import GithubClient
 from DirectReport.browserview.services.prompt_logic import generate_email
@@ -41,15 +42,12 @@ def get_commits_last_month():
     owner = 'chriswebb09'
     repo = 'your_repository'
     url = f'https://api.github.com/repos/{owner}/{repo}/pulls'
-
     # Replace 'your_token' with your personal access token
     headers = {'Authorization': 'token your_token'}
-
     # Calculate the date one month ago
     since_date = (datetime.utcnow() - timedelta(days=30)).strftime('%Y-%m-%dT%H:%M:%SZ')
     params = {'state': 'all', 'sort': 'created', 'direction': 'desc', 'since': since_date}
     response = requests.get(url, headers=headers, params=params)
-
     if response.status_code == 200:
         pull_requests = response.json()
         print(pull_requests)
@@ -71,7 +69,7 @@ def reponame():
     response3 = requests.get(url=reponame, headers=headers443, auth=(client_id, client_secret))
     json_Data3 = json.loads(response3.content)
 
-    USERNAME = "chriswebb09"
+    USERNAME = current_user.github_username
     REPO = "DirectReport"
 
     # Calculate the date one month ago
@@ -134,7 +132,6 @@ def ouath2_callback():
         'X-GitHub-Api-Version': '2022-11-28',
         'Content-Type': 'application/x-www-form-urlencoded',
     }
-    HEADER_TOKEN = token
     data2 = '{\n' + '  "access_token": "' + HEADER_TOKEN + '" \n}'
     response2 = requests.post(
         url="https://api.github.com/applications/" + client_id + "/token",
@@ -143,15 +140,30 @@ def ouath2_callback():
         auth=(client_id, client_secret),
     )
     json_Data = json.loads(response2.content)
-    repos = requests.get(
-        json_Data["user"]['repos_url'] + "?sort=updated&direction=desc", data=data2, auth=(client_id, client_secret)
-    )
-    json_Data2 = json.loads(repos.content)
+    user_info = json_Data["user"]
+
+    user_model = UserModel()
+    user_model.update_github_username(current_user.email, user_info["login"])
+    return render_template('team/teamreport.html', title='Team', data=[])
+
+
+@bp.route('/repos', methods=['GET', 'POST'])
+def repos():
+    # args_url = request.args.get('repo_url')
+    h_token = session['header_token']
+    username = current_user.github_username  # Replace with the GitHub username
+    url = f"https://api.github.com/users/{username}/repos" + "?sort=updated&direction=desc"
+    headers = {
+        'Accept': 'application/vnd.github+json',
+        'Authorization': 'Bearer ' + h_token,
+        'X-GitHub-Api-Version': '2022-11-28',
+    }
+    response = requests.get(url, headers=headers)
+    repos = response.json()
     results = []
-    for repo in json_Data2:
+    for repo in repos:
         owner = repo['owner']
         url_repo = "https://api.github.com/repos/" + owner['login'] + "/" + repo['name']
-
         data_res = {
             "name": repo['name'],
             "description": repo['description'],
@@ -160,7 +172,7 @@ def ouath2_callback():
             "owner_url": owner['url'],
         }
         results.append(data_res)
-    return render_template('team/teamreport.html', title='Team', data=results)
+    return jsonify(results), 200
 
 
 @bp.route("/team", methods=['GET'])
@@ -181,5 +193,5 @@ def generateemail():
 @bp.route("/repo/<reponame>", methods=['GET'])
 def repo(reponame=None):
     client = GithubClient()
-    repo = client.get_repo_issues("chriswebb09", reponame)
+    repo = client.get_repo_issues(current_user.github_username, reponame)
     return render_template('team/team.html', title='Team', data=repo)
