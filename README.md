@@ -96,59 +96,6 @@ $ python DirectReport launch
  Press CTRL+C to quit
  127.0.0.1 - - [12/May/2023 15:23:25] "GET / HTTP/1.1" 200 -
 
-```
-
-### Show-List
-
-```
-
-Usage: python -m DirectReport list [OPTIONS]
-
-  Lists items based on the selected transformation flag.
-
-  :param transformation: The selected transformation flag (week, day, or all).
-
-Options:
-  --week
-  --day
-  --notes
-  --all
-  --help   Show this message and exit.
- 
-```
-
-#### Basic
-
-```
-
- $ python DirectReport list
- 
-```
-
-
-#### All
-
-```
-
-$ python DirectReport list --all
-
- ```
- 
-#### Daily
- 
- ```
- 
-$ python DirectReport list --day
-
-```
-
-#### Weekly
-
-```
-
-$ python DirectReport list --week
-
-```
 
 ## Web Interface
 
