@@ -16,6 +16,17 @@ const RememberMe = () => {
     )
 }
 
+const NameElement = (forHtml, labelText, name, id, placeholder) => {
+    return (
+        <div>
+            <label htmlFor={forHtml} className="block mb-2 text-sm font-medium text-white dark:text-white">
+                {labelText}
+            </label>
+            <input type="text" name={name} id={id} className="bg-gray-50 border border-gray-300 text-blue-500 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder={placeholder} required=""/>
+        </div>
+    )
+}
+
 const SignupForm = () => {
     return (
         <form className="space-y-4 md:space-y-6" method="POST" action="/signup">
@@ -25,24 +36,9 @@ const SignupForm = () => {
                 </label>
                 <input type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-blue-500 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required=""/>
             </div>
-            <div>
-                <label htmlFor="firstname" className="block mb-2 text-sm font-medium text-white dark:text-white">
-                    First name
-                </label>
-                <input type="firstname" name="firstname" id="firstname" className="bg-gray-50 border border-gray-300 text-blue-500 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John Doe.." required=""/>
-            </div>
-            <div>
-                <label htmlFor="lastname" className="block mb-2 text-sm font-medium text-white dark:text-white">
-                    Last name
-                </label>
-                <input type="text" name="lastname" id="lastname" className="bg-gray-50 border border-gray-300 text-blue-500 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John Doe.." required=""/>
-            </div>
-            <div>
-                <label htmlFor="username" className="block mb-2 text-sm font-medium text-white dark:text-white">
-                    Username
-                </label>
-                <input type="text" name="username" id="username" className="bg-gray-50 border border-gray-300 text-blue-500 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John Doe.." required=""/>
-            </div>
+            {NameElement("firstname", "First name", "firstname", "firstname", "John")}
+            {NameElement("lastname", "Last name", "lastname", "lastname", "Doe")}
+            {NameElement("username", "Username", "username", "username", "JohnDoe")}
             <div>
                 <label htmlFor="password" className="block mb-2 text-sm font-medium text-white dark:text-white">Password</label>
                 <input type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-blue-500 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required=""/>
