@@ -63,7 +63,7 @@ def reponame():
         'Authorization': 'Bearer ' + h_token,
         'X-GitHub-Api-Version': '2022-11-28',
     }
-    response3 = requests.get(url=reponame, headers=header, auth=(client_id, client_secret))
+    response3 = requests.get(url=reponame, headers=headers, auth=(client_id, client_secret))
     json_Data3 = json.loads(response3.content)
     USERNAME = current_user.github_username
     last_month = datetime.utcnow() - timedelta(days=30)

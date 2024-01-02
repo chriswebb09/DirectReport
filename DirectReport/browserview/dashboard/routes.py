@@ -45,7 +45,6 @@ def dashboard_reports_saved():
 def dashboard_reports_new():
     if request.method == "POST":
         json_data = request.get_json()
-        report_model = ReportModel(json_data["id"], json_data['summary'], json_data['created_at'])
     return render_template('team/teamreport.html', title='Team Report', data=[])
 
 
