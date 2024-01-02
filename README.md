@@ -96,6 +96,7 @@ $ python DirectReport launch
  Press CTRL+C to quit
  127.0.0.1 - - [12/May/2023 15:23:25] "GET / HTTP/1.1" 200 -
 
+```
 
 ## Web Interface
 
