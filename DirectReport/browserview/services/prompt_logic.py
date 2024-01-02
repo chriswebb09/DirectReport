@@ -15,7 +15,7 @@ def generate_email(data):
     return response
 
 
-def get_team_summarys_from_git_shortlog(data):
+def team_summary_from_shortlog(data):
     prompt = prompts.GENERATE_SUMMARY_PROMPT_PREIX + data
     message = [{"role": "user", "content": prompt}]
     response = openai.ChatCompletion.create(

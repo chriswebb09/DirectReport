@@ -32,11 +32,11 @@ def home():
 @bp.route('/authorize/github')
 def oauth2_authorize():
     github_url = (
-            "https://github.com/login/oauth/authorize?scope=user:email&client_id="
-            + client_id
-            + "&client_secret="
-            + client_secret
-            + "&redirect_uri=http%3A%2F%2F127.0.0.1%3A5000%2Fcallback%2Fgithub"
+        "https://github.com/login/oauth/authorize?scope=user:email&client_id="
+        + client_id
+        + "&client_secret="
+        + client_secret
+        + "&redirect_uri=http%3A%2F%2F127.0.0.1%3A5000%2Fcallback%2Fgithub"
     )
     return redirect(github_url)
 
@@ -51,18 +51,15 @@ def get_commits_last_month(repo_name):
     response = requests.get(url, headers=headers, params=params)
     if response.status_code == 200:
         pull_requests = response.json()
-        print(pull_requests)
+        return pull_requests
     else:
         print(f"Error: {response.status_code}")
         print(response.text)
 
+
 @bp.route('/repo', methods=['GET', 'POST'])
 def reponame():
-    print("\n")
-    print(request.method)
-    print("/repo")
     args_url = request.args.get('repo_url')
-    print(args_url)
     h_token = session['header_token']
     repo_name = "https://api.github.com/repos/" + args_url + "/commits"
     headers = {
@@ -81,19 +78,17 @@ def reponame():
 
 @bp.route('/callback/github', methods=['GET', 'POST'])
 def ouath2_callback():
-    print("/callback/github")
     data = {'client_id': client_id, 'client_secret': client_secret, 'code': request.args.get("code")}
     response = requests.post('https://github.com/login/oauth/access_token', data=data)
     res = response.text.split('&', 1)
     token = res[0].split('=')[1]
-    HEADER_TOKEN = token
     session['header_token'] = token
     headers2 = {
         'Accept': 'application/vnd.github+json',
         'X-GitHub-Api-Version': '2022-11-28',
         'Content-Type': 'application/x-www-form-urlencoded',
     }
-    data2 = '{\n' + '  "access_token": "' + HEADER_TOKEN + '" \n}'
+    data2 = '{\n' + '  "access_token": "' + token + '" \n}'
     response2 = requests.post(
         url="https://api.github.com/applications/" + client_id + "/token",
         headers=headers2,
@@ -109,9 +104,6 @@ def ouath2_callback():
 
 @bp.route('/repos', methods=['GET', 'POST'])
 def repos():
-    print("\n")
-    print(request.method)
-    print("/repos")
     if request.method == 'GET':
         h_token = session['header_token']
         username = current_user.github_username
@@ -141,9 +133,7 @@ def repos():
             print(f"Error Response FROM API: {response.status_code} - {response.text}")
             return jsonify([]), 200
     else:
-        print("posted to repos")
         return jsonify([]), 200
-
 
 
 @bp.route("/team", methods=['GET'])
@@ -166,9 +156,6 @@ def repo(reponame=None):
     client = GithubClient()
     try:
         repo = client.get_repo_issues(current_user.github_username, reponame)
-        print(repo)
-        print("\n")
     except Exception as e:
-        print(e)
         repo = []
     return render_template('team/team.html', title='Team', data=repo)

@@ -60,7 +60,7 @@ def dashboard_reports_update():
         repo_data.append(repo["name"])
     raw_data = googleAi.get_data_from(prompt)
     begin, end = raw_data.find('{'), raw_data.rfind('}')
-    filtered_str = raw_data[begin: end + 1]
+    filtered_str = raw_data[begin : end + 1]
     response_data = json.loads(filtered_str)
     response_data["broad_categories"] = {
         "debug_info": 16,
@@ -72,8 +72,6 @@ def dashboard_reports_update():
         "syntax_fix": 1,
     }
     response_data["repos"] = repo_data
-    print(response_data)
-    print("\n\n")
     ReportBuilder.new(response_data, prompt, current_user.id, "DirectReport")
     return response_data, 201
 

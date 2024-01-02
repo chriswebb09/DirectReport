@@ -5,8 +5,6 @@ from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash
 from DirectReport.browserview.auth import bp
 from DirectReport.browserview.services.github import GithubClient
-from DirectReport.browserview.services.huggingface_client import HuggingFaceClient
-from DirectReport.browserview.services.googleai_client import GoogleAIClient
 from DirectReport.datadependencies import appsecrets
 from DirectReport.models.report.report_builder import ReportBuilder
 from DirectReport.models.user_model import UserModel

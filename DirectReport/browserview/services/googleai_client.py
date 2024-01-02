@@ -30,4 +30,3 @@ class GoogleAIClient:
             print(response.status_code)
             data = {}
         return data
-

@@ -66,8 +66,6 @@ class TeamReport extends React.Component {
                 "Content-Type": "application/json"
             }
         }).then(result => {
-            console.log(result.data);
-            // alert(result.data);
             this.handleTeamDataChange(result.data["team"]);
             this.handleReportDataChange(result.data["report"]);
             showGraphics(result.data, '#map-container');

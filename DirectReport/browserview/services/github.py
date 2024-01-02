@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 
-import json
 import re
-
 import requests
-
 from DirectReport.datadependencies import appsecrets, prompts
 
 
@@ -80,4 +77,3 @@ class GithubClient:
         response = requests.get(url, headers=headers)
         response.raise_for_status()
         return response.json()
-
