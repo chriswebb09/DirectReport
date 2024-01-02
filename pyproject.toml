@@ -84,7 +84,8 @@ per-file-ignores= [
     'DirectReport/browserview/auth/__init__.py:E402',
     'DirectReport/browserview/dashboard/__init__.py:E402',
     'DirectReport/browserview/errors/__init__.py:E402',
-    'DirectReport/browserview/main/__init__.py:E402'
+    'DirectReport/browserview/main/__init__.py:E402',
+    'DirectReport/browserview/dashboard/routes.py:E203'
 ]
 
 
