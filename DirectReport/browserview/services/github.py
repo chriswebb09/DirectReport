@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 
-import json
 import re
-
 import requests
-
 from DirectReport.datadependencies import appsecrets, prompts
 
 
@@ -80,29 +77,3 @@ class GithubClient:
         response = requests.get(url, headers=headers)
         response.raise_for_status()
         return response.json()
-
-
-class HuggingFaceClient:
-    def query(self, payload):
-        API_URL = "https://api-inference.huggingface.co/models/meta-llama/Llama-2-7b-chat-hf"
-        headers = {"Authorization": "Bearer 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"}
-        response = requests.post(API_URL, headers=headers, json=payload)
-        return response.json()
-
-
-class GoogleAIClient:
-    def query(self, prompt):
-        API_URL = f"https://generativelanguage.googleapis.com/v1beta3/models/text-bison-001:generateText?key={appsecrets.GOOGLE_AI_TOKEN}"
-        headers = {"Content-Type": "application/json"}
-        prompt_data = prompts.GENERATE_SUMMARY_PROMPT_PREIX + prompt
-        data = {"prompt": {"text": f"{prompt_data}"}}
-        response = requests.post(API_URL, data=json.dumps(data), headers=headers)
-        data = json.loads(response.text)
-        return data
-
-    def get_data_from(self, prompt):
-        response = self.query(prompt)
-        print(response)
-        response_data = response["candidates"][0]["output"]
-        json_loaded = json.loads(response_data)
-        return json_loaded
