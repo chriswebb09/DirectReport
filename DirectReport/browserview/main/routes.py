@@ -154,8 +154,9 @@ def generateemail():
 @bp.route("/repo/<reponame>", methods=['GET'])
 def repo(reponame=None):
     client = GithubClient()
+    repo = []
     try:
         repo = client.get_repo_issues(current_user.github_username, reponame)
     except Exception as e:
-        repo = []
+        print(e)
     return render_template('team/team.html', title='Team', data=repo)
