@@ -90,7 +90,7 @@ class GraphDiv extends React.Component {
 
     render() {
         return (
-            <div className="grid grid-cols-3 gap-6 mt-5 mx-20 bg-blue-500 shadow-[1.0px_1.0px_5.0px_0.0px_rgba(0,0,0,0.58)] rounded-3xl px-10 py-3">
+            <div className="grid grid-cols-3 gap-6 mt-5 mx-20 bg-blue-600 shadow-[1.0px_1.0px_5.0px_0.0px_rgba(0,0,0,0.58)] rounded-3xl px-10 py-3">
                 <div className="lg:col-span-1 sm:col-span-3 justify-center mt-7 mb-7 bg-white shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.58)] rounded-3xl px-20 ml-5" id="dd">
                     <div className="col-span-1 flex justify-center my-2 px-3" id="data_display_div">
                         <div id="map-container" className="pl-10 pr-5 rounded-3xl"></div>
