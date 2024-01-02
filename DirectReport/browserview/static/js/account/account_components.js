@@ -5,18 +5,18 @@ const AccountUserInfo = (userData, reportData) => {
     return (
         <div className="lg:col-span-3 md:col-span-2 my-0 sm:col-span-1 sm:col-span-3 justify-center">
             <div className="bg-blue-600 py-5 px-12 shadow-[1.0px_1.0px_5.0px_0.0px_rgba(0,0,0,0.58)] rounded-3xl">
-                <div className="flex h-30 flex-col self-center bg-blue-200 py-12 px-2 my-6 shadow-[1.0px_1.0px_5.0px_0.0px_rgba(0,0,0,0.58)] rounded-3xl border-solid border-2 border-gray-200">
+                <div className="flex h-30 flex-col self-center py-10 px-5 my-6 rounded-3xl">
                     <div className="lg:col-span-1 md:col-span-2 sm:col-span-3 mx-10 pb-8 pt-12 px-12 bg-blue-50 rounded-t-3xl shadow-[1.0px_1.0px_7.0px_0.0px_rgba(0,0,0,0.58)] border-solid border-2 border-gray-200">
                         <div className="grid grid-flow-col gap-2">
                             <div className="col-span-2 bg-gray-200 shadow-[1.0px_1.0px_7.0px_0.0px_rgba(0,0,0,0.58)] rounded-3xl py-7 px-2 border-solid border-2 border-gray-400">
                                 <p className="text-justify ml-10 pt-1 text-md font-mono tracking-wide text-sky-800">
-                                    <span className="ml-5 font-black">FULL NAME:  </span> {userData.name}
+                                    <span className="ml-10 font-black">FULL NAME:  </span> {userData.name}
                                 </p>
                                 <p className="text-justify ml-10 pt-1 text-md font-mono tracking-wide text-sky-800">
-                                    <span className="ml-5 font-black font-mono">EMAIL ADDRESS:</span> {userData.userid}
+                                    <span className="ml-10 font-black font-mono">EMAIL ADDRESS:</span> {userData.userid}
                                 </p>
                                 <p className="text-justify ml-10 pt-1 text-md font-mono tracking-wide text-sky-800">
-                                    <span className="ml-5 font-black font-mono">USER NAME:  </span> {userData.username}
+                                    <span className="ml-10 font-black font-mono">USER NAME:  </span> {userData.username}
                                 </p>
                                 <div className="rounded-2xl flex items-center justify-center">
                                     <button className="bg-blue-600 hover:bg-slate-100 self-center text-white font-mono tracking-wide shadow-[1.5px_2px_1.0px_0.5px_rgba(0,0,0,0.48)] hover:white hover:text-blue-500 hover:border-gray-200 text-sm font-semibold py-2 px-30 rounded-3xl mt-10" type="button">
@@ -29,15 +29,15 @@ const AccountUserInfo = (userData, reportData) => {
                             <div
                                 className="col-span-2 bg-gray-200 shadow-[1.0px_1.0px_7.0px_0.0px_rgba(0,0,0,0.58)] rounded-3xl py-7 px-2 border-solid border-2 border-gray-400">
                                 <p className="text-justify ml-10 pt-1 text-md font-mono tracking-wide text-sky-800">
-                                    <span className="ml-5 font-black font-mono">NUMBER OF REPORTS SAVED:  </span>
+                                    <span className="ml-10 font-black font-mono">NUMBER OF REPORTS SAVED:  </span>
                                     {reportData.length}
                                 </p>
                                 <p className="text-justify ml-10 pt-1 text-md font-mono tracking-wide text-sky-800">
-                                    <span className="ml-5 font-black font-mono">LAST REPORT:  </span>
-                                    DEC 12, 2021
+                                    <span className="ml-10 font-black font-mono">DATE STARTED TRACKING:  </span>
+                                    DEC 12, 2018
                                 </p>
                                 <p className="text-justify ml-10 pt-1 text-md font-mono tracking-wide text-sky-800">
-                                    <span className="ml-5 font-black font-mono">LAST REPORT:  </span>
+                                    <span className="ml-10 font-black font-mono">LAST REPORT CREATED:  </span>
                                     DEC 12, 2021
                                 </p>
 
@@ -55,21 +55,21 @@ const AccountUserInfo = (userData, reportData) => {
                     <div
                         className="lg:col-span-1 md:col-span-2 sm:col-span-3 mx-10 lg:px-18 md:px-4 sm:px-0 bg-gray-200 shadow-[1.0px_1.0px_7.0px_0.0px_rgba(0,0,0,0.58)] rounded-b-3xl shadow-[1.0px_1.0px_5.0px_0.0px_rgba(0,0,0,0.58)] ">
                         <div className="mx-0 min-w-full flex flex-col items-center">
-                            <h1 className="mx-10 pt-6 font-black font-mono tracking-wide text-xl text-sky-800">
+                            <h1 className="mx-10 pt-8 font-black font-mono tracking-wide text-xl text-sky-800">
                                 CONNECT ACCOUNT
                             </h1>
                         </div>
                         <div className="flex items-center justify-center py-2">
                            <ul>
                                <li>
-                                   <p className="text-justify ml-5 pt-1 text-md font-mono tracking-wide text-sky-800">
-                                       <span className="ml-5 font-black font-mono">GITHUB ACOUNT USERNAME:  </span>
+                                   <p className="text-justify pt-1 text-md font-mono tracking-wide text-sky-800">
+                                       <span className="ml-10 font-black font-mono">GITHUB ACOUNT USERNAME:  </span>
                                        {userData.github_username}
                                    </p>
                                </li>
                                <l>
-                                   <p className="text-justify ml-5 pt-1 text-md font-mono tracking-wide text-sky-800">
-                                       <span className="ml-5 font-black font-mono">SELECTED REPO:  </span>
+                                   <p className="text-justify pt-1 text-md font-mono tracking-wide text-sky-800">
+                                       <span className="ml-10 font-black font-mono">SELECTED REPO:  </span>
                                        DirectReport
                                    </p>
                                </l>
@@ -77,7 +77,7 @@ const AccountUserInfo = (userData, reportData) => {
                         </div>
 
 
-                        <div className="rounded-2xl flex items-center justify-center">
+                        <div className="rounded-2xl flex items-center justify-center pb-4">
                             <button
                                 className="bg-blue-600 hover:bg-slate-100 self-center text-white font-mono tracking-wide shadow-[1.5px_2px_1.0px_0.7px_rgba(0,0,0,0.48)] hover:white hover:text-blue-500 hover:border-gray-200 text-lg font-bold py-3 px-20 rounded-3xl mt-4 mb-6"
                                 type="button">
