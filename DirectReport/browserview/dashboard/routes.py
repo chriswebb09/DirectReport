@@ -43,8 +43,8 @@ def dashboard_reports_saved():
 @bp.route("/reports/new", methods=['GET', 'POST'])
 @login_required
 def dashboard_reports_new():
-    if request.method == "POST":
-        json_data = request.get_json()
+    # if request.method == "POST":
+    #     json_data = request.get_json()
     return render_template('team/teamreport.html', title='Team Report', data=[])
 
 
