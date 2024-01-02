@@ -107,3 +107,6 @@ $ python DirectReport launch
 
 
 ![Screenshot detail page for web interface.](DirectReport/assets/web_interface3.png)
+
+
+![Screenshot list page for web interface.](DirectReport/assets/web_interface4.png)
