@@ -20,6 +20,7 @@ client_secret = appsecrets.GITHUB_CLIENT_SECRET
 def dashboard_home():
     return render_template('account.html', title='Account', name=current_user.username, userid=current_user.id)
 
+
 @bp.route("/edit", methods=['GET', 'POST'])
 @login_required
 def dashbboard_edit():
@@ -82,4 +83,6 @@ def dashboard_saved_report(uid=None):
     reports = ReportBuilder.get_reports_for_user_id(current_user.id)
     report = list(filter(lambda report: report["uuid"] == uid, reports))[0]
     json_data = json.dumps(report)
-    return render_template('team/teamreport.html', title='Team Report', data=json_data, report=json_data, raw_input=report['raw_input'])
+    return render_template(
+        'team/teamreport.html', title='Team Report', data=json_data, report=json_data, raw_input=report['raw_input']
+    )

@@ -29,11 +29,11 @@ def home():
 @bp.route('/authorize/github')
 def oauth2_authorize():
     github_url = (
-            "https://github.com/login/oauth/authorize?scope=user:email&client_id="
-            + client_id
-            + "&client_secret="
-            + client_secret
-            + "&redirect_uri=http%3A%2F%2F127.0.0.1%3A5000%2Fcallback%2Fgithub"
+        "https://github.com/login/oauth/authorize?scope=user:email&client_id="
+        + client_id
+        + "&client_secret="
+        + client_secret
+        + "&redirect_uri=http%3A%2F%2F127.0.0.1%3A5000%2Fcallback%2Fgithub"
     )
     return redirect(github_url)
 
@@ -146,6 +146,7 @@ def ouath2_callback():
     user_model.update_github_username(current_user.email, user_info["login"])
     return render_template('team/teamreport.html', title='Team', data=[])
 
+
 @bp.route('/repos', methods=['GET', 'POST'])
 def repos():
     # args_url = request.args.get('repo_url')
@@ -172,6 +173,7 @@ def repos():
         }
         results.append(data_res)
     return jsonify(results), 200
+
 
 @bp.route("/team", methods=['GET'])
 def team():

@@ -52,6 +52,7 @@ def login():
         'auth/login.html', client_id=appsecrets.GITHUB_CLIENT_ID, client_secret=appsecrets.GITHUB_CLIENT_SECRET
     )
 
+
 @bp.route("/account_data", methods=['GET'])
 @login_required
 def account_data():
@@ -70,7 +71,7 @@ def account_data():
         "userid": current_user.id,
         "username": current_user.username,
         "email": current_user.email,
-        "github_username": current_user.github_username
+        "github_username": current_user.github_username,
     }
     user_element = {"user": user_account, "reports": report_results, "shortlog": shortlog}
     return user_element, 201

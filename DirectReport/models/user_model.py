@@ -74,7 +74,8 @@ class UserModel:
     def get_user_by_email(self, email):
         cursor = self.conn.cursor()
         cursor.execute(
-            "SELECT id, uid, username, firstname, lastname, email, password, github_username FROM users WHERE email=?", (email,)
+            "SELECT id, uid, username, firstname, lastname, email, password, github_username FROM users WHERE email=?",
+            (email,),
         )
         result = cursor.fetchone()
         if result:
@@ -84,10 +85,7 @@ class UserModel:
     def update_github_username(self, email, new_github_username):
         cursor = self.conn.cursor()
         try:
-            cursor.execute(
-                "UPDATE users SET github_username = ? WHERE email = ?",
-                (new_github_username, email)
-            )
+            cursor.execute("UPDATE users SET github_username = ? WHERE email = ?", (new_github_username, email))
             self.conn.commit()
             if cursor.rowcount == 0:
                 print("No user found with the given email.")
