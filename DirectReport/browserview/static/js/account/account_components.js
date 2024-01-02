@@ -59,15 +59,23 @@ const AccountUserInfo = (userData, reportData) => {
                                 CONNECT ACCOUNT
                             </h1>
                         </div>
+                        <div className="flex items-center justify-center py-2">
+                           <ul>
+                               <li>
+                                   <p className="text-justify ml-5 pt-1 text-md font-mono tracking-wide text-sky-800">
+                                       <span className="ml-5 font-black font-mono">GITHUB ACOUNT USERNAME:  </span>
+                                       {userData.github_username}
+                                   </p>
+                               </li>
+                               <l>
+                                   <p className="text-justify ml-5 pt-1 text-md font-mono tracking-wide text-sky-800">
+                                       <span className="ml-5 font-black font-mono">SELECTED REPO:  </span>
+                                       DirectReport
+                                   </p>
+                               </l>
+                           </ul>
+                        </div>
 
-                        <p className="text-justify ml-10 pt-1 text-md font-mono tracking-wide text-sky-800">
-                            <span className="ml-5 font-black font-mono">GITHUB ACOUNT USERNAME:  </span>
-                            {userData.github_username}
-                        </p>
-                        <p className="text-justify ml-10 pt-1 text-md font-mono tracking-wide text-sky-800">
-                            <span className="ml-5 font-black font-mono">SELECTED REPO:  </span>
-                            DirectReport
-                        </p>
 
                         <div className="rounded-2xl flex items-center justify-center">
                             <button
