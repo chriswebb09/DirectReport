@@ -30,9 +30,6 @@ const LoginForm = () => {
                          <button type="submit" className="w-full text-white bg-sky-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-3xl text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 shadow-[1.0px_1.0px_7.0px_0.0px_rgba(0,0,0,0.58)] ">
                              Sign in
                          </button>
-                         {/*<button className="w-80 sm:w-90 bg-white hover:bg-blue-400 text-blue-500 shadow-[1.5px_2px_1.0px_0.5px_rgba(0,0,0,0.48)] hover:text-white hover:border-gray-200 text-lg font-semibold py-2 px-5 rounded-3xl mt-2" type="button">*/}
-                         {/*    <a className="btn btn-primary" href="/authorize/github">Login with GitHub</a>*/}
-                         {/*</button>*/}
                          <p className="text-sm font-light text-white dark:text-gray-400 ml-14">Don’t have an account yet?
                              <a href="/signup" className="font-medium text-gray-200 ml-3 hover:underline dark:text-primary-500">Sign up</a>
                          </p>
