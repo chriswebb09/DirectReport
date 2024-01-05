@@ -7,7 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class User(UserMixin):
-    def __init__(self, id, username, firstname, lastname, email, password, github_username):
+    def __init__(self, id, username, firstname, lastname, email, password, github_username, github_repo):
         self.id = email
         self.uid = id
         self.username = username
@@ -17,6 +17,7 @@ class User(UserMixin):
         self.password = password
         self.authenticated = True
         self.github_username = github_username
+        self.github_repo = github_repo
 
     def is_active(self):
         return True
@@ -51,7 +52,8 @@ class UserModel:
                 lastname TEXT NOT NULL,
                 email TEXT UNIQUE NOT NULL PRIMARY KEY,
                 password TEXT NOT NULL,
-                github_username TEXT NOT NULL
+                github_username TEXT NOT NULL,
+                github_repo TEXT NOT NULL
             )
         """
         )
@@ -60,11 +62,12 @@ class UserModel:
     def insert_user(self, id, username, firstname, lastname, email, password):
         cursor = self.conn.cursor()
         uuid_str = str(uuid.uuid4())
-        gitub_username = ""
+        github_username = ""
+        github_repo = ""
         try:
             cursor.execute(
-                "INSERT INTO users (id, uid, username, firstname, lastname, email, password, github_username) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-                (id, uuid_str, username, firstname, lastname, email, password, gitub_username),
+                "INSERT INTO users (id, uid, username, firstname, lastname, email, password, github_username , github_repo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                (id, uuid_str, username, firstname, lastname, email, password, github_username, github_repo),
             )
             self.conn.commit()
             print("User added successfully!")
@@ -74,18 +77,30 @@ class UserModel:
     def get_user_by_email(self, email):
         cursor = self.conn.cursor()
         cursor.execute(
-            "SELECT id, uid, username, firstname, lastname, email, password, github_username FROM users WHERE email=?",
+            "SELECT id, uid, username, firstname, lastname, email, password, github_username, github_repo FROM users WHERE email=?",
             (email,),
         )
         result = cursor.fetchone()
         if result:
-            return User(result[0], result[2], result[3], result[4], result[5], result[6], result[7])
+            return User(result[0], result[2], result[3], result[4], result[5], result[6], result[7], result[8])
         return None
 
     def update_github_username(self, email, new_github_username):
         cursor = self.conn.cursor()
         try:
             cursor.execute("UPDATE users SET github_username = ? WHERE email = ?", (new_github_username, email))
+            self.conn.commit()
+            if cursor.rowcount == 0:
+                print("No user found with the given email.")
+            else:
+                print("GitHub username updated successfully!")
+        except sqlite3.Error as e:
+            print("An error occurred:", e)
+
+    def update_github_repo(self, email, new_github_repo):
+        cursor = self.conn.cursor()
+        try:
+            cursor.execute("UPDATE users SET github_repo = ? WHERE email = ?", (new_github_repo, email))
             self.conn.commit()
             if cursor.rowcount == 0:
                 print("No user found with the given email.")

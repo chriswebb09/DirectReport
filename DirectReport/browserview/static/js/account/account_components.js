@@ -63,14 +63,15 @@ const AccountUserInfo = (userData, reportData) => {
                            <ul>
                                <li>
                                    <p className="text-justify pt-1 text-md font-mono tracking-wide text-sky-800">
-                                       <span className="ml-10 font-black font-mono">GITHUB ACOUNT USERNAME:  </span>
-                                       {userData.github_username}
+                                       <span className="ml-10 font-black font-mono">GITHUB ACCOUNT:  </span>
+                                       {userData.github_username ? userData.github_username : 'None Connected'}
                                    </p>
                                </li>
                                <l>
                                    <p className="text-justify pt-1 text-md font-mono tracking-wide text-sky-800">
                                        <span className="ml-10 font-black font-mono">SELECTED REPO:  </span>
-                                       DirectReport
+                                       {userData.github_repo ? userData.github_repo : 'None Selected'}
+
                                    </p>
                                </l>
                            </ul>

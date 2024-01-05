@@ -1,12 +1,30 @@
 
+
+function sortOnKeys(dict) {
+
+    var sorted = [];
+    for(var key in dict) {
+        sorted[sorted.length] = key;
+    }
+    sorted.sort();
+
+    var tempDict = {};
+    for(var i = 0; i < sorted.length; i++) {
+        tempDict[sorted[i]] = dict[sorted[i]];
+    }
+
+    return tempDict;
+}
+
+
 function showGraphics(data, divtag) {
 
     const newData = data
+    const dict = sortOnKeys(newData['pull_requests']);
+    const stringData = JSON.stringify(dict);
 
-    const stringData = JSON.stringify(newData['broad_categories']);
-
-    const values = Object.keys(newData['broad_categories']).map(function (key) {
-        return [key, Number(newData['broad_categories'][key])]
+    const values = Object.keys(dict).map(function (key) {
+        return [key, Number(newData['pull_requests'][key])]
     });
 
     const chartWidth = 350
@@ -21,7 +39,7 @@ function showGraphics(data, divtag) {
         .attr('width', chartWidth)
         .attr('height', chartHeight)
 
-    var svg = d3.select("svg")
+    var svg = d3.select(divtag).select("svg")
     var groups = svg.selectAll(".groups")
         .data(data)
         .enter()
@@ -45,7 +63,7 @@ function showGraphics(data, divtag) {
         .attr("height", function (value, index) {
             return value[1] * 20
         })
-        .attr("fill", "teal");
+        .attr("fill", "blueviolet");
 
     groups.append("text")
         .attr('x', function (value, index) {
@@ -57,7 +75,7 @@ function showGraphics(data, divtag) {
 
         })
         .attr('y', function (value, index) {
-            return (chartHeight + 10)
+            return (chartHeight + 5)
         })
         .attr("dy", "-1em")
         .style("font-size", "11px")
@@ -70,12 +88,16 @@ function showGraphics(data, divtag) {
 function showGraphics2(data, divtag) {
 
     const newData = data
+    const stringData = JSON.stringify(newData['commit_nums']);
 
-    const stringData = JSON.stringify(newData['broad_categories']);
-
-    const values = Object.keys(newData['broad_categories']).map(function (key) {
-        return [key, Number(newData['broad_categories'][key])]
+    const values = Object.keys(newData['commit_nums']).map(function (key) {
+        return [key, Number(newData['commit_nums'][key])]
     });
+    // const stringData = JSON.stringify(newData['broad_categories']);
+    //
+    // const values = Object.keys(newData['broad_categories']).map(function (key) {
+    //     return [key, Number(newData['broad_categories'][key])]
+    // });
 
     const chartWidth = 350
     const chartHeight = 300
