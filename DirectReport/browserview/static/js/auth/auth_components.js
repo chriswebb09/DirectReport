@@ -15,13 +15,13 @@ const RememberMe = () => {
     )
 }
 
-const NameElement = (type, forHtml, labelText, name, id, placeholder, value) => {
+const NameElement = (props) => {
     return (
         <div>
-            <label htmlFor={forHtml} className="block mb-2 text-sm font-semibold tracking-wider text-white dark:text-white">
-                {labelText}
+            <label htmlFor={props.forHtml} className="block mb-2 text-sm font-semibold tracking-wider text-white dark:text-white">
+                {props.labelText}
             </label>
-            <input type={type} name={name} id={id} className="bg-gray-50 border border-gray-300 text-blue-500 tracking-wider sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 font-semibold" placeholder={placeholder} required="" value={value}/>
+            <input type={props.type} name={props.name} id={props.id} className="bg-gray-50 border border-gray-300 text-blue-500 tracking-wider sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 font-semibold" placeholder={props.placeholder} required="" value={props.value}/>
         </div>
     )
 }
@@ -29,13 +29,54 @@ const NameElement = (type, forHtml, labelText, name, id, placeholder, value) => 
 const AccountForm = ({action, submit_button}) => {
     console.log(action);
     console.log(submit_button);
+    let props;
     return (
         <form className="space-y-4 md:space-y-6" method="POST" action={action}>
-            {NameElement("email", "email", "Your email", "email", "email", "name@company.com", "name@company.com")}
-            {NameElement("text", "firstname", "First name", "firstname", "firstname", "John", "John")}
-            {NameElement("text", "lastname", "Last name", "lastname", "lastname", "Doe", "Doe")}
-            {NameElement("text", "username", "Username", "username", "username", "JohnDoe", "JohnDoe")}
-            {NameElement("password", "password", "Password", "password", "password", "••••••••", "••••••••")}
+            {NameElement(props = {
+                type: "email",
+                forHtml: "email",
+                labelText: "Email",
+                name: "email",
+                id: "email",
+                placeholder: "name@company.com",
+                value: "name@company.com"
+            })}
+            {NameElement(props = {
+                type: "text",
+                forHtml: "firstname",
+                labelText: "First name",
+                name: "firstname",
+                id: "firstname",
+                placeholder: "John",
+                value: "John"
+            })}
+            {NameElement(props = {
+                type: "text",
+                forHtml: "lastname",
+                labelText: "Last name",
+                name: "lastname",
+                id: "lastname",
+                placeholder: "Doe",
+                value: "Doe"
+            })}
+            {NameElement(props = {
+                type: "text",
+                forHtml: "username",
+                labelText: "Username",
+                name: "username",
+                id: "username",
+                placeholder: "JohnDoe",
+                value: "JohnDoe"
+            })}
+            {NameElement(props = {
+                type: "password",
+                forHtml: "password",
+                labelText: "Password",
+                name: "password",
+                id: "password",
+                placeholder: "••••••••",
+                value: "••••••••"
+            })}
             <div className="flex items-center justify-between">
                 {RememberMe()}
             </div>
