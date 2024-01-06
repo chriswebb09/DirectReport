@@ -37,7 +37,7 @@ def dashboard_reports_saved():
     :return: Rendered HTML template for the list page.
     """
 
-    results = requests.get('http://127.0.0.1:5000/api/reports/list')
+    results = requests.get('/api/reports/list')
     return render_template('list.html', title='List', data=results)
 
 
@@ -65,37 +65,17 @@ def dashboard_reports_update():
     commits_last_ninety = client.get_commits_in_last_ninety_days(
         current_user.github_username, current_user.github_repo, h_token
     )
-    # get_pull_requests_count = client.get_pull_requests_count(
-    #     current_user.github_username, current_user.github_repo, h_token
-    # )
-    # get_pull_requests_count_sixty = client.get_pull_requests_count_sixty_days(
-    #     current_user.github_username, current_user.github_repo, h_token
-    # )
+    get_pull_requests_count = client.get_pull_requests_count(
+        current_user.github_username, current_user.github_repo, h_token
+    )
+    get_pull_requests_count_sixty = client.get_pull_requests_count_sixty_days(
+        current_user.github_username, current_user.github_repo, h_token
+    )
     repo_data = []
     for repo in user_repos:
         repo_data.append(repo["name"])
-    raw_data = team_summary_from_shortlog(prompt)
-    print(raw_data)
-    raw_reponse = raw_data["choices"][0]["message"]["content"]
-    response_data = json.loads(raw_reponse)
-    # print(response_data)
-    # list(raw_data.choices)[0]
-    # my_openai_obj.to_dict()['message']['content']
-    # response_data = json.loads(raw_data)
-    # response_data = json.dumps(raw_data)
-    # raw_data = googleAi.get_data_from(prompt)
-    # begin, end = raw_data.find('{'), raw_data.rfind('}')
-    # filtered_str = raw_data[begin: end + 1]
-    # response_data = json.loads(filtered_str)
-    response_data["broad_categories"] = {
-        "debug_info": 16,
-        "code_maintenance": 9,
-        "documentation": 7,
-        "test_related": 6,
-        "nonbreaking_space_handling": 5,
-        "readme_update": 1,
-        "syntax_fix": 1,
-    }
+    raw_data = team_summary_from_shortlog(prompt)["choices"][0]["message"]["content"]
+    response_data = json.loads(raw_data)
     response_data["commit_nums"] = {
         "15 days": 4,
         "30 days": (commits_last_month / 10),
@@ -104,15 +84,15 @@ def dashboard_reports_update():
         "120 days": 10,
     }
     response_data["pull_requests"] = {
-        "30 days": 5,
-        "60 days": 6,
+        "30 days": get_pull_requests_count,
+        "60 days": get_pull_requests_count_sixty,
         "90 days": 8,
         "120 days": 10,
         "150 days": 10,
         "1 year": 30,
     }
     response_data["repos"] = repo_data
-    ReportBuilder.new(response_data, prompt, current_user.id, "DirectReport")
+    ReportBuilder.new(response_data, prompt, current_user.id, current_user.github_repo)
     return response_data, 201
 
 
