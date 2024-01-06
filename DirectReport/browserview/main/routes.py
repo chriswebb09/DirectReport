@@ -12,6 +12,7 @@ from DirectReport.browserview.services.github import GithubClient
 from DirectReport.browserview.services.prompt_logic import generate_email
 from DirectReport.datadependencies import appsecrets
 
+
 client_id = appsecrets.GITHUB_CLIENT_ID
 client_secret = appsecrets.GITHUB_CLIENT_SECRET
 
@@ -19,11 +20,9 @@ client_secret = appsecrets.GITHUB_CLIENT_SECRET
 @bp.before_app_request
 def before_request():
     if current_user.is_authenticated:
-        print("authenticated user")
-        print(current_user.github_username)
-        print(current_user.github_repo)
+        pass
     else:
-        print("unauthenticated user")
+        pass
 
 
 @bp.route('/', methods=['GET', 'POST'])
@@ -100,8 +99,8 @@ def ouath2_callback():
         data=data2,
         auth=(client_id, client_secret),
     )
-    json_Data = json.loads(response2.content)
-    user_info = json_Data["user"]
+    json_data = json.loads(response2.content)
+    user_info = json_data["user"]
     user_model = UserModel()
     user_model.update_github_username(current_user.email, user_info["login"])
     return render_template('team/teamreport.html', title='Team', data=[])

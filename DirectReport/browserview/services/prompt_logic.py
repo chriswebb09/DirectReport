@@ -19,6 +19,6 @@ def team_summary_from_shortlog(data):
     prompt = prompts.GENERATE_SUMMARY_PROMPT_PREIX + data
     message = [{"role": "user", "content": prompt}]
     response = openai.ChatCompletion.create(
-        model="gpt-4", messages=message, temperature=0, max_tokens=1000, frequency_penalty=0.0
+        model="gpt-4", messages=message, temperature=0.1, max_tokens=1000, frequency_penalty=0.0
     )
     return response

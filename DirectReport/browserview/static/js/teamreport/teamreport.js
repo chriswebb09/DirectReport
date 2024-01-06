@@ -128,10 +128,10 @@ class TeamReport extends React.Component {
             strategy: 'fixed'
         });
         document.getElementById('popover-repo-left-purple').classList.toggle("hidden");
-        document.getElementById('popover-repo-TitleContent').innerHTML = "Repos" + "(" + repos.length + ")";
+        document.getElementById('popover-repo-TitleContent').innerHTML = "Repos" + "(" + this.state.repos.length + ")";
         const content = document.getElementById('popover-repo-Content');
         var list_element = document.createElement("ul")
-        repos.map((repo) => {
+        this.state.repos.map((repo) => {
             var li = document.createElement("li");
             var repoURL = repo["url_repo"].substring(28, repo['url'].length).replace("/", "?repo_url=")
             li.innerHTML = '<span>' + repo["name"] + '</span>'
@@ -146,13 +146,14 @@ class TeamReport extends React.Component {
     };
 
     render() {
+
         return (
             <div>
-                <h1 id="h1content" className="self-center text-center text-2xl text-blue-800 text-center font-bold font-mono pt-10 pb-2 mb-8 pt-8 mx-30 px-20">Generate Team Report From Metadata</h1>
+                <h1 id="h1content" className="self-center text-center text-2xl text-blue-800 text-center font-bold font-mono pt-5 mb-8 pt-8 mx-30 px-20">Generate Team Report From Metadata</h1>
                 {repoPopoverUI()}
                 {spinnerUI()}
                 <div id="topRow" className="grid grid-cols-3 gap-10 rounded-3xl mx-20 mt-6">
-                    {EditSummaryElem(this.state.commits, this.state.repos, this.state, this.state.repoSelected, this.openRepoPopover)}
+                    {EditSummaryElem({"repos": this.state.repos, "commits": this.state.commits}, this.state, this.openRepoPopover)}
                     {SummarySection(this.state.teamData, this.state.reportData)}
                     {TeamSection(this.state.teamData, this.closePopover)}
                 </div>
