@@ -1,5 +1,24 @@
 const { useState, useEffect } = React;
 
+const SavedReportDiv = (item) => {
+    console.log(item);
+    return (
+        <div className="col-span-1 justify-center mt-1 mb-1">
+            <article className="mx-4 mt-2 w-90 rounded-3xl bg-white p-1 shadow-[1.0px_1.0px_2.0px_1.0px_rgba(0,0,0,0.58)]">
+                <a className="block rounded-xl bg-white sm:p-6 lg:p-8" href={'/dashboard/reports/' + item.item.uuid}>
+                    <div>
+                        <h2 className="text-2xl font-bold text-gray-800 sm:text-lg">{'User ID: ' + item.item.user_id}</h2>
+                        <h2 className="text-2xl font-bold text-gray-800 sm:text-lg">{'Repo: ' + item.item.repo_name}</h2>
+                        <h2 className="text-2xl font-bold text-gray-800 sm:text-lg">{'Date: ' + item.item.created_at}</h2>
+                        <p className="mt-3 text-sm text-justify line-clamp-3 text-gray-500">{'Raw Input: ' + item.item.raw_input}</p>
+                        <p className="mt-3 text-sm text-justify line-clamp-3 text-gray-500">{'Report: ' + item.item.report}</p>
+                    </div>
+                </a>
+            </article>
+        </div>
+    )
+}
+
 class SavedReportList extends React.Component {
     render() {
         return (
@@ -9,19 +28,7 @@ class SavedReportList extends React.Component {
                 </h1>
                 <div className="grid grid-cols-3 gap-4 mb-20 mx-30">
                     {this.props.listdata.map(item =>
-                        <div className="col-span-1 justify-center mt-1 mb-1">
-                            <article className="mx-4 mt-2 w-90 rounded-3xl bg-white p-1 shadow-[1.0px_1.0px_2.0px_1.0px_rgba(0,0,0,0.58)]">
-                                <a className="block rounded-xl bg-white sm:p-6 lg:p-8" href={'/dashboard/reports/' + item.uuid}>
-                                    <div>
-                                        <h2 className="text-2xl font-bold text-gray-800 sm:text-lg">{'User ID: ' + item.user_id}</h2>
-                                        <h2 className="text-2xl font-bold text-gray-800 sm:text-lg">{'Repo: ' + item.repo_name}</h2>
-                                        <h2 className="text-2xl font-bold text-gray-800 sm:text-lg">{'Date: ' + item.created_at}</h2>
-                                        <p className="mt-3 text-sm text-justify line-clamp-3 text-gray-500">{'Raw Input: ' + item.raw_input}</p>
-                                        <p className="mt-3 text-sm text-justify line-clamp-3 text-gray-500">{'Report: ' + item.report}</p>
-                                    </div>
-                                </a>
-                            </article>
-                        </div>
+                        <SavedReportDiv item={item}/>
                     )}
                 </div>
             </div>
