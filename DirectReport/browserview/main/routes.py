@@ -20,6 +20,8 @@ client_secret = appsecrets.GITHUB_CLIENT_SECRET
 def before_request():
     if current_user.is_authenticated:
         print("authenticated user")
+        print(current_user.github_username)
+        print(current_user.github_repo)
     else:
         print("unauthenticated user")
 
@@ -60,8 +62,11 @@ def get_commits_last_month(repo_name):
 @bp.route('/repo', methods=['GET', 'POST'])
 def reponame():
     args_url = request.args.get('repo_url')
+    repo = args_url.split('/')[1]
     h_token = session['header_token']
     repo_name = "https://api.github.com/repos/" + args_url + "/commits"
+    user_model = UserModel()
+    user_model.update_github_repo(current_user.email, repo)
     headers = {
         'Accept': 'application/vnd.github+json',
         'Authorization': 'Bearer ' + h_token,

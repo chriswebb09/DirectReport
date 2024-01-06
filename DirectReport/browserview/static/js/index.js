@@ -30,7 +30,7 @@ class Home extends React.Component {
                         {
                             className: "mt-4 text-lg mb-11 text-gray-200"
                         },
-                        "Keep track of your accomplishments each day of the workweek."
+                        "Keep track of your team's progress with DirectReport."
                     ),
                     React.createElement(
                         "div",
