@@ -5,6 +5,7 @@ import uuid
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
+
 class User(UserMixin):
     def __init__(self, id, username, firstname, lastname, email, password, github_username, github_repo):
         self.id = email
@@ -35,7 +36,6 @@ class User(UserMixin):
 
 
 class UserModel:
-
     def __init__(self, db_name="users.db"):
         self.conn = sqlite3.connect(db_name, check_same_thread=False)
         self.create_table()

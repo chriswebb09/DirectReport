@@ -71,7 +71,7 @@ def account_data():
         "username": current_user.username,
         "email": current_user.email,
         "github_username": current_user.github_username,
-        "github_repo": current_user.github_repo
+        "github_repo": current_user.github_repo,
     }
     user_element = {"user": user_account, "reports": report_results, "shortlog": shortlog}
     return user_element, 201

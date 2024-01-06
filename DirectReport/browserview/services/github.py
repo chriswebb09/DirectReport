@@ -5,6 +5,7 @@ import requests
 from DirectReport.datadependencies import appsecrets, prompts
 from datetime import datetime, timedelta
 
+
 class GithubClient:
     # Define a function to parse the git shortlog
     def parse_git_shortlog(self, shortlog):
@@ -199,4 +200,3 @@ class GithubClient:
                 break
             page += 1
         return commits_count
-

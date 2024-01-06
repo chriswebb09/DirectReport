@@ -56,11 +56,21 @@ def dashboard_reports_update():
     client = GithubClient()
     h_token = session['header_token']
     user_repos = client.get_user_repos(current_user.github_username, h_token)
-    commits_last_month = client.get_commits_in_last_month(current_user.github_username, current_user.github_repo, h_token)
-    commits_last_sixty = client.get_commits_in_last_sixty_days(current_user.github_username, current_user.github_repo, h_token)
-    commits_last_ninety = client.get_commits_in_last_ninety_days(current_user.github_username, current_user.github_repo, h_token)
-    get_pull_requests_count = client.get_pull_requests_count(current_user.github_username, current_user.github_repo, h_token)
-    get_pull_requests_count_sixty = client.get_pull_requests_count_sixty_days(current_user.github_username, current_user.github_repo, h_token)
+    commits_last_month = client.get_commits_in_last_month(
+        current_user.github_username, current_user.github_repo, h_token
+    )
+    commits_last_sixty = client.get_commits_in_last_sixty_days(
+        current_user.github_username, current_user.github_repo, h_token
+    )
+    commits_last_ninety = client.get_commits_in_last_ninety_days(
+        current_user.github_username, current_user.github_repo, h_token
+    )
+    get_pull_requests_count = client.get_pull_requests_count(
+        current_user.github_username, current_user.github_repo, h_token
+    )
+    get_pull_requests_count_sixty = client.get_pull_requests_count_sixty_days(
+        current_user.github_username, current_user.github_repo, h_token
+    )
     repo_data = []
     for repo in user_repos:
         repo_data.append(repo["name"])
@@ -69,7 +79,7 @@ def dashboard_reports_update():
     raw_reponse = raw_data["choices"][0]["message"]["content"]
     response_data = json.loads(raw_reponse)
     # print(response_data)
-        # list(raw_data.choices)[0]
+    # list(raw_data.choices)[0]
     # my_openai_obj.to_dict()['message']['content']
     # response_data = json.loads(raw_data)
     # response_data = json.dumps(raw_data)
@@ -86,8 +96,21 @@ def dashboard_reports_update():
         "readme_update": 1,
         "syntax_fix": 1,
     }
-    response_data["commit_nums"] = {"15 days": 4, "30 days": (commits_last_month / 10), "60 days": (commits_last_sixty / 10), "90 days": (commits_last_ninety / 10), "120 days": 10}
-    response_data["pull_requests"] = {"30 days": 5, "60 days": 6, "90 days": 8, "120 days": 10, "150 days": 10, "1 year": 30}
+    response_data["commit_nums"] = {
+        "15 days": 4,
+        "30 days": (commits_last_month / 10),
+        "60 days": (commits_last_sixty / 10),
+        "90 days": (commits_last_ninety / 10),
+        "120 days": 10,
+    }
+    response_data["pull_requests"] = {
+        "30 days": 5,
+        "60 days": 6,
+        "90 days": 8,
+        "120 days": 10,
+        "150 days": 10,
+        "1 year": 30,
+    }
     response_data["repos"] = repo_data
     ReportBuilder.new(response_data, prompt, current_user.id, "DirectReport")
     return response_data, 201
