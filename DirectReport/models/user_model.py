@@ -5,7 +5,6 @@ import uuid
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
-
 class User(UserMixin):
     def __init__(self, id, username, firstname, lastname, email, password, github_username, github_repo):
         self.id = email
@@ -36,6 +35,7 @@ class User(UserMixin):
 
 
 class UserModel:
+
     def __init__(self, db_name="users.db"):
         self.conn = sqlite3.connect(db_name, check_same_thread=False)
         self.create_table()
@@ -94,6 +94,30 @@ class UserModel:
                 print("No user found with the given email.")
             else:
                 print("GitHub username updated successfully!")
+        except sqlite3.Error as e:
+            print("An error occurred:", e)
+
+    def update_first_name(self, email, first_name):
+        cursor = self.conn.cursor()
+        try:
+            cursor.execute("UPDATE users SET firstname = ? WHERE email = ?", (first_name, email))
+            self.conn.commit()
+            if cursor.rowcount == 0:
+                print("No user found with the given email.")
+            else:
+                print("Fist name updated successfully!")
+        except sqlite3.Error as e:
+            print("An error occurred:", e)
+
+    def update_last_name(self, email, last_name):
+        cursor = self.conn.cursor()
+        try:
+            cursor.execute("UPDATE users SET lastname = ? WHERE email = ?", (last_name, email))
+            self.conn.commit()
+            if cursor.rowcount == 0:
+                print("No user found with the given email.")
+            else:
+                print("Last name updated successfully!")
         except sqlite3.Error as e:
             print("An error occurred:", e)
 

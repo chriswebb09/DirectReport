@@ -27,9 +27,9 @@ const NameElement = (forHtml, labelText, name, id, placeholder) => {
     )
 }
 
-const SignupForm = () => {
+const AccountForm = (action, submit_button) => {
     return (
-        <form className="space-y-4 md:space-y-6" method="POST" action="/signup">
+        <form className="space-y-4 md:space-y-6" method="POST" action={action}>
             <div>
                 <label htmlFor="email" className="block mb-2 text-sm font-semibold tracking-wider  text-white dark:text-white">
                     Your email
@@ -47,7 +47,7 @@ const SignupForm = () => {
                 {RememberMe()}
             </div>
             <button type="submit" className="w-full text-white bg-sky-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-3xl text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                Create Account
+                {submit_button}
             </button>
         </form>
     )
@@ -62,7 +62,7 @@ const Signup = () => {
                         <h1 className="text-xl font-bold leading-tight tracking-tight text-white md:text-2xl dark:text-white">
                             Sign up for an account
                         </h1>
-                        {SignupForm()}
+                        {AccountForm("/signup", "Create Account")}
                     </div>
                 </div>
             </div>

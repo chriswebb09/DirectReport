@@ -86,8 +86,8 @@ def dashboard_reports_update():
         "readme_update": 1,
         "syntax_fix": 1,
     }
-    response_data["commit_nums"] = {"15 days": 4, "30 days": (commits_last_month / 10), "60 days": (commits_last_sixty / 10), "90 days": (commits_last_ninety / 10), "120 days": 30}
-    response_data["pull_requests"] = {"30 days": 5, "60 days": 10, "90 days": 15, "120 days": 20, "150 days": 20, "1 year": 30}
+    response_data["commit_nums"] = {"15 days": 4, "30 days": (commits_last_month / 10), "60 days": (commits_last_sixty / 10), "90 days": (commits_last_ninety / 10), "120 days": 10}
+    response_data["pull_requests"] = {"30 days": 5, "60 days": 6, "90 days": 8, "120 days": 10, "150 days": 10, "1 year": 30}
     response_data["repos"] = repo_data
     ReportBuilder.new(response_data, prompt, current_user.id, "DirectReport")
     return response_data, 201

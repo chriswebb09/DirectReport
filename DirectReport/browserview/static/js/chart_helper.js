@@ -18,9 +18,9 @@ function sortOnKeys(dict) {
 
 
 function showAllGraphics(data, divTag, divTag2, divTag3) {
-       showGraphics(data,  divTag);
-       showGraphics2(data, divTag2);
-       showGraphics3(data, divTag3);
+    showGraphics(data,  divTag);
+    showGraphics2(data, divTag2);
+    showGraphics3(data, divTag3);
 }
 function showGraphics(data, divtag) {
 
@@ -34,7 +34,7 @@ function showGraphics(data, divtag) {
 
     const chartWidth = 350
     const chartHeight = 300
-    const padding = 25
+    const padding = 20
 
     var data = values
     const heightScalingFactor = chartHeight / 67
@@ -60,13 +60,13 @@ function showGraphics(data, divtag) {
             }
         })
         .attr('y', function (value, index) {
-            return (chartHeight - 18) - (value[1] * 20)
+            return (chartHeight - 30) - (value[1] * 5)
         })
         .attr("width", function (value, index) {
             return (chartWidth / data.length) - padding
         })
         .attr("height", function (value, index) {
-            return value[1] * 20
+            return value[1] * 5
         })
         .attr("fill", "blueviolet");
 
@@ -80,13 +80,14 @@ function showGraphics(data, divtag) {
 
         })
         .attr('y', function (value, index) {
-            return (chartHeight + 5)
+            return (chartHeight - 8)
         })
         .attr("dy", "-1em")
-        .style("font-size", "11px")
+        .style("font-size", "10px")
         .style("text-anchor", "center")
         .text(function (value, index) {
-            return value[0].split("_")[0].slice(0, 6)
+            print(value[0].split("_")[0].slice(0, 8))
+            return value[0].split("_")[0].slice(0, 8)
         })
 }
 
@@ -98,15 +99,10 @@ function showGraphics2(data, divtag) {
     const values = Object.keys(newData['commit_nums']).map(function (key) {
         return [key, Number(newData['commit_nums'][key])]
     });
-    // const stringData = JSON.stringify(newData['broad_categories']);
-    //
-    // const values = Object.keys(newData['broad_categories']).map(function (key) {
-    //     return [key, Number(newData['broad_categories'][key])]
-    // });
 
     const chartWidth = 350
     const chartHeight = 300
-    const padding = 25
+    const padding = 20
 
     var data = values
     const heightScalingFactor = chartHeight / 67
@@ -132,13 +128,14 @@ function showGraphics2(data, divtag) {
             }
         })
         .attr('y', function (value, index) {
-            return (chartHeight - 18) - (value[1] * 20)
+            return (chartHeight - 30) - (value[1] * 10)
         })
         .attr("width", function (value, index) {
             return (chartWidth / data.length) - padding
         })
         .attr("height", function (value, index) {
-            return value[1] * 20
+            // console.log(value[1] * 20)
+            return (value[1] * 10) - 5
         })
         .attr("fill", "steelblue");
 
@@ -152,15 +149,21 @@ function showGraphics2(data, divtag) {
 
         })
         .attr('y', function (value, index) {
-            return (chartHeight + 5)
+            return (chartHeight - 8)
         })
-        .attr("dy", "-1em")
-        .style("font-size", "11px")
+        .attr("dy", ".35em")
+        .style("font-size", "8px")
         .style("text-anchor", "center")
         .text(function (value, index) {
-            return value[0].split("_")[0].slice(0, 6)
+            return value[0].slice(0, 8)
         })
+        .call(wrap, 5);
 }
+
+
+
+
+
 
 function showGraphics3(data, divtag) {
 
@@ -174,14 +177,16 @@ function showGraphics3(data, divtag) {
 
     const chartWidth = 350
     const chartHeight = 300
-    const padding = 25
+    const padding = 20
 
     var data = values
     const heightScalingFactor = chartHeight / 67
+
     var container = d3.select(divtag)
         .append('svg')
         .attr('width', chartWidth)
         .attr('height', chartHeight)
+
 
     var svg = d3.select(divtag).select("svg")
     var groups = svg.selectAll(".groups")
@@ -195,17 +200,17 @@ function showGraphics3(data, divtag) {
             if (index === 0) {
                 return 0
             } else {
-                return (index * (chartWidth / data.length))
+                return (index * (chartWidth / data.length)) + padding
             }
         })
         .attr('y', function (value, index) {
-            return (chartHeight - 18) - (value[1] * 20)
+            return (chartHeight - 30) - (value[1] * 10)
         })
         .attr("width", function (value, index) {
             return (chartWidth / data.length) - padding
         })
         .attr("height", function (value, index) {
-            return value[1] * 20
+            return value[1] * 10
         })
         .attr("fill", "teal");
 
@@ -214,19 +219,20 @@ function showGraphics3(data, divtag) {
             if (index == 0) {
                 return 0
             } else {
-                return (index * (chartWidth / data.length))
+                return (index * (chartWidth / data.length) + padding)
             }
 
         })
         .attr('y', function (value, index) {
-            return (chartHeight + 5)
+            return (chartHeight + 8)
         })
         .attr("dy", "-1em")
-        .style("font-size", "11px")
+        .style("font-size", "8px")
         .style("text-anchor", "center")
         .text(function (value, index) {
-            return value[0].split("_")[0].slice(0, 6)
-        })
+            return value[0].split("_")[0].slice(0, 6) + ' ' + value[0].split("_")[1]
+        }).call(wrap, 5);
+
 }
 
 
@@ -309,4 +315,38 @@ function getMax(collection) {
         max = element > max ? element : max
     })
     return max
+}
+
+function wrap(text, width) {
+    text.each(function() {
+        var text = d3.select(this),
+            words = text.text().split(/\s+/).reverse(),
+            word,
+            line = [],
+            lineNumber = 0,
+            y = text.attr("y"),
+            xValue = text.attr("x"),
+            dy = parseFloat(text.attr("dy")),
+            lineHeight = 1.1, // ems
+            tspan = text.text(null).append("tspan").attr("x", function(d) {
+                return xValue
+            }).attr("y", y).attr("dy", dy + "em");
+        while (word = words.pop()) {
+            line.push(word);
+            tspan.text(line.join(" "));
+            var textWidth = tspan.node().getComputedTextLength();
+            if (tspan.node().getComputedTextLength() > width) {
+                line.pop();
+                tspan.text(line.join(" "));
+                line = [word];
+                ++lineNumber;
+                tspan = text.append("tspan").attr("x", function(d) {
+                    return xValue
+                }).attr("y", (y - 30)).attr("dy", lineNumber * lineHeight + dy + "em")
+                    .style("font-size", "10px")
+                    .style("text-anchor", "center")
+                    .text(word);
+            }
+        }
+    });
 }

@@ -130,6 +130,52 @@ const GithubEntry = (commit) => {
     )
 }
 
+const GithubEntryElement = (commits) => {
+    return (
+        <div>
+            {commits.length > 0 && (
+                <div className="bg-white px-6 rounded-3xl h-80 overflow-y-auto mb-4 mt-4 pt-2">
+                    {commits.map((commit) => {
+                        return (
+                            <div>
+                                {GithubEntry(commit)}
+                            </div>
+                        )
+                    })}
+                </div>
+            )}
+        </div>
+    )
+}
+
+const GetResults = (result) => {
+    const results = result.data['json_array'].map((commit) => {
+        return {
+            'message': commit['commit']['message'],
+            'name': commit['commit']['author']['name'],
+            'author_url': commit['author']['html_url'],
+            'author_name': commit['author']['login'],
+            'commit_author_email': commit['commit']['author']['email'],
+            'commit_author_name': commit['commit']['author']['name'],
+            'commit_author_date': commit['commit']['author']['date'],
+            'committer': commit['commit']['committer']['name'],
+            'committer_data': commit['commit']['committer']['date'],
+            'committer_email': commit['commit']['committer']['email'],
+            'comment_count': commit['commit']['comment_count'],
+            'type': 'commit'
+        }
+    })
+    return results
+}
+
+const GetRepoListElement = (li) => {
+    li.classList.add("py-5");
+    li.classList.add("px-3");
+    li.classList.add("border-b");
+    li.classList.add("border-solid");
+    li.classList.add("border-blueGray-100");
+}
+
 const spinnerUI = () => {
     return (
         <div className="hidden rounded-2xl col-span-1" id="popLefPurple" style={{zIndex: 100}}>
@@ -151,6 +197,38 @@ const spinnerUI = () => {
     )
 }
 
+const EditSummaryElem = (commits, repos, state, repoSelected, openRepoPopover) => {
+    return (
+        <div className="lg:col-span-1 sm:col-span-3 justify-center" id="edit_summary_div">
+            <div className="pb-6 pt-2 bg-blue-600 rounded-3xl px-6 shadow-[1.0px_1.0px_2.0px_1.0px_rgba(0,0,0,0.58)]">
+                <h1 id="title_element"
+                    className="self-center text-center text-white text-xl text-center font-bold font-mono mb-1 mt-3 py-2">
+                    Github Data
+                </h1>
+                {GithubEntryElement(commits)}
+                <div className="self-center mb-1 mt-1">
+                    <div className="mx-0 min-w-full flex flex-col items-center">
+                        {repos.length > 0 && (
+                            <button
+                                className="bg-white hover:bg-slate-100 self-center text-blue-600 font-mono tracking-wide shadow-[1.5px_2px_1.0px_0.5px_rgba(0,0,0,0.48)] hover:white hover:text-blue-500 hover:border-gray-200 text-md font-bold py-3 px-12 rounded-3xl mt-2 mb-3"
+                                onClick={(e) => openRepoPopover(repos, state)} type="button">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-6 inline-block ml-10"
+                                     fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                                </svg>
+                                <span className="px-4 py-2 tracking-wide">
+                                    {repoSelected ? 'Generate Report' : 'Repository'}
+                                </span>
+                            </button>
+                        )}
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
 const closeRepoPopover = () => {
     document.getElementById('popover-repo-left-purple').classList.toggle("hidden");
 }
@@ -163,7 +241,7 @@ const GraphElement = (title, id, mapcontainer_id) => {
     return (
         <div>
             <h1 id="title_element" className="self-center text-center text-white text-lg text-center font-bold font-mono mb-1 mt-3 py-2">{title}</h1>
-            <div className="lg:col-span-1 sm:col-span-3 justify-center mt-7 mb-7 bg-white shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.58)] rounded-3xl px-10 ml-10" id={id}>
+            <div className="lg:col-span-1 sm:col-span-3 justify-center mt-7 mb-7 bg-white shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.58)] rounded-3xl px-10 ml-5" id={id}>
                 <div className="flex justify-center my-2 px-3" id="data_display_div">
                     <div id={mapcontainer_id} className="pl-2 pr-2 rounded-3xl"></div>
                 </div>
@@ -176,7 +254,7 @@ const GraphElement = (title, id, mapcontainer_id) => {
 class GraphDiv extends React.Component {
     render() {
         return (
-            <div className="grid grid-cols-3 gap-12 mt-5 mx-20 bg-blue-600 shadow-[1.0px_1.0px_5.0px_0.0px_rgba(0,0,0,0.58)] rounded-3xl px-5 py-3">
+            <div className="grid grid-cols-3 gap-10 mt-5 mx-20 bg-blue-600 shadow-[1.0px_1.0px_5.0px_0.0px_rgba(0,0,0,0.58)] rounded-3xl px-5 py-3">
                 {GraphElement("Number of Pull Requests", "dd", "map-container")}
                 {GraphElement("Commits Over Times", "dd", "map-container2")}
                 {GraphElement("Broad Areas of Work", "dd", "map-container3")}
