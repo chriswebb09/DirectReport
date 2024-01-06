@@ -97,6 +97,30 @@ class UserModel:
         except sqlite3.Error as e:
             print("An error occurred:", e)
 
+    def update_first_name(self, email, first_name):
+        cursor = self.conn.cursor()
+        try:
+            cursor.execute("UPDATE users SET firstname = ? WHERE email = ?", (first_name, email))
+            self.conn.commit()
+            if cursor.rowcount == 0:
+                print("No user found with the given email.")
+            else:
+                print("Fist name updated successfully!")
+        except sqlite3.Error as e:
+            print("An error occurred:", e)
+
+    def update_last_name(self, email, last_name):
+        cursor = self.conn.cursor()
+        try:
+            cursor.execute("UPDATE users SET lastname = ? WHERE email = ?", (last_name, email))
+            self.conn.commit()
+            if cursor.rowcount == 0:
+                print("No user found with the given email.")
+            else:
+                print("Last name updated successfully!")
+        except sqlite3.Error as e:
+            print("An error occurred:", e)
+
     def update_github_repo(self, email, new_github_repo):
         cursor = self.conn.cursor()
         try:
