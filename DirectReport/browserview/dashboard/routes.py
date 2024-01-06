@@ -51,7 +51,7 @@ def dashboard_reports_new():
 @login_required
 def dashboard_reports_update():
     prompt = ""
-    googleAi = GoogleAIClient()
+    # googleAi = GoogleAIClient()
     prompt = request.get_json()["prompt"].strip()
     client = GithubClient()
     h_token = session['header_token']
@@ -65,12 +65,12 @@ def dashboard_reports_update():
     commits_last_ninety = client.get_commits_in_last_ninety_days(
         current_user.github_username, current_user.github_repo, h_token
     )
-    get_pull_requests_count = client.get_pull_requests_count(
-        current_user.github_username, current_user.github_repo, h_token
-    )
-    get_pull_requests_count_sixty = client.get_pull_requests_count_sixty_days(
-        current_user.github_username, current_user.github_repo, h_token
-    )
+    # get_pull_requests_count = client.get_pull_requests_count(
+    #     current_user.github_username, current_user.github_repo, h_token
+    # )
+    # get_pull_requests_count_sixty = client.get_pull_requests_count_sixty_days(
+    #     current_user.github_username, current_user.github_repo, h_token
+    # )
     repo_data = []
     for repo in user_repos:
         repo_data.append(repo["name"])

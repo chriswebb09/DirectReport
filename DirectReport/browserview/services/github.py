@@ -59,7 +59,6 @@ class GithubClient:
           The number of comments on the pull request.
         """
 
-        current_date = datetime.now()
         thirty_days_ago = datetime.now() - timedelta(days=30)
         since = thirty_days_ago.isoformat()
         url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/pulls"
@@ -95,7 +94,6 @@ class GithubClient:
           The number of comments on the pull request.
         """
 
-        current_date = datetime.now()
         thirty_days_ago = datetime.now() - timedelta(days=60)
         since = thirty_days_ago.isoformat()
         url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/pulls"
@@ -133,7 +131,6 @@ class GithubClient:
         return response.json()
 
     def get_commits_in_last_month(self, repo_owner, repo_name, token):
-        current_date = datetime.now()
         thirty_days_ago = datetime.now() - timedelta(days=30)
         since = thirty_days_ago.isoformat()
         headers = {"Authorization": f"token {token}"}
@@ -156,7 +153,6 @@ class GithubClient:
         return commits_count
 
     def get_commits_in_last_sixty_days(self, repo_owner, repo_name, token):
-        current_date = datetime.now()
         sixty_days_ago = datetime.now() - timedelta(days=60)
         since = sixty_days_ago.isoformat()
         headers = {"Authorization": f"token {token}"}
@@ -179,7 +175,6 @@ class GithubClient:
         return commits_count
 
     def get_commits_in_last_ninety_days(self, repo_owner, repo_name, token):
-        current_date = datetime.now()
         ninety_days_ago = datetime.now() - timedelta(days=90)
         since = ninety_days_ago.isoformat()
         headers = {"Authorization": f"token {token}"}
