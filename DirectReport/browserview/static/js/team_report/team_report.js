@@ -17,42 +17,7 @@ const ShowSpinner = () => {
     )
 }
 
-const ShowTeamReport = () => {
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
 
-    useEffect(() => {
-        fetch('/api/account_data')
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(
-                        `This is an HTTP error: The status is ${response.status}`
-                    );
-                }
-                return response.json();
-            })
-            .then((responseData) => {
-                setError(null);
-            })
-            .catch((err) => {
-                setError(err.message);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
-    }, []);
-
-    if (loading) {
-        return (
-            <ShowSpinner />
-        )
-    } else {
-        return (
-            <TeamReport/>
-        )
-    }
-
-}
 
 class TeamReport extends React.Component {
     constructor(props) {
