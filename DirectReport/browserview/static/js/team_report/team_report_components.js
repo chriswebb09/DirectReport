@@ -18,7 +18,6 @@ const ShowSummary = memo(function ShowSum({report}) {
 const ShowHighlights = memo(function ShowHigh({report}) {
     return (
         <div className="h-30">
-            {/*<p>{report}</p>*/}
             <ul className="px-2 pt-2 pb-3">
                 {/* Check if 'highlights' in report is not undefined */}
                 {report["highlights"] !== undefined ?
@@ -114,15 +113,13 @@ const SummarySection = (props) => {
 const TeamSection = (props) => {
     let propData = props.props;
     let teamData = propData["teamData"];
-    // let closePopover = propData["closePopover"];
     return (
         <div id="team_member_to_select" className="lg:col-span-1 sm:col-span-3 justify-center">
             <div className="pb-6 pt-2 bg-blue-600 rounded-3xl px-4 mb-2 shadow-[1.0px_1.0px_5.0px_0.0px_rgba(0,0,0,0.58)]">
                 <h1 className="self-center text-center text-xl text-white text-center font-bold font-mono mb-1 mt-3 py-2 mx-20 px-20">Team</h1>
                 {PopoverUI(closePopover)}
                 {teamData && teamData.length > 0 && (
-                    <div
-                        className="content-center py-2 h-90 rounded-3xl mb-1 bg-slate-100 shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.58)] mx-1 mt-3 px-3">
+                    <div className="content-center py-2 h-90 rounded-3xl mb-1 bg-slate-100 shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.58)] mx-1 mt-3 px-3">
                         {ShowTeamList(teamData)}
                     </div>
                 )}
@@ -244,47 +241,6 @@ const EditSummaryElem = memo(function EdSummaryElem({props}) {
                 )}
                 {GithubButtonElement(props)}
             </div>
-        </div>
-    )
-})
-
-const closeRepoPopover = () => {
-    document.getElementById('popover-repo-left-purple').classList.toggle("hidden");
-}
-
-const closePopover = () => {
-    document.getElementById('popover-id-left-purple').classList.toggle("hidden");
-}
-
-const GraphElement = (title, id, mapcontainer_id) => {
-    return (
-        <div>
-            <h1 id="title_element" className="self-center text-center text-white text-lg text-center font-bold font-mono mb-1 mt-3 py-2">{title}</h1>
-            <div className="lg:col-span-1 sm:col-span-3 justify-center mt-7 mb-7 bg-white shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.58)] rounded-3xl px-10 ml-5" id={id}>
-                <div className="flex justify-center my-2 px-3" id="data_display_div">
-                    <div id={mapcontainer_id} className="pl-2 pr-2 rounded-3xl"></div>
-                </div>
-            </div>
-        </div>
-    )
-}
-
-
-const GraphDiv = () => {
-    return (
-        <div className="grid grid-cols-3 gap-10 mt-5 mx-20 bg-blue-600 shadow-[1.0px_1.0px_5.0px_0.0px_rgba(0,0,0,0.58)] rounded-3xl px-5 py-3">
-            {GraphElement("Number of Pull Requests", "dd", "map-container")}
-            {GraphElement("Commits Over Times", "dd", "map-container2")}
-            {GraphElement("Broad Areas of Work", "dd", "map-container3")}
-        </div>
-    )
-}
-
-const GraphicsUI = memo(function Graphics() {
-    return (
-        <div>
-            <h3 className="text-xl text-blue-800 font-mono font-semibold mt-10 mb-8 mx-10 px-12">Graphic Data</h3>
-            <GraphDiv/>
         </div>
     )
 })

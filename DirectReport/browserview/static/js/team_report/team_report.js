@@ -3,13 +3,10 @@
 const {useState, useCallback, useEffect, memo} = React;
 
 const ShowTeamReport = () => {
-    // const [userData, setUserData] = useState({});
-    // const [reportData, setReportData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        // document.getElementById('AuthSpinnerUI').classList.toggle("hidden");
         fetch('/api/account_data')
             .then((response) => {
                 if (!response.ok) {
@@ -20,18 +17,13 @@ const ShowTeamReport = () => {
                 return response.json();
             })
             .then((responseData) => {
-                // setUserData(responseData["user"]);
-                // setReportData(responseData["reports"]);
                 setError(null);
             })
             .catch((err) => {
-                // setUserData(null);
-                // setReportData(null);
                 setError(err.message);
             })
             .finally(() => {
                 setLoading(false);
-                // document.getElementById('AuthSpinnerUI').classList.toggle("hidden");
             });
     }, []);
 
@@ -206,7 +198,6 @@ class TeamReport extends React.Component {
                 {SpinnerUI()}
                 <div id="topRow" className="grid grid-cols-3 gap-10 rounded-3xl mx-20 mt-6">
                     <EditSummaryElem props={{"repos": this.state.repos, "commits": this.state.commits, "state": this.state, "openRepoPopover": this.openRepoPopover}} />
-                    {/*{EditSummaryElem({"repos": this.state.repos, "commits": this.state.commits, "state": this.state, "openRepoPopover": this.openRepoPopover})}*/}
                     <SummarySection reportData={this.state.reportData}/>
                     <TeamSection props={{"teamData": this.state.teamData, "closePopover": this.closePopover}} />
                 </div>
