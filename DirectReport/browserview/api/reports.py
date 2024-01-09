@@ -77,32 +77,14 @@ def reponame():
     args_url = request.args.get('repo_url')
     repo = args_url.split('/')[1]
     h_token = session['header_token']
-    repo_name = "https://api.github.com/repos/" + args_url + "/commits"
     client = GithubClient()
     user_model = UserModel()
     user_model.update_github_repo(current_user.email, repo)
-
-    headers = {
-        'Accept': 'application/vnd.github+json',
-        'Authorization': 'Bearer ' + h_token,
-        'X-GitHub-Api-Version': '2022-11-28',
-    }
-
     test = client.get_commits_in_last_month(current_user.github_username, current_user.github_repo, h_token)
-    print(test)
     json_response_data = json.dumps(test)
-    print(json_response_data)
     json_response_data_loads = json.loads(json_response_data)
-    print(json_response_data_loads)
     res_json = {"json_array": json_response_data_loads}
     return res_json, 200
-    # response_data = requests.get(url=repo_name, headers=headers, auth=(client_id, client_secret))
-    # if response_data.status_code == 200:
-    #     json_response_data = json.loads(response_data.content)
-    #     res_json = {"json_array": json_response_data}
-    #     return res_json, 200
-    # else:
-    #     return jsonify([]), 200
 
 
 @bp.route('/repos', methods=['GET', 'POST'])
