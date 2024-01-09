@@ -35,86 +35,41 @@ const AccountForm = (action, submit_button, showBox, userProfile) => {
     let lastNameProps;
     let firstNameProps;
     let userNameProps;
-    if (userProfile.data != null && userProfile.data["user"] != null) {
-        console.log(userProfile.data["user"]);
-        emailProps = {
-            type: "email",
-            forHtml: "email",
-            labelText: "Email",
-            name: "email",
-            id: "email",
-            placeholder: "name@company.com",
-            value: userProfile.data["user"]["email"]
-        }
-        firstNameProps = {
-            type: "text",
-            forHtml: "firstname",
-            labelText: "First name",
-            name: "firstname",
-            id: "firstname",
-            placeholder: "John",
-            value: userProfile.data["user"]["firstname"]
-        }
-        lastNameProps = {
-            type: "text",
-            forHtml: "lastname",
-            labelText: "Last name",
-            name: "lastname",
-            id: "lastname",
-            placeholder: "Doe",
-            value: userProfile.data["user"]["lastname"]
-        }
-
-        userNameProps = {
-                type: "text",
-                forHtml: "username",
-                labelText: "Username",
-                name: "username",
-                id: "username",
-                placeholder: "JohnDoe",
-                value: userProfile.data["user"]["username"]
-            }
-
-    } else {
-        emailProps = {
-            type: "email",
-            forHtml: "email",
-            labelText: "Email",
-            name: "email",
-            id: "email",
-            placeholder: "name@company.com",
-            value: "name@company.com"
-        }
-
-        lastNameProps =  {
-            type: "text",
-            forHtml: "lastname",
-            labelText: "Last name",
-            name: "lastname",
-            id: "lastname",
-            placeholder: "Doe",
-            value: "Doe"
-        }
-
-        firstNameProps = {
-            type: "text",
-            forHtml: "firstname",
-            labelText: "First name",
-            name: "firstname",
-            id: "firstname",
-            placeholder: "John",
-            value: "John"
-        }
-
-        userNameProps = {
-                type: "text",
-                forHtml: "username",
-                labelText: "Username",
-                name: "username",
-                id: "username",
-                placeholder: "JohnDoe",
-                value: "JohnDoe"
-            }
+    emailProps = {
+        type: "email",
+        forHtml: "email",
+        labelText: "Email",
+        name: "email",
+        id: "email",
+        placeholder: "name@company.com",
+        value: (userProfile.data !== undefined && userProfile.data["user"]["email"] != null) ? userProfile.data["user"]["email"] : "name@company.com"
+    }
+    firstNameProps = {
+        type: "text",
+        forHtml: "firstname",
+        labelText: "First name",
+        name: "firstname",
+        id: "firstname",
+        placeholder: "John",
+        value: (userProfile.data !== undefined && userProfile.data["user"]["firstname"] != null) ? userProfile.data["user"]["firstname"] : "John"
+    }
+    lastNameProps = {
+        type: "text",
+        forHtml: "lastname",
+        labelText: "Last name",
+        name: "lastname",
+        id: "lastname",
+        placeholder: "Doe",
+        value: (userProfile.data !== undefined && userProfile.data["user"]["lastname"] != null) ? userProfile.data["user"]["lastname"] : "Doe"
+    }
+    userNameProps = {
+        type: "text",
+        forHtml: "username",
+        labelText: "Username",
+        name: "username",
+        id: "username",
+        placeholder: "JohnDoe",
+        value: (userProfile.data !== undefined && userProfile.data["user"]["username"] != null) ? userProfile.data["user"]["username"] : "JohnDoe"
     }
     return (
         <form className="space-y-4 md:space-y-6" method="POST" action={actionElem}>
