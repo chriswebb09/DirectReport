@@ -7,7 +7,7 @@ const ShowSpinner = () => {
     return (
         <div className="my-50 py-20">
             <div className="py-10 mt-20">
-                <AuthSpinnerUI/>
+                <SpinnerUI/>
             </div>
             <div className="mx-0 min-w-full flex flex-col items-center">
                 <div className="mt-10 py-10">There is a problem fetching the post data</div>

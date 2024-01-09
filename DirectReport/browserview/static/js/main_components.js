@@ -1,6 +1,6 @@
 const { useState, useEffect, memo } = React;
 
-const AuthSpinnerUI = () => {
+const SpinnerUI = () => {
     return (
         <div className="hidden rounded-2xl col-span-1" id="AuthSpinnerUI" style={{zIndex: 100}}>
             <div>
