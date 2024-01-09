@@ -64,10 +64,10 @@ const openPopover = (e: ChangeEvent<HTMLInputElement>, team_member) => {
     });
     document.getElementById('popover-id-left-purple').classList.toggle("hidden");
     document.getElementById('popoverTitleContent').innerHTML = team_member.name
-    var a = document.createElement('a');
+    let a = document.createElement('a');
     a.setAttribute('href',"https://www.github.com/" + team_member.github_username);
     a.innerHTML = "Github Profile"
-    var p = document.createElement("p");
+    let p = document.createElement("p");
     p.innerHTML = team_member.accomplishments + "<br/> <br/>";
     p.appendChild(a);
     document.getElementById('popoverContent').appendChild(p);
