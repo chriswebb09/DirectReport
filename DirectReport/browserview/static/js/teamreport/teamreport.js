@@ -62,7 +62,7 @@ class TeamReport extends React.Component {
     }
 
     handleSubmit() {
-        const payload = {"prompt": this.state.commentText};
+        const payload = {"prompt": this.state.commentText}
         axios({
             method: 'post',
             url: '/dashboard/reports/update',
@@ -72,6 +72,7 @@ class TeamReport extends React.Component {
                 "Content-Type": "application/json"
             }
         }).then(result => {
+            console.log(result.data);
             this.handleTeamDataChange(result.data["team"]);
             this.handleReportDataChange(result.data["report"]);
             showAllGraphics(result.data, '#map-container', '#map-container2', '#map-container3');
@@ -154,7 +155,7 @@ class TeamReport extends React.Component {
                 {spinnerUI()}
                 <div id="topRow" className="grid grid-cols-3 gap-10 rounded-3xl mx-20 mt-6">
                     {EditSummaryElem({"repos": this.state.repos, "commits": this.state.commits}, this.state, this.openRepoPopover)}
-                    {SummarySection(this.state.teamData, this.state.reportData)}
+                    {SummarySection(this.state.reportData)}
                     {TeamSection(this.state.teamData, this.closePopover)}
                 </div>
                 {this.state.teamData.length <= 0 && (

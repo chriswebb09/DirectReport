@@ -72,6 +72,7 @@ def reponame():
         'X-GitHub-Api-Version': '2022-11-28',
     }
     response_data = requests.get(url=repo_name, headers=headers, auth=(client_id, client_secret))
+    print(response_data)
     if response_data.status_code == 200:
         json_response_data = json.loads(response_data.content)
         res_json = {"json_array": json_response_data}

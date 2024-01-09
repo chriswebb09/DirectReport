@@ -1,10 +1,9 @@
 const { useState, useEffect } = React;
 
 // Define a functional component named 'ShowSummary'
-const ShowSummary = ({ report }) => {
+const ShowSummary = (report) => {
     return (
         <p id="show_summary" className="w-97 sm:w-97 overflow-y-auto break-words">
-            {/* Check if 'report' and 'report.summary' are not null or undefined */}
             {report && report.summary &&
                 <div className="px-2 mb-1 text-xs text-blue-700">
                     {report.summary}
@@ -17,8 +16,10 @@ const ShowSummary = ({ report }) => {
 
 // Define a functional component named 'ShowHighlights'
 const ShowHighlights = (report) => {
+    console.log(report);
     return (
         <div className="h-30">
+            {/*<p>{report}</p>*/}
             <ul className="px-2 pt-2 pb-3">
                 {/* Check if 'highlights' in report is not undefined */}
                 {report["highlights"] !== undefined ?
@@ -41,10 +42,9 @@ const ShowHighlights = (report) => {
 
 
 const ShowTeamList = (team) => {
-    console.log(team);
     return (
         <div class="items-center pt-1 select-none">
-            {team !== undefined ?
+            {team !== undefined && team.length > 0?
                 team.map(team_member =>
                     <button class="bg-blue-600 py-1 px-2 pb-1 pt-1 mr-0.5 my-0.5 no-underline rounded-full text-white font-sans border-2 border-gray text-xs btn-primary hover:text-white hover:bg-indigo-700 focus:outline-none active:shadow-none" onClick={(event) => openPopover(event, team_member)}>{
                         team_member.name}
@@ -91,17 +91,21 @@ const repoPopoverUI = () => {
     )
 }
 
-const SummarySection = (teamData, reportData) => {
+const SummarySection = (reportData) => {
+    console.log("SummarySection");
+    console.log(reportData);
+    // var report = reportData["report"];
     return (
-
         <div id="show_summmary_div" className="lg:col-span-1 sm:col-span-3 justify-center">
             <div className="pb-6 pt-2 bg-blue-600 rounded-3xl px-30 shadow-[1.0px_1.0px_5.0px_0.0px_rgba(0,0,0,0.58)]">
                 <h1 className="self-center text-center text-xl text-white text-center font-bold font-mono mb-1 mt-3 py-2 mt-2 mx-20 px-20">Summary</h1>
                 <div id="summary" className="px-4 mx-0 mb-1 mt-1">
-                    {teamData.length > 0 && (
+                    {reportData && reportData["highlights"] !== undefined && (
                         <div id="summary-container" className="ml-3 mr-3 bg-slate-100 shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.58)] overflow-y-scroll h-100 rounded-3xl tracking-wide text-gray-500 md:text-gl dark:text-gray-400 mt-3 px-3">
-                            {ShowSummary(reportData)}
-                            {ShowHighlights(reportData)}
+                            <div>
+                                {ShowSummary(reportData)}
+                                {ShowHighlights(reportData)}
+                            </div>
                         </div>
                     )}
                 </div>
@@ -112,13 +116,14 @@ const SummarySection = (teamData, reportData) => {
 
 const TeamSection = (teamData, closePopover) => {
     return (
-
         <div id="team_member_to_select" className="lg:col-span-1 sm:col-span-3 justify-center">
-            <div className="pb-6 pt-2 bg-blue-600 rounded-3xl px-4 mb-2 shadow-[1.0px_1.0px_5.0px_0.0px_rgba(0,0,0,0.58)]">
+            <div
+                className="pb-6 pt-2 bg-blue-600 rounded-3xl px-4 mb-2 shadow-[1.0px_1.0px_5.0px_0.0px_rgba(0,0,0,0.58)]">
                 <h1 className="self-center text-center text-xl text-white text-center font-bold font-mono mb-1 mt-3 py-2 mx-20 px-20">Team</h1>
                 {PopoverUI(closePopover)}
                 {teamData.length > 0 && (
-                    <div className="content-center py-2 h-90 rounded-3xl mb-1 bg-slate-100 shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.58)] mx-1 mt-3 px-3">
+                    <div
+                        className="content-center py-2 h-90 rounded-3xl mb-1 bg-slate-100 shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.58)] mx-1 mt-3 px-3">
                         {ShowTeamList(teamData)}
                     </div>
                 )}
@@ -142,7 +147,7 @@ const GithubButtonElement = (repos, openRepoPopover, state) => {
     return (
         <div className="self-center mb-1 mt-1">
             <div className="mx-0 min-w-full flex flex-col items-center">
-                {repos.length > 0 && (
+                {repos && (
                     <button className="bg-white hover:bg-slate-100 self-center text-blue-600 font-mono tracking-wide shadow-[1.5px_2px_1.0px_0.5px_rgba(0,0,0,0.48)] hover:white hover:text-blue-500 hover:border-gray-200 text-md font-bold py-3 px-12 rounded-3xl mt-2 mb-3" onClick={(e) => openRepoPopover({repos}, {state})} type="button">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-6 inline-block ml-10" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
@@ -158,10 +163,9 @@ const GithubButtonElement = (repos, openRepoPopover, state) => {
 }
 
 const GithubEntryElement = (commits) => {
-    console.log(commits);
     return (
         <div>
-            {commits.length > 0 && (
+            {commits && (
                 <div className="bg-white px-6 rounded-3xl h-80 overflow-y-auto mb-4 mt-4 pt-2">
                     {commits.map((commit) => {
                         return (
@@ -228,13 +232,10 @@ const spinnerUI = () => {
 const EditSummaryElem = (props, state, openRepoPopover) => {
     let repos = props['repos'];
     let commits = props['commits'];
-    console.log(repos);
-    console.log({repos});
     return (
         <div className="lg:col-span-1 sm:col-span-3 justify-center" id="edit_summary_div">
             <div className="pb-6 pt-2 bg-blue-600 rounded-3xl px-6 shadow-[1.0px_1.0px_2.0px_1.0px_rgba(0,0,0,0.58)]">
-                <h1 id="title_element"
-                    className="self-center text-center text-white text-xl text-center font-bold font-mono mb-1 mt-3 py-2">
+                <h1 id="title_element" className="self-center text-center text-white text-xl text-center font-bold font-mono mb-1 mt-3 py-2">
                     Github Data
                 </h1>
                 {GithubEntryElement(commits)}
@@ -253,6 +254,9 @@ const closePopover = () => {
 }
 
 const GraphElement = (title, id, mapcontainer_id) => {
+    console.log(title);
+    console.log(id);
+    console.log(mapcontainer_id);
     return (
         <div>
             <h1 id="title_element" className="self-center text-center text-white text-lg text-center font-bold font-mono mb-1 mt-3 py-2">{title}</h1>
@@ -266,21 +270,19 @@ const GraphElement = (title, id, mapcontainer_id) => {
 }
 
 
-class GraphDiv extends React.Component {
-    render() {
-        return (
-            <div className="grid grid-cols-3 gap-10 mt-5 mx-20 bg-blue-600 shadow-[1.0px_1.0px_5.0px_0.0px_rgba(0,0,0,0.58)] rounded-3xl px-5 py-3">
-                {GraphElement("Number of Pull Requests", "dd", "map-container")}
-                {GraphElement("Commits Over Times", "dd", "map-container2")}
-                {GraphElement("Broad Areas of Work", "dd", "map-container3")}
-            </div>
-        )
-    }
+const GraphDiv = () => {
+    return (
+        <div className="grid grid-cols-3 gap-10 mt-5 mx-20 bg-blue-600 shadow-[1.0px_1.0px_5.0px_0.0px_rgba(0,0,0,0.58)] rounded-3xl px-5 py-3">
+            {GraphElement("Number of Pull Requests", "dd", "map-container")}
+            {GraphElement("Commits Over Times", "dd", "map-container2")}
+            {GraphElement("Broad Areas of Work", "dd", "map-container3")}
+        </div>
+    )
 }
 
 const GraphicsUI = () => {
     return (
-        <div className="">
+        <div>
             <h3 className="text-xl text-blue-800 font-mono font-semibold mt-10 mb-8 mx-10 px-12">Graphic Data</h3>
             <GraphDiv/>
         </div>

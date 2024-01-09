@@ -37,7 +37,7 @@ def dashboard_reports_saved():
     :return: Rendered HTML template for the list page.
     """
 
-    results = requests.get('/api/reports/list')
+    results = requests.get('http://127.0.0.1:5000/api/reports/list')
     return render_template('list.html', title='List', data=results)
 
 
@@ -76,6 +76,7 @@ def dashboard_reports_update():
         repo_data.append(repo["name"])
     raw_data = team_summary_from_shortlog(prompt)["choices"][0]["message"]["content"]
     response_data = json.loads(raw_data)
+    print(response_data)
     response_data["commit_nums"] = {
         "15 days": 4,
         "30 days": (commits_last_month / 10),
@@ -92,6 +93,7 @@ def dashboard_reports_update():
         "1 year": 30,
     }
     response_data["repos"] = repo_data
+    print(repo_data)
     ReportBuilder.new(response_data, prompt, current_user.id, current_user.github_repo)
     return response_data, 201
 
@@ -101,7 +103,22 @@ def dashboard_reports_update():
 def dashboard_saved_report(uid=None):
     reports = ReportBuilder.get_reports_for_user_id(current_user.id)
     report = list(filter(lambda report: report["uuid"] == uid, reports))[0]
-    json_data = json.dumps(report)
+    print(report)
+    report["commit_nums"] = {
+        "15 days": 4,
+        "30 days": (8 / 10),
+        "60 days": (10 / 10),
+        "90 days": (12 / 10),
+        "120 days": 3,
+    }
+    report["pull_requests"] = {
+        "30 days": 4,
+        "60 days": 6,
+        "90 days": 8,
+        "120 days": 10,
+        "150 days": 10,
+        "1 year": 30,
+    }
     return render_template(
-        'team/teamreport.html', title='Team Report', data=json_data, report=json_data, raw_input=report['raw_input']
+        'archived_report.html', title='Team Report', data=report, raw_input={"raw_input": report["raw_input"]}, report=report["report"]
     )
