@@ -167,9 +167,7 @@ class GithubClient:
                 # Break the loop if the response is not successful
                 break
             commits = response.json()
-            # print(commits)
             commits_data.extend(commits)
-            # commits_data.append(commits)
             current_count = len(commits)
             commits_count += current_count
             if current_count < per_page:

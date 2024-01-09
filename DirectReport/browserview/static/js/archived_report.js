@@ -23,14 +23,14 @@ const ArchivedReport = (reportDataElems) => {
 
     function printData(reportDataElems) {
         const obj = JSON.parse(JSON.stringify(reportDataElems));
-        const test_data = JSON.parse(JSON.stringify(obj.results.data))
-        setCommitNums(test_data.commit_nums);
-        setPullRequests(test_data.pull_requests);
-        const test_data2 = JSON.parse(JSON.stringify(obj.results.raw_input_elem))
-        setRawInputText(test_data2.raw_input);
-        const new_data = obj.results.reportDataElems.replace(/'/g, '"');
-        const test1 = JSON.parse(new_data);
-        Object.entries(test1).forEach((entry) => {
+        const resultsData = JSON.parse(JSON.stringify(obj.results.data))
+        setCommitNums(resultsData.commit_nums);
+        setPullRequests(resultsData.pull_requests);
+        const raw_input_elem = JSON.parse(JSON.stringify(obj.results.raw_input_elem))
+        setRawInputText(raw_input_elem.raw_input);
+        const reportDataElemsData = obj.results.reportDataElems.replace(/'/g, '"');
+        const dataObjs = JSON.parse(reportDataElemsData);
+        Object.entries(dataObjs).forEach((entry) => {
             const [key, value] = entry;
             var obj_new = JSON.parse(JSON.stringify(value));
             if (key === "team") {

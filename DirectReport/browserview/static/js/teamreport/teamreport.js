@@ -72,7 +72,6 @@ class TeamReport extends React.Component {
                 "Content-Type": "application/json"
             }
         }).then(result => {
-            console.log(result.data);
             this.handleTeamDataChange(result.data["team"]);
             this.handleReportDataChange(result.data["report"]);
             showAllGraphics(result.data, '#map-container', '#map-container2', '#map-container3');
@@ -109,9 +108,7 @@ class TeamReport extends React.Component {
             url: "/api/repo" + repoURL,
             headers: {'content-type': 'application/json'}
         }).then(result => {
-            // console.log(result.data)
             const results = GetResults(result.data["json_array"]);
-            console.log(results)
             const prompt = results.map((commit) => {
                 return commit.name + " " + commit.message + " " + commit.commit_author_date + "\n"
             })
@@ -133,10 +130,10 @@ class TeamReport extends React.Component {
         document.getElementById('popover-repo-left-purple').classList.toggle("hidden");
         document.getElementById('popover-repo-TitleContent').innerHTML = "Repos" + "(" + this.state.repos.length + ")";
         const content = document.getElementById('popover-repo-Content');
-        var list_element = document.createElement("ul")
+        const list_element = document.createElement("ul")
         this.state.repos.map((repo) => {
-            var li = document.createElement("li");
-            var repoURL = repo["url_repo"].substring(28, repo['url'].length).replace("/", "?repo_url=")
+            const li = document.createElement("li");
+            const repoURL = repo["url_repo"].substring(28, repo['url'].length).replace("/", "?repo_url=")
             li.innerHTML = '<span>' + repo["name"] + '</span>'
             {GetRepoListElement(li, repo)}
             li.onclick = () => {

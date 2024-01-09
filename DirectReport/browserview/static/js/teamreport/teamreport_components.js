@@ -45,8 +45,8 @@ const ShowTeamList = (team) => {
         <div class="items-center pt-1 select-none">
             {team !== undefined && team.length > 0?
                 team.map(team_member =>
-                    <button class="bg-blue-600 py-1 px-2 pb-1 pt-1 mr-0.5 my-0.5 no-underline rounded-full text-white font-sans border-2 border-gray text-xs btn-primary hover:text-white hover:bg-indigo-700 focus:outline-none active:shadow-none" onClick={(event) => openPopover(event, team_member)}>{
-                        team_member.name}
+                    <button class="bg-blue-600 py-1 px-2 pb-1 pt-1 mr-0.5 my-0.5 no-underline rounded-full text-white font-sans border-2 border-gray text-xs btn-primary hover:text-white hover:bg-indigo-700 focus:outline-none active:shadow-none" onClick={(event) => openPopover(event, team_member)}>
+                        {team_member.name}
                     </button>
                 ) : null
             }
