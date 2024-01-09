@@ -1,7 +1,7 @@
-const { useState, useEffect } = React;
+const { useState, useEffect, memo } = React;
 
 // Define a functional component named 'ShowSummary'
-const ShowSummary = (report) => {
+const ShowSummary = memo(function ShowSum({report}) {
     return (
         <p id="show_summary" className="w-97 sm:w-97 overflow-y-auto break-words">
             {report && report.summary &&
@@ -11,11 +11,11 @@ const ShowSummary = (report) => {
             }
         </p>
     );
-};
+})
 
 
 // Define a functional component named 'ShowHighlights'
-const ShowHighlights = (report) => {
+const ShowHighlights = memo(function ShowHigh({report}) {
     return (
         <div className="h-30">
             {/*<p>{report}</p>*/}
@@ -37,7 +37,7 @@ const ShowHighlights = (report) => {
             </ul>
         </div>
     )
-}
+})
 
 
 const ShowTeamList = (team) => {
@@ -75,7 +75,7 @@ const openPopover = (e: ChangeEvent<HTMLInputElement>, team_member) => {
     document.getElementById('popoverCommits').innerHTML = "Commits: " + team_member.commits;
 }
 
-const repoPopoverUI = () => {
+const RepoPopoverUI = () => {
     return (
         <div className="hidden bg-blue-950 border-0 mx-10 px-35 block font-normal leading-normal text-sm max-w-xs text-left no-underline break-words rounded-2xl h-68" id="popover-repo-left-purple" style={{zIndex: 2}}>
             <div>
@@ -90,7 +90,8 @@ const repoPopoverUI = () => {
     )
 }
 
-const SummarySection = (reportData) => {
+const SummarySection = (props) => {
+    let reportData = props["reportData"];
     return (
         <div id="show_summmary_div" className="lg:col-span-1 sm:col-span-3 justify-center">
             <div className="pb-6 pt-2 bg-blue-600 rounded-3xl px-30 shadow-[1.0px_1.0px_5.0px_0.0px_rgba(0,0,0,0.58)]">
@@ -99,8 +100,8 @@ const SummarySection = (reportData) => {
                     {reportData && reportData["highlights"] !== undefined && (
                         <div id="summary-container" className="ml-3 mr-3 bg-slate-100 shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.58)] overflow-y-scroll h-100 rounded-3xl tracking-wide text-gray-500 md:text-gl dark:text-gray-400 mt-3 px-3">
                             <div>
-                                {ShowSummary(reportData)}
-                                {ShowHighlights(reportData)}
+                                <ShowSummary report={reportData}/>
+                                <ShowHighlights report={reportData}/>
                             </div>
                         </div>
                     )}
@@ -110,14 +111,16 @@ const SummarySection = (reportData) => {
     )
 }
 
-const TeamSection = (teamData, closePopover) => {
+const TeamSection = (props) => {
+    let propData = props.props;
+    let teamData = propData["teamData"];
+    // let closePopover = propData["closePopover"];
     return (
         <div id="team_member_to_select" className="lg:col-span-1 sm:col-span-3 justify-center">
-            <div
-                className="pb-6 pt-2 bg-blue-600 rounded-3xl px-4 mb-2 shadow-[1.0px_1.0px_5.0px_0.0px_rgba(0,0,0,0.58)]">
+            <div className="pb-6 pt-2 bg-blue-600 rounded-3xl px-4 mb-2 shadow-[1.0px_1.0px_5.0px_0.0px_rgba(0,0,0,0.58)]">
                 <h1 className="self-center text-center text-xl text-white text-center font-bold font-mono mb-1 mt-3 py-2 mx-20 px-20">Team</h1>
                 {PopoverUI(closePopover)}
-                {teamData.length > 0 && (
+                {teamData && teamData.length > 0 && (
                     <div
                         className="content-center py-2 h-90 rounded-3xl mb-1 bg-slate-100 shadow-[1.0px_1.0px_6.0px_0.0px_rgba(0,0,0,0.58)] mx-1 mt-3 px-3">
                         {ShowTeamList(teamData)}
@@ -139,7 +142,10 @@ const GithubEntry = (commit) => {
     )
 }
 
-const GithubButtonElement = (repos, openRepoPopover, state) => {
+const GithubButtonElement = (props) => {
+    let repos = props["repos"];
+    let openRepoPopover = props["openRepoPopover"];
+    let state = props["state"];
     return (
         <div className="self-center mb-1 mt-1">
             <div className="mx-0 min-w-full flex flex-col items-center">
@@ -204,7 +210,7 @@ const GetRepoListElement = (li) => {
     li.classList.add("border-blueGray-100");
 }
 
-const spinnerUI = () => {
+const SpinnerUI = () => {
     return (
         <div className="hidden rounded-2xl col-span-1" id="popLefPurple" style={{zIndex: 100}}>
             <div>
@@ -225,8 +231,7 @@ const spinnerUI = () => {
     )
 }
 
-const EditSummaryElem = (props, state, openRepoPopover) => {
-    let repos = props['repos'];
+const EditSummaryElem = memo(function EdSummaryElem({props}) {
     let commits = props['commits'];
     return (
         <div className="lg:col-span-1 sm:col-span-3 justify-center" id="edit_summary_div">
@@ -237,11 +242,11 @@ const EditSummaryElem = (props, state, openRepoPopover) => {
                 {commits && commits.length > 0 && (
                     GithubEntryElement(commits)
                 )}
-                {GithubButtonElement(repos, openRepoPopover, state)}
+                {GithubButtonElement(props)}
             </div>
         </div>
     )
-}
+})
 
 const closeRepoPopover = () => {
     document.getElementById('popover-repo-left-purple').classList.toggle("hidden");
@@ -275,14 +280,14 @@ const GraphDiv = () => {
     )
 }
 
-const GraphicsUI = () => {
+const GraphicsUI = memo(function Graphics() {
     return (
         <div>
             <h3 className="text-xl text-blue-800 font-mono font-semibold mt-10 mb-8 mx-10 px-12">Graphic Data</h3>
             <GraphDiv/>
         </div>
     )
-}
+})
 
 const PopoverUI = (closePopover) => {
     return (

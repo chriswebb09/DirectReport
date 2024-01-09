@@ -8,6 +8,7 @@ const Account = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
+        document.getElementById('AuthSpinnerUI').classList.toggle("hidden");
         fetch('/api/account_data')
             .then((response) => {
                 if (!response.ok) {
@@ -23,17 +24,27 @@ const Account = () => {
                 setError(null);
             })
             .catch((err) => {
-                setUserData(null)
-                setReportData(null)
+                setUserData(null);
+                setReportData(null);
+                setError(err.message);
             })
             .finally(() => {
                 setLoading(false);
+                document.getElementById('AuthSpinnerUI').classList.toggle("hidden");
             });
     }, []);
 
     if (loading) {
         return (
-            <div>{`There is a problem fetching the post data - ${error}`}</div>
+            <div className="my-50 py-20">
+                <div className="py-10 mt-20">
+                    <AuthSpinnerUI/>
+                </div>
+                <div className="mx-0 min-w-full flex flex-col items-center">
+                    <div className="mt-10 py-10">{`There is a problem fetching the post data - ${error}`}</div>
+                    <div className="mt-20 py-20"></div>
+                </div>
+            </div>
         )
     } else {
         return (

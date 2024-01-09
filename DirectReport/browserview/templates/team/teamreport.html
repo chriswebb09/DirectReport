@@ -10,12 +10,13 @@
         <script type="text/babel">
             var data = {{data|tojson|safe}}
         </script>
-        <script type="text/babel" src="{{url_for('static', filename='js/teamreport/teamreport_components.js')}}"></script>
+        <script type="text/babel" src="{{url_for('static', filename='js/main_components.js')}}"></script>
+        <script type="text/babel" src="{{url_for('static', filename='js/team_report/team_report_components.js')}}"></script>
         <script type="text/babel" src="{{url_for('static', filename='js/chart_helper.js')}}"></script>
-        <script type="text/babel" src="{{url_for('static', filename='js/teamreport/teamreport.js')}}"></script>
+        <script type="text/babel" src="{{url_for('static', filename='js/team_report/team_report.js')}}"></script>
         <script type="text/babel">
             const domContainer = document.querySelector('#root');
-            ReactDOM.render(<TeamReport/>, domContainer);
+            ReactDOM.render(<ShowTeamReport/>, domContainer);
         </script>
     </main>
 {% endblock %}
