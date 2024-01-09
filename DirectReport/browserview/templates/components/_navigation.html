@@ -1,26 +1,26 @@
 
-<nav class="bg-gray-900 text-white ">
+<nav class="bg-gray-900 text-white pt-5 pb-5">
     <div class="flex w-full items-center">
-        <a class="ml-20 w-3/4 text-2xl font-bold" href="/">DirectReport.</a>
-        <div class="dropdown inline-block relative px-20">
-            <button class="text-white font-semibold inline-flex mt-2 pt-5 pb-5 pl-2 pr-0 hover:border-gray-200">
+        <a class="ml-20 w-3/4 text-lg font-bold" href="/">DirectReport.</a>
+        <div class="dropdown inline-block relative pl-60">
+            <button class="text-white font-semibold inline-flex pl-10 pr-20 hover:border-gray-200">
                 {% if current_user.is_authenticated %}
                     <span class="mr-8 ml-8 text-md hover:text-gray-200">Account</span>
                 {% else %}
                     <a class="mr-8 ml-8 text-md hover:text-gray-200" href="/login">Login</a>
                 {% endif %}
             </button>
-            <ul class="dropdown-menu absolute hidden text-gray-700">
+            <ul class="dropdown-menu absolute hidden text-gray-700 pt-5">
                 {% if current_user.is_authenticated %}
-                     <li class="">
-                         <a class="bg-gray-900 hover:bg-gray-400 py-5 pl-8 pr-8 block whitespace-no-wrap text-white tracking-wide border-b-2 border-t-2 border-gray-200" href="/dashboard/home">Dashboard</a>
-                     </li>
-                    <li class="">
-                        <a class="bg-gray-900 hover:bg-gray-400 py-5 pl-8 pr-8 block whitespace-no-wrap text-white tracking-wide border-b-2 border-gray-200" href="/dashboard/reports/saved">Saved Reports</a>
+                    <li>
+                        <a class="bg-gray-900 hover:bg-gray-400 py-5 pl-20 pr-20 block whitespace-no-wrap text-white tracking-wide border-b-2 border-t-2 border-gray-200" href="/dashboard/home">Dashboard</a>
                     </li>
-                     <li class="">
-                         <a class="bg-gray-900 hover:bg-gray-400 pt-5 pb-5 pl-8 pr-8 block whitespace-no-wrap tracking-wide text-white" href="/logout">Log Out</a>
-                     </li>
+                    <li>
+                        <a class="bg-gray-900 hover:bg-gray-400 py-5 pl-20 pr-10 block whitespace-no-wrap text-white tracking-wide border-b-2 border-gray-200" href="/dashboard/reports/saved">Saved Reports</a>
+                    </li>
+                    <li>
+                        <a class="bg-gray-900 hover:bg-gray-400 pt-5 pb-5 pl-20 pr-20 block whitespace-no-wrap tracking-wide text-white" href="/logout">Log Out</a>
+                    </li>
                 {% endif %}
             </ul>
         </div>

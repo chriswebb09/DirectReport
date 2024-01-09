@@ -48,7 +48,7 @@ def dashboard_reports_saved():
 @bp.route("/reports/new", methods=['GET', 'POST'])
 @login_required
 def dashboard_reports_new():
-    return render_template('team/teamreport.html', title='Team Report', data=[])
+    return render_template('team/team_report.html', title='Team Report', data=[])
 
 
 @bp.route("/reports/<uid>", methods=['GET'])

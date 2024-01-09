@@ -70,8 +70,6 @@ const AccountUserInfo = (userData, reportData) => {
                                </l>
                            </ul>
                         </div>
-
-
                         <div className="rounded-2xl flex items-center justify-center pb-2">
                             <button className="bg-blue-600 hover:bg-slate-100 self-center text-white font-mono tracking-wide shadow-[1.5px_2px_1.0px_0.7px_rgba(0,0,0,0.48)] hover:white hover:text-blue-500 hover:border-gray-200 text-lg font-bold py-3 px-10 rounded-3xl mt-4 mb-6" type="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-6 inline-block ml-20" fill="currentColor" viewBox="0 0 24 24">
@@ -86,3 +84,4 @@ const AccountUserInfo = (userData, reportData) => {
         </div>
     )
 }
+

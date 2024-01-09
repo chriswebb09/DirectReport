@@ -10,18 +10,18 @@ class Home extends React.Component {
             React.createElement(
                 'div',
                 {
-                    className: "pt-20 pb-20 flex h-50",
+                    className: "pt-5 pb-10 flex h-30",
                     style: {background: "linear-gradient(90deg, #667eea 0%, #764ba2 100%)"}
                 },
                 React.createElement(
                     "div",
                     {
-                        className: "container mx-auto px-6"
+                        className: "container mx-10 px-10 py-10"
                     },
                     React.createElement(
                         "h2",
                         {
-                            className: "text-3xl font-bold mb-3 text-white"
+                            className: "text-2xl font-bold mb-3 text-white"
                         },
                         "DirectReport."
                     ),

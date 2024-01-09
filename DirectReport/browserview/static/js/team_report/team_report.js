@@ -1,6 +1,23 @@
 'use strict';
 
-const {useState, useCallback, useEffect} = React;
+const {useState, useCallback, useEffect, memo} = React;
+
+
+const ShowSpinner = () => {
+    return (
+        <div className="my-50 py-20">
+            <div className="py-10 mt-20">
+                <SpinnerUI/>
+            </div>
+            <div className="mx-0 min-w-full flex flex-col items-center">
+                <div className="mt-10 py-10">There is a problem fetching the post data</div>
+                <div className="mt-20 py-20"></div>
+            </div>
+        </div>
+    )
+}
+
+
 
 class TeamReport extends React.Component {
     constructor(props) {
@@ -146,16 +163,15 @@ class TeamReport extends React.Component {
     };
 
     render() {
-
         return (
             <div id>
                 <h1 id="h1content" className="self-center text-center text-2xl text-blue-800 text-center font-bold font-mono pt-10 mb-10 pt-8 mx-30 px-20">Generate Team Report From Metadata</h1>
-                {repoPopoverUI()}
-                {spinnerUI()}
+                {RepoPopoverUI()}
+                {SpinnerUI()}
                 <div id="topRow" className="grid grid-cols-3 gap-10 rounded-3xl mx-20 mt-6">
-                    {EditSummaryElem({"repos": this.state.repos, "commits": this.state.commits}, this.state, this.openRepoPopover)}
-                    {SummarySection(this.state.reportData)}
-                    {TeamSection(this.state.teamData, this.closePopover)}
+                    <EditSummaryElem props={{"repos": this.state.repos, "commits": this.state.commits, "state": this.state, "openRepoPopover": this.openRepoPopover}} />
+                    <SummarySection reportData={this.state.reportData}/>
+                    <TeamSection props={{"teamData": this.state.teamData, "closePopover": this.closePopover}} />
                 </div>
                 {this.state.commits.length <= 0 && (
                     <div id="padding-content" className="pb-[340px] h-10">
