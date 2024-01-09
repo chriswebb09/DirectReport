@@ -65,7 +65,7 @@ class TeamReport extends React.Component {
         const payload = {"prompt": this.state.commentText}
         axios({
             method: 'post',
-            url: '/dashboard/reports/update',
+            url: '/api/reports/update',
             data: payload,
             headers: {
                 "Accept": "application/json",
@@ -91,7 +91,7 @@ class TeamReport extends React.Component {
     getRepoData() {
         axios({
             method: 'get',
-            url: '/repos',
+            url: '/api/repos',
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json"
@@ -106,10 +106,12 @@ class TeamReport extends React.Component {
     update(repoURL) {
         axios({
             method: 'post',
-            url: "/repo" + repoURL,
+            url: "/api/repo" + repoURL,
             headers: {'content-type': 'application/json'}
         }).then(result => {
-            const results = GetResults(result);
+            // console.log(result.data)
+            const results = GetResults(result.data["json_array"]);
+            console.log(results)
             const prompt = results.map((commit) => {
                 return commit.name + " " + commit.message + " " + commit.commit_author_date + "\n"
             })
@@ -126,7 +128,7 @@ class TeamReport extends React.Component {
     openRepoPopover(repos, state) {
         const element = document.getElementById('h1content');
         Popper.createPopper(element, document.getElementById('popover-repo-left-purple'), {
-            strategy: 'fixed'
+            resize: true
         });
         document.getElementById('popover-repo-left-purple').classList.toggle("hidden");
         document.getElementById('popover-repo-TitleContent').innerHTML = "Repos" + "(" + this.state.repos.length + ")";
@@ -149,8 +151,8 @@ class TeamReport extends React.Component {
     render() {
 
         return (
-            <div>
-                <h1 id="h1content" className="self-center text-center text-2xl text-blue-800 text-center font-bold font-mono pt-5 mb-8 pt-8 mx-30 px-20">Generate Team Report From Metadata</h1>
+            <div id>
+                <h1 id="h1content" className="self-center text-center text-2xl text-blue-800 text-center font-bold font-mono pt-10 mb-10 pt-8 mx-30 px-20">Generate Team Report From Metadata</h1>
                 {repoPopoverUI()}
                 {spinnerUI()}
                 <div id="topRow" className="grid grid-cols-3 gap-10 rounded-3xl mx-20 mt-6">
@@ -158,8 +160,8 @@ class TeamReport extends React.Component {
                     {SummarySection(this.state.reportData)}
                     {TeamSection(this.state.teamData, this.closePopover)}
                 </div>
-                {this.state.teamData.length <= 0 && (
-                    <div id="padding-content" className="pb-[240px] pt-40 mt-20 h-10">
+                {this.state.commits.length <= 0 && (
+                    <div id="padding-content" className="pb-[340px] h-10">
                     </div>
                 )}
                 {this.state.teamData.length > 0 && (

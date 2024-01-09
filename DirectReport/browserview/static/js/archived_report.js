@@ -14,7 +14,6 @@ const ArchivedReport = (reportDataElems) => {
 
     const openRepoPopover = () => {
         console.log("open repo popover");
-        // setRepoSelected(true);
     }
 
     useEffect(() => {
@@ -23,15 +22,14 @@ const ArchivedReport = (reportDataElems) => {
     }, [reportDataElems]);
 
     function printData(reportDataElems) {
-        var obj = JSON.parse(JSON.stringify(reportDataElems));
-        // var objb = JSON.parse(JSON.stringify(obj));
-        var test_data = JSON.parse(JSON.stringify(obj.results.data))
+        const obj = JSON.parse(JSON.stringify(reportDataElems));
+        const test_data = JSON.parse(JSON.stringify(obj.results.data))
         setCommitNums(test_data.commit_nums);
         setPullRequests(test_data.pull_requests);
-        var test_data2 = JSON.parse(JSON.stringify(obj.results.raw_input_elem))
+        const test_data2 = JSON.parse(JSON.stringify(obj.results.raw_input_elem))
         setRawInputText(test_data2.raw_input);
-        var new_data = obj.results.reportDataElems.replace(/\'/g, "\"");
-        var test1 = JSON.parse(new_data);
+        const new_data = obj.results.reportDataElems.replace(/'/g, '"');
+        const test1 = JSON.parse(new_data);
         Object.entries(test1).forEach((entry) => {
             const [key, value] = entry;
             var obj_new = JSON.parse(JSON.stringify(value));
@@ -47,10 +45,6 @@ const ArchivedReport = (reportDataElems) => {
                  });
             } else if (key === "broad_categories") {
                 setBroadCategories(obj_new);
-            } else if (key === "repos") {
-                 setRepos({
-                     repos:obj_new,
-                 });
             } else if (key == "commit_nums") {
                 setCommitNums(obj_new);
             } else if (key == "pull_requests") {

@@ -18,7 +18,6 @@ def page_not_found(e):
     :return: Rendered HTML template for the 404 error page.
     """
     if wants_json_response():
-        print(e)
         return api_error_response(404)
     return render_template('404.html', error=e), 404
 
@@ -26,6 +25,5 @@ def page_not_found(e):
 @bp.app_errorhandler(500)
 def internal_error(error):
     if wants_json_response():
-        print(error)
         return api_error_response(500)
     return render_template('500.html', error=error), 500

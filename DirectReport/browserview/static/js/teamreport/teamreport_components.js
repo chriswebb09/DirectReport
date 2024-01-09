@@ -16,7 +16,6 @@ const ShowSummary = (report) => {
 
 // Define a functional component named 'ShowHighlights'
 const ShowHighlights = (report) => {
-    console.log(report);
     return (
         <div className="h-30">
             {/*<p>{report}</p>*/}
@@ -78,13 +77,13 @@ const openPopover = (e: ChangeEvent<HTMLInputElement>, team_member) => {
 
 const repoPopoverUI = () => {
     return (
-        <div className="hidden bg-blue-950 border-0 mx-10 px-15 block z-50 font-normal leading-normal text-sm max-w-xs text-left no-underline break-words rounded-2xl h-68" id="popover-repo-left-purple" style={{zIndex: 2}}>
+        <div className="hidden bg-blue-950 border-0 mx-10 px-35 block font-normal leading-normal text-sm max-w-xs text-left no-underline break-words rounded-2xl h-68" id="popover-repo-left-purple" style={{zIndex: 2}}>
             <div>
                 <div id="popover-repo-Title" className="bg-blue-950 text-white tracking-wide opacity-75 font-bold p-3 mb-0 border-b border-solid border-blueGray-50 uppercase rounded-t-2xl py-4">
-                    <span id="popover-repo-TitleContent" className="mx-5"></span>
+                    <span id="popover-repo-TitleContent" className="px-5 mx-25"></span>
                     <button className="mx-5 float-right" onClick={closeRepoPopover}>X</button>
                 </div>
-                <div id="popover-repo-Content" className="text-white font-semibold tracking-wide px-6 py-2 h-2/3 overflow-y-scroll h-36"></div>
+                <div id="popover-repo-Content" className="text-white font-semibold tracking-wide px-6 h-2/3 overflow-y-scroll h-36"></div>
                 <div id="profile-repo-Button" className="text-white tracking-wide px-6 py-4"></div>
             </div>
         </div>
@@ -92,9 +91,6 @@ const repoPopoverUI = () => {
 }
 
 const SummarySection = (reportData) => {
-    console.log("SummarySection");
-    console.log(reportData);
-    // var report = reportData["report"];
     return (
         <div id="show_summmary_div" className="lg:col-span-1 sm:col-span-3 justify-center">
             <div className="pb-6 pt-2 bg-blue-600 rounded-3xl px-30 shadow-[1.0px_1.0px_5.0px_0.0px_rgba(0,0,0,0.58)]">
@@ -181,11 +177,11 @@ const GithubEntryElement = (commits) => {
 }
 
 const GetResults = (result) => {
-    const results = result.data['json_array'].map((commit) => {
+    const results = result.map((commit) => {
         return {
-            'message': commit['commit']['message'],
-            'name': commit['commit']['author']['name'],
-            'author_url': commit['author']['html_url'],
+            'message': commit["commit"].message,
+            'name': commit["author"]["name"],
+            'author_url': commit["author"]["html_url"],
             'author_name': commit['author']['login'],
             'commit_author_email': commit['commit']['author']['email'],
             'commit_author_name': commit['commit']['author']['name'],
@@ -238,7 +234,9 @@ const EditSummaryElem = (props, state, openRepoPopover) => {
                 <h1 id="title_element" className="self-center text-center text-white text-xl text-center font-bold font-mono mb-1 mt-3 py-2">
                     Github Data
                 </h1>
-                {GithubEntryElement(commits)}
+                {commits && commits.length > 0 && (
+                    GithubEntryElement(commits)
+                )}
                 {GithubButtonElement(repos, openRepoPopover, state)}
             </div>
         </div>
@@ -254,9 +252,6 @@ const closePopover = () => {
 }
 
 const GraphElement = (title, id, mapcontainer_id) => {
-    console.log(title);
-    console.log(id);
-    console.log(mapcontainer_id);
     return (
         <div>
             <h1 id="title_element" className="self-center text-center text-white text-lg text-center font-bold font-mono mb-1 mt-3 py-2">{title}</h1>
