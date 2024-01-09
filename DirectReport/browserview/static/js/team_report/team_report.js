@@ -2,6 +2,21 @@
 
 const {useState, useCallback, useEffect, memo} = React;
 
+
+const ShowSpinner = () => {
+    return (
+        <div className="my-50 py-20">
+            <div className="py-10 mt-20">
+                <AuthSpinnerUI/>
+            </div>
+            <div className="mx-0 min-w-full flex flex-col items-center">
+                <div className="mt-10 py-10">There is a problem fetching the post data</div>
+                <div className="mt-20 py-20"></div>
+            </div>
+        </div>
+    )
+}
+
 const ShowTeamReport = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -29,15 +44,7 @@ const ShowTeamReport = () => {
 
     if (loading) {
         return (
-            <div className="my-50 py-20">
-                <div className="py-10 mt-20">
-                    <AuthSpinnerUI/>
-                </div>
-                <div className="mx-0 min-w-full flex flex-col items-center">
-                    <div className="mt-10 py-10">{`There is a problem fetching the post data - ${error}`}</div>
-                    <div className="mt-20 py-20"></div>
-                </div>
-            </div>
+            <ShowSpinner />
         )
     } else {
         return (
