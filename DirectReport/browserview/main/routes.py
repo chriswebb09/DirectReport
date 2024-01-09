@@ -5,7 +5,6 @@ from flask import render_template, session, request, redirect, json, jsonify
 from flask_login import current_user
 from DirectReport.models.user_model import UserModel
 from DirectReport.browserview.main import bp
-from DirectReport.browserview.services.github import GithubClient
 from DirectReport.datadependencies import appsecrets
 
 
@@ -61,20 +60,4 @@ def ouath2_callback():
     user_info = json_data["user"]
     user_model = UserModel()
     user_model.update_github_username(current_user.email, user_info["login"])
-    return render_template('team/teamreport.html', title='Team', data=[])
-
-
-@bp.route("/team", methods=['GET'])
-def team():
-    return render_template('team/team.html', title='Team', data=[])
-
-
-@bp.route("/repo/<reponame>", methods=['GET'])
-def repo(reponame=None):
-    client = GithubClient()
-    repo = []
-    try:
-        repo = client.get_repo_issues(current_user.github_username, reponame)
-    except Exception as e:
-        print(e)
-    return render_template('team/team.html', title='Team', data=repo)
+    return render_template('team/team_report.html', title='Team', data=[])
