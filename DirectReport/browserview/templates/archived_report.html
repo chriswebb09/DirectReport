@@ -7,15 +7,16 @@
 {% block content %}
     <main className="">
         <div id="root" class='bg-slate-200 mx-50 pb-[140px]'></div>
-        <script type="text/babel">
-            var data = {{data|tojson|safe}}
-        </script>
+        <script type="text/babel" src="{{url_for('static', filename='js/archived_report_components.js')}}"></script>
         <script type="text/babel" src="{{url_for('static', filename='js/teamreport/teamreport_components.js')}}"></script>
         <script type="text/babel" src="{{url_for('static', filename='js/chart_helper.js')}}"></script>
-        <script type="text/babel" src="{{url_for('static', filename='js/teamreport/teamreport.js')}}"></script>
+        <script type="text/babel" src="{{url_for('static', filename='js/archived_report.js')}}"></script>
         <script type="text/babel">
+            var data = {{data|tojson|safe}}
+            var report = {{report|tojson|safe}};
+            var raw_input = {{raw_input|tojson|safe}};
             const domContainer = document.querySelector('#root');
-            ReactDOM.render(<TeamReport/>, domContainer);
+            ReactDOM.render(<ArchivedReport reportDataElems={report} data={data}  raw_input_elem={raw_input} commentText={"This is text"}/>, domContainer);
         </script>
     </main>
 {% endblock %}

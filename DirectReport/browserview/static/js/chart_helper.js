@@ -60,13 +60,13 @@ function showGraphics(data, divtag) {
             }
         })
         .attr('y', function (value, index) {
-            return (chartHeight - 30) - (value[1] * 5)
+            return (chartHeight - 30) - (value[1] * 8)
         })
         .attr("width", function (value, index) {
             return (chartWidth / data.length) - padding
         })
         .attr("height", function (value, index) {
-            return value[1] * 5
+            return value[1] * 8
         })
         .attr("fill", "blueviolet");
 
@@ -86,7 +86,6 @@ function showGraphics(data, divtag) {
         .style("font-size", "10px")
         .style("text-anchor", "center")
         .text(function (value, index) {
-            print(value[0].split("_")[0].slice(0, 8))
             return value[0].split("_")[0].slice(0, 8)
         })
 }
@@ -128,14 +127,14 @@ function showGraphics2(data, divtag) {
             }
         })
         .attr('y', function (value, index) {
-            return (chartHeight - 30) - (value[1] * 10)
+            return (chartHeight - 30) - (value[1] * 18)
         })
         .attr("width", function (value, index) {
             return (chartWidth / data.length) - padding
         })
         .attr("height", function (value, index) {
             // console.log(value[1] * 20)
-            return (value[1] * 10) - 5
+            return (value[1] * 18) - 5
         })
         .attr("fill", "steelblue");
 
@@ -204,13 +203,13 @@ function showGraphics3(data, divtag) {
             }
         })
         .attr('y', function (value, index) {
-            return (chartHeight - 30) - (value[1] * 10)
+            return (chartHeight - 30) - (value[1] * 17)
         })
         .attr("width", function (value, index) {
             return (chartWidth / data.length) - padding
         })
         .attr("height", function (value, index) {
-            return value[1] * 10
+            return value[1] * 17
         })
         .attr("fill", "teal");
 
@@ -230,7 +229,7 @@ function showGraphics3(data, divtag) {
         .style("font-size", "8px")
         .style("text-anchor", "center")
         .text(function (value, index) {
-            return value[0].split("_")[0].slice(0, 6) + ' ' + value[0].split("_")[1]
+            return value[0].split("_")[0]
         }).call(wrap, 5);
 
 }
