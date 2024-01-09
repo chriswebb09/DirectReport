@@ -120,5 +120,9 @@ def dashboard_saved_report(uid=None):
         "1 year": 30,
     }
     return render_template(
-        'archived_report.html', title='Team Report', data=report, raw_input={"raw_input": report["raw_input"]}, report=report["report"]
+        'archived_report.html',
+        title='Team Report',
+        data=report,
+        raw_input={"raw_input": report["raw_input"]},
+        report=report["report"],
     )
