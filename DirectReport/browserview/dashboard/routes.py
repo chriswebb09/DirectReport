@@ -20,7 +20,18 @@ def dashboard_home():
 @bp.route("/edit", methods=['GET', 'POST'])
 @login_required
 def dashbboard_edit():
-    return render_template('edit_account.html', title='Edit Account')
+    user_account = {
+        "name": current_user.firstname + " " + current_user.lastname,
+        "firstname": current_user.firstname,
+        "lastname": current_user.lastname,
+        "userid": current_user.id,
+        "username": current_user.username,
+        "email": current_user.email,
+        "github_username": current_user.github_username,
+        "github_repo": current_user.github_repo,
+    }
+    user_element = {"user": user_account}
+    return render_template('edit_account.html', title='Edit Account', data=user_element)
 
 
 @bp.route("/reports/saved", methods=['GET', 'POST'])
