@@ -45,16 +45,16 @@ def ouath2_callback():
     res = response.text.split('&', 1)
     token = res[0].split('=')[1]
     session['header_token'] = token
-    headers2 = {
+    headers = {
         'Accept': 'application/vnd.github+json',
         'X-GitHub-Api-Version': '2022-11-28',
         'Content-Type': 'application/x-www-form-urlencoded',
     }
-    data2 = '{\n' + '  "access_token": "' + token + '" \n}'
+    access_token = '{\n' + '  "access_token": "' + token + '" \n}'
     response2 = requests.post(
         url="https://api.github.com/applications/" + client_id + "/token",
-        headers=headers2,
-        data=data2,
+        headers=headers,
+        data=access_token,
         auth=(client_id, client_secret),
     )
     json_data = json.loads(response2.content)

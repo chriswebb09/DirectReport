@@ -8,7 +8,7 @@ const Account = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetch(`/account_data`)
+        fetch('/api/account_data')
             .then((response) => {
                 if (!response.ok) {
                     throw new Error(

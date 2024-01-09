@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from datetime import datetime, timedelta
+
 import requests
 from flask import session, request, json, jsonify
 from flask_login import login_required, current_user
@@ -10,6 +10,7 @@ from DirectReport.browserview.services.prompt_logic import generate_email, team_
 from DirectReport.browserview.services.github import GithubClient
 from DirectReport.browserview.api import bp
 from DirectReport.datadependencies import appsecrets
+
 
 client_id = appsecrets.GITHUB_CLIENT_ID
 client_secret = appsecrets.GITHUB_CLIENT_SECRET
@@ -67,7 +68,6 @@ def dashboard_reports_update():
         "1 year": 30,
     }
     response_data["repos"] = repo_data
-    print(response_data)
     ReportBuilder.new(response_data, prompt, current_user.id, current_user.github_repo)
     return response_data, 201
 
@@ -80,10 +80,10 @@ def reponame():
     client = GithubClient()
     user_model = UserModel()
     user_model.update_github_repo(current_user.email, repo)
-    test = client.get_commits_in_last_month(current_user.github_username, current_user.github_repo, h_token)
-    json_response_data = json.dumps(test)
-    json_response_data_loads = json.loads(json_response_data)
-    res_json = {"json_array": json_response_data_loads}
+    response = client.get_commits_in_last_month(current_user.github_username, current_user.github_repo, h_token)
+    json_response_data = json.dumps(response)
+    commits_last_month = json.loads(json_response_data)
+    res_json = {"json_array": commits_last_month}
     return res_json, 200
 
 
@@ -129,3 +129,25 @@ def generateemail():
     report = generate_email(prompt)
     elements = {"email": report.choices[0].message.content}
     return elements, 201
+
+
+@bp.route("/account_data", methods=['GET'])
+@login_required
+def account_data():
+    saved_reports = ReportBuilder.get_reports_for_user_id(current_user.id)
+    report_results = []
+    for report in saved_reports:
+        report_element = {"report": report}
+        report_results.append(report_element)
+    user_account = {
+        "name": current_user.firstname + " " + current_user.lastname,
+        "firstname": current_user.firstname,
+        "lastname": current_user.lastname,
+        "userid": current_user.id,
+        "username": current_user.username,
+        "email": current_user.email,
+        "github_username": current_user.github_username,
+        "github_repo": current_user.github_repo,
+    }
+    user_element = {"user": user_account, "reports": report_results}
+    return user_element, 201

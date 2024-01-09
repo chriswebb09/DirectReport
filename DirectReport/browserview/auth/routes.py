@@ -7,6 +7,7 @@ from DirectReport.browserview.auth import bp
 from DirectReport.datadependencies import appsecrets
 from DirectReport.models.user_model import UserModel
 
+
 user_model = UserModel()
 
 
