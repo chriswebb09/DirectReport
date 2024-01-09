@@ -26,7 +26,6 @@ class GithubClient:
                 authors[author] = int(commits)
         return authors
 
-    # def get_pull_request_comments_count(repo_owner, repo_name, pull_request_number):
     def get_pull_request_comments(self, repo_owner, repo_name):
         """
         Gets the number of comments on a pull request.
@@ -130,7 +129,7 @@ class GithubClient:
         response.raise_for_status()
         return response.json()
 
-    def get_commits_in_last_month(self, repo_owner, repo_name, token):
+    def get_commits_count_in_last_month(self, repo_owner, repo_name, token):
         thirty_days_ago = datetime.now() - timedelta(days=30)
         since = thirty_days_ago.isoformat()
         headers = {"Authorization": f"token {token}"}
@@ -152,7 +151,33 @@ class GithubClient:
             page += 1
         return commits_count
 
-    def get_commits_in_last_sixty_days(self, repo_owner, repo_name, token):
+    def get_commits_in_last_month(self, repo_owner, repo_name, token):
+        thirty_days_ago = datetime.now() - timedelta(days=30)
+        since = thirty_days_ago.isoformat()
+        headers = {"Authorization": f"token {token}"}
+        url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/commits"
+        commits_count = 0
+        page = 1
+        per_page = 100  # Number of results per page
+        commits_data = []
+        while True:
+            # Make a request to the GitHub API
+            response = requests.get(url, headers=headers, params={'since': since, 'page': page, 'per_page': per_page})
+            if response.status_code != 200:
+                # Break the loop if the response is not successful
+                break
+            commits = response.json()
+            # print(commits)
+            commits_data.extend(commits)
+            # commits_data.append(commits)
+            current_count = len(commits)
+            commits_count += current_count
+            if current_count < per_page:
+                break
+            page += 1
+        return commits_data
+
+    def get_commits_count_in_last_sixty_days(self, repo_owner, repo_name, token):
         sixty_days_ago = datetime.now() - timedelta(days=60)
         since = sixty_days_ago.isoformat()
         headers = {"Authorization": f"token {token}"}
@@ -174,7 +199,7 @@ class GithubClient:
             page += 1
         return commits_count
 
-    def get_commits_in_last_ninety_days(self, repo_owner, repo_name, token):
+    def get_commits_count_in_last_ninety_days(self, repo_owner, repo_name, token):
         ninety_days_ago = datetime.now() - timedelta(days=90)
         since = ninety_days_ago.isoformat()
         headers = {"Authorization": f"token {token}"}

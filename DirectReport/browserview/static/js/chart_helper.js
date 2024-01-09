@@ -176,7 +176,7 @@ function showGraphics3(data, divtag) {
 
     const chartWidth = 350
     const chartHeight = 300
-    const padding = 20
+    const padding = 10
 
     var data = values
     const heightScalingFactor = chartHeight / 67
@@ -203,13 +203,13 @@ function showGraphics3(data, divtag) {
             }
         })
         .attr('y', function (value, index) {
-            return (chartHeight - 30) - (value[1] * 17)
+            return (chartHeight - 30) - (value[1] * 10)
         })
         .attr("width", function (value, index) {
             return (chartWidth / data.length) - padding
         })
         .attr("height", function (value, index) {
-            return value[1] * 17
+            return value[1] * 10
         })
         .attr("fill", "teal");
 
