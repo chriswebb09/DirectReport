@@ -13,11 +13,11 @@
 
 # Overview
 
-Keep track of your accomplishments each day of the workweek, create a report of things you accomplished at the end of the week that you can email to manager.  Review progress each quarterly for more effective performance review.
+Keep track of the progress of your project and the team through metadata and AI.
 
 ## Project End Goals 
 
-Ultimately the goal of this project goal is seamlessly track your work during the week through API integrations / commandline interface and then allow you to explore the data in a webbrowser page. The end goal is to allow you to maintain notes of your weekly work and if needed generate a concise report for your manager. 
+Ultimately the goal of this project goal is seamlessly track how an opensource project is progressing through API integrations / commandline interface. Overtime each snapshot will add to the larger picture of the health of the project. 
 
 ## Documentation 
 
@@ -100,13 +100,19 @@ $ python DirectReport launch
 
 ## Web Interface
 
-![Screenshot home page for web interface.](DirectReport/assets/main_launch.png)
+![Screenshot](DirectReport/assets/main_launch.png)
 
 
-![Screenshot list page for web interface.](DirectReport/assets/web_interface2.png)
+![Screenshot](DirectReport/assets/web_interface2.png)
 
 
-![Screenshot detail page for web interface.](DirectReport/assets/web_interface3.png)
+![Screenshot](DirectReport/assets/web_interface3.png)
 
 
-![Screenshot list page for web interface.](DirectReport/assets/web_interface4.png)
+![Screenshot](DirectReport/assets/web_interface4.png)
+
+
+![Screenshot](DirectReport/assets/web_interface5.png)
+
+
+![Screenshot](DirectReport/assets/web_interface6.png)
